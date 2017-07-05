@@ -1,26 +1,20 @@
+// React imports
 import React, { Component } from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import Paper from 'material-ui/Paper';
+
+// App imports
 import './PsBot.css';
 
-const style = {
-    height: 100,
-    width: 100,
-    margin: 20,
-    textAlign: 'center',
-    display: 'inline-block',
+const psBotStyle = {
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10
 };
 
 class PsBot extends Component {
-    injectTapEventPlugin();
-
     render() {
         return (
-            <div>
-                <Paper style={style} zDepth={1}>
-                    This will be the paper content
-                </Paper>
-            </div>
+            <div style={psBotStyle}> This will be the bot content</div>
         );
     }
 }

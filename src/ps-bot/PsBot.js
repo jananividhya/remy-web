@@ -143,8 +143,26 @@ class PsBot extends Component {
                 conversations: conversations,
                 conversationInputText: this.state.conversationInputText
             });
+
+            setInterval(this.fetchBotConversations, 5000);
         }).catch((ex) => {
             console.log('Parsing failed while sending conversation to bot ', ex);
+        });
+    };
+
+    fetchBotConversations = () => {
+        let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
+            {method: 'GET', headers: this.headers});
+
+        let conversations = this.state.conversations;
+
+        fetch(request)
+            .then((response) => {
+                return response.json();
+            }).then((json) => {
+            //json.filter
+        }).catch((ex) => {
+
         });
     };
 
@@ -170,13 +188,14 @@ class PsBot extends Component {
                 <List>
                     {this.state.conversations.map((conversation, id) => {
                         return <ListItem key={id}
-                            leftAvatar={<Avatar src="images/ok-128.jpg" />}
+                            className={conversation.from.name === 'User' ? 'Ps-Bot-Conversation-Human' : 'Ps-Bot-Conversation-Bot'}
                             primaryText={conversation.from.name}
                             secondaryText={
                                 <p>
                                     {conversation.text}
                                 </p>
                             }
+                            leftAvatar={<Avatar src="images/ok-128.jpg" />}
                             secondaryTextLines={1}
                         />
                     })}

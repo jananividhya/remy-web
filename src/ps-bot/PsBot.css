@@ -12,3 +12,12 @@
 .Ps-Bot-Conversation-Input {
     width: 300px;
 }
+
+.Ps-Bot-Conversation-Human {
+    float: right;
+    text-align: right;
+}
+
+.Ps-Bot-Conversation-Bot {
+    text-align: left;
+}

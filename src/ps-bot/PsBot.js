@@ -168,9 +168,6 @@ class PsBot extends Component {
             <div style={psBotStyle}>
                 Bot initialized for conversation id {this.state.conversationId}
                 <List>
-                    /**
-                     * @todo add css
-                     */
                     {this.state.conversations.map((conversation, id) => {
                         return <ListItem key={id}
                             leftAvatar={<Avatar src="images/ok-128.jpg" />}
@@ -185,9 +182,6 @@ class PsBot extends Component {
                     })}
                 </List>
                 <div className="Ps-Bot-Conversation-Input-Container">
-                    /**
-                     * @todo add css
-                     */
                     <form>
                         <TextField
                             floatingLabelText={this.state.conversationInputText}

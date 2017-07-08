@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 // App imports
-import PsBot from './ps-bot/PsBot';
+import PsBot from './components/ps-bot/PsBot';
 
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';

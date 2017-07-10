@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentSend from 'material-ui/svg-icons/content/send';
+import FlatButton from 'material-ui/FlatButton';
 
 // Common imports
 import 'whatwg-fetch';
@@ -61,7 +62,8 @@ class PsBot extends Component {
             conversationId: '',
             conversationText: '',
             conversations: [],
-            conversationInputText: 'Begin your conversation here..'
+            conversationHistory: [],
+            conversationInputText: this.props.conversationInputText || 'Begin your conversation here..'
         };
 
         /**
@@ -69,7 +71,7 @@ class PsBot extends Component {
          * @type {*}
          */
         this.headers = new Headers();
-        this.headers.append('Authorization', 'Bearer 052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4');
+        this.headers.append('Authorization', 'Bearer ' + this.props.accessKey);
         this.headers.append('Content-Type', 'application/json');
 
         this.initConversation(this.directLineBaseUrl);
@@ -108,12 +110,13 @@ class PsBot extends Component {
     /**
      * @method sendConversationToBot()
      * @methodOf PsBot#sendConversationToBot
+     * @param {String} conversationText Conversation being sent to bot
      * @description Sends the user conversation to pS Bot
      */
-    sendConversationToBot = () => {
+    sendConversationToBot = (conversationText) => {
         let conversation = {
             "type": "message",
-            "text": this.state.conversationText,
+            "text": this.state.conversationText || conversationText,
             "from": {
                 "id": "default-user",
                 "name": "User"
@@ -141,26 +144,43 @@ class PsBot extends Component {
                 conversationId: this.state.conversationId,
                 conversationText: '',
                 conversations: conversations,
+                conversationHistory: this.state.conversationHistory,
                 conversationInputText: this.state.conversationInputText
             });
 
-            setInterval(this.fetchBotConversations, 5000);
+            let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 5000);
         }).catch((ex) => {
             console.log('Parsing failed while sending conversation to bot ', ex);
         });
     };
 
-    fetchBotConversations = () => {
+    fetchBotConversations = (fetchBotConversationsTimer) => {
         let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
             {method: 'GET', headers: this.headers});
-
-        let conversations = this.state.conversations;
 
         fetch(request)
             .then((response) => {
                 return response.json();
             }).then((json) => {
-            //json.filter
+            for (let newConversation of json.activities) {
+                if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0) {
+                    let conversationHistory = this.state.conversationHistory;
+                    conversationHistory.push(newConversation.id);
+
+                    let conversations = this.state.conversations;
+                    conversations.push(newConversation);
+
+                    this.setState({
+                        conversationId: this.state.conversationId,
+                        conversationText: '',
+                        conversations: conversations,
+                        conversationHistory: conversationHistory,
+                        conversationInputText: this.state.conversationInputText
+                    });
+                } else {
+                    clearInterval(fetchBotConversationsTimer);
+                }
+            }
         }).catch((ex) => {
 
         });
@@ -181,6 +201,18 @@ class PsBot extends Component {
         });
     };
 
+    /**
+     * @method pSBotButtonClick
+     * @methodOf PsBot#pSBotButtonClick
+     * @description Sends the conversation to the bot based on the value of the button being clicked
+     * @param event Event triggered onClick of pS Bot button
+     */
+    pSBotButtonClick = (event) => {
+        // Using event.target.innerHTML is a pure hack.
+        // Need to figure out an alternative for getting the value of FlatButton/RaisedButton
+        this.sendConversationToBot(event.target.innerHTML);
+    };
+
     render() {
         return (
             <div style={psBotStyle}>
@@ -191,12 +223,25 @@ class PsBot extends Component {
                             className={conversation.from.name === 'User' ? 'Ps-Bot-Conversation-Human' : 'Ps-Bot-Conversation-Bot'}
                             primaryText={conversation.from.name}
                             secondaryText={
-                                <p>
-                                    {conversation.text}
-                                </p>
+                                !conversation.attachments ? (
+                                    <p>
+                                        {conversation.text}
+                                    </p> ) :
+                                    ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                    // Handle card response from bot
+                                        <p>
+                                            {conversation.text}
+                                            {conversation.attachments[0].content.buttons.map((button, buttonId) => {
+                                                    return <FlatButton key={buttonId}
+                                                                       label={button.title}
+                                                                       onTouchTap={this.pSBotButtonClick} />
+
+                                               })
+                                            }
+                                        </p>) : '')
                             }
                             leftAvatar={<Avatar src="images/ok-128.jpg" />}
-                            secondaryTextLines={1}
+                            secondaryTextLines={conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' ? 2 : 1}
                         />
                     })}
                 </List>

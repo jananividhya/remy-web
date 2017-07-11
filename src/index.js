@@ -26,7 +26,7 @@ ReactDOM.render(
         <div>
             <Paper style={paperStyle} zDepth={1}>
                 <PsBot conversationInputText="Begin by typing a conversation.."
-                       accessKey="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
+                       accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
                        />
             </Paper>
         </div>

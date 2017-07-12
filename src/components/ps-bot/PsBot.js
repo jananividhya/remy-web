@@ -9,6 +9,7 @@ import {orange500, blue500} from 'material-ui/styles/colors';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 
 // Common imports
@@ -251,44 +252,45 @@ class PsBot extends Component {
             <div style={psBotStyle}>
                 Bot initialized for conversation id {this.state.conversationId}
                     {this.state.conversations.map((conversation, id) => {
-                        return <div key={id}
-                            className={conversation.from.name === 'User' ? 'Ps-Bot-Conversation-Human' : 'Ps-Bot-Conversation-Bot'}>
-                            <p><Avatar src="images/ok-128.jpg" /> {conversation.from.name}</p>
-                            {
-                                !conversation.attachments ? (
-                                    <p>
-                                        {conversation.text}
-                                    </p> ) :
-                                    ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                    // Handle card response from bot
+                        return <Paper className={conversation.from.name === 'User' ? 'Ps-Bot-Conversation-Human' : 'Ps-Bot-Conversation-Bot'} zDepth={1} key={id}>
+                            <div>
+                                <p><Avatar src="images/ok-128.jpg" /> {conversation.from.name}</p>
+                                {
+                                    !conversation.attachments ? (
                                         <p>
                                             {conversation.text}
-                                            <Card>
-                                                (conversation.attachments[0].content.title) ? (
-                                                <CardHeader
-                                                    title={conversation.attachments[0].content.title}
-                                                    subtitle={conversation.attachments[0].content.subtitle}
-                                                    actAsExpander={false}
-                                                    showExpandableButton={false}
-                                                />
-                                                ) : ''
-                                                (conversation.attachments[0].content.text) ? (
-                                                <CardText>
-                                                    {conversation.attachments[0].content.text}
-                                                </CardText> ) : ''
-                                                <CardActions>
-                                                    {conversation.attachments[0].content.buttons.map((button, buttonId) => {
-                                                        return <FlatButton key={buttonId}
-                                                                           label={button.title}
-                                                                           onTouchTap={() => this.pSBotButtonClick(button)} />
+                                        </p> ) :
+                                        ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                            // Handle card response from bot
+                                            <p>
+                                                {conversation.text}
+                                                <Card>
+                                                    (conversation.attachments[0].content.title) ? (
+                                                    <CardHeader
+                                                        title={conversation.attachments[0].content.title}
+                                                        subtitle={conversation.attachments[0].content.subtitle}
+                                                        actAsExpander={false}
+                                                        showExpandableButton={false}
+                                                    />
+                                                    ) : ''
+                                                    (conversation.attachments[0].content.text) ? (
+                                                    <CardText>
+                                                        {conversation.attachments[0].content.text}
+                                                    </CardText> ) : ''
+                                                    <CardActions>
+                                                        {conversation.attachments[0].content.buttons.map((button, buttonId) => {
+                                                            return <FlatButton key={buttonId}
+                                                                               label={button.title}
+                                                                               onTouchTap={() => this.pSBotButtonClick(button)} />
 
-                                                    })
-                                                    }
-                                                </CardActions>
-                                            </Card>
-                                        </p>) : '')
-                            }
+                                                        })
+                                                        }
+                                                    </CardActions>
+                                                </Card>
+                                            </p>) : '')
+                                }
                             </div>
+                            </Paper>
                     })}
                 <div className="Ps-Bot-Conversation-Input-Container">
                     <form>

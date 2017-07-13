@@ -3,7 +3,11 @@ import React, { Component } from 'react';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import SendIcon from 'material-ui-icons/Send';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
@@ -15,7 +19,7 @@ import 'whatwg-fetch';
 // App imports
 import './PsBot.css';
 
-const styleSheet = createStyleSheet('FullWidthGrid', theme => ({
+const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
         flexGrow: 1,
         marginTop: 30,
@@ -24,6 +28,29 @@ const styleSheet = createStyleSheet('FullWidthGrid', theme => ({
         padding: 16,
         textAlign: 'center',
         color: theme.palette.text.secondary,
+    },
+    paperHumanConversation: {
+        background: '#FFFFFF',
+        border: '1px solid #D2D1D2',
+        borderRadius: '3px',
+        float: 'right',
+        textAlign: 'right',
+        lineHeight: '20px',
+        width: '240px',
+        /** Remove after confirmation **/
+        paddingRight: '10px',
+        paddingLeft: '10px'
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    input: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+    card: {
+        maxWidth: 345,
     },
 }));
 
@@ -244,20 +271,113 @@ class PsBot extends Component {
     };
 
     render() {
-        return (
-            <div className={this.classes.root}>
+        return ( <div>
+            <div className={this.classes.root} style={psBotStyle}>
                 <Grid container gutter={24}>
                     <Grid item xs={12}>
-                        <Paper className={this.classes.paper}>xs=12</Paper>
+                        <Paper className={this.classes.paper}>Bot initialized for conversation id {this.state.conversationId}</Paper>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Paper className={this.classes.paper}>xs=12 sm=6</Paper>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Paper className={this.classes.paper}>xs=12 sm=6</Paper>
+
+                        {this.state.conversations.map((conversation, id) => {
+                            return (conversation.from.name === 'User' ?
+                                    <Grid item xs={12} sm={6} key={id}>
+                                        <Paper className={conversation.from.name === 'User' ? this.classes.paperHumanConversation : 'Ps-Bot-Conversation-Bot'}>
+                                            <div>
+                                                {
+                                                    !conversation.attachments ? (
+                                                        <p>
+                                                            {conversation.text}
+                                                        </p> ) :
+                                                        ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                            // Handle card response from bot
+                                                            <p>
+                                                                {conversation.text}
+                                                                <Card className={this.classes.card}>
+                                                                    <CardContent> {
+                                                                        (conversation.attachments[0].content.title) ? (
+                                                                            <Typography type="headline" component="h2">
+                                                                                {conversation.attachments[0].content.title}
+                                                                            </Typography>
+                                                                        ) : '' }
+                                                                        { (conversation.attachments[0].content.text) ? (
+                                                                            <Typography component="p">
+                                                                                {conversation.attachments[0].content.text}
+                                                                            </Typography> ) : '' }
+                                                                    </CardContent>
+                                                                    <CardActions>
+                                                                        {conversation.attachments[0].content.buttons.map((button, buttonId) => {
+                                                                            return <Button raised className={this.classes.button} key={buttonId}
+                                                                                           onTouchTap={() => this.pSBotButtonClick(button)} >{button.title}</Button>
+
+                                                                        })
+                                                                        }
+                                                                    </CardActions>
+                                                                </Card>
+                                                            </p>) : '')
+                                                }
+                                            </div>
+                                        </Paper>
+                                    </Grid>
+                                    :
+                                    <Grid item xs={12} sm={6}>
+                                        <Paper className={conversation.from.name === 'User' ? this.classes.paperHumanConversation : 'Ps-Bot-Conversation-Bot'}>
+                                            <div>
+                                                {
+                                                    !conversation.attachments ? (
+                                                        <p>
+                                                            {conversation.text}
+                                                        </p> ) :
+                                                        ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                            // Handle card response from bot
+                                                            <p>
+                                                                {conversation.text}
+                                                                <Card className={this.classes.card}>
+                                                                    <CardContent> {
+                                                                        (conversation.attachments[0].content.title) ? (
+                                                                            <Typography type="headline" component="h2">
+                                                                                {conversation.attachments[0].content.title}
+                                                                            </Typography>
+                                                                        ) : '' }
+                                                                        { (conversation.attachments[0].content.text) ? (
+                                                                            <Typography component="p">
+                                                                                {conversation.attachments[0].content.text}
+                                                                            </Typography> ) : '' }
+                                                                    </CardContent>
+                                                                    <CardActions>
+                                                                        {conversation.attachments[0].content.buttons.map((button, buttonId) => {
+                                                                            return <Button raised className={this.classes.button} key={buttonId}
+                                                                                           onTouchTap={() => this.pSBotButtonClick(button)} >{button.title}</Button>
+
+                                                                        })
+                                                                        }
+                                                                    </CardActions>
+                                                                </Card>
+                                                            </p>) : '')
+                                                }
+                                            </div>
+                                        </Paper>
+                                    </Grid>
+                                    )
+                        })}
+                    <Grid item xs={12} sm={12} md={12}>
+                        <div className="Ps-Bot-Conversation-Input-Container">
+                            <form>
+                                <TextField
+                                    id="human-input"
+                                    label={this.state.conversationInputText}
+                                    className={this.classes.input}
+                                    value={this.state.conversationText}
+                                    onChange={this.setConversation}
+                                />
+                                <Button fab color="primary" className={this.classes.button} onClick={this.sendConversationToBot}>
+                                    <SendIcon />
+                                </Button>
+                            </form>
+                        </div>
                     </Grid>
                 </Grid>
             </div>
+        </div>
         );
     }
 }

@@ -24,7 +24,7 @@ const paperStyle = {
 ReactDOM.render(
     <MuiThemeProvider>
         <div>
-            <Paper style={paperStyle} zDepth={1}>
+            <Paper style={paperStyle}>
                 <PsBot conversationInputText="Begin by typing a conversation.."
                        accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
                        />

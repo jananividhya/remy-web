@@ -27,8 +27,22 @@
     border-radius: 3px;
     float: right;
     text-align: right;
+    line-height: 20px;
+    width: 240px;
+    /** Remove after confirmation **/
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .Ps-Bot-Conversation-Bot {
+    background: #FFFFFF;
+    border: 1px solid #D2D1D2;
+    border-radius: 3px;
+    float: right;
     text-align: left;
+    line-height: 20px;
+    width: 240px;
+    /** Remove after confirmation **/
+    padding-right: 10px;
+    padding-left: 10px;
 }

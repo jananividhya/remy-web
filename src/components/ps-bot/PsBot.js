@@ -3,14 +3,11 @@ import React, { Component } from 'react';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Avatar from 'material-ui/Avatar';
-import TextField from 'material-ui/TextField';
-import {orange500, blue500} from 'material-ui/styles/colors';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentSend from 'material-ui/svg-icons/content/send';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
+import PropTypes from 'prop-types';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
 
 // Common imports
 import 'whatwg-fetch';
@@ -18,26 +15,23 @@ import 'whatwg-fetch';
 // App imports
 import './PsBot.css';
 
+const styleSheet = createStyleSheet('FullWidthGrid', theme => ({
+    root: {
+        flexGrow: 1,
+        marginTop: 30,
+    },
+    paper: {
+        padding: 16,
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+}));
+
 const psBotStyle = {
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10
-};
-
-const psBotConversationInputStyle = {
-    errorStyle: {
-        color: orange500,
-    },
-    underlineStyle: {
-        borderColor: orange500,
-    },
-    floatingLabelStyle: {
-        color: orange500,
-    },
-    floatingLabelFocusStyle: {
-        color: blue500,
-    }
 };
 
 /**
@@ -56,6 +50,8 @@ class PsBot extends Component {
 
     constructor(props) {
         super(props);
+
+        this.classes = props.classes;
 
         // Needed for onTouchTap
         injectTapEventPlugin();
@@ -249,66 +245,25 @@ class PsBot extends Component {
 
     render() {
         return (
-            <div style={psBotStyle}>
-                Bot initialized for conversation id {this.state.conversationId}
-                    {this.state.conversations.map((conversation, id) => {
-                        return <Paper className={conversation.from.name === 'User' ? 'Ps-Bot-Conversation-Human' : 'Ps-Bot-Conversation-Bot'} zDepth={1} key={id}>
-                            <div>
-                                <p><Avatar src="images/ok-128.jpg" /> {conversation.from.name}</p>
-                                {
-                                    !conversation.attachments ? (
-                                        <p>
-                                            {conversation.text}
-                                        </p> ) :
-                                        ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                            // Handle card response from bot
-                                            <p>
-                                                {conversation.text}
-                                                <Card>
-                                                    (conversation.attachments[0].content.title) ? (
-                                                    <CardHeader
-                                                        title={conversation.attachments[0].content.title}
-                                                        subtitle={conversation.attachments[0].content.subtitle}
-                                                        actAsExpander={false}
-                                                        showExpandableButton={false}
-                                                    />
-                                                    ) : ''
-                                                    (conversation.attachments[0].content.text) ? (
-                                                    <CardText>
-                                                        {conversation.attachments[0].content.text}
-                                                    </CardText> ) : ''
-                                                    <CardActions>
-                                                        {conversation.attachments[0].content.buttons.map((button, buttonId) => {
-                                                            return <FlatButton key={buttonId}
-                                                                               label={button.title}
-                                                                               onTouchTap={() => this.pSBotButtonClick(button)} />
-
-                                                        })
-                                                        }
-                                                    </CardActions>
-                                                </Card>
-                                            </p>) : '')
-                                }
-                            </div>
-                            </Paper>
-                    })}
-                <div className="Ps-Bot-Conversation-Input-Container">
-                    <form>
-                        <TextField
-                            floatingLabelText={this.state.conversationInputText}
-                            floatingLabelStyle={psBotConversationInputStyle.floatingLabelStyle}
-                            floatingLabelFocusStyle={psBotConversationInputStyle.floatingLabelFocusStyle}
-                            value={this.state.conversationText}
-                            onChange={this.setConversation}
-                        />
-                        <FloatingActionButton mini={true} onClick={this.sendConversationToBot}>
-                            <ContentSend />
-                        </FloatingActionButton>
-                    </form>
-                </div>
+            <div className={this.classes.root}>
+                <Grid container gutter={24}>
+                    <Grid item xs={12}>
+                        <Paper className={this.classes.paper}>xs=12</Paper>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Paper className={this.classes.paper}>xs=12 sm=6</Paper>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Paper className={this.classes.paper}>xs=12 sm=6</Paper>
+                    </Grid>
+                </Grid>
             </div>
         );
     }
 }
 
-export default PsBot;
+PsBot.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styleSheet)(PsBot);

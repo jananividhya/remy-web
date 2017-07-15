@@ -41,6 +41,18 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         paddingRight: '10px',
         paddingLeft: '10px'
     },
+    paperBotConversation: {
+        background: '#FFFFFF',
+        border: '1px solid #D2D1D2',
+        borderRadius: '3px',
+        float: 'left',
+        textAlign: 'left',
+        lineHeight: '20px',
+        width: '240px',
+        /** Remove after confirmation **/
+        paddingRight: '10px',
+        paddingLeft: '10px'
+    },
     button: {
         margin: theme.spacing.unit,
     },
@@ -279,9 +291,9 @@ class PsBot extends Component {
                     </Grid>
 
                         {this.state.conversations.map((conversation, id) => {
-                            return (conversation.from.name === 'User' ?
-                                    <Grid item xs={12} sm={6} key={id}>
-                                        <Paper className={conversation.from.name === 'User' ? this.classes.paperHumanConversation : 'Ps-Bot-Conversation-Bot'}>
+                            return (conversation.from.name !== 'User' ? (
+                                    <Grid item xs={12} sm={12} key={id}>
+                                        <Paper className={this.classes.paperBotConversation}>
                                             <div>
                                                 {
                                                     !conversation.attachments ? (
@@ -289,8 +301,7 @@ class PsBot extends Component {
                                                             {conversation.text}
                                                         </p> ) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                            // Handle card response from bot
-                                                            <p>
+                                                            <div>
                                                                 {conversation.text}
                                                                 <Card className={this.classes.card}>
                                                                     <CardContent> {
@@ -313,14 +324,14 @@ class PsBot extends Component {
                                                                         }
                                                                     </CardActions>
                                                                 </Card>
-                                                            </p>) : '')
+                                                            </div>) : '')
                                                 }
                                             </div>
                                         </Paper>
-                                    </Grid>
+                                    </Grid>)
                                     :
-                                    <Grid item xs={12} sm={6}>
-                                        <Paper className={conversation.from.name === 'User' ? this.classes.paperHumanConversation : 'Ps-Bot-Conversation-Bot'}>
+                                    <Grid item xs={12} sm={12} key={id}>
+                                        <Paper className={this.classes.paperHumanConversation}>
                                             <div>
                                                 {
                                                     !conversation.attachments ? (
@@ -329,7 +340,7 @@ class PsBot extends Component {
                                                         </p> ) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
                                                             // Handle card response from bot
-                                                            <p>
+                                                            <div>
                                                                 {conversation.text}
                                                                 <Card className={this.classes.card}>
                                                                     <CardContent> {
@@ -352,7 +363,7 @@ class PsBot extends Component {
                                                                         }
                                                                     </CardActions>
                                                                 </Card>
-                                                            </p>) : '')
+                                                            </div>) : '')
                                                 }
                                             </div>
                                         </Paper>

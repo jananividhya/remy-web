@@ -254,7 +254,7 @@ class PsBot extends Component {
             conversationId: this.state.conversationId,
             conversationText: event.target.value,
             conversations: this.state.conversations,
-            conversationInputText: 'Conversation here..'
+            conversationInputText: 'Say Something'
         });
     };
 

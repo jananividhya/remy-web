@@ -8,7 +8,7 @@ function createWindow() {
     win = new BrowserWindow({width: 642, height: 630});
 
     // Specify entry point
-    win.loadURL('http://localhost:3000');
+    win.loadURL('https://public-ps-bot.herokuapp.com/');
 
     // Show dev tools
     // Remove this line before distributing

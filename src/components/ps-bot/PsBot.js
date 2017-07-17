@@ -1,42 +1,83 @@
 // React imports
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
-import {orange500, blue500} from 'material-ui/styles/colors';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
+import SendIcon from 'material-ui-icons/Send';
+import {CardActions, CardContent, CardMedia} from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
+import Paper from 'material-ui/Paper';
+import PropTypes from 'prop-types';
+import {withStyles, createStyleSheet} from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
 
 // Common imports
 import 'whatwg-fetch';
+import isURL from 'validator/lib/isURL';
 
 // App imports
 import './PsBot.css';
+
+const styleSheet = createStyleSheet('PsBot', theme => ({
+    root: {
+        flexGrow: 1,
+        marginTop: 30,
+        height: 100
+    },
+    paper: {
+        padding: 16,
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    paperHumanConversation: {
+        background: '#FFFFFF',
+        color: '#9B9B9B',
+        border: '1px solid #D2D1D2',
+        borderRadius: '3px',
+        fontSize: '14px',
+        float: 'right',
+        textAlign: 'right',
+        lineHeight: '20px',
+        width: '240px',
+        /** Remove after confirmation **/
+        paddingRight: '10px',
+        paddingLeft: '10px'
+    },
+    paperBotConversation: {
+        background: 'rgba(150, 101, 171, 0.87)',
+        color: '#FFFFFF',
+        border: '1px solid #D2D1D2',
+        borderRadius: '3px',
+        fontSize: '14px',
+        float: 'left',
+        textAlign: 'left',
+        lineHeight: '20px',
+        letterSpacing: '0px',
+        width: '240px',
+        /** Remove after confirmation **/
+        paddingRight: '10px',
+        paddingLeft: '10px'
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    input: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 515
+    },
+    card: {
+        maxWidth: 345,
+    },
+}));
 
 const psBotStyle = {
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10
-};
-
-const psBotConversationInputStyle = {
-    errorStyle: {
-        color: orange500,
-    },
-    underlineStyle: {
-        borderColor: orange500,
-    },
-    floatingLabelStyle: {
-        color: orange500,
-    },
-    floatingLabelFocusStyle: {
-        color: blue500,
-    }
 };
 
 /**
@@ -55,6 +96,8 @@ class PsBot extends Component {
 
     constructor(props) {
         super(props);
+
+        this.classes = props.classes;
 
         // Needed for onTouchTap
         injectTapEventPlugin();
@@ -100,24 +143,25 @@ class PsBot extends Component {
             .then((response) => {
                 return response.json();
             }).then((json) => {
-                let stateObj = {
-                    conversationId: json.conversationId
-                };
+            let stateObj = {
+                conversationId: json.conversationId
+            };
 
-                this.setState(stateObj);
-            }).catch((ex) => {
-                console.log('Exception Occurred while parsing json ', ex);
-            });
+            this.setState(stateObj);
+        }).catch((ex) => {
+            console.log('Exception Occurred while parsing json ', ex);
+        });
     };
 
 
     /**
      * @method sendConversationToBot()
      * @methodOf PsBot#sendConversationToBot
+     * @param {Object} event Form Submit Event
      * @param {String} conversationText Conversation being sent to bot
      * @description Sends the user conversation to pS Bot
      */
-    sendConversationToBot = (conversationText) => {
+    sendConversationToBot = (event, conversationText) => {
         let conversation = {
             "type": "message",
             "text": this.state.conversationText || conversationText,
@@ -152,10 +196,36 @@ class PsBot extends Component {
                 conversationInputText: this.state.conversationInputText
             });
 
+            conversations.push({
+                "type": "message",
+                "text": "Thinking...",
+                "from": {
+                    "id": "ps-public-bot",
+                    "name": "bot"
+                },
+                "locale": "en-US",
+                "textFormat": "plain",
+                "timestamp": new Date(),
+                "channelData": {
+                    "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
+                },
+                "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+            });
+
+            this.setState({
+                conversationId: this.state.conversationId,
+                conversationText: '',
+                conversations: conversations,
+                conversationHistory: this.state.conversationHistory,
+                conversationInputText: this.state.conversationInputText
+            });
+
             let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 5000);
         }).catch((ex) => {
             console.log('Parsing failed while sending conversation to bot ', ex);
         });
+
+        if (event) event.preventDefault();
     };
 
     /**
@@ -166,6 +236,11 @@ class PsBot extends Component {
      * @param fetchBotConversationsTimer
      */
     fetchBotConversations = (fetchBotConversationsTimer) => {
+        let conversations = this.state.conversations;
+
+        // Remove thinking before pushing the content
+        conversations.splice(-1, 1);
+
         let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
             {method: 'GET', headers: this.headers});
 
@@ -208,7 +283,7 @@ class PsBot extends Component {
             conversationId: this.state.conversationId,
             conversationText: event.target.value,
             conversations: this.state.conversations,
-            conversationInputText: 'Conversation here..'
+            conversationInputText: 'Say Something'
         });
     };
 
@@ -216,25 +291,19 @@ class PsBot extends Component {
      * @method isURL
      * @methodOf PsBot#isURL
      * @description Checks if a given string is an url or not
-     * Need to replace this with `validator` npm module to validate url's and email's
      * @param str
      * @returns {boolean}
      */
     isURL = (str) => {
-    let pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-        return pattern.test(str);
+        return isURL(str);
     };
 
     /**
      * @method pSBotButtonClick
      * @methodOf PsBot#pSBotButtonClick
      * @description Sends the conversation to the bot based on the value of the button being clicked
-     * @param button Button object passed from onClick
+     * @param {Object} event Button Click Event
+     * @param {Object} button Button object passed from onClick
      */
     pSBotButtonClick = (button) => {
         const buttonValue = button.value;
@@ -242,71 +311,107 @@ class PsBot extends Component {
         if (this.isURL(buttonValue)) {
             window.open(buttonValue);
         } else {
-            this.sendConversationToBot(buttonValue);
+            this.sendConversationToBot(null, buttonValue);
         }
     };
 
     render() {
-        return (
-            <div style={psBotStyle}>
-                Bot initialized for conversation id {this.state.conversationId}
-                    {this.state.conversations.map((conversation, id) => {
-                        return <div key={id}
-                            className={conversation.from.name === 'User' ? 'Ps-Bot-Conversation-Human' : 'Ps-Bot-Conversation-Bot'}>
-                            <p><Avatar src="images/ok-128.jpg" /> {conversation.from.name}</p>
-                            {
-                                !conversation.attachments ? (
-                                    <p>
-                                        {conversation.text}
-                                    </p> ) :
-                                    ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                    // Handle card response from bot
-                                        <p>
-                                            {conversation.text}
-                                            <Card>
-                                                (conversation.attachments[0].content.title) ? (
-                                                <CardHeader
-                                                    title={conversation.attachments[0].content.title}
-                                                    subtitle={conversation.attachments[0].content.subtitle}
-                                                    actAsExpander={false}
-                                                    showExpandableButton={false}
-                                                />
-                                                ) : ''
-                                                (conversation.attachments[0].content.text) ? (
-                                                <CardText>
-                                                    {conversation.attachments[0].content.text}
-                                                </CardText> ) : ''
-                                                <CardActions>
-                                                    {conversation.attachments[0].content.buttons.map((button, buttonId) => {
-                                                        return <FlatButton key={buttonId}
-                                                                           label={button.title}
-                                                                           onTouchTap={() => this.pSBotButtonClick(button)} />
+        return ( <div>
+                <div className={this.classes.root} style={psBotStyle}>
+                    <Grid container gutter={24}>
+                        {/*Enable only in development*/}
+                        {/*<Grid item xs={12}>
+                            <Paper className={this.classes.paper}>Bot initialized for conversation
+                                id {this.state.conversationId}</Paper>
+                        </Grid>*/}
 
-                                                    })
-                                                    }
-                                                </CardActions>
-                                            </Card>
-                                        </p>) : '')
-                            }
+                        {this.state.conversations.map((conversation, id) => {
+                            return (conversation.from.name !== 'User' ? (
+                                    <Grid item xs={12} sm={12} key={id}>
+                                        <Paper className={this.classes.paperBotConversation}>
+                                            <div>
+                                                {
+                                                    !conversation.attachments ? (
+                                                        <p>
+                                                            {conversation.text}
+                                                        </p> ) :
+                                                        ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                            <p>
+                                                                <CardContent> {
+                                                                    (conversation.attachments[0].content.title) ? (
+                                                                        <Typography type="headline" component="h2">
+                                                                            {conversation.attachments[0].content.title}
+                                                                        </Typography>
+                                                                    ) : conversation.text }
+                                                                    { (conversation.attachments[0].content.text) ? (
+                                                                        <Typography component="p">
+                                                                            {conversation.attachments[0].content.text}
+                                                                        </Typography> ) : '' }
+                                                                </CardContent>
+                                                                <CardActions>
+                                                                    {conversation.attachments[0].content.buttons.map((button, buttonId) => {
+                                                                        return <Button raised
+                                                                                       className={this.classes.button}
+                                                                                       key={buttonId}
+                                                                                       onTouchTap={() => this.pSBotButtonClick(button)}>{button.title}</Button>
+
+                                                                    })
+                                                                    }
+                                                                </CardActions>
+                                                            </p>) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
+                                                            <p>
+                                                                <CardMedia>
+                                                                    <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" />
+                                                                </CardMedia>
+                                                            </p>
+                                                        ) : (
+                                                            <p>
+                                                                {conversation.text}
+                                                            </p>
+                                                        )))
+                                                }
+                                            </div>
+                                        </Paper>
+                                    </Grid>)
+                                    :
+                                    <Grid item xs={12} sm={12} key={id}>
+                                        <Paper className={this.classes.paperHumanConversation}>
+                                            <p>
+                                                {conversation.text}
+                                            </p>
+                                        </Paper>
+                                    </Grid>
+                            )
+                        })}
+                    </Grid>
+                </div>
+                <div>
+                    <Grid container>
+                        <Grid item xs={12} sm={12} md={12}>
+                            <div className="Ps-Bot-Conversation-Input-Container">
+                                <form onSubmit={this.sendConversationToBot}>
+                                    <TextField
+                                        id="human-input"
+                                        label={this.state.conversationInputText}
+                                        className={this.classes.input}
+                                        value={this.state.conversationText}
+                                        onChange={this.setConversation}
+                                    />
+                                    <Button fab color="primary" className={this.classes.button} type="submit">
+                                        <SendIcon />
+                                    </Button>
+                                </form>
                             </div>
-                    })}
-                <div className="Ps-Bot-Conversation-Input-Container">
-                    <form>
-                        <TextField
-                            floatingLabelText={this.state.conversationInputText}
-                            floatingLabelStyle={psBotConversationInputStyle.floatingLabelStyle}
-                            floatingLabelFocusStyle={psBotConversationInputStyle.floatingLabelFocusStyle}
-                            value={this.state.conversationText}
-                            onChange={this.setConversation}
-                        />
-                        <FloatingActionButton mini={true} onClick={this.sendConversationToBot}>
-                            <ContentSend />
-                        </FloatingActionButton>
-                    </form>
+                        </Grid>
+                    </Grid>
                 </div>
             </div>
         );
     }
 }
 
-export default PsBot;
+PsBot.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styleSheet)(PsBot);

@@ -196,6 +196,30 @@ class PsBot extends Component {
                 conversationInputText: this.state.conversationInputText
             });
 
+            conversations.push({
+                "type": "message",
+                "text": "Thinking...",
+                "from": {
+                    "id": "ps-public-bot",
+                    "name": "bot"
+                },
+                "locale": "en-US",
+                "textFormat": "plain",
+                "timestamp": new Date(),
+                "channelData": {
+                    "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
+                },
+                "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+            });
+
+            this.setState({
+                conversationId: this.state.conversationId,
+                conversationText: '',
+                conversations: conversations,
+                conversationHistory: this.state.conversationHistory,
+                conversationInputText: this.state.conversationInputText
+            });
+
             let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 5000);
         }).catch((ex) => {
             console.log('Parsing failed while sending conversation to bot ', ex);
@@ -212,6 +236,11 @@ class PsBot extends Component {
      * @param fetchBotConversationsTimer
      */
     fetchBotConversations = (fetchBotConversationsTimer) => {
+        let conversations = this.state.conversations;
+
+        // Remove thinking before pushing the content
+        conversations.splice(-1, 1);
+
         let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
             {method: 'GET', headers: this.headers});
 
@@ -335,7 +364,11 @@ class PsBot extends Component {
                                                                     <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" />
                                                                 </CardMedia>
                                                             </p>
-                                                        ) : ''))
+                                                        ) : (
+                                                            <p>
+                                                                {conversation.text}
+                                                            </p>
+                                                        )))
                                                 }
                                             </div>
                                         </Paper>

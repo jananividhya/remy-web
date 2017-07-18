@@ -71,6 +71,10 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     card: {
         maxWidth: 345,
     },
+    responseImage: {
+        height: '140px',
+        width: '95px'
+    },
 }));
 
 const psBotStyle = {
@@ -368,7 +372,7 @@ class PsBot extends Component {
                                                             </p>) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
                                                             <p>
                                                                 <CardMedia>
-                                                                    <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" />
+                                                                    <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" className={this.classes.responseImage} />
                                                                 </CardMedia>
                                                             </p>
                                                         ) : ''))

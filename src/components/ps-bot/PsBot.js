@@ -205,6 +205,8 @@ class PsBot extends Component {
                 },
                 "locale": "en-US",
                 "textFormat": "plain",
+                "contentType": "typing",
+                "img": "sending.gif",
                 "timestamp": new Date(),
                 "channelData": {
                     "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
@@ -332,9 +334,14 @@ class PsBot extends Component {
                                             <div>
                                                 {
                                                     !conversation.attachments ? (
+                                                    (conversation.contentType === 'typing') ?
+                                                        (
+                                                            <p><img src={conversation.img} alt="Thinking.." /></p>
+                                                        )
+                                                        : (
                                                         <p>
                                                             {conversation.text}
-                                                        </p> ) :
+                                                        </p> )) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
                                                             <p>
                                                                 <CardContent> {
@@ -364,11 +371,7 @@ class PsBot extends Component {
                                                                     <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" />
                                                                 </CardMedia>
                                                             </p>
-                                                        ) : (
-                                                            <p>
-                                                                {conversation.text}
-                                                            </p>
-                                                        )))
+                                                        ) : ''))
                                                 }
                                             </div>
                                         </Paper>

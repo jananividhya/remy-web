@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "PurpleSlate App",
+  "name": "PurpleSlate Bot",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "arrow.png",
       "sizes": "192x192",
       "type": "image/png"
     }

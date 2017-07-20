@@ -23,31 +23,41 @@ import './PsBot.css';
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
         flexGrow: 1,
+        fontFamily: 'Lato, sans-serif',
+        fontSize: '14px',
+        color: '#9B9B9B',
         marginTop: 30,
-        height: 100
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 10,
+        height: 100,
     },
     paper: {
         padding: 16,
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-    paperHumanConversation: {
+    paperBotConversation: {
         background: '#FFFFFF',
         color: '#9B9B9B',
+        boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
         borderRadius: '3px',
         fontSize: '14px',
         float: 'right',
         textAlign: 'right',
         lineHeight: '20px',
-        width: '240px',
         /** Remove after confirmation **/
         paddingRight: '10px',
-        paddingLeft: '10px'
+        paddingLeft: '10px',
+        position: 'relative',
+        top: '50%',
+        transform: 'translateY(-40%)',
     },
-    paperBotConversation: {
+    paperHumanConversation: {
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
+        boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
         borderRadius: '3px',
         fontSize: '14px',
@@ -55,10 +65,18 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         textAlign: 'left',
         lineHeight: '20px',
         letterSpacing: '0px',
-        width: '240px',
         /** Remove after confirmation **/
         paddingRight: '10px',
-        paddingLeft: '10px'
+        paddingLeft: '10px',
+        position: 'relative',
+        top: '50%',
+        transform: 'translateY(-40%)',
+    },
+    buttonResponse: {
+        background: 'rgba(150, 101, 171, 0.87)',
+        boxShadow: '0px 0px',
+        color: '#FFFFFF',
+        fontFamily: 'Lato, sans-serif !important',
     },
     button: {
         margin: theme.spacing.unit,
@@ -75,14 +93,11 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         height: '140px',
         width: '95px'
     },
+    emojis: {
+        border: '0px',
+        height: '32px'
+    },
 }));
-
-const psBotStyle = {
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10
-};
 
 /**
  * @todo make the class modular
@@ -210,7 +225,7 @@ class PsBot extends Component {
                 "locale": "en-US",
                 "textFormat": "plain",
                 "contentType": "typing",
-                "img": "sending.gif",
+                "img": "thinking.gif",
                 "timestamp": new Date(),
                 "channelData": {
                     "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
@@ -323,13 +338,13 @@ class PsBot extends Component {
 
     render() {
         return ( <div>
-                <div className={this.classes.root} style={psBotStyle}>
+                <div className={this.classes.root}>
                     <Grid container gutter={24}>
                         {/*Enable only in development*/}
-                        {/*<Grid item xs={12}>
+                        <Grid item xs={12}>
                             <Paper className={this.classes.paper}>Bot initialized for conversation
                                 id {this.state.conversationId}</Paper>
-                        </Grid>*/}
+                        </Grid>
 
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ? (
@@ -340,7 +355,7 @@ class PsBot extends Component {
                                                     !conversation.attachments ? (
                                                     (conversation.contentType === 'typing') ?
                                                         (
-                                                            <p><img src={conversation.img} alt="Thinking.." /></p>
+                                                            <p className={this.classes.emojis}><img src={conversation.img} alt="thinking aloud.." /></p>
                                                         )
                                                         : (
                                                         <p>
@@ -362,7 +377,7 @@ class PsBot extends Component {
                                                                 <CardActions>
                                                                     {conversation.attachments[0].content.buttons.map((button, buttonId) => {
                                                                         return <Button raised
-                                                                                       className={this.classes.button}
+                                                                                       className={this.classes.buttonResponse}
                                                                                        key={buttonId}
                                                                                        onTouchTap={() => this.pSBotButtonClick(button)}>{button.title}</Button>
 

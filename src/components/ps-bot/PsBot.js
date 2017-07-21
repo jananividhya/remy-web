@@ -53,6 +53,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         position: 'relative',
         top: '50%',
         transform: 'translateY(-40%)',
+        maxWidth: '450px',
     },
     paperHumanConversation: {
         background: 'rgba(150, 101, 171, 0.87)',
@@ -77,9 +78,17 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         boxShadow: '0px 0px',
         color: '#FFFFFF',
         fontFamily: 'Lato, sans-serif !important',
+        minWidth: '120px',
     },
-    button: {
+    psConversationButton: {
         margin: theme.spacing.unit,
+        background: 'rgba(150, 101, 171, 0.87)',
+    },
+    nextLine: {
+        wordWrap: 'break-word',
+        clear: 'both',
+        position: 'relative',
+        overflowY: 'scroll',
     },
     input: {
         marginLeft: theme.spacing.unit,
@@ -90,12 +99,20 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         maxWidth: 345,
     },
     responseImage: {
-        height: '140px',
-        width: '95px'
+        height: '240px',
+        width: '240px'
     },
     emojis: {
         border: '0px',
-        height: '32px'
+        height: '24px'
+    },
+    leftAlignedText: {
+        float: 'left !important',
+        textAlign: 'left !important'
+    },
+    psTextColor: {
+        fontFamily: 'Lato, sans-serif',
+        color: '#9B9B9B',
     },
 }));
 
@@ -363,23 +380,27 @@ class PsBot extends Component {
                                                         </p> )) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
                                                             <p>
-                                                                <CardContent> {
+                                                                <CardContent className={this.classes.leftAlignedText}> {
                                                                     (conversation.attachments[0].content.title) ? (
-                                                                        <Typography type="headline" component="h2">
+                                                                        <Typography type="headline" component="h2" className={this.classes.psTextColor}>
                                                                             {conversation.attachments[0].content.title}
                                                                         </Typography>
                                                                     ) : conversation.text }
                                                                     { (conversation.attachments[0].content.text) ? (
-                                                                        <Typography component="p">
+                                                                        <Typography className={this.classes.psTextColor}>
                                                                             {conversation.attachments[0].content.text}
                                                                         </Typography> ) : '' }
                                                                 </CardContent>
-                                                                <CardActions>
+                                                                <CardActions className={this.classes.nextLine}>
                                                                     {conversation.attachments[0].content.buttons.map((button, buttonId) => {
-                                                                        return <Button raised
-                                                                                       className={this.classes.buttonResponse}
-                                                                                       key={buttonId}
-                                                                                       onTouchTap={() => this.pSBotButtonClick(button)}>{button.title}</Button>
+                                                                        return <div>
+                                                                            <Button raised
+                                                                                    className={this.classes.buttonResponse}
+                                                                                    key={buttonId}
+                                                                                    onTouchTap={() => this.pSBotButtonClick(button)}>{(button.title.length > 10) ?
+                                                                                (button.title.substring(0, 8) + '..')
+                                                                                : button.title}</Button>
+                                                                            </div>
 
                                                                     })
                                                                     }
@@ -390,7 +411,7 @@ class PsBot extends Component {
                                                                     <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" className={this.classes.responseImage} />
                                                                 </CardMedia>
                                                             </p>
-                                                        ) : ''))
+                                                        ) : conversation.text))
                                                 }
                                             </div>
                                         </Paper>
@@ -419,7 +440,7 @@ class PsBot extends Component {
                                         value={this.state.conversationText}
                                         onChange={this.setConversation}
                                     />
-                                    <Button fab color="primary" className={this.classes.button} type="submit">
+                                    <Button fab color="primary" className={this.classes.psConversationButton} type="submit">
                                         <SendIcon />
                                     </Button>
                                 </form>

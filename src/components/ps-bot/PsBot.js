@@ -1,5 +1,6 @@
 // React imports
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -159,6 +160,18 @@ class PsBot extends Component {
 
         this.initConversation(this.directLineBaseUrl);
     }
+
+    /**
+     * @override
+     * @method componentDidUpdate
+     * @methodOf Component
+     */
+    componentDidUpdate = () => {
+        const node = ReactDOM.findDOMNode(this.messagesEnd);
+        if (node) {
+            node.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
     /**
      * @method initConversation
@@ -365,7 +378,7 @@ class PsBot extends Component {
 
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ? (
-                                    <Grid item xs={12} sm={12} key={id}>
+                                    <Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                         <Paper className={this.classes.paperBotConversation}>
                                             <div>
                                                 {
@@ -393,10 +406,9 @@ class PsBot extends Component {
                                                                 </CardContent>
                                                                 <CardActions className={this.classes.nextLine}>
                                                                     {conversation.attachments[0].content.buttons.map((button, buttonId) => {
-                                                                        return <div>
+                                                                        return <div key={buttonId}>
                                                                             <Button raised
                                                                                     className={this.classes.buttonResponse}
-                                                                                    key={buttonId}
                                                                                     onTouchTap={() => this.pSBotButtonClick(button)}>{(button.title.length > 10) ?
                                                                                 (button.title.substring(0, 8) + '..')
                                                                                 : button.title}</Button>

@@ -36,6 +36,8 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     paper: {
         padding: 16,
         textAlign: 'center',
+        boxShadow: '0px 0px',
+        border: '1px solid #D2D1D2',
         color: theme.palette.text.secondary,
     },
     paperBotConversation: {
@@ -104,8 +106,8 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         width: '240px'
     },
     emojis: {
-        border: '0px',
-        height: '24px'
+        width: '36px',
+        height: '36px'
     },
     leftAlignedText: {
         float: 'left !important',
@@ -114,6 +116,13 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
         color: '#9B9B9B',
+    },
+    psBotThinking: {
+        background: '#FFFFFF',
+        float: 'right',
+        position: 'relative',
+        transform: 'translateY(-40%)',
+        boxShadow: '0px 0px',
     },
 }));
 
@@ -371,21 +380,21 @@ class PsBot extends Component {
                 <div className={this.classes.root}>
                     <Grid container gutter={24}>
                         {/*Enable only in development*/}
-                        <Grid item xs={12}>
+                        {/*<Grid item xs={12}>
                             <Paper className={this.classes.paper}>Bot initialized for conversation
                                 id {this.state.conversationId}</Paper>
-                        </Grid>
+                        </Grid>*/}
 
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ? (
                                     <Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
-                                        <Paper className={this.classes.paperBotConversation}>
+                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : this.classes.paperBotConversation}>
                                             <div>
                                                 {
                                                     !conversation.attachments ? (
                                                     (conversation.contentType === 'typing') ?
                                                         (
-                                                            <p className={this.classes.emojis}><img src={conversation.img} alt="thinking aloud.." /></p>
+                                                            <p><img src={conversation.img} alt="thinking aloud.." className={this.classes.emojis} /></p>
                                                         )
                                                         : (
                                                         <p>

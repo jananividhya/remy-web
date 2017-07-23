@@ -18,7 +18,9 @@ const paperStyle = {
     width: 600,
     margin: 20,
     display: 'inline-block',
-    overflow: 'scroll'
+    overflow: 'scroll',
+    boxShadow: '0px 0px',
+    border: '1px solid #D2D1D2',
 };
 
 ReactDOM.render(

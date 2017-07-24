@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Lato:300');
 
 .Ps-Bot {
-    font-family: Lato-Regular;
+    font-family: Lato, sans-serif;
     font-size: 14px;
     color: #9B9B9B;
     letter-spacing: 0;

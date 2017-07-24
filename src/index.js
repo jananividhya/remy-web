@@ -7,6 +7,9 @@ import './index.css';
 import Paper from 'material-ui/Paper';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+// Common Imports
+import {IntlProvider} from 'react-intl';
+
 // App imports
 import PsBot from './components/ps-bot/PsBot';
 
@@ -18,18 +21,22 @@ const paperStyle = {
     width: 600,
     margin: 20,
     display: 'inline-block',
-    overflow: 'scroll'
+    overflow: 'scroll',
+    boxShadow: '0px 0px',
+    border: '1px solid #D2D1D2',
 };
 
 ReactDOM.render(
-    <MuiThemeProvider>
-        <div>
-            <Paper style={paperStyle} zDepth={1}>
-                <PsBot conversationInputText="Begin by typing a conversation.."
-                       accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
-                       />
-            </Paper>
-        </div>
-    </MuiThemeProvider>,
+    <IntlProvider locale="en">
+        <MuiThemeProvider>
+            <div>
+                <Paper style={paperStyle}>
+                    <PsBot conversationInputText="Begin by typing a conversation.."
+                           accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
+                           />
+                </Paper>
+            </div>
+        </MuiThemeProvider>
+    </IntlProvider>,
     document.getElementById('root'));
 registerServiceWorker();

@@ -20,7 +20,8 @@ import isURL from 'validator/lib/isURL';
 
 // App imports
 import './PsBot.css';
-import {FormattedRelative, FormattedTime} from 'react-intl';
+import PsBotThinking from './PsBotThinking';
+import {FormattedTime} from 'react-intl';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -394,6 +395,7 @@ class PsBot extends Component {
      * @param {Object} button Button object passed from onClick
      */
     pSBotButtonClick = (button) => {
+        console.log('button ', button);
         const buttonValue = button.value;
 
         if (this.isURL(buttonValue)) {
@@ -422,7 +424,7 @@ class PsBot extends Component {
                                                     !conversation.attachments ? (
                                                     (conversation.contentType === 'typing') ?
                                                         (
-                                                            <p><img src={conversation.img} alt="thinking aloud.." className={this.classes.emojis} /></p>
+                                                            <PsBotThinking thinkingImg={conversation.img} />
                                                         )
                                                         : (
                                                         <p>
@@ -464,7 +466,8 @@ class PsBot extends Component {
                                                 }
                                             </div>
                                         </Paper>
-                                        {(this.state.conversations.length === id + 1) ? <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid> : ''}
+                                        <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid>
+                                        {/*{(this.state.conversations.length === id + 1) ? <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid> : ''}*/}
                                     </Grid>)
                                     :
                                     <Grid item xs={12} sm={12} key={id}>

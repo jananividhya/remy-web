@@ -43,11 +43,11 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         color: theme.palette.text.secondary,
     },
     paperBotConversation: {
-        background: '#FFFFFF',
-        color: '#9B9B9B',
+        background: '#15D3DC',
+        color: '#F3F6F8',
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
-        borderRadius: '35px',
+        borderRadius: '15px',
         fontSize: '14px',
         float: 'right',
         textAlign: 'right',
@@ -58,11 +58,11 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         maxWidth: '450px',
     },
     paperHumanConversation: {
-        background: 'rgba(150, 101, 171, 0.87)',
-        color: '#FFFFFF',
+        //background: 'rgba(150, 101, 171, 0.87)',
+        color: '#7F7979',
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
-        borderRadius: '35px',
+        borderRadius: '15px',
         fontSize: '14px',
         float: 'left',
         textAlign: 'left',
@@ -466,9 +466,8 @@ class PsBot extends Component {
                                                 }
                                             </div>
                                         </Paper>
-                                        <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid>
-                                        {/*{(this.state.conversations.length === id + 1) ? <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid> : ''}*/}
-                                    </Grid>)
+                                    </Grid>
+                                    {{(this.state.conversations.length === id + 1) ? <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid> : ''}})
                                     :
                                     <Grid item xs={12} sm={12} key={id}>
                                         <Paper className={this.classes.paperHumanConversation}>

@@ -24,6 +24,7 @@ const paperStyle = {
     overflow: 'scroll',
     boxShadow: '0px 0px',
     border: '1px solid #D2D1D2',
+    background: '#F3F6F8',
 };
 
 ReactDOM.render(

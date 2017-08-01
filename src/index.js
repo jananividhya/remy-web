@@ -31,7 +31,7 @@ ReactDOM.render(
         <MuiThemeProvider>
             <div>
                 <Paper style={paperStyle}>
-                    <PsBot conversationInputText="Begin by typing a conversation.."
+                    <PsBot conversationInputText="Say Something.."
                            accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
                            />
                 </Paper>

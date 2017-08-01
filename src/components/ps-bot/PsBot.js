@@ -43,8 +43,8 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         color: theme.palette.text.secondary,
     },
     paperBotConversation: {
-        background: '#15D3DC',
-        color: '#F3F6F8',
+        background: '#FFFFFF',
+        color: '#9B9B9B',
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
         borderRadius: '15px',
@@ -58,8 +58,8 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         maxWidth: '450px',
     },
     paperHumanConversation: {
-        //background: 'rgba(150, 101, 171, 0.87)',
-        color: '#7F7979',
+        background: 'rgba(150, 101, 171, 0.87)',
+        color: '#FFFFFF',
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
         borderRadius: '15px',
@@ -130,6 +130,10 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     cursor: {
         position:'absolute',
         marginLeft:'50px',
+    },
+    conversationText: {
+        marginTop: '-8px',
+        marginBottom: '-8px',
     },
 }));
 
@@ -419,7 +423,7 @@ class PsBot extends Component {
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                         <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : ((conversation.attachments && conversation.attachments[0].content && !conversation.attachments[0].content.title && conversation.attachments[0].content.buttons) ? this.classes.psBotThinking :this.classes.paperBotConversation)}>
-                                            <div>
+                                            <div className={this.classes.conversationText}>
                                                 {
                                                     !conversation.attachments ? (
                                                     (conversation.contentType === 'typing') ?
@@ -466,16 +470,19 @@ class PsBot extends Component {
                                                 }
                                             </div>
                                         </Paper>
+                                            {(this.state.conversations.length === id + 1) ? <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid> : ''}
                                     </Grid>
-                                    {{(this.state.conversations.length === id + 1) ? <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid> : ''}})
+                                  )
                                     :
-                                    <Grid item xs={12} sm={12} key={id}>
+                                    (<Grid item xs={12} sm={12} key={id}>
                                         <Paper className={this.classes.paperHumanConversation}>
-                                            <p>
-                                                {conversation.text}
-                                            </p>
+                                            <div className={this.classes.conversationText}>
+                                                <p>
+                                                    {conversation.text}
+                                                </p>
+                                            </div>
                                         </Paper>
-                                    </Grid>
+                                    </Grid>)
                             )
                         })}
                     </Grid>

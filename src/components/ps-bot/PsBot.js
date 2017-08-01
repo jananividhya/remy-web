@@ -17,11 +17,12 @@ import Grid from 'material-ui/Grid';
 // Common imports
 import 'whatwg-fetch';
 import isURL from 'validator/lib/isURL';
+import {FormattedTime} from 'react-intl';
 
 // App imports
 import './PsBot.css';
 import PsBotThinking from './PsBotThinking';
-import {FormattedTime} from 'react-intl';
+import PsHumanConversation from './PsHumanConversation';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -56,21 +57,6 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         paddingLeft: '10px',
         position: 'relative',
         maxWidth: '450px',
-    },
-    paperHumanConversation: {
-        background: 'rgba(150, 101, 171, 0.87)',
-        color: '#FFFFFF',
-        boxShadow: '0px 0px',
-        border: '1px solid #D2D1D2',
-        borderRadius: '15px',
-        fontSize: '14px',
-        float: 'left',
-        textAlign: 'left',
-        letterSpacing: '0px',
-        /** Remove after confirmation **/
-        paddingRight: '10px',
-        paddingLeft: '10px',
-        position: 'relative',
     },
     buttonResponse: {
         background: 'rgba(150, 101, 171, 0.87)',
@@ -413,12 +399,6 @@ class PsBot extends Component {
         return ( <div>
                 <div className={this.classes.root}>
                     <Grid container gutter={8}>
-                        {/*Enable only in development*/}
-                        {/*<Grid item xs={12}>
-                            <Paper className={this.classes.paper}>Bot initialized for conversation
-                                id {this.state.conversationId}</Paper>
-                        </Grid>*/}
-
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
@@ -474,15 +454,7 @@ class PsBot extends Component {
                                     </Grid>
                                   )
                                     :
-                                    (<Grid item xs={12} sm={12} key={id}>
-                                        <Paper className={this.classes.paperHumanConversation}>
-                                            <div className={this.classes.conversationText}>
-                                                <p>
-                                                    {conversation.text}
-                                                </p>
-                                            </div>
-                                        </Paper>
-                                    </Grid>)
+                                    (<PsHumanConversation conversationText={conversation.text} key={id} />)
                             )
                         })}
                     </Grid>

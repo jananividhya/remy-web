@@ -8,9 +8,17 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import SendIcon from 'material-ui-icons/Send';
 import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import ShareIcon from 'material-ui-icons/Share';
+import ThumbUpIcon from 'material-ui-icons/ThumbUp';
+import ChatIcon from 'material-ui-icons/Chat';
+import MenuIcon from 'material-ui-icons/Menu';
 
 // Common imports
 import 'whatwg-fetch';
@@ -18,6 +26,7 @@ import {FormattedTime} from 'react-intl';
 
 // App imports
 import './PsBot.css';
+import PsBotNavbar from './PsBotNavbar';
 import PsBotThinking from './PsBotThinking';
 import PsHumanConversation from './PsHumanConversation';
 import PsBotCard from './PsBotCard';
@@ -34,7 +43,10 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10,
-        height: 100,
+        height: 330,
+    },
+    conversationContainer: {
+        marginTop: 10,
     },
     paperBotConversation: {
         background: '#FFFFFF',
@@ -332,7 +344,8 @@ class PsBot extends Component {
     render() {
         return ( <div>
                 <div className={this.classes.root}>
-                    <Grid container gutter={8}>
+                    <PsBotNavbar />
+                    <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>

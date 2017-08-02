@@ -7,8 +7,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import SendIcon from 'material-ui-icons/Send';
-import {CardActions, CardContent, CardMedia} from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -23,6 +21,8 @@ import './PsBot.css';
 import PsBotThinking from './PsBotThinking';
 import PsHumanConversation from './PsHumanConversation';
 import PsBotCard from './PsBotCard';
+import PsBotCardImage from './PsBotCardImage';
+import PsBotConversationTime from './PsBotConversationTime';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -35,13 +35,6 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         marginRight: 10,
         marginBottom: 10,
         height: 100,
-    },
-    paper: {
-        padding: 16,
-        textAlign: 'center',
-        boxShadow: '0px 0px',
-        border: '1px solid #D2D1D2',
-        color: theme.palette.text.secondary,
     },
     paperBotConversation: {
         background: '#FFFFFF',
@@ -58,22 +51,9 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         position: 'relative',
         maxWidth: '450px',
     },
-    buttonResponse: {
-        background: 'rgba(150, 101, 171, 0.87)',
-        boxShadow: '0px 0px',
-        color: '#FFFFFF',
-        fontFamily: 'Lato, sans-serif !important',
-        minWidth: '120px',
-    },
     psConversationButton: {
         margin: theme.spacing.unit,
         background: 'rgba(150, 101, 171, 0.87)',
-    },
-    nextLine: {
-        wordWrap: 'break-word',
-        clear: 'both',
-        position: 'relative',
-        overflowY: 'scroll',
     },
     input: {
         marginLeft: theme.spacing.unit,
@@ -83,39 +63,12 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     card: {
         maxWidth: 345,
     },
-    responseImage: {
-        height: '240px',
-        width: '240px'
-    },
-    emojis: {
-        width: '36px',
-        height: '36px'
-    },
-    leftAlignedText: {
-        float: 'left !important',
-        textAlign: 'left !important',
-    },
-    psTextColor: {
-        fontFamily: 'Lato, sans-serif',
-        color: '#9B9B9B',
-    },
     psBotThinking: {
         background: '#FFFFFF',
         float: 'right',
         position: 'relative',
         maxWidth: '350px',
         boxShadow: '0px 0px',
-    },
-    psBotResponseTime: {
-        float: 'right !important',
-        textAlign: 'right !important',
-        overflow: 'hidden',
-        clear: 'both',
-    },
-    buttonTop: {},
-    cursor: {
-        position:'absolute',
-        marginLeft:'50px',
     },
     conversationText: {
         marginTop: '-8px',
@@ -373,7 +326,7 @@ class PsBot extends Component {
      * @param {Object} buttonValue Button Click Event
      */
     pSBotButtonClick = (buttonValue) => {
-        this.sendConversationToBot(buttonValue);
+        this.sendConversationToBot(null, buttonValue);
     };
 
     render() {
@@ -400,16 +353,13 @@ class PsBot extends Component {
                                                                        text={conversation.attachments[0].content.text}
                                                                        buttons={conversation.attachments[0].content.buttons}
                                                                        action={this.pSBotButtonClick} />) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
-                                                            <p>
-                                                                <CardMedia>
-                                                                    <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" className={this.classes.responseImage} />
-                                                                </CardMedia>
-                                                            </p>
+                                                            <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                         ) : conversation.text))
                                                 }
                                             </div>
                                         </Paper>
-                                            {(this.state.conversations.length === id + 1) ? <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid> : ''}
+                                            {(this.state.conversations.length === id + 1) ?
+                                                <PsBotConversationTime time={conversation.localTimestamp} /> : ''}
                                     </Grid>
                                   )
                                     :

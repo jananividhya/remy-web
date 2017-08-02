@@ -16,13 +16,13 @@ import Grid from 'material-ui/Grid';
 
 // Common imports
 import 'whatwg-fetch';
-import isURL from 'validator/lib/isURL';
 import {FormattedTime} from 'react-intl';
 
 // App imports
 import './PsBot.css';
 import PsBotThinking from './PsBotThinking';
 import PsHumanConversation from './PsHumanConversation';
+import PsBotCard from './PsBotCard';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -367,32 +367,13 @@ class PsBot extends Component {
     };
 
     /**
-     * @method isURL
-     * @methodOf PsBot#isURL
-     * @description Checks if a given string is an url or not
-     * @param str
-     * @returns {boolean}
-     */
-    isURL = (str) => {
-        return isURL(str);
-    };
-
-    /**
      * @method pSBotButtonClick
      * @methodOf PsBot#pSBotButtonClick
      * @description Sends the conversation to the bot based on the value of the button being clicked
-     * @param {Object} event Button Click Event
-     * @param {Object} button Button object passed from onClick
+     * @param {Object} buttonValue Button Click Event
      */
-    pSBotButtonClick = (button) => {
-        console.log('button ', button);
-        const buttonValue = button.value;
-
-        if (this.isURL(buttonValue)) {
-            window.open(buttonValue);
-        } else {
-            this.sendConversationToBot(null, buttonValue);
-        }
+    pSBotButtonClick = (buttonValue) => {
+        this.sendConversationToBot(buttonValue);
     };
 
     render() {
@@ -415,32 +396,10 @@ class PsBot extends Component {
                                                             {conversation.text}
                                                         </p> )) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                            <div>
-                                                                {((conversation.attachments[0].content.title) ? <CardContent className={this.classes.leftAlignedText}> {
-                                                                    (conversation.attachments[0].content.title) ? (
-                                                                        <Typography type="headline" component="h2" className={this.classes.psTextColor}>
-                                                                            {conversation.attachments[0].content.title}
-                                                                        </Typography>
-                                                                    ) : '' }
-                                                                    { (conversation.attachments[0].content.text) ? (
-                                                                        <Typography className={this.classes.psTextColor}>
-                                                                            {conversation.attachments[0].content.text}
-                                                                        </Typography> ) : '' }
-                                                                </CardContent> : '') }
-                                                                {(conversation.attachments[0].content.buttons) ? (
-                                                                    <CardActions className={[this.classes.nextLine, this.classes.buttonTop].join(' ')}>
-                                                                        {conversation.attachments[0].content.buttons.map((button, buttonId) => {
-                                                                            return <Button key={buttonId} raised
-                                                                                        className={this.classes.buttonResponse}
-                                                                                        onTouchTap={() => this.pSBotButtonClick(button)}>{(button.title.length > 10) ?
-                                                                                    (button.title.substring(0, 8) + '..')
-                                                                                    : button.title}</Button>
-
-                                                                        })
-                                                                        }
-                                                                    </CardActions>
-                                                                ) : ''}
-                                                            </div>) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
+                                                            <PsBotCard title={conversation.attachments[0].content.title}
+                                                                       text={conversation.attachments[0].content.text}
+                                                                       buttons={conversation.attachments[0].content.buttons}
+                                                                       action={this.pSBotButtonClick} />) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
                                                             <p>
                                                                 <CardMedia>
                                                                     <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" className={this.classes.responseImage} />

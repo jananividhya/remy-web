@@ -17,7 +17,7 @@ import PsBot from './components/ps-bot/PsBot';
 import registerServiceWorker from './registerServiceWorker';
 
 const paperStyle = {
-    height: 500,
+    height: 700,
     width: 600,
     margin: 20,
     display: 'inline-block',

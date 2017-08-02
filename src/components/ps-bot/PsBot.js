@@ -7,8 +7,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import SendIcon from 'material-ui-icons/Send';
-import {CardActions, CardContent, CardMedia} from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -16,13 +14,15 @@ import Grid from 'material-ui/Grid';
 
 // Common imports
 import 'whatwg-fetch';
-import isURL from 'validator/lib/isURL';
-import {FormattedTime} from 'react-intl';
 
 // App imports
 import './PsBot.css';
+import PsBotNavbar from './PsBotNavbar';
 import PsBotThinking from './PsBotThinking';
 import PsHumanConversation from './PsHumanConversation';
+import PsBotCard from './PsBotCard';
+import PsBotCardImage from './PsBotCardImage';
+import PsBotConversationTime from './PsBotConversationTime';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -34,14 +34,10 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10,
-        height: 100,
+        height: 330,
     },
-    paper: {
-        padding: 16,
-        textAlign: 'center',
-        boxShadow: '0px 0px',
-        border: '1px solid #D2D1D2',
-        color: theme.palette.text.secondary,
+    conversationContainer: {
+        marginTop: 10,
     },
     paperBotConversation: {
         background: '#FFFFFF',
@@ -58,22 +54,9 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         position: 'relative',
         maxWidth: '450px',
     },
-    buttonResponse: {
-        background: 'rgba(150, 101, 171, 0.87)',
-        boxShadow: '0px 0px',
-        color: '#FFFFFF',
-        fontFamily: 'Lato, sans-serif !important',
-        minWidth: '120px',
-    },
     psConversationButton: {
         margin: theme.spacing.unit,
         background: 'rgba(150, 101, 171, 0.87)',
-    },
-    nextLine: {
-        wordWrap: 'break-word',
-        clear: 'both',
-        position: 'relative',
-        overflowY: 'scroll',
     },
     input: {
         marginLeft: theme.spacing.unit,
@@ -83,39 +66,12 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     card: {
         maxWidth: 345,
     },
-    responseImage: {
-        height: '240px',
-        width: '240px'
-    },
-    emojis: {
-        width: '36px',
-        height: '36px'
-    },
-    leftAlignedText: {
-        float: 'left !important',
-        textAlign: 'left !important',
-    },
-    psTextColor: {
-        fontFamily: 'Lato, sans-serif',
-        color: '#9B9B9B',
-    },
     psBotThinking: {
         background: '#FFFFFF',
         float: 'right',
         position: 'relative',
         maxWidth: '350px',
         boxShadow: '0px 0px',
-    },
-    psBotResponseTime: {
-        float: 'right !important',
-        textAlign: 'right !important',
-        overflow: 'hidden',
-        clear: 'both',
-    },
-    buttonTop: {},
-    cursor: {
-        position:'absolute',
-        marginLeft:'50px',
     },
     conversationText: {
         marginTop: '-8px',
@@ -367,38 +323,20 @@ class PsBot extends Component {
     };
 
     /**
-     * @method isURL
-     * @methodOf PsBot#isURL
-     * @description Checks if a given string is an url or not
-     * @param str
-     * @returns {boolean}
-     */
-    isURL = (str) => {
-        return isURL(str);
-    };
-
-    /**
      * @method pSBotButtonClick
      * @methodOf PsBot#pSBotButtonClick
      * @description Sends the conversation to the bot based on the value of the button being clicked
-     * @param {Object} event Button Click Event
-     * @param {Object} button Button object passed from onClick
+     * @param {Object} buttonValue Button Click Event
      */
-    pSBotButtonClick = (button) => {
-        console.log('button ', button);
-        const buttonValue = button.value;
-
-        if (this.isURL(buttonValue)) {
-            window.open(buttonValue);
-        } else {
-            this.sendConversationToBot(null, buttonValue);
-        }
+    pSBotButtonClick = (buttonValue) => {
+        this.sendConversationToBot(null, buttonValue);
     };
 
     render() {
         return ( <div>
                 <div className={this.classes.root}>
-                    <Grid container gutter={8}>
+                    <PsBotNavbar />
+                    <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
@@ -415,42 +353,17 @@ class PsBot extends Component {
                                                             {conversation.text}
                                                         </p> )) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                            <div>
-                                                                {((conversation.attachments[0].content.title) ? <CardContent className={this.classes.leftAlignedText}> {
-                                                                    (conversation.attachments[0].content.title) ? (
-                                                                        <Typography type="headline" component="h2" className={this.classes.psTextColor}>
-                                                                            {conversation.attachments[0].content.title}
-                                                                        </Typography>
-                                                                    ) : '' }
-                                                                    { (conversation.attachments[0].content.text) ? (
-                                                                        <Typography className={this.classes.psTextColor}>
-                                                                            {conversation.attachments[0].content.text}
-                                                                        </Typography> ) : '' }
-                                                                </CardContent> : '') }
-                                                                {(conversation.attachments[0].content.buttons) ? (
-                                                                    <CardActions className={[this.classes.nextLine, this.classes.buttonTop].join(' ')}>
-                                                                        {conversation.attachments[0].content.buttons.map((button, buttonId) => {
-                                                                            return <Button key={buttonId} raised
-                                                                                        className={this.classes.buttonResponse}
-                                                                                        onTouchTap={() => this.pSBotButtonClick(button)}>{(button.title.length > 10) ?
-                                                                                    (button.title.substring(0, 8) + '..')
-                                                                                    : button.title}</Button>
-
-                                                                        })
-                                                                        }
-                                                                    </CardActions>
-                                                                ) : ''}
-                                                            </div>) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
-                                                            <p>
-                                                                <CardMedia>
-                                                                    <img src={conversation.attachments && conversation.attachments[0].contentUrl} alt="" className={this.classes.responseImage} />
-                                                                </CardMedia>
-                                                            </p>
+                                                            <PsBotCard title={conversation.attachments[0].content.title}
+                                                                       text={conversation.attachments[0].content.text}
+                                                                       buttons={conversation.attachments[0].content.buttons}
+                                                                       action={this.pSBotButtonClick} />) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
+                                                            <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                         ) : conversation.text))
                                                 }
                                             </div>
                                         </Paper>
-                                            {(this.state.conversations.length === id + 1) ? <Grid item xs={12} sm={12} className={this.classes.psBotResponseTime}><FormattedTime value={conversation.localTimestamp} format="" /></Grid> : ''}
+                                            {(this.state.conversations.length === id + 1) ?
+                                                <PsBotConversationTime time={conversation.localTimestamp} /> : ''}
                                     </Grid>
                                   )
                                     :

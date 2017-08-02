@@ -8,21 +8,12 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import SendIcon from 'material-ui-icons/Send';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import ShareIcon from 'material-ui-icons/Share';
-import ThumbUpIcon from 'material-ui-icons/ThumbUp';
-import ChatIcon from 'material-ui-icons/Chat';
-import MenuIcon from 'material-ui-icons/Menu';
 
 // Common imports
 import 'whatwg-fetch';
-import {FormattedTime} from 'react-intl';
 
 // App imports
 import './PsBot.css';

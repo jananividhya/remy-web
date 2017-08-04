@@ -14,7 +14,7 @@
 }
 
 .Ps-Bot-Conversation-Input-Container {
-    margin-top: 365px;
+    margin-top: 345px;
     position: absolute;
 }
 
@@ -60,3 +60,5 @@
     margin-left: 0px;
     bottom: 0px;
 }
+
+.material-icons.md-36 { font-size: 42px; }

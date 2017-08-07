@@ -35,7 +35,9 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         fontFamily: 'Lato, sans-serif',
         color: '#9B9B9B',
     },
-    buttonTop: {},
+    buttonTop: {
+        bottom: '4px',
+    },
 }));
 
 /**

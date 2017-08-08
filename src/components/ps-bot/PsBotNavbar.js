@@ -27,6 +27,7 @@ const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     logo: {
         height: '42px',
         fontSize: '42px',
+        marginLeft: '20px',
     },
 }));
 

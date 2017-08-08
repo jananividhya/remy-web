@@ -13,6 +13,7 @@ const styleSheet = createStyleSheet('PsBotConversationTime', theme => ({
         textAlign: 'right !important',
         overflow: 'hidden',
         clear: 'both',
+        fontSize: '10px',
     },
 }));
 

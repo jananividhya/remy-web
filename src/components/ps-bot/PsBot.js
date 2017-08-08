@@ -36,6 +36,11 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         marginBottom: 10,
         height: 330,
     },
+    conversationInput: {
+        fontFamily: 'Lato, sans-serif',
+        fontSize: '12px',
+        color: '#9B9B9B',
+    },
     conversationContainer: {
         marginTop: 10,
     },
@@ -372,7 +377,7 @@ class PsBot extends Component {
                         })}
                     </Grid>
                 </div>
-                <div>
+                <div className={this.classes.root}>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">

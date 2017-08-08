@@ -376,9 +376,7 @@ class PsBot extends Component {
                             )
                         })}
                     </Grid>
-                </div>
-                <div className={this.classes.root}>
-                    <Grid container>
+                    <Grid container className={this.classes.conversationInput}>
                         <Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 <form onSubmit={this.sendConversationToBot}>

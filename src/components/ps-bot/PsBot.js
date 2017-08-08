@@ -42,7 +42,8 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         color: '#9B9B9B',
     },
     conversationContainer: {
-        marginTop: 10,
+        marginTop: 80,
+        marginBottom: 60,
     },
     paperBotConversation: {
         background: '#FFFFFF',

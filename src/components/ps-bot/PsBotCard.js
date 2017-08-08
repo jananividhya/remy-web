@@ -54,7 +54,7 @@ class PsBotCard extends Component {
 
     /**
      * @method isURL
-     * @methodOf PsBot#isURL
+     * @methodOf PsBotCard#isURL
      * @description Checks if a given string is an url or not
      * @param str
      * @returns {boolean}
@@ -65,7 +65,7 @@ class PsBotCard extends Component {
 
     /**
      * @method pSBotButtonClick
-     * @methodOf PsBot#pSBotButtonClick
+     * @methodOf PsBotCard#pSBotButtonClick
      * @description Sends the conversation to the bot based on the value of the button being clicked
      * @param {Object} event Button Click Event
      * @param {Object} button Button object passed from onClick

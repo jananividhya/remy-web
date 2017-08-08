@@ -15,9 +15,11 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     appbar: {
-        marginTop: '-30px',
-        marginLeft: '-20px',
-        width: 615,
+        marginTop: '-80px',
+        marginLeft: '-10px',
+        width: 600,
+        zIndex: 1000,
+        position: 'absolute',
         background: '#FFFFFF',
     },
     appbarFlex: {

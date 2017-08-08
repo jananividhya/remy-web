@@ -380,9 +380,10 @@ class PsBot extends Component {
                     <Grid container className={this.classes.conversationInput}>
                         <Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">
-                                <form onSubmit={this.sendConversationToBot}>
+                                <form onSubmit={this.sendConversationToBot} autoComplete="off">
                                     <TextField
                                         id="human-input"
+                                        autoComplete="off"
                                         label={this.state.conversationInputText}
                                         className={this.classes.input}
                                         value={this.state.conversationText}

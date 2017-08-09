@@ -93,7 +93,7 @@ class PsBotCard extends Component {
                         {this.props.text}
                     </Typography> ) : '' }
             </CardContent> : '') }
-            {(this.props.buttons) ? (
+            {((this.props.title || this.props.text) && this.props.buttons) ? (
                 <CardActions className={[this.classes.nextLine, this.classes.buttonTop].join(' ')}>
                     {this.props.buttons.map((button, buttonId) => {
                         return <Button key={buttonId} raised

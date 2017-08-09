@@ -52,8 +52,8 @@
 
 #human-input {
     background: url('conversation-cursor.gif') no-repeat top left;
-    margin-left: 70px;
-    bottom: 8px;
+    margin-left: 92px;
+    bottom: 7px;
     position: relative;
 }
 

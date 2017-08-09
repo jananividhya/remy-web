@@ -6,7 +6,6 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import ShareIcon from 'material-ui-icons/Share';
-import ThumbUpIcon from 'material-ui-icons/ThumbUp';
 import FavoriteBorder from 'material-ui-icons/FavoriteBorder';
 import MenuIcon from 'material-ui-icons/Menu';
 import Typography from 'material-ui/Typography';
@@ -53,7 +52,7 @@ class PsBotNavbar extends Component {
                 </IconButton>
                 <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
                     <IconButton aria-label="Share">
-                        <img src="psbot-logo.png" className={this.classes.logo} />
+                        <img src="psbot-logo.png" alt="PsBot" className={this.classes.logo} />
                     </IconButton>
                 </Typography>
                 <IconButton aria-label="Share">

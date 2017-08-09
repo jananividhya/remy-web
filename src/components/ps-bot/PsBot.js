@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import {CardActions} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import SendIcon from 'material-ui-icons/Send';
@@ -67,7 +68,9 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 515
+        width: 515,
+        fontFamily: 'Lato, sans-serif',
+        fontSize: '15px',
     },
     card: {
         maxWidth: 345,
@@ -82,6 +85,15 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     conversationText: {
         marginTop: '-8px',
         marginBottom: '-8px',
+    },
+    responseSuggestions: {
+        marginBottom: 30,
+    },
+    responseSuggestionButton: {
+        borderRadius: '60px',
+        height: '10px',
+        background: 'rgba(150, 101, 171, 0.87)',
+        color: '#FFFFFF',
     },
 }));
 
@@ -115,7 +127,8 @@ class PsBot extends Component {
             conversationText: '',
             conversations: [],
             conversationHistory: [],
-            conversationInputText: this.props.conversationInputText || 'Begin your conversation here..'
+            conversationInputText: this.props.conversationInputText || 'Begin your conversation here..',
+            responseSuggestions: [],
         };
 
         /**
@@ -179,6 +192,10 @@ class PsBot extends Component {
      * @description Sends the user conversation to pS Bot
      */
     sendConversationToBot = (event, conversationText) => {
+        this.setState({
+            responseSuggestions: [],
+        });
+
         let conversation = {
             "type": "message",
             "text": this.state.conversationText || conversationText,
@@ -211,7 +228,8 @@ class PsBot extends Component {
                 conversationText: '',
                 conversations: conversations,
                 conversationHistory: this.state.conversationHistory,
-                conversationInputText: this.state.conversationInputText
+                conversationInputText: this.state.conversationInputText,
+                responseSuggestions: this.state.responseSuggestions,
             });
 
             conversations.push({
@@ -238,7 +256,8 @@ class PsBot extends Component {
                 conversationText: '',
                 conversations: conversations,
                 conversationHistory: this.state.conversationHistory,
-                conversationInputText: this.state.conversationInputText
+                conversationInputText: this.state.conversationInputText,
+                responseSuggestions: this.state.responseSuggestions
             });
 
             let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 5000);
@@ -282,12 +301,20 @@ class PsBot extends Component {
                         delete textConversation.attachments;
                         conversations.push(textConversation);
 
+                        if (newConversation.attachments[0].content.buttons) {
+                            let responseSuggestions = newConversation.attachments[0].content.buttons;
+                            this.setState({
+                                responseSuggestions: responseSuggestions,
+                            });
+                        }
+
                         this.setState({
                             conversationId: this.state.conversationId,
                             conversationText: '',
                             conversations: conversations,
                             conversationHistory: conversationHistory,
-                            conversationInputText: this.state.conversationInputText
+                            conversationInputText: this.state.conversationInputText,
+                            responseSuggestions: this.state.responseSuggestions,
                         });
                     }
 
@@ -324,7 +351,9 @@ class PsBot extends Component {
             conversationId: this.state.conversationId,
             conversationText: event.target.value,
             conversations: this.state.conversations,
-            conversationInputText: 'Say Something..'
+            conversationInputText: 'Say Something..',
+            conversationHistory: this.state.conversationHistory,
+            responseSuggestions: this.state.responseSuggestions,
         });
     };
 
@@ -338,7 +367,21 @@ class PsBot extends Component {
         this.sendConversationToBot(null, buttonValue);
     };
 
+    pSBotSuggestionResponseClick = (button) => {
+        const buttonValue = button.value;
+        this.pSBotButtonClick(buttonValue);
+    };
+
     render() {
+
+        let responseSuggestions = [];
+
+        if (this.state.responseSuggestions) {
+            responseSuggestions = this.state.responseSuggestions;
+        } else {
+            responseSuggestions = [];
+        }
+
         return ( <div>
                 <div className={this.classes.root}>
                     <PsBotNavbar />
@@ -378,12 +421,19 @@ class PsBot extends Component {
                         })}
                     </Grid>
                     <Grid container className={this.classes.conversationInput}>
+                        {responseSuggestions.map((suggestion, id) => {
+                            return (<CardActions key={id} className={this.classes.responseSuggestions}>
+                                    <Button key={id} raised className={this.classes.responseSuggestionButton}
+                                       onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}>
+                                       {suggestion.title}
+                                    </Button>
+                                </CardActions>)
+                        })}
                         <Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 <form onSubmit={this.sendConversationToBot} autoComplete="off">
                                     <TextField
                                         id="human-input"
-                                        autoComplete="off"
                                         label={this.state.conversationInputText}
                                         className={this.classes.input}
                                         value={this.state.conversationText}

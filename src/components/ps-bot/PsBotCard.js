@@ -12,11 +12,13 @@ import isURL from 'validator/lib/isURL';
 
 const styleSheet = createStyleSheet('PsBotCard', theme => ({
     buttonResponse: {
-        background: 'rgba(150, 101, 171, 0.87)',
         boxShadow: '0px 0px',
         color: '#FFFFFF',
         fontFamily: 'Lato, sans-serif !important',
         minWidth: '120px',
+        borderRadius: '60px',
+        height: '10px',
+        background: 'rgba(150, 101, 171, 0.87)',
     },
     nextLine: {
         wordWrap: 'break-word',

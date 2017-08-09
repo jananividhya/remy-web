@@ -7,6 +7,8 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 
+import renderHTML from 'react-render-html';
+
 const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {
         background: 'rgba(150, 101, 171, 0.87)',
@@ -26,6 +28,10 @@ const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
         marginTop: '-8px',
         marginBottom: '-8px',
     },
+    commandHighlight: {
+        fontFamily: 'monospace',
+        color: 'red',
+    },
 }));
 
 /**
@@ -41,11 +47,19 @@ class PsHumanConversation extends Component {
     }
 
     render() {
+
+        let conversationText = this.props.conversationText;
+
+        if (conversationText && conversationText.indexOf('`') >= 0) {
+            conversationText = conversationText.replace('`', '<span className={this.classes.commandHighlight} style="color: yellow;">');
+            conversationText = conversationText.replace('`', '</span>');
+        }
+
         return ( <Grid item xs={12} sm={12}>
             <Paper className={this.classes.paperHumanConversation}>
                 <div className={this.classes.conversationText}>
                     <p>
-                        {this.props.conversationText}
+                        {renderHTML(conversationText)}
                     </p>
                 </div>
             </Paper>

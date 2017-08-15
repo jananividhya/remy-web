@@ -220,6 +220,15 @@ class PsBot extends Component {
         let conversations = this.state.conversations;
         conversations.push(conversation);
 
+        this.setState({
+            conversationId: this.state.conversationId,
+            conversationText: '',
+            conversations: conversations,
+            conversationHistory: this.state.conversationHistory,
+            conversationInputText: this.state.conversationInputText,
+            responseSuggestions: []
+        });
+
         fetch(request)
             .then((response) => {
                 return response.json();

@@ -7,6 +7,8 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 
+import {Motion, spring} from 'react-motion';
+
 import renderHTML from 'react-render-html';
 
 const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
@@ -44,7 +46,22 @@ class PsHumanConversation extends Component {
     constructor(props) {
         super(props);
         this.classes = props.classes;
+        this.state = {
+            hover: false
+        };
     }
+
+    conversationContent = (val, conversationText) => {
+        return (<p>
+                        {renderHTML(conversationText)}
+                    </p>);
+    };
+
+    toggleHover = () => {
+        this.setState({
+            hover: !this.state.hover
+        });
+    };
 
     render() {
 
@@ -55,15 +72,26 @@ class PsHumanConversation extends Component {
             conversationText = conversationText.replace('`', '</span>');
         }
 
-        return ( <Grid item xs={12} sm={12}>
-            <Paper className={this.classes.paperHumanConversation}>
-                <div className={this.classes.conversationText}>
-                    <p>
-                        {renderHTML(conversationText)}
-                    </p>
-                </div>
-            </Paper>
-        </Grid> );
+        return (
+            <Motion style={{x: spring(400)}}> 
+            {
+                (x) => {
+                    return (
+                        <Grid item xs={12} sm={12} style={{
+                            transform: "scale(" + x + ")"
+                        }}>
+                            <Paper className={this.classes.paperHumanConversation} >
+                                <div className={this.classes.conversationText}>            
+                                    <p>
+                                        {renderHTML(conversationText)}
+                                    </p>
+                                </div>
+                            </Paper>
+                        </Grid>
+                    );
+                }
+            }
+            </Motion>);
     }
 }
 

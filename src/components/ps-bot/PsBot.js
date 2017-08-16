@@ -192,7 +192,7 @@ class PsBot extends Component {
      * @param {String} conversationText Conversation being sent to bot
      * @description Sends the user conversation to pS Bot
      */
-    sendConversationToBot = (event, conversationText) => {
+    sendConversationToBot = (event, conversationText, isAutoResponse) => {
         this.setState({
             responseSuggestions: [],
         });
@@ -213,6 +213,10 @@ class PsBot extends Component {
             },
             "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
         };
+
+        if (isAutoResponse) {
+            conversation.value = conversationText;
+        }
 
         let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
             {method: 'POST', headers: this.headers, body: JSON.stringify(conversation)});
@@ -374,7 +378,7 @@ class PsBot extends Component {
      * @param {Object} buttonValue Button Click Event
      */
     pSBotButtonClick = (buttonValue) => {
-        this.sendConversationToBot(null, buttonValue);
+        this.sendConversationToBot(null, buttonValue, true);
     };
 
     pSBotSuggestionResponseClick = (button) => {

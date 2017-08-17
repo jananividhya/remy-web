@@ -52,7 +52,7 @@ class PsBotNavbar extends Component {
                 </IconButton>
                 <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
                     <IconButton aria-label="Share">
-                        <img src="psbot-logo.png" alt="PsBot" className={this.classes.logo} />
+                        <img src="psbot-logo.jpg" alt="PsBot" className={this.classes.logo} />
                     </IconButton>
                 </Typography>
                 <IconButton aria-label="Share">

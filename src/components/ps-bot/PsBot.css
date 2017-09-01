@@ -14,8 +14,10 @@
 }
 
 .Ps-Bot-Conversation-Input-Container {
-    margin-top: 345px;
+    top: 600px;
+    margin-left: -10px;
     position: absolute;
+    z-index: 1000;
 }
 
 .Ps-Bot-Conversation-Input {
@@ -50,8 +52,8 @@
 
 #human-input {
     background: url('conversation-cursor.gif') no-repeat top left;
-    margin-left: 100px;
-    bottom: 8px;
+    margin-left: 92px;
+    bottom: 7px;
     position: relative;
 }
 

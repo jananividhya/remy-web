@@ -6,7 +6,6 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import ShareIcon from 'material-ui-icons/Share';
-import ThumbUpIcon from 'material-ui-icons/ThumbUp';
 import FavoriteBorder from 'material-ui-icons/FavoriteBorder';
 import MenuIcon from 'material-ui-icons/Menu';
 import Typography from 'material-ui/Typography';
@@ -15,9 +14,11 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     appbar: {
-        marginTop: '-30px',
-        marginLeft: '-20px',
-        width: 615,
+        marginTop: '-80px',
+        marginLeft: '-10px',
+        width: 600,
+        zIndex: 1000,
+        position: 'absolute',
         background: '#FFFFFF',
     },
     appbarFlex: {
@@ -27,6 +28,7 @@ const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     logo: {
         height: '42px',
         fontSize: '42px',
+        marginLeft: '20px',
     },
 }));
 
@@ -50,7 +52,7 @@ class PsBotNavbar extends Component {
                 </IconButton>
                 <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
                     <IconButton aria-label="Share">
-                        <img src="psbot-logo.png" className={this.classes.logo} />
+                        <img src="psbot-logo.jpg" alt="PsBot" className={this.classes.logo} />
                     </IconButton>
                 </Typography>
                 <IconButton aria-label="Share">

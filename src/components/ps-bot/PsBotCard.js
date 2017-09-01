@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 
 // Material UI imports
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 import {CardActions, CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
@@ -10,13 +11,17 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 import isURL from 'validator/lib/isURL';
 
+import './PsBotButton.css';
+
 const styleSheet = createStyleSheet('PsBotCard', theme => ({
     buttonResponse: {
-        background: 'rgba(150, 101, 171, 0.87)',
         boxShadow: '0px 0px',
         color: '#FFFFFF',
         fontFamily: 'Lato, sans-serif !important',
         minWidth: '120px',
+        borderRadius: '60px',
+        height: '10px',
+        background: 'rgba(150, 101, 171, 0.87)',
     },
     nextLine: {
         wordWrap: 'break-word',
@@ -38,6 +43,25 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     buttonTop: {
         bottom: '4px',
     },
+    paperBotConversation: {
+        background: '#FFFFFF',
+        color: '#9B9B9B',
+        boxShadow: '0px 0px',
+        border: '1px solid #D2D1D2',
+        borderRadius: '15px',
+        fontSize: '14px',
+        float: 'right',
+        textAlign: 'right',
+        cursor: 'pointer',
+        paddingRight: '10px',
+        paddingLeft: '10px',
+        position: 'relative',
+        maxWidth: '450px',
+    },
+    conversationText: {
+        marginTop: '-8px',
+        marginBottom: '-8px',
+    },
 }));
 
 /**
@@ -54,7 +78,7 @@ class PsBotCard extends Component {
 
     /**
      * @method isURL
-     * @methodOf PsBot#isURL
+     * @methodOf PsBotCard#isURL
      * @description Checks if a given string is an url or not
      * @param str
      * @returns {boolean}
@@ -65,7 +89,7 @@ class PsBotCard extends Component {
 
     /**
      * @method pSBotButtonClick
-     * @methodOf PsBot#pSBotButtonClick
+     * @methodOf PsBotCard#pSBotButtonClick
      * @description Sends the conversation to the bot based on the value of the button being clicked
      * @param {Object} event Button Click Event
      * @param {Object} button Button object passed from onClick
@@ -93,14 +117,17 @@ class PsBotCard extends Component {
                         {this.props.text}
                     </Typography> ) : '' }
             </CardContent> : '') }
-            {(this.props.buttons) ? (
+            {((this.props.title || this.props.text) && this.props.buttons) ? (
                 <CardActions className={[this.classes.nextLine, this.classes.buttonTop].join(' ')}>
                     {this.props.buttons.map((button, buttonId) => {
-                        return <Button key={buttonId} raised
-                                       className={this.classes.buttonResponse}
-                                       onTouchTap={() => this.pSBotButtonClick(button)}>{(button.title.length > 10) ?
-                            (button.title.substring(0, 8) + '..')
-                            : button.title}</Button>
+                        return <Paper className={this.classes.paperBotConversation} key={buttonId}
+                                    onClick={() => this.pSBotButtonClick(button)}>
+                                            <div className={this.classes.conversationText}>
+                                                <p>
+                                                    {button.title}
+                                                </p>
+                                            </div>
+                                        </Paper>
                     })
                     }
                 </CardActions>

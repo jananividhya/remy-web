@@ -91,7 +91,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
     responseSuggestionButton: {
         borderRadius: '60px',
-        height: '10px',
+        marginBottom: '60px',
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
         fontFamily: 'Lato, sans-serif !important',
@@ -436,12 +436,14 @@ class PsBot extends Component {
                     </Grid>
                     <Grid container className={this.classes.conversationInput}>
                         {responseSuggestions.map((suggestion, id) => {
-                            return (<CardActions key={id} className={this.classes.responseSuggestions}>
-                                    <Button key={id} raised className={this.classes.responseSuggestionButton}
-                                       onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}>
-                                       {suggestion.title}
-                                    </Button>
-                                </CardActions>)
+                            return (<Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
+                                    onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}>
+                                            <div className={this.classes.conversationText}>
+                                                <p>
+                                                    {suggestion.title}
+                                                </p>
+                                            </div>
+                                        </Paper>)
                         })}
                         <Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">

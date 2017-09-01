@@ -3,12 +3,15 @@ import React, {Component} from 'react';
 
 // Material UI imports
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 import {CardActions, CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 import isURL from 'validator/lib/isURL';
+
+import './PsBotButton.css';
 
 const styleSheet = createStyleSheet('PsBotCard', theme => ({
     buttonResponse: {
@@ -39,6 +42,25 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     },
     buttonTop: {
         bottom: '4px',
+    },
+    paperBotConversation: {
+        background: '#FFFFFF',
+        color: '#9B9B9B',
+        boxShadow: '0px 0px',
+        border: '1px solid #D2D1D2',
+        borderRadius: '15px',
+        fontSize: '14px',
+        float: 'right',
+        textAlign: 'right',
+        cursor: 'pointer',
+        paddingRight: '10px',
+        paddingLeft: '10px',
+        position: 'relative',
+        maxWidth: '450px',
+    },
+    conversationText: {
+        marginTop: '-8px',
+        marginBottom: '-8px',
     },
 }));
 
@@ -98,11 +120,14 @@ class PsBotCard extends Component {
             {((this.props.title || this.props.text) && this.props.buttons) ? (
                 <CardActions className={[this.classes.nextLine, this.classes.buttonTop].join(' ')}>
                     {this.props.buttons.map((button, buttonId) => {
-                        return <Button key={buttonId} raised
-                                       className={this.classes.buttonResponse}
-                                       onTouchTap={() => this.pSBotButtonClick(button)}>{(button.title.length > 10) ?
-                            (button.title.substring(0, 8) + '..')
-                            : button.title}</Button>
+                        return <Paper className={this.classes.paperBotConversation} key={buttonId}
+                                    onClick={() => this.pSBotButtonClick(button)}>
+                                            <div className={this.classes.conversationText}>
+                                                <p>
+                                                    {button.title}
+                                                </p>
+                                            </div>
+                                        </Paper>
                     })
                     }
                 </CardActions>

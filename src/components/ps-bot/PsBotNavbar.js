@@ -14,8 +14,6 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     appbar: {
-        marginTop: '-80px',
-        marginLeft: '-10px',
         width: 600,
         zIndex: 1000,
         position: 'absolute',
@@ -45,7 +43,10 @@ class PsBotNavbar extends Component {
     }
 
     render() {
-        return ( <AppBar position="static" className={this.classes.appbar}>
+        return ( <AppBar position="static" className={this.classes.appbar} style={{
+            marginTop: this.props.marginTop,
+            marginLeft: this.props.marginLeft || 0,
+        }}>
             <Toolbar>
                 <IconButton color="default" aria-label="Menu">
                     <MenuIcon />

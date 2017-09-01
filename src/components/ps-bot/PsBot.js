@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {CardActions} from 'material-ui/Card';
+import { CardActions } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import SendIcon from 'material-ui-icons/Send';
@@ -12,6 +12,7 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+import { TransitionMotion, spring } from 'react-motion';
 
 // Common imports
 import 'whatwg-fetch';
@@ -388,7 +389,8 @@ class PsBot extends Component {
 
     render() {
 
-        let responseSuggestions = [];
+        let responseSuggestions = [],
+        hideOptions = false;
 
         if (this.state.responseSuggestions) {
             responseSuggestions = this.state.responseSuggestions;
@@ -396,9 +398,42 @@ class PsBot extends Component {
             responseSuggestions = [];
         }
 
+        if (this.state.conversations) {
+            hideOptions = true;
+        }
+
         return ( <div>
                 <div className={this.classes.root}>
-                    <PsBotNavbar />
+                    <PsBotNavbar marginTop={-30} marginLeft={-10} />
+                    {
+                        hideOptions ? (
+                            <TransitionMotion defaultStyles={[
+                        { key: 'one', style: {marginTop: 0}},
+                        { key: 'two', style: {marginTop: 0}},
+                        { key: 'three', style: {marginTop: 0}}
+                        ]}
+                        styles={[
+                        { key: 'one', style: { marginTop: spring(80) }, data: 'Start with a Hello'},
+                        { key: 'two', style: { marginTop: spring(30) }, data: 'Learn'},
+                        { key: 'three', style: { marginTop: spring(30) }, data: 'Quit'}
+                        ]}
+                        >
+                        {(styles) => (
+                        <div>
+                            { styles.map(({ key, style, data}) => (
+                            <div key={key} style={{
+                                textAlign: 'center',
+                                marginTop: 50,
+                                ...style
+                            }}>
+                            { data }
+                            </div>
+                            ))}
+                        </div>
+                        )}
+                    </TransitionMotion>
+                        ) : ('')
+                    }
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ?

@@ -303,6 +303,8 @@ class PsBot extends Component {
             .then((response) => {
                 return response.json();
             }).then((json) => {
+            const lastItem = json.activities[json.activities.length - 1];
+
             for (let newConversation of json.activities) {
                 if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0) {
 
@@ -404,7 +406,7 @@ class PsBot extends Component {
 
         return ( <div>
                 <div className={this.classes.root}>
-                    <PsBotNavbar marginTop={-30} marginLeft={-10} />
+                    <PsBotNavbar marginTop={-80} marginLeft={-10} />
                     {
                         hideOptions ? (
                             <TransitionMotion defaultStyles={[
@@ -434,6 +436,7 @@ class PsBot extends Component {
                     </TransitionMotion>
                         ) : ('')
                     }
+
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ?

@@ -490,9 +490,6 @@ class PsBot extends Component {
                                         value={this.state.conversationText}
                                         onChange={this.setConversation}
                                     />
-                                    <Button fab color="primary" className={this.classes.psConversationButton} type="submit">
-                                        <SendIcon />
-                                    </Button>
                                 </form>
                             </div>
                         </Grid>

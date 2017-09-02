@@ -222,7 +222,7 @@ class PsBot extends Component {
         let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
             {method: 'POST', headers: this.headers, body: JSON.stringify(conversation)});
 
-        let conversations = this.state.conversations;
+        let conversations = this.state.conversations.slice();
         conversations.push(conversation);
 
         this.setState({
@@ -308,8 +308,8 @@ class PsBot extends Component {
             for (let newConversation of json.activities) {
                 if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0) {
 
-                    let conversationHistory = this.state.conversationHistory;
-                    let conversations = this.state.conversations;
+                    let conversationHistory = this.state.conversationHistory.slice();
+                    let conversations = this.state.conversations.slice();
 
                     if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.text) {
                         conversationHistory.push(newConversation.id);
@@ -351,6 +351,10 @@ class PsBot extends Component {
                 } else {
                     clearInterval(fetchBotConversationsTimer);
                 }
+            }
+
+            if (lastItem.inputHint === 'expectingInput') {
+                clearInterval(fetchBotConversationsTimer);
             }
         }).catch((ex) => {
 
@@ -406,7 +410,7 @@ class PsBot extends Component {
 
         return ( <div>
                 <div className={this.classes.root}>
-                    <PsBotNavbar marginTop={-80} marginLeft={-10} />
+                    <PsBotNavbar marginTop={-30} marginLeft={-10} />
                     {
                         hideOptions ? (
                             <TransitionMotion defaultStyles={[
@@ -415,9 +419,18 @@ class PsBot extends Component {
                         { key: 'three', style: {marginTop: 0}}
                         ]}
                         styles={[
-                        { key: 'one', style: { marginTop: spring(80) }, data: 'Start with a Hello'},
-                        { key: 'two', style: { marginTop: spring(30) }, data: 'Learn'},
-                        { key: 'three', style: { marginTop: spring(30) }, data: 'Quit'}
+                        { key: 'one', style: { marginTop: spring(230) }, data: {
+                            title: 'Start with a Hello',
+                            value: 'Hello',
+                        }},
+                        { key: 'two', style: { marginTop: spring(30) }, data: {
+                            title: 'Learn',
+                            value: 'learn',
+                        }},
+                        { key: 'three', style: { marginTop: spring(30) }, data: {
+                            title: 'Quit',
+                            value: 'quit',
+                        }}
                         ]}
                         >
                         {(styles) => (
@@ -425,10 +438,15 @@ class PsBot extends Component {
                             { styles.map(({ key, style, data}) => (
                             <div key={key} style={{
                                 textAlign: 'center',
-                                marginTop: 50,
                                 ...style
                             }}>
-                            { data }
+                                <Paper onClick={() => this.pSBotButtonClick(data.value)}>
+                                    <div className={this.classes.conversationText}>
+                                        <p>
+                                            {data.title}
+                                        </p>
+                                    </div>
+                                </Paper>
                             </div>
                             ))}
                         </div>
@@ -483,7 +501,7 @@ class PsBot extends Component {
                                             </div>
                                         </Paper>)
                         })}
-                        <Grid item xs={12} sm={12} md={12}>
+                        {/*<Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 <form onSubmit={this.sendConversationToBot} autoComplete="off">
                                     <TextField
@@ -495,7 +513,7 @@ class PsBot extends Component {
                                     />
                                 </form>
                             </div>
-                        </Grid>
+                        </Grid>*/}
                     </Grid>
                 </div>
             </div>

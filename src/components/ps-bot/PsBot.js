@@ -459,11 +459,11 @@ class PsBot extends Component {
                                                   styles={[
                                                       { key: 'greet-welcome', style: { marginTop: spring(110) }, data: {
                                                           type: 'Greet',
-                                                          title: 'Welcome to purpleBot',
+                                                          title: "Hello, I'm purpleBot",
                                                       }},
                                                       { key: 'greet-what', style: { marginTop: spring(10) }, data: {
                                                           type: 'Greet',
-                                                          title: 'What would you like to do?',
+                                                          title: 'Some things you can ask me..',
                                                       }},
                                                       { key: 'hello', style: { marginTop: spring(30) }, data: {
                                                           type: 'Command',

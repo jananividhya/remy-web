@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { TransitionMotion, spring } from 'react-motion';
+import {Emoji} from 'emoji-mart';
 
 // Common imports
 import 'whatwg-fetch';
@@ -93,9 +94,36 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     responseSuggestionButton: {
         borderRadius: '60px',
         marginBottom: '60px',
+        marginLeft: '4px',
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
         fontFamily: 'Lato, sans-serif !important',
+    },
+    conversationOptions: {
+        background: 'rgba(150, 101, 171, 0.87)',
+        color: '#FFFFFF',
+        boxShadow: '0px 0px',
+        border: '1px solid #D2D1D2',
+        borderRadius: '15px',
+        fontSize: '14px',
+        float: 'center',
+        letterSpacing: '0px',
+        paddingRight: '10px',
+        paddingLeft: '10px',
+        position: 'relative',
+        width: '200px',
+    },
+    conversationGreeting: {
+        color: 'purple',
+        boxShadow: '0px 0px',
+        fontSize: '20px',
+        float: 'center',
+        letterSpacing: '0px',
+        paddingRight: '10px',
+        paddingLeft: '10px',
+        position: 'relative',
+        marginLeft: '-95px',
+        width: '400px',
     },
 }));
 
@@ -275,7 +303,10 @@ class PsBot extends Component {
                 responseSuggestions: this.state.responseSuggestions
             });
 
-            let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 5000);
+            // Remove thinking before pushing the content
+            conversations.splice(-1, 1);
+
+            let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 200);
         }).catch((ex) => {
             console.log('Parsing failed while sending conversation to bot ', ex);
         });
@@ -291,11 +322,6 @@ class PsBot extends Component {
      * @param fetchBotConversationsTimer
      */
     fetchBotConversations = (fetchBotConversationsTimer) => {
-        let conversations = this.state.conversations;
-
-        // Remove thinking before pushing the content
-        conversations.splice(-1, 1);
-
         let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
             {method: 'GET', headers: this.headers});
 
@@ -320,6 +346,14 @@ class PsBot extends Component {
 
                         if (newConversation.attachments[0].content.buttons) {
                             let responseSuggestions = newConversation.attachments[0].content.buttons;
+                            responseSuggestions.push({"type": "emoji",
+                                "title": "+1",
+                                "value": "+1"});
+                            responseSuggestions.push({"type": "emoji",
+                                "title": "-1",
+                                "value": "-1"});
+
+                            console.log('responseSuggestions ', responseSuggestions);
                             this.setState({
                                 responseSuggestions: responseSuggestions,
                             });
@@ -348,12 +382,10 @@ class PsBot extends Component {
                         conversationHistory: conversationHistory,
                         conversationInputText: this.state.conversationInputText
                     });
-                } else {
-                    clearInterval(fetchBotConversationsTimer);
                 }
             }
 
-            if (lastItem.inputHint === 'expectingInput') {
+            if (lastItem.inputHint === 'expectingInput' || lastItem.inputHint === 'acceptingInput') {
                 clearInterval(fetchBotConversationsTimer);
             }
         }).catch((ex) => {
@@ -396,7 +428,7 @@ class PsBot extends Component {
     render() {
 
         let responseSuggestions = [],
-        hideOptions = false;
+        hideOptions = true;
 
         if (this.state.responseSuggestions) {
             responseSuggestions = this.state.responseSuggestions;
@@ -404,58 +436,102 @@ class PsBot extends Component {
             responseSuggestions = [];
         }
 
-        if (this.state.conversations) {
-            hideOptions = true;
+        if (this.state.conversations.length > 0) {
+            hideOptions = false;
         }
 
         return ( <div>
                 <div className={this.classes.root}>
-                    <PsBotNavbar marginTop={-30} marginLeft={-10} />
-                    {
-                        hideOptions ? (
-                            <TransitionMotion defaultStyles={[
-                        { key: 'one', style: {marginTop: 0}},
-                        { key: 'two', style: {marginTop: 0}},
-                        { key: 'three', style: {marginTop: 0}}
-                        ]}
-                        styles={[
-                        { key: 'one', style: { marginTop: spring(230) }, data: {
-                            title: 'Start with a Hello',
-                            value: 'Hello',
-                        }},
-                        { key: 'two', style: { marginTop: spring(30) }, data: {
-                            title: 'Learn',
-                            value: 'learn',
-                        }},
-                        { key: 'three', style: { marginTop: spring(30) }, data: {
-                            title: 'Quit',
-                            value: 'quit',
-                        }}
-                        ]}
-                        >
-                        {(styles) => (
-                        <div>
-                            { styles.map(({ key, style, data}) => (
-                            <div key={key} style={{
-                                textAlign: 'center',
-                                ...style
-                            }}>
-                                <Paper onClick={() => this.pSBotButtonClick(data.value)}>
-                                    <div className={this.classes.conversationText}>
-                                        <p>
-                                            {data.title}
-                                        </p>
-                                    </div>
-                                </Paper>
-                            </div>
-                            ))}
-                        </div>
-                        )}
-                    </TransitionMotion>
-                        ) : ('')
-                    }
-
+                    <PsBotNavbar marginTop={-80} marginLeft={-10} />
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
+                        {
+                            hideOptions ? (
+                                <TransitionMotion defaultStyles={[
+                                    { key: 'greet-welcome', style: {marginTop: 0}},
+                                    { key: 'greet-what', style: {marginTop: 0}},
+                                    { key: 'hello', style: {marginTop: 0}},
+                                    { key: 'learn', style: {marginTop: 0}},
+                                    { key: 'about-us', style: {marginTop: 0}},
+                                    { key: 'our-philosophy', style: {marginTop: 0}},
+                                    { key: 'careers', style: {marginTop: 0}},
+                                    { key: 'quit', style: {marginTop: 0}}
+                                ]}
+                                                  styles={[
+                                                      { key: 'greet-welcome', style: { marginTop: spring(110) }, data: {
+                                                          type: 'Greet',
+                                                          title: 'Welcome to purpleBot',
+                                                      }},
+                                                      { key: 'greet-what', style: { marginTop: spring(10) }, data: {
+                                                          type: 'Greet',
+                                                          title: 'What would you like to do?',
+                                                      }},
+                                                      { key: 'hello', style: { marginTop: spring(30) }, data: {
+                                                          type: 'Command',
+                                                          title: 'Say Hello to purpleBot',
+                                                          value: 'Hello',
+                                                      }},
+                                                      { key: 'learn', style: { marginTop: spring(10) }, data: {
+                                                          type: 'Command',
+                                                          title: 'Learn with purpleBot',
+                                                          value: 'learn',
+                                                      }},
+                                                      { key: 'about-us', style: { marginTop: spring(10) }, data: {
+                                                          type: 'Command',
+                                                          title: 'About us',
+                                                          value: 'About us',
+                                                      }},
+                                                      { key: 'our-philosophy', style: { marginTop: spring(10) }, data: {
+                                                          type: 'Command',
+                                                          title: 'Our Philosophy',
+                                                          value: 'Our Philosophy',
+                                                      }},
+                                                      { key: 'careers', style: { marginTop: spring(10) }, data: {
+                                                          type: 'Command',
+                                                          title: 'Careers @ Purpleslate',
+                                                          value: 'Careers',
+                                                      }},
+                                                      { key: 'quit', style: { marginTop: spring(10) }, data: {
+                                                          type: 'Command',
+                                                          title: 'Talk to you later',
+                                                          value: 'quit',
+                                                      }}
+                                                  ]}
+                                >
+                                    {(styles) => (
+                                        <div>
+                                            { styles.map(({ key, style, data}) => (
+                                                <div key={key} style={{
+                                                    textAlign: 'center',
+                                                    marginLeft: '190px',
+                                                    cursor: 'pointer',
+                                                    ...style
+                                                }}>
+                                                    { (data.type === 'Greet') ? (
+                                                    <Paper className={this.classes.conversationGreeting}>
+                                                        <div className={this.classes.conversationText}>
+                                                            <p>
+                                                                {data.title}
+                                                            </p>
+                                                        </div>
+                                                    </Paper>
+                                                    ) : (
+                                                    <Paper className={this.classes.conversationOptions}
+                                                           onClick={() => this.pSBotButtonClick(data.value)}>
+                                                        <div className={this.classes.conversationText}>
+                                                            <p>
+                                                                {data.title}
+                                                            </p>
+                                                        </div>
+                                                    </Paper>
+                                                    )
+                                                    }
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </TransitionMotion>
+                            ) : ('')
+                        }
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
@@ -465,19 +541,68 @@ class PsBot extends Component {
                                                     !conversation.attachments ? (
                                                     (conversation.contentType === 'typing') ?
                                                         (
-                                                            <PsBotThinking thinkingImg={conversation.img} />
+                                                            <TransitionMotion defaultStyles={[
+                                                                {key: id.toString(), style: {marginRight: -50}},
+                                                            ]} styles={[
+                                                                { key: id.toString(), style: { marginRight: spring(0) }, data: conversation.img},
+                                                            ]}>
+                                                                {(styles) => (
+                                                                    <div>
+                                                                        { styles.map(({ key, style, data}) => (
+                                                                            <div key={key} style={{
+                                                                                ...style
+                                                                            }}>
+                                                                                <PsBotThinking thinkingImg={data} />
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
+                                                            </TransitionMotion>
                                                         )
                                                         : (
-                                                        <p>
-                                                            {conversation.text}
-                                                        </p> )) :
+                                                    <TransitionMotion defaultStyles={[
+                                                        {key: id.toString(), style: {marginRight: -50}},
+                                                    ]} styles={[
+                                                        { key: id.toString(), style: { marginRight: spring(0) }, data: conversation.text},
+                                                    ]}>
+                                                        {(styles) => (
+                                                            <div>
+                                                                { styles.map(({ key, style, data}) => (
+                                                                    <div key={key} style={{
+                                                                        ...style
+                                                                    }}>
+                                                                        <p>
+                                                                            {data}
+                                                                        </p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </TransitionMotion>
+                                                         )) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
                                                             <PsBotCard title={conversation.attachments[0].content.title}
                                                                        text={conversation.attachments[0].content.text}
                                                                        buttons={conversation.attachments[0].content.buttons}
                                                                        action={this.pSBotButtonClick} />) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
-                                                        ) : conversation.text))
+                                                        ) : <TransitionMotion defaultStyles={[
+                                                            {key: id.toString(), style: {marginRight: -50}},
+                                                        ]} styles={[
+                                                            { key: id.toString(), style: { marginRight: spring(0) }, data: conversation.text},
+                                                        ]}>
+                                                            {(styles) => (
+                                                                <div>
+                                                                    { styles.map(({ key, style, data}) => (
+                                                                        <div key={key} style={{
+                                                                            ...style
+                                                                        }}>
+                                                                                {data}
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </TransitionMotion>))
                                                 }
                                             </div>
                                         </Paper>
@@ -486,20 +611,44 @@ class PsBot extends Component {
                                     </Grid>
                                   )
                                     :
-                                    (<PsHumanConversation conversationText={conversation.text} key={id} />)
+                                    (
+                                    <TransitionMotion key={id} defaultStyles={[
+                                        { key: id.toString(), style: {marginLeft: -50}},
+                                    ]}
+                                                      styles={[
+                                                          { key: id.toString(), style: { marginLeft: spring(0) }, data: conversation.text},
+                                                      ]}
+                                    >
+                                        {(styles) => (
+                                            <div>
+                                                { styles.map(({ key, style, data}) => (
+                                                    <div key={key} style={{
+                                                        ...style
+                                                    }}>
+                                                        <PsHumanConversation conversationText={data} />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </TransitionMotion>
+                                    )
                             )
                         })}
                     </Grid>
                     <Grid container className={this.classes.conversationInput}>
                         {responseSuggestions.map((suggestion, id) => {
-                            return (<Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
-                                    onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}>
-                                            <div className={this.classes.conversationText}>
-                                                <p>
-                                                    {suggestion.title}
-                                                </p>
-                                            </div>
-                                        </Paper>)
+                            return (
+                            (suggestion.type === 'emoji') ? (
+                                <Emoji size={30} emoji={suggestion.title} className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id} />
+                            ) : (<Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
+                                           onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}>
+                                <div className={this.classes.conversationText}>
+                                    <p>
+                                        {suggestion.title}
+                                    </p>
+                                </div>
+                            </Paper>)
+                            )
                         })}
                         {/*<Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">

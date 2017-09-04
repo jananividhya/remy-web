@@ -535,16 +535,10 @@ class PsBot extends Component {
                         {this.state.conversations.map((conversation, id) => {
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
-                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : ((conversation.attachments && conversation.attachments[0].content && !conversation.attachments[0].content.title && conversation.attachments[0].content.buttons) ? this.classes.psBotThinking :this.classes.paperBotConversation)}>
-                                            <div className={this.classes.conversationText}>
-                                                {
-                                                    !conversation.attachments ? (
-                                                    (conversation.contentType === 'typing') ?
-                                                        (
-                                                            <TransitionMotion defaultStyles={[
+                                    <TransitionMotion defaultStyles={[
                                                                 {key: id.toString(), style: {marginRight: -50}},
                                                             ]} styles={[
-                                                                { key: id.toString(), style: { marginRight: spring(0) }, data: conversation.img},
+                                                                { key: id.toString(), style: { marginRight: spring(0) }, data: conversation},
                                                             ]}>
                                                                 {(styles) => (
                                                                     <div>
@@ -552,33 +546,19 @@ class PsBot extends Component {
                                                                             <div key={key} style={{
                                                                                 ...style
                                                                             }}>
-                                                                                <PsBotThinking thinkingImg={data} />
-                                                                            </div>
-                                                                        ))}
-                                                                    </div>
-                                                                )}
-                                                            </TransitionMotion>
+                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : ((conversation.attachments && conversation.attachments[0].content && !conversation.attachments[0].content.title && conversation.attachments[0].content.buttons) ? this.classes.psBotThinking :this.classes.paperBotConversation)}>
+                                            <div className={this.classes.conversationText}>
+                                                {
+                                                    !conversation.attachments ? (
+                                                    (conversation.contentType === 'typing') ?
+                                                        (
+                                                            
+                                                                                <PsBotThinking thinkingImg={data.img} />
                                                         )
                                                         : (
-                                                    <TransitionMotion defaultStyles={[
-                                                        {key: id.toString(), style: {marginRight: -50}},
-                                                    ]} styles={[
-                                                        { key: id.toString(), style: { marginRight: spring(0) }, data: conversation.text},
-                                                    ]}>
-                                                        {(styles) => (
-                                                            <div>
-                                                                { styles.map(({ key, style, data}) => (
-                                                                    <div key={key} style={{
-                                                                        ...style
-                                                                    }}>
                                                                         <p>
-                                                                            {data}
+                                                                            {data.text}
                                                                         </p>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                    </TransitionMotion>
                                                          )) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
                                                             <PsBotCard title={conversation.attachments[0].content.title}
@@ -586,26 +566,15 @@ class PsBot extends Component {
                                                                        buttons={conversation.attachments[0].content.buttons}
                                                                        action={this.pSBotButtonClick} />) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
-                                                        ) : <TransitionMotion defaultStyles={[
-                                                            {key: id.toString(), style: {marginRight: -50}},
-                                                        ]} styles={[
-                                                            { key: id.toString(), style: { marginRight: spring(0) }, data: conversation.text},
-                                                        ]}>
-                                                            {(styles) => (
-                                                                <div>
-                                                                    { styles.map(({ key, style, data}) => (
-                                                                        <div key={key} style={{
-                                                                            ...style
-                                                                        }}>
-                                                                                {data}
-                                                                        </div>
-                                                                    ))}
-                                                                </div>
-                                                            )}
-                                                        </TransitionMotion>))
+                                                        ) : data.text))
                                                 }
                                             </div>
                                         </Paper>
+                                        </div>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
+                                                            </TransitionMotion>
                                             {(this.state.conversations.length === id + 1) ?
                                                 <PsBotConversationTime time={conversation.localTimestamp} /> : ''}
                                     </Grid>

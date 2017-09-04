@@ -11,6 +11,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 import isURL from 'validator/lib/isURL';
 
+// Style Imports
 import './PsBotButton.css';
 
 const styleSheet = createStyleSheet('PsBotCard', theme => ({

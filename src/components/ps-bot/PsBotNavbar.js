@@ -5,9 +5,9 @@ import React, {Component} from 'react';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
-import ShareIcon from 'material-ui-icons/Share';
+import TocIcon from 'material-ui-icons/Toc';
 import FavoriteBorder from 'material-ui-icons/FavoriteBorder';
-import MenuIcon from 'material-ui-icons/Menu';
+import SearchIcon from 'material-ui-icons/Search';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -26,7 +26,6 @@ const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     logo: {
         height: '42px',
         fontSize: '42px',
-        marginLeft: '20px',
     },
 }));
 
@@ -49,7 +48,7 @@ class PsBotNavbar extends Component {
         }}>
             <Toolbar>
                 <IconButton color="default" aria-label="Menu">
-                    <MenuIcon />
+                    <SearchIcon />
                 </IconButton>
                 <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
                     <IconButton aria-label="Share">
@@ -57,10 +56,7 @@ class PsBotNavbar extends Component {
                     </IconButton>
                 </Typography>
                 <IconButton aria-label="Share">
-                    <ShareIcon className={this.classes.logo} />
-                </IconButton>
-                <IconButton aria-label="Like">
-                    <FavoriteBorder className={this.classes.logo} />
+                    <TocIcon className={this.classes.logo} />
                 </IconButton>
             </Toolbar>
         </AppBar> );

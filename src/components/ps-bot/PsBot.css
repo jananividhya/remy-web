@@ -14,7 +14,7 @@
 }
 
 .Ps-Bot-Conversation-Input-Container {
-    top: 600px;
+    top: 638px;
     margin-left: -10px;
     position: absolute;
     z-index: 1000;
@@ -50,7 +50,7 @@
     padding-left: 10px;
 }
 
-#human-input {
+/* #human-input {
     background: url('conversation-cursor.gif') no-repeat top left;
     margin-left: 92px;
     bottom: 7px;
@@ -61,6 +61,6 @@
     background: none;
     margin-left: 0px;
     bottom: 0px;
-}
+} */
 
 .material-icons.md-36 { font-size: 42px; }

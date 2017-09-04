@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { CardActions } from 'material-ui/Card';
-import TextField from 'material-ui/TextField';
+import Input from 'material-ui/Input/Input';
 import Button from 'material-ui/Button';
 import SendIcon from 'material-ui-icons/Send';
 import Paper from 'material-ui/Paper';
@@ -70,7 +70,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 515,
+        width: 582,
         fontFamily: 'Lato, sans-serif',
         fontSize: '15px',
     },
@@ -619,19 +619,23 @@ class PsBot extends Component {
                             </Paper>)
                             )
                         })}
-                        {/*<Grid item xs={12} sm={12} md={12}>
+                        <Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 <form onSubmit={this.sendConversationToBot} autoComplete="off">
-                                    <TextField
-                                        id="human-input"
-                                        label={this.state.conversationInputText}
-                                        className={this.classes.input}
-                                        value={this.state.conversationText}
-                                        onChange={this.setConversation}
-                                    />
+                                <Input
+                                    fullWidth
+                                    id="human-input"
+                                    placeholder={this.state.conversationInputText}
+                                    className={this.classes.input}
+                                    value={this.state.conversationText}
+                                    inputProps={{
+                                    'aria-label': this.state.conversationInputText,
+                                    }}
+                                    onChange={this.setConversation}
+                                />
                                 </form>
                             </div>
-                        </Grid>*/}
+                        </Grid>
                     </Grid>
                 </div>
             </div>

@@ -90,7 +90,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
     responseSuggestionButton: {
         borderRadius: '60px',
-        marginBottom: '60px',
+        marginBottom: '20px',
         marginLeft: '4px',
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',

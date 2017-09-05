@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 
 // Material UI imports
-import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import {CardActions, CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';

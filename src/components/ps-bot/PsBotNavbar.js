@@ -6,7 +6,6 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import TocIcon from 'material-ui-icons/Toc';
-import FavoriteBorder from 'material-ui-icons/FavoriteBorder';
 import SearchIcon from 'material-ui-icons/Search';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';

@@ -4,10 +4,7 @@ import ReactDOM from 'react-dom';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { CardActions } from 'material-ui/Card';
 import Input from 'material-ui/Input/Input';
-import Button from 'material-ui/Button';
-import SendIcon from 'material-ui-icons/Send';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -182,6 +179,10 @@ class PsBot extends Component {
         if (node) {
             node.scrollIntoView({ behavior: "smooth" });
         }
+    };
+
+    componentDidMount = () => {
+        console.log('Component Mounted successfully!');
     };
 
     /**

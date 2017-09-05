@@ -181,10 +181,6 @@ class PsBot extends Component {
         }
     };
 
-    componentDidMount = () => {
-        console.log('Component Mounted successfully!');
-    };
-
     /**
      * @method initConversation
      * @methodOf PsBot#initConversation
@@ -624,6 +620,7 @@ class PsBot extends Component {
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 <form onSubmit={this.sendConversationToBot} autoComplete="off">
                                 <Input
+                                    autoFocus
                                     fullWidth
                                     id="human-input"
                                     placeholder={this.state.conversationInputText}

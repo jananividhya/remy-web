@@ -41,26 +41,21 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         color: '#9B9B9B',
     },
     buttonTop: {
-        bottom: '4px',
+        bottom: '8px',
     },
     paperBotConversation: {
-        background: '#FFFFFF',
-        color: '#9B9B9B',
+        background: 'rgba(150, 101, 171, 0.87)',
+        color: '#FFFFFF',
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
         borderRadius: '15px',
         fontSize: '14px',
-        float: 'right',
-        textAlign: 'right',
+        float: 'center',
+        textAlign: 'center',
         cursor: 'pointer',
         paddingRight: '10px',
         paddingLeft: '10px',
         position: 'relative',
-        maxWidth: '450px',
-    },
-    conversationText: {
-        marginTop: '-8px',
-        marginBottom: '-8px',
     },
 }));
 
@@ -118,9 +113,8 @@ class PsBotCard extends Component {
                     </Typography> ) : '' }
             </CardContent> : '') }
             {((this.props.title || this.props.text) && this.props.buttons) ? (
-                <CardActions className={[this.classes.nextLine, this.classes.buttonTop].join(' ')}>
-                    {this.props.buttons.map((button, buttonId) => {
-                        return <Paper className={this.classes.paperBotConversation} key={buttonId}
+                    this.props.buttons.map((button, buttonId) => {
+                        return <Paper className={[this.classes.nextLine, this.classes.buttonTop, this.classes.paperBotConversation].join(' ')} key={buttonId}
                                     onClick={() => this.pSBotButtonClick(button)}>
                                             <div className={this.classes.conversationText}>
                                                 <p>
@@ -129,8 +123,6 @@ class PsBotCard extends Component {
                                             </div>
                                         </Paper>
                     })
-                    }
-                </CardActions>
             ) : ''}
         </div> );
     }

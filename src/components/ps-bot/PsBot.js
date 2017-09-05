@@ -169,6 +169,12 @@ class PsBot extends Component {
         this.initConversation(this.directLineBaseUrl);
     }
 
+    allowedImageTypes = [
+        'image/png',
+        'image/jpg',
+        'image/jpeg',
+    ];
+
     /**
      * @override
      * @method componentDidUpdate
@@ -561,7 +567,7 @@ class PsBot extends Component {
                                                             <PsBotCard title={conversation.attachments[0].content.title}
                                                                        text={conversation.attachments[0].content.text}
                                                                        buttons={conversation.attachments[0].content.buttons}
-                                                                       action={this.pSBotButtonClick} />) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
+                                                                       action={this.pSBotButtonClick} />) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                         ) : data.text))
                                                 }

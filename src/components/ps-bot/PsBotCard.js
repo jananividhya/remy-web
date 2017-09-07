@@ -2,16 +2,13 @@
 import React, {Component} from 'react';
 
 // Material UI imports
-import Paper from 'material-ui/Paper';
 import {CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 
 import isURL from 'validator/lib/isURL';
-import PsBotCardImage from './PsBotCardImage';
 
 // Style Imports
 import './PsBotButton.css';
@@ -138,10 +135,11 @@ class PsBotCard extends Component {
 
     render() {
         return ( <div>
-            {((this.state.title) ? <CardContent className={this.classes.leftAlignedText}> {
-                (this.state.title) ? (<div>
+            {((this.state.title || this.state.subtitle || this.state.text) ? <CardContent className={this.classes.leftAlignedText}> {
+                <div>
                     {(this.state.images && this.state.images[0]) ? (
                             <img src={this.state.images[0].url}
+                                alt={this.state.title}
                                 height={50}
                                 width={50}
                                 style={{marginLeft: -10}} />
@@ -152,14 +150,14 @@ class PsBotCard extends Component {
                     <Typography type="subheading" component="p" className={this.classes.psTextColor}>
                         {this.state.subtitle}
                     </Typography>
-                    </div>
-                ) : '' }
-                { (this.state.text) ? (
-                    <Typography className={this.classes.psTextColor}>
+                    { (this.state.text) ? (
+                    <Typography component="p" className={this.classes.psTextColor}>
                         {this.state.text}
                     </Typography> ) : '' }
+                </div>
+            }
             </CardContent> : '') }
-            {((this.state.title || this.state.text) && this.state.buttons) ? (
+            {(this.state.buttons) ? (
                     this.state.buttons.map((button, buttonId) => {
                         return (button.type === 'openUrl') ? (<Chip label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
                                     onClick={() => this.pSBotButtonClick(button)} />) : ''

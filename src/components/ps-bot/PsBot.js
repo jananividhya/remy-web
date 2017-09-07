@@ -569,7 +569,7 @@ class PsBot extends Component {
                                                                             <div key={key} style={{
                                                                                 ...style
                                                                             }}>
-                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : ((conversation.attachments && conversation.attachments[0].content && !conversation.attachments[0].content.title && conversation.attachments[0].content.buttons) ? this.classes.psBotThinking :this.classes.paperBotConversation)}>
+                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : this.classes.paperBotConversation}>
                                             <div className={this.classes.conversationText}>
                                                 {
                                                     !conversation.attachments ? (

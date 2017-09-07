@@ -28,7 +28,8 @@ class PsBotCardImage extends Component {
     render() {
         return ( <p>
             <CardMedia>
-                <img src={this.props.imageUrl} alt="" className={this.classes.responseImage} />
+                <img src={this.props.imageUrl} alt="" 
+                    style={{height: this.props.height || '240', width: this.props.width || '240'}} />
             </CardMedia>
         </p> );
     }

@@ -11,6 +11,8 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { TransitionMotion, spring } from 'react-motion';
 import {Emoji} from 'emoji-mart';
+import Button from 'material-ui/Button';
+import Menu, { MenuItem } from 'material-ui/Menu';
 
 // Common imports
 import 'whatwg-fetch';
@@ -156,6 +158,9 @@ class PsBot extends Component {
             conversationHistory: [],
             conversationInputText: this.props.conversationInputText || 'Begin your conversation here..',
             responseSuggestions: [],
+            listMenu: [],
+            anchorEl: undefined,
+            menuOpen: false,
         };
 
         /**
@@ -262,7 +267,8 @@ class PsBot extends Component {
             conversations: conversations,
             conversationHistory: this.state.conversationHistory,
             conversationInputText: this.state.conversationInputText,
-            responseSuggestions: []
+            responseSuggestions: [],
+            listMenu: [],
         });
 
         fetch(request)
@@ -276,6 +282,7 @@ class PsBot extends Component {
                 conversationHistory: this.state.conversationHistory,
                 conversationInputText: this.state.conversationInputText,
                 responseSuggestions: this.state.responseSuggestions,
+                listMenu: this.state.listMenu,
             });
 
             conversations.push({
@@ -303,7 +310,8 @@ class PsBot extends Component {
                 conversations: conversations,
                 conversationHistory: this.state.conversationHistory,
                 conversationInputText: this.state.conversationInputText,
-                responseSuggestions: this.state.responseSuggestions
+                responseSuggestions: this.state.responseSuggestions,
+                listMenu: this.state.listMenu,
             });
 
             // Remove thinking before pushing the content
@@ -349,14 +357,13 @@ class PsBot extends Component {
 
                         if (newConversation.attachments[0].content.buttons) {
                             let responseSuggestions = newConversation.attachments[0].content.buttons;
-                            responseSuggestions.push({"type": "emoji",
+                            /* responseSuggestions.push({"type": "emoji",
                                 "title": "+1",
                                 "value": "+1"});
                             responseSuggestions.push({"type": "emoji",
                                 "title": "-1",
-                                "value": "-1"});
-
-                            console.log('responseSuggestions ', responseSuggestions);
+                                "value": "-1"}); */
+                            
                             this.setState({
                                 responseSuggestions: responseSuggestions,
                             });
@@ -369,6 +376,10 @@ class PsBot extends Component {
                             conversationHistory: conversationHistory,
                             conversationInputText: this.state.conversationInputText,
                             responseSuggestions: this.state.responseSuggestions,
+                        });
+                    } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
+                        this.setState({
+                            listMenu: newConversation.attachments[0].content.buttons
                         });
                     }
 
@@ -410,6 +421,7 @@ class PsBot extends Component {
             conversationInputText: 'Say Something..',
             conversationHistory: this.state.conversationHistory,
             responseSuggestions: this.state.responseSuggestions,
+            listMenu: this.state.listMenu,
         });
     };
 
@@ -426,6 +438,14 @@ class PsBot extends Component {
     pSBotSuggestionResponseClick = (button) => {
         const buttonValue = button.value;
         this.pSBotButtonClick(buttonValue);
+    };
+
+    handleMenuClick = (event) => {
+        this.setState({ menuOpen: true, anchorEl: event.currentTarget });
+    };
+
+    handleMenuClose = () => {
+        this.setState({ menuOpen: false });
     };
 
     render() {
@@ -564,9 +584,7 @@ class PsBot extends Component {
                                                                         </p>
                                                          )) :
                                                         ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                            <PsBotCard title={conversation.attachments[0].content.title}
-                                                                       text={conversation.attachments[0].content.text}
-                                                                       buttons={conversation.attachments[0].content.buttons}
+                                                            <PsBotCard data={conversation.attachments[0].content}
                                                                        action={this.pSBotButtonClick} />) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                         ) : data.text))
@@ -624,7 +642,8 @@ class PsBot extends Component {
                         })}
                         <Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">
-                                <form onSubmit={this.sendConversationToBot} autoComplete="off">
+                                {(this.state.listMenu && this.state.listMenu.length === 0) ?
+                                (<form onSubmit={this.sendConversationToBot} autoComplete="off">
                                 <Input
                                     autoFocus
                                     fullWidth
@@ -637,7 +656,31 @@ class PsBot extends Component {
                                     }}
                                     onChange={this.setConversation}
                                 />
-                                </form>
+                                </form>) : (
+                                    <div className={this.classes.input}>
+                                    <Button
+                                        aria-owns={this.state.menuOpen ? 'simple-menu' : null}
+                                        aria-haspopup="true"
+                                        onClick={this.handleMenuClick}
+                                    >
+                                        What would you like to know about?
+                                    </Button>
+                                    <Menu
+                                        id="simple-menu"
+                                        anchorEl={this.state.anchorEl}
+                                        open={this.state.menuOpen}
+                                        onRequestClose={this.handleMenuClose}
+                                    >   
+                                        {
+                                            this.state.listMenu.map((menu, id) => {
+                                                return (
+                                                    <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
+                                                )
+                                            })
+                                        }
+                                    </Menu>
+                                    </div>
+                                )}
                             </div>
                         </Grid>
                     </Grid>

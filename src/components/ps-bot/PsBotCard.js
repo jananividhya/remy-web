@@ -3,12 +3,15 @@ import React, {Component} from 'react';
 
 // Material UI imports
 import Paper from 'material-ui/Paper';
-import {CardActions, CardContent} from 'material-ui/Card';
+import {CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
 
 import isURL from 'validator/lib/isURL';
+import PsBotCardImage from './PsBotCardImage';
 
 // Style Imports
 import './PsBotButton.css';
@@ -35,13 +38,15 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     leftAlignedText: {
         float: 'left !important',
         textAlign: 'left !important',
+        marginBottom: '10px',
     },
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
         color: '#9B9B9B',
     },
     buttonTop: {
-        bottom: '8px',
+        bottom: '18px',
+        left: '12px',
     },
     paperBotConversation: {
         background: 'rgba(150, 101, 171, 0.87)',
@@ -57,6 +62,15 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         paddingLeft: '10px',
         position: 'relative',
     },
+    avatar: {
+        margin: 10,
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    bigAvatar: {
+        width: 60,
+        height: 60,
+    },
 }));
 
 /**
@@ -69,7 +83,30 @@ class PsBotCard extends Component {
     constructor(props) {
         super(props);
         this.classes = props.classes;
+
+        this.state = this.props.data;
     }
+
+    /* {
+          "contentType": "application/vnd.microsoft.card.hero",
+          "content": {
+            "title": "purpleSlate",
+            "subtitle": "Purple : Associated with all the Good things in life - nobility, royalty, power, ambition, creativity, wisdom, dignity, grandeur and magic",
+            "text": "Slate : For many of us, the Slate is the earliest piece of  instrument we are exposed to in our pursuit of Learning. For us, Slate is representative of the high levels of Curiosity and Passion we carried in those early days of our life. Our objective is to get back to those core values, as we did in our very early days of learning - before taking the giant leap to the Future. ",
+            "images": [
+              {
+                "url": "http://www.purpleslate.in/img/ps/arrow.png"
+              }
+            ],
+            "buttons": [
+              {
+                "type": "openUrl",
+                "title": "Read more",
+                "value": "http://www.purpleslate.in"
+              }
+            ]
+          }
+        } */
 
     /**
      * @method isURL
@@ -101,27 +138,31 @@ class PsBotCard extends Component {
 
     render() {
         return ( <div>
-            {((this.props.title) ? <CardContent className={this.classes.leftAlignedText}> {
-                (this.props.title) ? (
+            {((this.state.title) ? <CardContent className={this.classes.leftAlignedText}> {
+                (this.state.title) ? (<div>
+                    {(this.state.images && this.state.images[0]) ? (
+                            <img src={this.state.images[0].url}
+                                height={50}
+                                width={50}
+                                style={{marginLeft: -10}} />
+                        ) : ''}
                     <Typography type="headline" component="h2" className={this.classes.psTextColor}>
-                        {this.props.title}
+                            {this.state.title}
                     </Typography>
+                    <Typography type="subheading" component="p" className={this.classes.psTextColor}>
+                        {this.state.subtitle}
+                    </Typography>
+                    </div>
                 ) : '' }
-                { (this.props.text) ? (
+                { (this.state.text) ? (
                     <Typography className={this.classes.psTextColor}>
-                        {this.props.text}
+                        {this.state.text}
                     </Typography> ) : '' }
             </CardContent> : '') }
-            {((this.props.title || this.props.text) && this.props.buttons) ? (
-                    this.props.buttons.map((button, buttonId) => {
-                        return <Paper className={[this.classes.nextLine, this.classes.buttonTop, this.classes.paperBotConversation].join(' ')} key={buttonId}
-                                    onClick={() => this.pSBotButtonClick(button)}>
-                                            <div className={this.classes.conversationText}>
-                                                <p>
-                                                    {button.title}
-                                                </p>
-                                            </div>
-                                        </Paper>
+            {((this.state.title || this.state.text) && this.state.buttons) ? (
+                    this.state.buttons.map((button, buttonId) => {
+                        return (button.type === 'openUrl') ? (<Chip label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
+                                    onClick={() => this.pSBotButtonClick(button)} />) : ''
                     })
             ) : ''}
         </div> );

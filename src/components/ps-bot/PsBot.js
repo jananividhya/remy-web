@@ -383,10 +383,10 @@ class PsBot extends Component {
                         });
                     }
 
-                    conversationHistory = this.state.conversationHistory;
+                    //conversationHistory = this.state.conversationHistory;
                     conversationHistory.push(newConversation.id);
 
-                    conversations = this.state.conversations;
+                    //conversations = this.state.conversations;
                     conversations.push(newConversation);
 
                     this.setState({
@@ -556,6 +556,9 @@ class PsBot extends Component {
                             ) : ('')
                         }
                         {this.state.conversations.map((conversation, id) => {
+                            console.group('Conversation ');
+                            console.log('Conversation %o', conversation);
+                            console.groupEnd();
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                     <TransitionMotion defaultStyles={[
@@ -583,9 +586,10 @@ class PsBot extends Component {
                                                                             {data.text}
                                                                         </p>
                                                          )) :
-                                                        ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                        ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                            <p>I think this is it 
                                                             <PsBotCard data={conversation.attachments[0].content}
-                                                                       action={this.pSBotButtonClick} />) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
+                                                                       action={this.pSBotButtonClick} /></p>) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                         ) : data.text))
                                                 }

@@ -13,6 +13,7 @@ import { TransitionMotion, spring } from 'react-motion';
 import {Emoji} from 'emoji-mart';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import Autosuggest from 'react-autosuggest';
 
 // Common imports
 import 'whatwg-fetch';
@@ -126,6 +127,40 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
 }));
 
+const commandSuggestions = [
+    {
+        key: 'hello',
+        title: 'Say Hello to purpleBot',
+        value: 'Hello',
+    },
+    {
+        key: 'learn',
+        title: 'Learn with purpleBot',
+        value: 'learn',
+    }
+];
+
+const getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0 ? [] : commandSuggestions.filter(lang =>
+        lang.title.toLowerCase().slice(0, inputLength) === inputValue
+    );
+};
+
+// When suggestion is clicked, Autosuggest needs to populate the input
+// based on the clicked suggestion. Teach Autosuggest how to calculate the
+// input value for every given suggestion.
+const getSuggestionValue = suggestion => suggestion.title;
+
+// Use your imagination to render suggestions.
+const renderSuggestion = suggestion => (
+    <div>
+        {suggestion.title}
+    </div>
+);
+
 /**
  * @todo make the class modular
  * @class PsBot
@@ -161,6 +196,8 @@ class PsBot extends Component {
             listMenu: [],
             anchorEl: undefined,
             menuOpen: false,
+            commandSuggestionValue: '',
+            commandSuggestions: [],
         };
 
         /**
@@ -173,6 +210,27 @@ class PsBot extends Component {
 
         this.initConversation(this.directLineBaseUrl);
     }
+
+    onSuggestionChange = (event, { newValue }) => {
+        this.setState({
+            commandSuggestionValue: newValue
+        });
+    };
+
+    // Autosuggest will call this function every time you need to update suggestions.
+    // You already implemented this logic above, so just use it.
+    onSuggestionsFetchRequested = ({ value }) => {
+        this.setState({
+            commandSuggestions: getSuggestions(value)
+        });
+    };
+
+    // Autosuggest will call this function every time you need to clear suggestions.
+    onSuggestionsClearRequested = () => {
+        this.setState({
+            commandSuggestions: []
+        });
+    };
 
     allowedImageTypes = [
         'image/png',
@@ -343,7 +401,7 @@ class PsBot extends Component {
             const lastItem = json.activities[json.activities.length - 1];
 
             for (let newConversation of json.activities) {
-                if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0) {
+                if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
 
                     let conversationHistory = this.state.conversationHistory.slice();
                     let conversations = this.state.conversations.slice();
@@ -399,7 +457,7 @@ class PsBot extends Component {
                 }
             }
 
-            if (lastItem.inputHint === 'expectingInput' || lastItem.inputHint === 'acceptingInput') {
+            if (lastItem.inputHint === 'expectingInput' || lastItem.inputHint === 'acceptingInput' || lastItem.code === 'completedSuccessfully') {
                 clearInterval(fetchBotConversationsTimer);
             }
         }).catch((ex) => {
@@ -449,6 +507,15 @@ class PsBot extends Component {
     };
 
     render() {
+
+        const value = this.state.commandSuggestionValue;
+        const commandSuggestions = this.state.commandSuggestions;
+
+        const inputProps = {
+            placeholder: 'Type a command',
+            value,
+            onChange: this.onSuggestionChange
+        };
 
         let responseSuggestions = [],
         hideOptions = true;
@@ -587,7 +654,7 @@ class PsBot extends Component {
                                                                         </p>
                                                          )) :
                                                         ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                            <p>I think this is it 
+                                                            <p>
                                                             <PsBotCard data={conversation.attachments[0].content}
                                                                        action={this.pSBotButtonClick} /></p>) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
@@ -648,6 +715,15 @@ class PsBot extends Component {
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 {(this.state.listMenu && this.state.listMenu.length === 0) ?
                                 (<form onSubmit={this.sendConversationToBot} autoComplete="off">
+                                    {/*<Autosuggest
+                                        className={this.classes.input}
+                                        suggestions={commandSuggestions}
+                                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                        getSuggestionValue={getSuggestionValue}
+                                        renderSuggestion={renderSuggestion}
+                                        inputProps={inputProps}
+                                    />*/}
                                 <Input
                                     autoFocus
                                     fullWidth

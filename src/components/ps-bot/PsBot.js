@@ -4,16 +4,16 @@ import ReactDOM from 'react-dom';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { CardActions } from 'material-ui/Card';
 import Input from 'material-ui/Input/Input';
-import Button from 'material-ui/Button';
-import SendIcon from 'material-ui-icons/Send';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { TransitionMotion, spring } from 'react-motion';
 import {Emoji} from 'emoji-mart';
+import Button from 'material-ui/Button';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import Autosuggest from 'react-autosuggest';
 
 // Common imports
 import 'whatwg-fetch';
@@ -93,7 +93,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
     responseSuggestionButton: {
         borderRadius: '60px',
-        marginBottom: '60px',
+        marginBottom: '20px',
         marginLeft: '4px',
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
@@ -127,6 +127,40 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
 }));
 
+const commandSuggestions = [
+    {
+        key: 'hello',
+        title: 'Say Hello to purpleBot',
+        value: 'Hello',
+    },
+    {
+        key: 'learn',
+        title: 'Learn with purpleBot',
+        value: 'learn',
+    }
+];
+
+const getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0 ? [] : commandSuggestions.filter(lang =>
+        lang.title.toLowerCase().slice(0, inputLength) === inputValue
+    );
+};
+
+// When suggestion is clicked, Autosuggest needs to populate the input
+// based on the clicked suggestion. Teach Autosuggest how to calculate the
+// input value for every given suggestion.
+const getSuggestionValue = suggestion => suggestion.title;
+
+// Use your imagination to render suggestions.
+const renderSuggestion = suggestion => (
+    <div>
+        {suggestion.title}
+    </div>
+);
+
 /**
  * @todo make the class modular
  * @class PsBot
@@ -159,6 +193,11 @@ class PsBot extends Component {
             conversationHistory: [],
             conversationInputText: this.props.conversationInputText || 'Begin your conversation here..',
             responseSuggestions: [],
+            listMenu: [],
+            anchorEl: undefined,
+            menuOpen: false,
+            commandSuggestionValue: '',
+            commandSuggestions: [],
         };
 
         /**
@@ -171,6 +210,33 @@ class PsBot extends Component {
 
         this.initConversation(this.directLineBaseUrl);
     }
+
+    onSuggestionChange = (event, { newValue }) => {
+        this.setState({
+            commandSuggestionValue: newValue
+        });
+    };
+
+    // Autosuggest will call this function every time you need to update suggestions.
+    // You already implemented this logic above, so just use it.
+    onSuggestionsFetchRequested = ({ value }) => {
+        this.setState({
+            commandSuggestions: getSuggestions(value)
+        });
+    };
+
+    // Autosuggest will call this function every time you need to clear suggestions.
+    onSuggestionsClearRequested = () => {
+        this.setState({
+            commandSuggestions: []
+        });
+    };
+
+    allowedImageTypes = [
+        'image/png',
+        'image/jpg',
+        'image/jpeg',
+    ];
 
     /**
      * @override
@@ -259,7 +325,8 @@ class PsBot extends Component {
             conversations: conversations,
             conversationHistory: this.state.conversationHistory,
             conversationInputText: this.state.conversationInputText,
-            responseSuggestions: []
+            responseSuggestions: [],
+            listMenu: [],
         });
 
         fetch(request)
@@ -273,6 +340,7 @@ class PsBot extends Component {
                 conversationHistory: this.state.conversationHistory,
                 conversationInputText: this.state.conversationInputText,
                 responseSuggestions: this.state.responseSuggestions,
+                listMenu: this.state.listMenu,
             });
 
             conversations.push({
@@ -300,7 +368,8 @@ class PsBot extends Component {
                 conversations: conversations,
                 conversationHistory: this.state.conversationHistory,
                 conversationInputText: this.state.conversationInputText,
-                responseSuggestions: this.state.responseSuggestions
+                responseSuggestions: this.state.responseSuggestions,
+                listMenu: this.state.listMenu,
             });
 
             // Remove thinking before pushing the content
@@ -332,7 +401,7 @@ class PsBot extends Component {
             const lastItem = json.activities[json.activities.length - 1];
 
             for (let newConversation of json.activities) {
-                if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0) {
+                if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
 
                     let conversationHistory = this.state.conversationHistory.slice();
                     let conversations = this.state.conversations.slice();
@@ -346,14 +415,13 @@ class PsBot extends Component {
 
                         if (newConversation.attachments[0].content.buttons) {
                             let responseSuggestions = newConversation.attachments[0].content.buttons;
-                            responseSuggestions.push({"type": "emoji",
+                            /* responseSuggestions.push({"type": "emoji",
                                 "title": "+1",
                                 "value": "+1"});
                             responseSuggestions.push({"type": "emoji",
                                 "title": "-1",
-                                "value": "-1"});
-
-                            console.log('responseSuggestions ', responseSuggestions);
+                                "value": "-1"}); */
+                            
                             this.setState({
                                 responseSuggestions: responseSuggestions,
                             });
@@ -367,12 +435,16 @@ class PsBot extends Component {
                             conversationInputText: this.state.conversationInputText,
                             responseSuggestions: this.state.responseSuggestions,
                         });
+                    } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
+                        this.setState({
+                            listMenu: newConversation.attachments[0].content.buttons
+                        });
                     }
 
-                    conversationHistory = this.state.conversationHistory;
+                    //conversationHistory = this.state.conversationHistory;
                     conversationHistory.push(newConversation.id);
 
-                    conversations = this.state.conversations;
+                    //conversations = this.state.conversations;
                     conversations.push(newConversation);
 
                     this.setState({
@@ -385,7 +457,7 @@ class PsBot extends Component {
                 }
             }
 
-            if (lastItem.inputHint === 'expectingInput' || lastItem.inputHint === 'acceptingInput') {
+            if (lastItem.inputHint === 'expectingInput' || lastItem.inputHint === 'acceptingInput' || lastItem.code === 'completedSuccessfully') {
                 clearInterval(fetchBotConversationsTimer);
             }
         }).catch((ex) => {
@@ -407,6 +479,7 @@ class PsBot extends Component {
             conversationInputText: 'Say Something..',
             conversationHistory: this.state.conversationHistory,
             responseSuggestions: this.state.responseSuggestions,
+            listMenu: this.state.listMenu,
         });
     };
 
@@ -425,7 +498,24 @@ class PsBot extends Component {
         this.pSBotButtonClick(buttonValue);
     };
 
+    handleMenuClick = (event) => {
+        this.setState({ menuOpen: true, anchorEl: event.currentTarget });
+    };
+
+    handleMenuClose = () => {
+        this.setState({ menuOpen: false });
+    };
+
     render() {
+
+        const value = this.state.commandSuggestionValue;
+        const commandSuggestions = this.state.commandSuggestions;
+
+        const inputProps = {
+            placeholder: 'Type a command',
+            value,
+            onChange: this.onSuggestionChange
+        };
 
         let responseSuggestions = [],
         hideOptions = true;
@@ -533,6 +623,9 @@ class PsBot extends Component {
                             ) : ('')
                         }
                         {this.state.conversations.map((conversation, id) => {
+                            console.group('Conversation ');
+                            console.log('Conversation %o', conversation);
+                            console.groupEnd();
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                     <TransitionMotion defaultStyles={[
@@ -546,7 +639,7 @@ class PsBot extends Component {
                                                                             <div key={key} style={{
                                                                                 ...style
                                                                             }}>
-                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : ((conversation.attachments && conversation.attachments[0].content && !conversation.attachments[0].content.title && conversation.attachments[0].content.buttons) ? this.classes.psBotThinking :this.classes.paperBotConversation)}>
+                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : this.classes.paperBotConversation}>
                                             <div className={this.classes.conversationText}>
                                                 {
                                                     !conversation.attachments ? (
@@ -560,11 +653,10 @@ class PsBot extends Component {
                                                                             {data.text}
                                                                         </p>
                                                          )) :
-                                                        ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                            <PsBotCard title={conversation.attachments[0].content.title}
-                                                                       text={conversation.attachments[0].content.text}
-                                                                       buttons={conversation.attachments[0].content.buttons}
-                                                                       action={this.pSBotButtonClick} />) : ((conversation.attachments && conversation.attachments[0].contentType === 'image/png') ? (
+                                                        ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                            <p>
+                                                            <PsBotCard data={conversation.attachments[0].content}
+                                                                       action={this.pSBotButtonClick} /></p>) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                         ) : data.text))
                                                 }
@@ -621,8 +713,19 @@ class PsBot extends Component {
                         })}
                         <Grid item xs={12} sm={12} md={12}>
                             <div className="Ps-Bot-Conversation-Input-Container">
-                                <form onSubmit={this.sendConversationToBot} autoComplete="off">
+                                {(this.state.listMenu && this.state.listMenu.length === 0) ?
+                                (<form onSubmit={this.sendConversationToBot} autoComplete="off">
+                                    {/*<Autosuggest
+                                        className={this.classes.input}
+                                        suggestions={commandSuggestions}
+                                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                        getSuggestionValue={getSuggestionValue}
+                                        renderSuggestion={renderSuggestion}
+                                        inputProps={inputProps}
+                                    />*/}
                                 <Input
+                                    autoFocus
                                     fullWidth
                                     id="human-input"
                                     placeholder={this.state.conversationInputText}
@@ -633,7 +736,31 @@ class PsBot extends Component {
                                     }}
                                     onChange={this.setConversation}
                                 />
-                                </form>
+                                </form>) : (
+                                    <div className={this.classes.input}>
+                                    <Button
+                                        aria-owns={this.state.menuOpen ? 'simple-menu' : null}
+                                        aria-haspopup="true"
+                                        onClick={this.handleMenuClick}
+                                    >
+                                        What would you like to know about?
+                                    </Button>
+                                    <Menu
+                                        id="simple-menu"
+                                        anchorEl={this.state.anchorEl}
+                                        open={this.state.menuOpen}
+                                        onRequestClose={this.handleMenuClose}
+                                    >   
+                                        {
+                                            this.state.listMenu.map((menu, id) => {
+                                                return (
+                                                    <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
+                                                )
+                                            })
+                                        }
+                                    </Menu>
+                                    </div>
+                                )}
                             </div>
                         </Grid>
                     </Grid>

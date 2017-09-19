@@ -26,6 +26,7 @@ import PsHumanConversation from './PsHumanConversation';
 import PsBotCard from './PsBotCard';
 import PsBotCardImage from './PsBotCardImage';
 import PsBotConversationTime from './PsBotConversationTime';
+import AutoSuggestTheme from './AutoSuggestTheme.css';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -129,12 +130,12 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
 
 const commandSuggestions = [
     {
-        key: 'hello',
+        key: '/hello',
         title: 'Say Hello to purpleBot',
-        value: 'Hello',
+        value: 'hello',
     },
     {
-        key: 'learn',
+        key: '/learn',
         title: 'Learn with purpleBot',
         value: 'learn',
     }
@@ -144,15 +145,15 @@ const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return inputLength === 0 ? [] : commandSuggestions.filter(lang =>
-        lang.title.toLowerCase().slice(0, inputLength) === inputValue
+    return inputLength === 0 ? [] : commandSuggestions.filter(command =>
+        command.key.toLowerCase().slice(0, inputLength) === inputValue
     );
 };
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.title;
+const getSuggestionValue = suggestion => suggestion.value;
 
 // Use your imagination to render suggestions.
 const renderSuggestion = suggestion => (
@@ -230,6 +231,11 @@ class PsBot extends Component {
         this.setState({
             commandSuggestions: []
         });
+    };
+
+    onSuggestionSelected = (event, {suggestion}) => {
+        console.log('suggestion ', suggestion);
+        this.pSBotSuggestionResponseClick(suggestion);
     };
 
     allowedImageTypes = [
@@ -715,16 +721,17 @@ class PsBot extends Component {
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 {(this.state.listMenu && this.state.listMenu.length === 0) ?
                                 (<form onSubmit={this.sendConversationToBot} autoComplete="off">
-                                    {/*<Autosuggest
-                                        className={this.classes.input}
+                                    <Autosuggest
+                                        autoFocus="on"
                                         suggestions={commandSuggestions}
                                         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                                         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                        onSuggestionSelected={this.onSuggestionSelected}
                                         getSuggestionValue={getSuggestionValue}
                                         renderSuggestion={renderSuggestion}
                                         inputProps={inputProps}
-                                    />*/}
-                                <Input
+                                    />
+                                {/*<Input
                                     autoFocus
                                     fullWidth
                                     id="human-input"
@@ -735,7 +742,7 @@ class PsBot extends Component {
                                     'aria-label': this.state.conversationInputText,
                                     }}
                                     onChange={this.setConversation}
-                                />
+                                />*/}
                                 </form>) : (
                                     <div className={this.classes.input}>
                                     <Button

@@ -132,22 +132,22 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
 const commandSuggestions = [
     {
         key: '/hello',
-        title: 'Say Hello to purpleBot',
+        title: 'Say Hello to purpleBot - /hello',
         value: 'hello',
     },
     {
         key: '/learn',
-        title: 'Learn with purpleBot',
+        title: 'Learn with purpleBot - /learn',
         value: 'learn',
     },
     {
         key: '/aboutus',
-        title: 'About Us',
+        title: 'About Us - /aboutus',
         value: 'About us',
     },
     {
         key: '/quit',
-        title: 'Talk to you later',
+        title: 'Talk to you later - /quit',
         value: 'quit',
     }
 ];

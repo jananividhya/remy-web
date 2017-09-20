@@ -99,6 +99,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
         fontFamily: 'Lato, sans-serif !important',
+        cursor: 'pointer',
     },
     conversationOptions: {
         background: 'rgba(150, 101, 171, 0.87)',
@@ -138,6 +139,16 @@ const commandSuggestions = [
         key: '/learn',
         title: 'Learn with purpleBot',
         value: 'learn',
+    },
+    {
+        key: '/aboutus',
+        title: 'About Us',
+        value: 'About us',
+    },
+    {
+        key: '/quit',
+        title: 'Talk to you later',
+        value: 'quit',
     }
 ];
 
@@ -234,7 +245,11 @@ class PsBot extends Component {
     };
 
     onSuggestionSelected = (event, {suggestion}) => {
+        event.preventDefault();
         console.log('suggestion ', suggestion);
+        this.setState({
+            commandSuggestionValue: ''
+        });
         this.pSBotSuggestionResponseClick(suggestion);
     };
 
@@ -294,6 +309,17 @@ class PsBot extends Component {
      * @description Sends the user conversation to pS Bot
      */
     sendConversationToBot = (event, conversationText, isAutoResponse) => {
+        if (conversationText instanceof Event) {
+            console.log('Conversation sent to bot ', this.state.commandSuggestionValue);
+            conversationText = this.state.commandSuggestionValue;
+            this.setState({
+                commandSuggestionValue: ''
+            });
+        }
+
+
+        if (event) event.preventDefault();
+
         this.setState({
             responseSuggestions: [],
         });
@@ -385,8 +411,6 @@ class PsBot extends Component {
         }).catch((ex) => {
             console.log('Parsing failed while sending conversation to bot ', ex);
         });
-
-        if (event) event.preventDefault();
     };
 
     /**
@@ -518,7 +542,7 @@ class PsBot extends Component {
         const commandSuggestions = this.state.commandSuggestions;
 
         const inputProps = {
-            placeholder: 'Type a command',
+            placeholder: 'Say something..',
             value,
             onChange: this.onSuggestionChange
         };
@@ -538,7 +562,7 @@ class PsBot extends Component {
 
         return ( <div>
                 <div className={this.classes.root}>
-                    <PsBotNavbar marginTop={-80} marginLeft={-10} />
+                    <PsBotNavbar marginTop={-30} marginLeft={-10} action={this.pSBotButtonClick} />
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {
                             hideOptions ? (

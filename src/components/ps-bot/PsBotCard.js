@@ -68,6 +68,10 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         width: 60,
         height: 60,
     },
+    cardText: {
+        marginTop: 10,
+        marginBottom: 10,
+    }
 }));
 
 /**
@@ -151,7 +155,7 @@ class PsBotCard extends Component {
                         {this.state.subtitle}
                     </Typography>
                     { (this.state.text) ? (
-                    <Typography component="p" className={this.classes.psTextColor}>
+                    <Typography component="p" className={[this.classes.psTextColor, this.classes.cardText].join(' ')}>
                         {this.state.text}
                     </Typography> ) : '' }
                 </div>

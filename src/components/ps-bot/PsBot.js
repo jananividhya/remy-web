@@ -435,8 +435,6 @@ class PsBot extends Component {
                     let conversations = this.state.conversations.slice();
 
                     if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.text) {
-                        conversationHistory.push(newConversation.id);
-
                         const textConversation = Object.assign({}, newConversation);
                         delete textConversation.attachments;
                         conversations.push(textConversation);
@@ -448,14 +446,6 @@ class PsBot extends Component {
                             });
                         }
 
-                        this.setState({
-                            conversationId: this.state.conversationId,
-                            conversationText: '',
-                            conversations: conversations,
-                            conversationHistory: conversationHistory,
-                            conversationInputText: this.state.conversationInputText,
-                            responseSuggestions: this.state.responseSuggestions,
-                        });
                     } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
                         this.setState({
                             listMenu: newConversation.attachments[0].content.buttons
@@ -466,18 +456,19 @@ class PsBot extends Component {
                         });
                     }
 
-                    //conversationHistory = this.state.conversationHistory;
                     conversationHistory.push(newConversation.id);
+                    if (this.state.responseSuggestions.length === 0) {
+                        conversations.push(newConversation);
+                    }
 
-                    //conversations = this.state.conversations;
-                    conversations.push(newConversation);
 
                     this.setState({
                         conversationId: this.state.conversationId,
                         conversationText: '',
                         conversations: conversations,
                         conversationHistory: conversationHistory,
-                        conversationInputText: this.state.conversationInputText
+                        conversationInputText: this.state.conversationInputText,
+                        responseSuggestions: this.state.responseSuggestions,
                     });
                 }
             }
@@ -690,7 +681,23 @@ class PsBot extends Component {
                                                                 )}
                                                             </TransitionMotion>
                                             {(this.state.conversations.length === id + 1) ?
-                                                <PsBotConversationTime time={conversation.localTimestamp} /> : ''}
+                                                (<TransitionMotion defaultStyles={[
+                                                    { key: id.toString(), style: {marginLeft: -50}},
+                                                ]} styles={[
+                                                    { key: id.toString(), style: { marginLeft: spring(0) }, data: conversation.localTimestamp},
+                                                ]}>
+                                                    {(styles) => (
+                                                        <div>
+                                                            {styles.map(({key, style, data}) => (
+                                                                <div key={key} style={{...style}}>
+                                                                    <PsBotConversationTime time={data} />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+
+                                                    )}
+
+                                                </TransitionMotion>) : ''}
                                     </Grid>
                                   )
                                     :
@@ -747,18 +754,6 @@ class PsBot extends Component {
                                         renderSuggestion={renderSuggestion}
                                         inputProps={inputProps}
                                     />
-                                {/*<Input
-                                    autoFocus
-                                    fullWidth
-                                    id="human-input"
-                                    placeholder={this.state.conversationInputText}
-                                    className={this.classes.input}
-                                    value={this.state.conversationText}
-                                    inputProps={{
-                                    'aria-label': this.state.conversationInputText,
-                                    }}
-                                    onChange={this.setConversation}
-                                />*/}
                                 </form>) : (
                                     <div className={this.classes.input}>
                                     <Button

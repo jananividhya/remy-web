@@ -46,7 +46,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         color: '#9B9B9B',
     },
     conversationContainer: {
-        marginTop: 80,
+        marginTop: 60,
         marginBottom: 60,
     },
     paperBotConversation: {
@@ -58,7 +58,6 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         fontSize: '14px',
         float: 'right',
         textAlign: 'right',
-        /** Remove after confirmation **/
         paddingRight: '10px',
         paddingLeft: '10px',
         position: 'relative',
@@ -210,6 +209,7 @@ class PsBot extends Component {
             menuOpen: false,
             commandSuggestionValue: '',
             commandSuggestions: [],
+            noButtonCard: false,
         };
 
         /**
@@ -246,7 +246,6 @@ class PsBot extends Component {
 
     onSuggestionSelected = (event, {suggestion}) => {
         event.preventDefault();
-        console.log('suggestion ', suggestion);
         this.setState({
             commandSuggestionValue: ''
         });
@@ -296,7 +295,7 @@ class PsBot extends Component {
 
             this.setState(stateObj);
         }).catch((ex) => {
-            console.log('Exception Occurred while parsing json ', ex);
+            console.error('Exception Occurred while parsing json ', ex);
         });
     };
 
@@ -310,7 +309,6 @@ class PsBot extends Component {
      */
     sendConversationToBot = (event, conversationText, isAutoResponse) => {
         if (conversationText instanceof Event) {
-            console.log('Conversation sent to bot ', this.state.commandSuggestionValue);
             conversationText = this.state.commandSuggestionValue;
             this.setState({
                 commandSuggestionValue: ''
@@ -409,7 +407,7 @@ class PsBot extends Component {
 
             let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 200);
         }).catch((ex) => {
-            console.log('Parsing failed while sending conversation to bot ', ex);
+            console.error('Parsing failed while sending conversation to bot ', ex);
         });
     };
 
@@ -445,13 +443,6 @@ class PsBot extends Component {
 
                         if (newConversation.attachments[0].content.buttons) {
                             let responseSuggestions = newConversation.attachments[0].content.buttons;
-                            /* responseSuggestions.push({"type": "emoji",
-                                "title": "+1",
-                                "value": "+1"});
-                            responseSuggestions.push({"type": "emoji",
-                                "title": "-1",
-                                "value": "-1"}); */
-                            
                             this.setState({
                                 responseSuggestions: responseSuggestions,
                             });
@@ -465,9 +456,13 @@ class PsBot extends Component {
                             conversationInputText: this.state.conversationInputText,
                             responseSuggestions: this.state.responseSuggestions,
                         });
-                    } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
+                    } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
                         this.setState({
                             listMenu: newConversation.attachments[0].content.buttons
+                        });
+                    } else {
+                        this.setState({
+                            noButtonCard: true,
                         });
                     }
 
@@ -577,7 +572,7 @@ class PsBot extends Component {
                                     { key: 'quit', style: {marginTop: 0}}
                                 ]}
                                                   styles={[
-                                                      { key: 'greet-welcome', style: { marginTop: spring(110) }, data: {
+                                                      { key: 'greet-welcome', style: { marginTop: spring(60) }, data: {
                                                           type: 'Greet',
                                                           title: "Hello, I'm purpleBot",
                                                       }},
@@ -653,9 +648,6 @@ class PsBot extends Component {
                             ) : ('')
                         }
                         {this.state.conversations.map((conversation, id) => {
-                            console.group('Conversation ');
-                            console.log('Conversation %o', conversation);
-                            console.groupEnd();
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                     <TransitionMotion defaultStyles={[

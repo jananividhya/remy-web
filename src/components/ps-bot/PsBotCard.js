@@ -88,27 +88,6 @@ class PsBotCard extends Component {
         this.state = this.props.data;
     }
 
-    /* {
-          "contentType": "application/vnd.microsoft.card.hero",
-          "content": {
-            "title": "purpleSlate",
-            "subtitle": "Purple : Associated with all the Good things in life - nobility, royalty, power, ambition, creativity, wisdom, dignity, grandeur and magic",
-            "text": "Slate : For many of us, the Slate is the earliest piece of  instrument we are exposed to in our pursuit of Learning. For us, Slate is representative of the high levels of Curiosity and Passion we carried in those early days of our life. Our objective is to get back to those core values, as we did in our very early days of learning - before taking the giant leap to the Future. ",
-            "images": [
-              {
-                "url": "http://www.purpleslate.in/img/ps/arrow.png"
-              }
-            ],
-            "buttons": [
-              {
-                "type": "openUrl",
-                "title": "Read more",
-                "value": "http://www.purpleslate.in"
-              }
-            ]
-          }
-        } */
-
     /**
      * @method isURL
      * @methodOf PsBotCard#isURL
@@ -155,15 +134,15 @@ class PsBotCard extends Component {
                         {this.state.subtitle}
                     </Typography>
                     { (this.state.text) ? (
-                    <Typography component="p" className={[this.classes.psTextColor, this.classes.cardText].join(' ')}>
+                    <Typography component="p" className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
                         {this.state.text}
                     </Typography> ) : '' }
                 </div>
             }
             </CardContent> : '') }
-            {(this.state.buttons) ? (
+            {(!this.state.noButtonCard && this.state.buttons) ? (
                     this.state.buttons.map((button, buttonId) => {
-                        return (button.type === 'openUrl') ? (<Chip label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
+                        return (button.type === 'openUrl') ? (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
                                     onClick={() => this.pSBotButtonClick(button)} />) : ''
                     })
             ) : ''}

@@ -7,6 +7,7 @@ import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Chip from 'material-ui/Chip';
+import Highlight from 'react-highlight';
 
 import isURL from 'validator/lib/isURL';
 
@@ -36,6 +37,7 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     leftAlignedText: {
         float: 'left !important',
         textAlign: 'left !important',
+        marginBottom: '-10px',
     },
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
@@ -135,37 +137,11 @@ class PsBotCard extends Component {
 
     render() {
         return ( <div>
-            {((this.state.title || this.state.subtitle || this.state.text) ? <CardContent className={this.classes.leftAlignedText}> {
-                <div>
-                    {(this.state.images && this.state.images[0]) ? (
-                            <img src={this.state.images[0].url}
-                                alt={this.state.title}
-                                height={50}
-                                width={50}
-                                style={{marginLeft: -10}} />
-                        ) : ''}
-                    <Typography type="headline" component="h2" className={this.classes.psTextColor}>
-                            {this.state.title}
-                    </Typography>
-                    <Typography type="subheading" component="p" className={this.classes.psTextColor}>
-                        {this.state.subtitle}
-                    </Typography>
-                    { (this.state.text) ? (
-                    <Typography component="p" className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
-                        {this.state.text}
-                    </Typography> ) : '' }
-                    {(!this.state.noButtonCard && this.state.buttons) ? (
-                        <div className={this.classes.testQuiz}>
-                            {this.state.buttons.map((button, buttonId) => {
-                            return (button.type === 'openUrl') ? (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
-                                                                                                                  onClick={() => this.pSBotButtonClick(button)} />) : ((button.type === 'quizAnswers') ?
-                                (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTopQuiz].join(' ')} />) : '')
-                        })}
-                        </div>
-                    ) : ''}
-                </div>
-            }
-            </CardContent> : '') }
+            <CardContent className={this.classes.leftAlignedText}>
+                <Highlight className={this.state.language}>
+                    {this.state.code}
+                </Highlight>
+            </CardContent>
         </div> );
     }
 }

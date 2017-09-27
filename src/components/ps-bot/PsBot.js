@@ -27,6 +27,7 @@ import PsBotCard from './PsBotCard';
 import PsBotCardImage from './PsBotCardImage';
 import PsBotConversationTime from './PsBotConversationTime';
 import AutoSuggestTheme from './AutoSuggestTheme.css';
+import PsBotCodeCard from './PsBotCodeCard';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -193,6 +194,79 @@ class PsBot extends Component {
 
         // Needed for onTouchTap
         injectTapEventPlugin();
+
+        /*{
+            "type": "message",
+            "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",
+            "timestamp": "2017-09-27T10:13:25.5564836Z",
+            "localTimestamp": "2017-09-27T10:13:25.756+00:00",
+            "channelId": "webchat",
+            "from": {
+            "id": "fiercebadlands",
+                "name": "fiercebadlands"
+        },
+            "conversation": {
+            "id": "DRbdBQEFmKRDsaFOxRFPL0"
+        },
+            "locale": "en-US",
+            "inputHint": "ignoringInput",
+            "attachments": [
+            {
+                "contentType": "application/vnd.microsoft.card.hero",
+                "content": {
+                    "title": "Multiple Choice Question",
+                    "text": "What is the answer to this question?",
+                    "subtitle": "Choose from below list of answers",
+                    "buttons": [
+                        {
+                            "type": "quizAnswers",
+                            "title": "Answer A"
+                        },
+                        {
+                            "type": "quizAnswers",
+                            "title": "Answer B"
+                        },
+                        {
+                            "type": "quizAnswers",
+                            "title": "Answer C"
+                        },
+                        {
+                            "type": "quizAnswers",
+                            "title": "Answer D"
+                        }
+                    ]
+                }
+            }
+        ],
+            "replyToId": "DRbdBQEFmKRDsaFOxRFPL0|0000011"
+        }*/
+
+        /*{
+            "type": "message",
+            "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",
+            "timestamp": "2017-09-27T10:13:25.5564836Z",
+            "localTimestamp": "2017-09-27T10:13:25.756+00:00",
+            "channelId": "webchat",
+            "from": {
+            "id": "fiercebadlands",
+                "name": "fiercebadlands"
+        },
+            "conversation": {
+            "id": "DRbdBQEFmKRDsaFOxRFPL0"
+        },
+            "locale": "en-US",
+            "inputHint": "ignoringInput",
+            "attachments": [
+            {
+                "contentType": "application/vnd.microsoft.card.code",
+                "content": {
+                    "language": "html",
+                    "code": "<div><p>This is a test</p></div>",
+                }
+            }
+        ],
+            "replyToId": "DRbdBQEFmKRDsaFOxRFPL0|0000011"
+        }*/
 
         /**
          * @type {{conversationId: string, conversationText: string, conversations: Array, conversationHistory: Array, conversationInputText: string}}
@@ -671,7 +745,8 @@ class PsBot extends Component {
                                                             <PsBotCard data={conversation.attachments[0].content}
                                                                        action={this.pSBotButtonClick} /></p>) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
-                                                        ) : data.text))
+                                                        ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
+                                                           <PsBotCodeCard data={conversation.attachments[0].content} /> : data.text))
                                                 }
                                             </div>
                                         </Paper>

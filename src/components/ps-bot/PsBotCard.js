@@ -84,7 +84,13 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     chip: {
 
     },
-    testQuiz: {
+    noQuiz: {
+        marginLeft: '-120px',
+        textAlign: 'center',
+        verticalAlign: 'middle',
+        paddingRight: '10px',
+    },
+    quiz: {
         textAlign: 'center',
         verticalAlign: 'middle',
         paddingRight: '10px',
@@ -155,7 +161,7 @@ class PsBotCard extends Component {
                         {this.state.text}
                     </Typography> ) : '' }
                     {(!this.state.noButtonCard && this.state.buttons) ? (
-                        <div className={this.classes.testQuiz}>
+                        <div className={this.classes.noQuiz}>
                             {this.state.buttons.map((button, buttonId) => {
                             return (button.type === 'openUrl') ? (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
                                                                                                                   onClick={() => this.pSBotButtonClick(button)} />) : ((button.type === 'quizAnswers') ?

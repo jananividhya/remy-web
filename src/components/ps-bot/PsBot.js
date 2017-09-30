@@ -248,23 +248,27 @@ class PsBot extends Component {
             "localTimestamp": "2017-09-27T10:13:25.756+00:00",
             "channelId": "webchat",
             "from": {
-            "id": "fiercebadlands",
+                "id": "fiercebadlands",
                 "name": "fiercebadlands"
-        },
+            },
             "conversation": {
-            "id": "DRbdBQEFmKRDsaFOxRFPL0"
-        },
+                "id": "DRbdBQEFmKRDsaFOxRFPL0"
+            },
             "locale": "en-US",
             "inputHint": "ignoringInput",
             "attachments": [
-            {
-                "contentType": "application/vnd.microsoft.card.code",
-                "content": {
-                    "language": "html",
-                    "code": "<div><p>This is a test</p></div>",
+                {
+                    "contentType": "application/vnd.microsoft.card.code",
+                    "content": {
+                        "language": "javascript",
+                        "code": [
+                            "(function() {",
+                            "       console.log('Hello, World!');",
+                            "})();"
+                        ]
+                    }
                 }
-            }
-        ],
+            ],
             "replyToId": "DRbdBQEFmKRDsaFOxRFPL0|0000011"
         }*/
 

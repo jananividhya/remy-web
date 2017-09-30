@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Chip from 'material-ui/Chip';
 import Highlight from 'react-highlight';
+import '../../../node_modules/highlight.js/styles/idea.css';
 
 import isURL from 'validator/lib/isURL';
 
@@ -37,7 +38,8 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     leftAlignedText: {
         float: 'left !important',
         textAlign: 'left !important',
-        marginBottom: '-10px',
+        marginTop: '-22px',
+        marginBottom: '-38px',
     },
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
@@ -136,13 +138,15 @@ class PsBotCard extends Component {
     };
 
     render() {
-        return ( <div>
+        return (
             <CardContent className={this.classes.leftAlignedText}>
-                <Highlight className={this.state.language}>
-                    {this.state.code}
+                <Highlight className="javascript">
+                    {this.state.code.map((code, key) => (
+                        <p key={key}>{code}</p>
+                    ))}
                 </Highlight>
             </CardContent>
-        </div> );
+        );
     }
 }
 

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Chip from 'material-ui/Chip';
 import Highlight from 'react-highlight';
-import '../../../node_modules/highlight.js/styles/idea.css';
+import '../../../node_modules/highlight.js/styles/vs.css';
 
 import isURL from 'validator/lib/isURL';
 

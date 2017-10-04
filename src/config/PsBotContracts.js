@@ -69,11 +69,15 @@ export default () => {
                 {
                     "contentType": "application/vnd.microsoft.card.code",
                     "content": {
-                        "language": "javascript",
+                        "language": "java",
                         "code": [
-                            "(function() {",
-                            "       console.log('Hello, World!');",
-                            "})();"
+                            "import java.io.*",
+                            "",
+                            "class Test {",
+                            "    public static void main(String args[]) {",
+                            "         System.out.println(\"Hello, World!\")",
+                            "    }",
+                            "}",
                         ]
                     }
                 }

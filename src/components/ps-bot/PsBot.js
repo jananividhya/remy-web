@@ -28,6 +28,9 @@ import PsBotCardImage from './PsBotCardImage';
 import PsBotConversationTime from './PsBotConversationTime';
 import AutoSuggestTheme from './AutoSuggestTheme.css';
 import PsBotCodeCard from './PsBotCodeCard';
+import PsBotQuizCard from './PsBotQuizCard';
+import SlashCommands from '../../config/PsBotSlashCommands';
+import Contracts from '../../config/PsBotContracts';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -195,83 +198,6 @@ class PsBot extends Component {
         // Needed for onTouchTap
         injectTapEventPlugin();
 
-        /*{
-            "type": "message",
-            "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",
-            "timestamp": "2017-09-27T10:13:25.5564836Z",
-            "localTimestamp": "2017-09-27T10:13:25.756+00:00",
-            "channelId": "webchat",
-            "from": {
-            "id": "fiercebadlands",
-                "name": "fiercebadlands"
-        },
-            "conversation": {
-            "id": "DRbdBQEFmKRDsaFOxRFPL0"
-        },
-            "locale": "en-US",
-            "inputHint": "ignoringInput",
-            "attachments": [
-            {
-                "contentType": "application/vnd.microsoft.card.hero",
-                "content": {
-                    "title": "Multiple Choice Question",
-                    "text": "What is the answer to this question?",
-                    "subtitle": "Choose from below list of answers",
-                    "buttons": [
-                        {
-                            "type": "quizAnswers",
-                            "title": "Answer A"
-                        },
-                        {
-                            "type": "quizAnswers",
-                            "title": "Answer B"
-                        },
-                        {
-                            "type": "quizAnswers",
-                            "title": "Answer C"
-                        },
-                        {
-                            "type": "quizAnswers",
-                            "title": "Answer D"
-                        }
-                    ]
-                }
-            }
-        ],
-            "replyToId": "DRbdBQEFmKRDsaFOxRFPL0|0000011"
-        }*/
-
-        /*{
-            "type": "message",
-            "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",
-            "timestamp": "2017-09-27T10:13:25.5564836Z",
-            "localTimestamp": "2017-09-27T10:13:25.756+00:00",
-            "channelId": "webchat",
-            "from": {
-                "id": "fiercebadlands",
-                "name": "fiercebadlands"
-            },
-            "conversation": {
-                "id": "DRbdBQEFmKRDsaFOxRFPL0"
-            },
-            "locale": "en-US",
-            "inputHint": "ignoringInput",
-            "attachments": [
-                {
-                    "contentType": "application/vnd.microsoft.card.code",
-                    "content": {
-                        "language": "javascript",
-                        "code": [
-                            "(function() {",
-                            "       console.log('Hello, World!');",
-                            "})();"
-                        ]
-                    }
-                }
-            ],
-            "replyToId": "DRbdBQEFmKRDsaFOxRFPL0|0000011"
-        }*/
-
         /**
          * @type {{conversationId: string, conversationText: string, conversations: Array, conversationHistory: Array, conversationInputText: string}}
          */
@@ -436,6 +362,51 @@ class PsBot extends Component {
             responseSuggestions: [],
             listMenu: [],
         });
+
+        if (conversationText.charAt(0) === '/') {
+            const allowedSlashCommands = SlashCommands();
+
+            const slashConversation = {
+                "type": "command",
+                "text": conversationText,
+                "from": {
+                    "id": "default-user",
+                    "name": "User"
+                },
+                "locale": "en-US",
+                "textFormat": "plain",
+                "timestamp": new Date(),
+                "localTimestamp": Date.now(),
+                "channelData": {
+                    "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
+                },
+                "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+            };
+
+            if (allowedSlashCommands.hasOwnProperty(conversationText)) {
+                this.setState({
+                    conversationId: this.state.conversationId,
+                    conversationText: '',
+                    conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands[conversationText]]),
+                    conversationHistory: this.state.conversationHistory,
+                    conversationInputText: this.state.conversationInputText,
+                    responseSuggestions: this.state.responseSuggestions,
+                    listMenu: this.state.listMenu,
+                });
+
+            } else {
+                this.setState({
+                    conversationId: this.state.conversationId,
+                    conversationText: '',
+                    conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands['/unknown']]),
+                    conversationHistory: this.state.conversationHistory,
+                    conversationInputText: this.state.conversationInputText,
+                    responseSuggestions: this.state.responseSuggestions,
+                    listMenu: this.state.listMenu,
+                });
+            }
+            return;
+        }
 
         fetch(request)
             .then((response) => {
@@ -747,10 +718,14 @@ class PsBot extends Component {
                                                         ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
                                                             <p>
                                                             <PsBotCard data={conversation.attachments[0].content}
-                                                                       action={this.pSBotButtonClick} /></p>) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
+                                                                       action={this.pSBotButtonClick} /></p>) : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
+                                                            <p>
+                                                                <PsBotQuizCard data={conversation.attachments[0].content}
+                                                                           action={this.pSBotButtonClick} /></p>
+                                                            : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                         ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
-                                                           <PsBotCodeCard data={conversation.attachments[0].content} /> : data.text))
+                                                           <PsBotCodeCard data={conversation.attachments[0].content} /> : data.text)))
                                                 }
                                             </div>
                                         </Paper>

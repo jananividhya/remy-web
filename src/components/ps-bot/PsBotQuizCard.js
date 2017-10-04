@@ -48,6 +48,7 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         paddingTop: '12px',
     },
     buttonTop: {
+        right: '35px',
         top: '6px',
         textAlign: 'center',
         marginRight: '5px',
@@ -150,14 +151,18 @@ class PsBotCard extends Component {
                         {this.state.subtitle}
                     </Typography>
                     { (this.state.text) ? (
-                    <Typography component="p" className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
-                        {this.state.text}
-                    </Typography> ) : '' }
+                            this.state.text.map((textVal, key) => (
+                                <Typography component="p" key={key} className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
+                                    {textVal}
+                                </Typography>
+                            ))
+                    ) : '' }
                     {(!this.state.noButtonCard && this.state.buttons) ? (
-                        <div>
+                        <div className={this.classes.quiz}>
                             {this.state.buttons.map((button, buttonId) => {
-                            return (button.type === 'openUrl') ? (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
-                                                                                                                  onClick={() => this.pSBotButtonClick(button)} />) : ''
+                            return ((button.type === 'quizAnswers') ?
+                                (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTopQuiz].join(' ')}
+                                       onClick={() => this.pSBotButtonClick(button)}/>) : '')
                         })}
                         </div>
                     ) : ''}

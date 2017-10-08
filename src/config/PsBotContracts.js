@@ -21,6 +21,7 @@ export default () => {
                         "title": "Multiple Choice Question",
                         "text": [
                             "What is the answer to this question?",
+                            "This is the second line to the quiz card..",
                         ],
                         "subtitle": "Choose from below list of answers",
                         "buttons": [
@@ -69,15 +70,11 @@ export default () => {
                 {
                     "contentType": "application/vnd.microsoft.card.code",
                     "content": {
-                        "language": "java",
+                        "language": "javascript",
                         "code": [
-                            "import java.io.*",
-                            "",
-                            "class Test {",
-                            "    public static void main(String args[]) {",
-                            "         System.out.println(\"Hello, World!\")",
-                            "    }",
-                            "}",
+                            "(function () {",
+                            "   console.log('Hello, World!')",
+                            "})();",
                         ]
                     }
                 }

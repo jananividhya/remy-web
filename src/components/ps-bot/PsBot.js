@@ -29,6 +29,7 @@ import PsBotConversationTime from './PsBotConversationTime';
 import AutoSuggestTheme from './AutoSuggestTheme.css';
 import PsBotCodeCard from './PsBotCodeCard';
 import PsBotQuizCard from './PsBotQuizCard';
+import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import Contracts from '../../config/PsBotContracts';
 
@@ -725,7 +726,9 @@ class PsBot extends Component {
                                                             : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                         ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
-                                                           <PsBotCodeCard data={conversation.attachments[0].content} /> : data.text)))
+                                                           <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
+                                                                    <PsBotCommandCard data={conversation.attachments[0].content} />
+                                                                    : data.text)))
                                                 }
                                             </div>
                                         </Paper>

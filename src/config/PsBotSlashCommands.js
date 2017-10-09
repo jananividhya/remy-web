@@ -1,3 +1,5 @@
+const uuid = require('uuid');
+
 export default () => {
     return {
         "/help": [{
@@ -11,10 +13,7 @@ export default () => {
             'localTimestamp': Date.now(),
             "textFormat": "plain",
             "timestamp": new Date(),
-            "channelData": {
-                "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
-            },
-            "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+            "id": uuid.v4()
         }, {
             "type": "message",
             "text": "This is a sample help",
@@ -26,70 +25,105 @@ export default () => {
             'localTimestamp': Date.now(),
             "textFormat": "plain",
             "timestamp": new Date(),
-            "channelData": {
-                "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
-            },
-            "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+            "id": uuid.v4()
         }],
         "/menu": [{
             "type": "message",
-            "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",
+            "id": uuid.v4(),
             "timestamp": Date.now(),
             "localTimestamp": Date.now(),
             "from": {
                 "id": "fiercebadlands",
                 "name": "fiercebadlands"
             },
-            "conversation": {
-                "id": "DRbdBQEFmKRDsaFOxRFPL0"
-            },
             "locale": "en-US",
             "inputHint": "ignoringInput",
             "attachments": [
                 {
-                    "contentType": "application/vnd.microsoft.card.quiz",
+                    "contentType": "application/vnd.ps.card.command",
                     "content": {
                         "title": "Available Commands",
-                        "text": [
-                            "/help - Helps you in the middle of a conversation",
-                            "/menu - Lists the menu options",
-                            "/signin - Sign-in and make more context sensitive conversations..",
-                        ],
+                        "commands": [{
+                            "identifier": "/help",
+                            "description": "Helps you in the middle of a conversation"
+                        }, {
+                            "identifier": "/menu",
+                            "description": "Lists the menu options"
+                        }, {
+                            "identifier": "/signin",
+                            "description": "Sign-in and make more context sensitive conversations.."
+                        }],
                         "subtitle": "Commands let you question me and blah blah blah",
                     }
                 }
-            ],
-            "replyToId": "DRbdBQEFmKRDsaFOxRFPL0|0000011"
+            ]
         }],
         "/signin": [{
             "type": "message",
-            "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",
+            "text": "Hey, there!",
+            "from": {
+                "id": "localbot",
+                "name": "localbot"
+            },
+            "locale": "en-US",
+            'localTimestamp': Date.now(),
+            "textFormat": "plain",
+            "timestamp": new Date(),
+            "id": uuid.v4()
+        }, {
+            "type": "message",
+            "text": "I am purpleBot, your anytime learning companion.",
+            "from": {
+                "id": "localbot",
+                "name": "localbot"
+            },
+            "locale": "en-US",
+            'localTimestamp': Date.now(),
+            "textFormat": "plain",
+            "timestamp": new Date(),
+            "id": uuid.v4()
+        }, {
+            "type": "message",
+            "text": "Help me know you better.",
+            "from": {
+                "id": "localbot",
+                "name": "localbot"
+            },
+            "locale": "en-US",
+            'localTimestamp': Date.now(),
+            "textFormat": "plain",
+            "timestamp": new Date(),
+            "id": uuid.v4()
+        }, {
+            "type": "message",
+            "id": uuid.v4(),
             "timestamp": Date.now(),
             "localTimestamp": Date.now(),
             "from": {
                 "id": "fiercebadlands",
                 "name": "fiercebadlands"
             },
-            "conversation": {
-                "id": "DRbdBQEFmKRDsaFOxRFPL0"
-            },
             "locale": "en-US",
             "inputHint": "ignoringInput",
             "attachments": [
                 {
-                    "contentType": "application/vnd.microsoft.card.quiz",
+                    "contentType": "application/vnd.ps.card.command",
                     "content": {
-                        "title": "Available Commands",
-                        "text": [
-                            "/help - Helps you in the middle of a conversation",
-                            "/menu - Lists the menu options",
-                            "/signin - Sign-in and make more context sensitive conversations..",
-                        ],
-                        "subtitle": "Commands let you question me and blah blah blah",
+                        "title": "Sign-in to purpleSlate",
+                        "commands": [{
+                            "identifier": "/signin-with-fb",
+                            "description": "sign in with fb"
+                        }, {
+                            "identifier": "/help",
+                            "description": "Lists the menu options"
+                        }, {
+                            "identifier": "/help",
+                            "description": "Sign-in and make more context sensitive conversations.."
+                        }],
+                        "subtitle": "How do you want to authenticate yourself? You have few options.",
                     }
                 }
-            ],
-            "replyToId": "DRbdBQEFmKRDsaFOxRFPL0|0000011"
+            ]
         }],
         "/unknown": [{
             "type": "message",
@@ -102,39 +136,37 @@ export default () => {
             'localTimestamp': Date.now(),
             "textFormat": "plain",
             "timestamp": new Date(),
-            "channelData": {
-                "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
-            },
-            "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+            "id": uuid.v4()
         }, {
             "type": "message",
-            "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",
+            "id": uuid.v4(),
             "timestamp": Date.now(),
             "localTimestamp": Date.now(),
             "from": {
                 "id": "fiercebadlands",
                 "name": "fiercebadlands"
             },
-            "conversation": {
-                "id": "DRbdBQEFmKRDsaFOxRFPL0"
-            },
             "locale": "en-US",
             "inputHint": "ignoringInput",
             "attachments": [
                 {
-                    "contentType": "application/vnd.microsoft.card.quiz",
+                    "contentType": "application/vnd.ps.card.command",
                     "content": {
                         "title": "Available Commands",
-                        "text": [
-                            "/help - Helps you in the middle of a conversation",
-                            "/menu - Lists the menu options",
-                            "/signin - Sign-in and make more context sensitive conversations..",
-                        ],
+                        "commands": [{
+                            "identifier": "/help",
+                            "description": "Helps you in the middle of a conversation"
+                        }, {
+                            "identifier": "/menu",
+                            "description": "Lists the menu options"
+                        }, {
+                            "identifier": "/signin",
+                            "description": "Sign-in and make more context sensitive conversations.."
+                        }],
                         "subtitle": "Commands let you question me and blah blah blah",
                     }
                 }
-            ],
-            "replyToId": "DRbdBQEFmKRDsaFOxRFPL0|0000011"
+            ]
         }]
     };
 };

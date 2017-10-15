@@ -26,6 +26,12 @@ import PsHumanConversation from './PsHumanConversation';
 import PsBotCard from './PsBotCard';
 import PsBotCardImage from './PsBotCardImage';
 import PsBotConversationTime from './PsBotConversationTime';
+import AutoSuggestTheme from './AutoSuggestTheme.css';
+import PsBotCodeCard from './PsBotCodeCard';
+import PsBotQuizCard from './PsBotQuizCard';
+import PsBotCommandCard from './commands/PsBotCommandCard';
+import SlashCommands from '../../config/PsBotSlashCommands';
+import Contracts from '../../config/PsBotContracts';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -45,7 +51,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         color: '#9B9B9B',
     },
     conversationContainer: {
-        marginTop: 80,
+        marginTop: 60,
         marginBottom: 60,
     },
     paperBotConversation: {
@@ -57,7 +63,6 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         fontSize: '14px',
         float: 'right',
         textAlign: 'right',
-        /** Remove after confirmation **/
         paddingRight: '10px',
         paddingLeft: '10px',
         position: 'relative',
@@ -98,6 +103,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
         fontFamily: 'Lato, sans-serif !important',
+        cursor: 'pointer',
     },
     conversationOptions: {
         background: 'rgba(150, 101, 171, 0.87)',
@@ -129,14 +135,24 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
 
 const commandSuggestions = [
     {
-        key: 'hello',
-        title: 'Say Hello to purpleBot',
-        value: 'Hello',
+        key: '/hello',
+        title: 'Say Hello to purpleBot - /hello',
+        value: 'hello',
     },
     {
-        key: 'learn',
-        title: 'Learn with purpleBot',
+        key: '/learn',
+        title: 'Learn with purpleBot - /learn',
         value: 'learn',
+    },
+    {
+        key: '/aboutus',
+        title: 'About Us - /aboutus',
+        value: 'About us',
+    },
+    {
+        key: '/quit',
+        title: 'Talk to you later - /quit',
+        value: 'quit',
     }
 ];
 
@@ -144,15 +160,15 @@ const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return inputLength === 0 ? [] : commandSuggestions.filter(lang =>
-        lang.title.toLowerCase().slice(0, inputLength) === inputValue
+    return inputLength === 0 ? [] : commandSuggestions.filter(command =>
+        command.key.toLowerCase().slice(0, inputLength) === inputValue
     );
 };
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.title;
+const getSuggestionValue = suggestion => suggestion.value;
 
 // Use your imagination to render suggestions.
 const renderSuggestion = suggestion => (
@@ -198,6 +214,7 @@ class PsBot extends Component {
             menuOpen: false,
             commandSuggestionValue: '',
             commandSuggestions: [],
+            noButtonCard: false,
         };
 
         /**
@@ -230,6 +247,14 @@ class PsBot extends Component {
         this.setState({
             commandSuggestions: []
         });
+    };
+
+    onSuggestionSelected = (event, {suggestion}) => {
+        event.preventDefault();
+        this.setState({
+            commandSuggestionValue: ''
+        });
+        this.pSBotSuggestionResponseClick(suggestion);
     };
 
     allowedImageTypes = [
@@ -275,7 +300,7 @@ class PsBot extends Component {
 
             this.setState(stateObj);
         }).catch((ex) => {
-            console.log('Exception Occurred while parsing json ', ex);
+            console.error('Exception Occurred while parsing json ', ex);
         });
     };
 
@@ -288,6 +313,16 @@ class PsBot extends Component {
      * @description Sends the user conversation to pS Bot
      */
     sendConversationToBot = (event, conversationText, isAutoResponse) => {
+        if (conversationText instanceof Event) {
+            conversationText = this.state.commandSuggestionValue;
+            this.setState({
+                commandSuggestionValue: ''
+            });
+        }
+
+
+        if (event) event.preventDefault();
+
         this.setState({
             responseSuggestions: [],
         });
@@ -328,6 +363,51 @@ class PsBot extends Component {
             responseSuggestions: [],
             listMenu: [],
         });
+
+        if (conversationText.charAt(0) === '/') {
+            const allowedSlashCommands = SlashCommands();
+
+            const slashConversation = {
+                "type": "command",
+                "text": conversationText,
+                "from": {
+                    "id": "default-user",
+                    "name": "User"
+                },
+                "locale": "en-US",
+                "textFormat": "plain",
+                "timestamp": new Date(),
+                "localTimestamp": Date.now(),
+                "channelData": {
+                    "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
+                },
+                "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+            };
+
+            if (allowedSlashCommands.hasOwnProperty(conversationText)) {
+                this.setState({
+                    conversationId: this.state.conversationId,
+                    conversationText: '',
+                    conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands[conversationText]]),
+                    conversationHistory: this.state.conversationHistory,
+                    conversationInputText: this.state.conversationInputText,
+                    responseSuggestions: this.state.responseSuggestions,
+                    listMenu: this.state.listMenu,
+                });
+
+            } else {
+                this.setState({
+                    conversationId: this.state.conversationId,
+                    conversationText: '',
+                    conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands['/unknown']]),
+                    conversationHistory: this.state.conversationHistory,
+                    conversationInputText: this.state.conversationInputText,
+                    responseSuggestions: this.state.responseSuggestions,
+                    listMenu: this.state.listMenu,
+                });
+            }
+            return;
+        }
 
         fetch(request)
             .then((response) => {
@@ -377,10 +457,8 @@ class PsBot extends Component {
 
             let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 200);
         }).catch((ex) => {
-            console.log('Parsing failed while sending conversation to bot ', ex);
+            console.error('Parsing failed while sending conversation to bot ', ex);
         });
-
-        if (event) event.preventDefault();
     };
 
     /**
@@ -407,52 +485,40 @@ class PsBot extends Component {
                     let conversations = this.state.conversations.slice();
 
                     if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.text) {
-                        conversationHistory.push(newConversation.id);
-
                         const textConversation = Object.assign({}, newConversation);
                         delete textConversation.attachments;
                         conversations.push(textConversation);
 
                         if (newConversation.attachments[0].content.buttons) {
                             let responseSuggestions = newConversation.attachments[0].content.buttons;
-                            /* responseSuggestions.push({"type": "emoji",
-                                "title": "+1",
-                                "value": "+1"});
-                            responseSuggestions.push({"type": "emoji",
-                                "title": "-1",
-                                "value": "-1"}); */
-                            
                             this.setState({
                                 responseSuggestions: responseSuggestions,
                             });
                         }
 
-                        this.setState({
-                            conversationId: this.state.conversationId,
-                            conversationText: '',
-                            conversations: conversations,
-                            conversationHistory: conversationHistory,
-                            conversationInputText: this.state.conversationInputText,
-                            responseSuggestions: this.state.responseSuggestions,
-                        });
-                    } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
+                    } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
                         this.setState({
                             listMenu: newConversation.attachments[0].content.buttons
                         });
+                    } else {
+                        this.setState({
+                            noButtonCard: true,
+                        });
                     }
 
-                    //conversationHistory = this.state.conversationHistory;
                     conversationHistory.push(newConversation.id);
+                    if (this.state.responseSuggestions.length === 0) {
+                        conversations.push(newConversation);
+                    }
 
-                    //conversations = this.state.conversations;
-                    conversations.push(newConversation);
 
                     this.setState({
                         conversationId: this.state.conversationId,
                         conversationText: '',
                         conversations: conversations,
                         conversationHistory: conversationHistory,
-                        conversationInputText: this.state.conversationInputText
+                        conversationInputText: this.state.conversationInputText,
+                        responseSuggestions: this.state.responseSuggestions,
                     });
                 }
             }
@@ -512,7 +578,7 @@ class PsBot extends Component {
         const commandSuggestions = this.state.commandSuggestions;
 
         const inputProps = {
-            placeholder: 'Type a command',
+            placeholder: 'Say something..',
             value,
             onChange: this.onSuggestionChange
         };
@@ -532,7 +598,7 @@ class PsBot extends Component {
 
         return ( <div>
                 <div className={this.classes.root}>
-                    <PsBotNavbar marginTop={-80} marginLeft={-10} />
+                    <PsBotNavbar marginTop={-30} marginLeft={-10} action={this.pSBotButtonClick} />
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {
                             hideOptions ? (
@@ -547,7 +613,7 @@ class PsBot extends Component {
                                     { key: 'quit', style: {marginTop: 0}}
                                 ]}
                                                   styles={[
-                                                      { key: 'greet-welcome', style: { marginTop: spring(110) }, data: {
+                                                      { key: 'greet-welcome', style: { marginTop: spring(60) }, data: {
                                                           type: 'Greet',
                                                           title: "Hello, I'm purpleBot",
                                                       }},
@@ -623,9 +689,6 @@ class PsBot extends Component {
                             ) : ('')
                         }
                         {this.state.conversations.map((conversation, id) => {
-                            console.group('Conversation ');
-                            console.log('Conversation %o', conversation);
-                            console.groupEnd();
                             return (conversation.from.name !== 'User' ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                     <TransitionMotion defaultStyles={[
@@ -656,9 +719,16 @@ class PsBot extends Component {
                                                         ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
                                                             <p>
                                                             <PsBotCard data={conversation.attachments[0].content}
-                                                                       action={this.pSBotButtonClick} /></p>) : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
+                                                                       action={this.pSBotButtonClick} /></p>) : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
+                                                            <p>
+                                                                <PsBotQuizCard data={conversation.attachments[0].content}
+                                                                           action={this.pSBotButtonClick} /></p>
+                                                            : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
-                                                        ) : data.text))
+                                                        ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
+                                                           <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
+                                                                    <PsBotCommandCard data={conversation.attachments[0].content} />
+                                                                    : data.text)))
                                                 }
                                             </div>
                                         </Paper>
@@ -668,7 +738,23 @@ class PsBot extends Component {
                                                                 )}
                                                             </TransitionMotion>
                                             {(this.state.conversations.length === id + 1) ?
-                                                <PsBotConversationTime time={conversation.localTimestamp} /> : ''}
+                                                (<TransitionMotion defaultStyles={[
+                                                    { key: id.toString(), style: {marginLeft: -50}},
+                                                ]} styles={[
+                                                    { key: id.toString(), style: { marginLeft: spring(0) }, data: conversation.localTimestamp},
+                                                ]}>
+                                                    {(styles) => (
+                                                        <div>
+                                                            {styles.map(({key, style, data}) => (
+                                                                <div key={key} style={{...style}}>
+                                                                    <PsBotConversationTime time={data} />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+
+                                                    )}
+
+                                                </TransitionMotion>) : ''}
                                     </Grid>
                                   )
                                     :
@@ -715,27 +801,16 @@ class PsBot extends Component {
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 {(this.state.listMenu && this.state.listMenu.length === 0) ?
                                 (<form onSubmit={this.sendConversationToBot} autoComplete="off">
-                                    {/*<Autosuggest
-                                        className={this.classes.input}
+                                    <Autosuggest
+                                        autoFocus="on"
                                         suggestions={commandSuggestions}
                                         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                                         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                        onSuggestionSelected={this.onSuggestionSelected}
                                         getSuggestionValue={getSuggestionValue}
                                         renderSuggestion={renderSuggestion}
                                         inputProps={inputProps}
-                                    />*/}
-                                <Input
-                                    autoFocus
-                                    fullWidth
-                                    id="human-input"
-                                    placeholder={this.state.conversationInputText}
-                                    className={this.classes.input}
-                                    value={this.state.conversationText}
-                                    inputProps={{
-                                    'aria-label': this.state.conversationInputText,
-                                    }}
-                                    onChange={this.setConversation}
-                                />
+                                    />
                                 </form>) : (
                                     <div className={this.classes.input}>
                                     <Button

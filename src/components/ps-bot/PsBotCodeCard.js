@@ -7,6 +7,8 @@ import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Chip from 'material-ui/Chip';
+import Highlight from 'react-highlight';
+import '../../../node_modules/highlight.js/styles/vs.css';
 
 import isURL from 'validator/lib/isURL';
 
@@ -36,6 +38,8 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     leftAlignedText: {
         float: 'left !important',
         textAlign: 'left !important',
+        marginTop: '-22px',
+        marginBottom: '-38px',
     },
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
@@ -48,6 +52,7 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         paddingTop: '12px',
     },
     buttonTop: {
+        right: '35px',
         top: '6px',
         textAlign: 'center',
         marginRight: '5px',
@@ -83,7 +88,7 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     chip: {
 
     },
-    quiz: {
+    testQuiz: {
         textAlign: 'center',
         verticalAlign: 'middle',
         paddingRight: '10px',
@@ -133,38 +138,15 @@ class PsBotCard extends Component {
     };
 
     render() {
-        return ( <div>
-            {((this.state.title || this.state.subtitle || this.state.text) ? <CardContent className={this.classes.leftAlignedText}> {
-                <div>
-                    {(this.state.images && this.state.images[0]) ? (
-                            <img src={this.state.images[0].url}
-                                alt={this.state.title}
-                                height={50}
-                                width={50}
-                                style={{marginLeft: -10}} />
-                        ) : ''}
-                    <Typography type="headline" component="h2" className={this.classes.psTextColor}>
-                            {this.state.title}
-                    </Typography>
-                    <Typography type="subheading" component="p" className={this.classes.psTextColor}>
-                        {this.state.subtitle}
-                    </Typography>
-                    { (this.state.text) ? (
-                    <Typography component="p" className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
-                        {this.state.text}
-                    </Typography> ) : '' }
-                    {(!this.state.noButtonCard && this.state.buttons) ? (
-                        <div>
-                            {this.state.buttons.map((button, buttonId) => {
-                            return (button.type === 'openUrl') ? (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
-                                                                                                                  onClick={() => this.pSBotButtonClick(button)} />) : ''
-                        })}
-                        </div>
-                    ) : ''}
-                </div>
-            }
-            </CardContent> : '') }
-        </div> );
+        return (
+            <CardContent className={this.classes.leftAlignedText}>
+                <Highlight className="javascript">
+                    {this.state.code.map((code, key) => (
+                        <p key={key}>{code}</p>
+                    ))}
+                </Highlight>
+            </CardContent>
+        );
     }
 }
 

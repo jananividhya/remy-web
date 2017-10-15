@@ -11,10 +11,25 @@ import {Motion, spring} from 'react-motion';
 
 import renderHTML from 'react-render-html';
 
+// App imports
+import SlashCommand from './PsSlashCommand';
+
 const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
+        boxShadow: '0px 0px',
+        border: '1px solid #D2D1D2',
+        borderRadius: '15px',
+        fontSize: '14px',
+        float: 'left',
+        textAlign: 'left',
+        letterSpacing: '0px',
+        paddingRight: '10px',
+        paddingLeft: '10px',
+        position: 'relative',
+    },
+    paperHumanCommand: {
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
         borderRadius: '15px',
@@ -32,7 +47,8 @@ const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     },
     commandHighlight: {
         fontFamily: 'monospace',
-        color: 'red',
+        color: '#550000',
+        backgroundColor: '#FFAAAA',
     },
 }));
 
@@ -51,25 +67,13 @@ class PsHumanConversation extends Component {
         };
     }
 
-    conversationContent = (val, conversationText) => {
-        return (<p>
-                        {renderHTML(conversationText)}
-                    </p>);
-    };
-
-    toggleHover = () => {
-        this.setState({
-            hover: !this.state.hover
-        });
-    };
-
     render() {
 
         let conversationText = this.props.conversationText;
+        let isSlashCommand = false;
 
-        if (conversationText && conversationText.indexOf('`') >= 0) {
-            conversationText = conversationText.replace('`', '<span className={this.classes.commandHighlight} style="color: yellow;">');
-            conversationText = conversationText.replace('`', '</span>');
+        if (conversationText && conversationText.charAt(0) === '/') {
+            isSlashCommand = true;
         }
 
         return (
@@ -80,10 +84,12 @@ class PsHumanConversation extends Component {
                         <Grid item xs={12} sm={12} style={{
                             transform: "scale(" + x + ")"
                         }}>
-                            <Paper className={this.classes.paperHumanConversation} >
+                            <Paper className={(!isSlashCommand) ? this.classes.paperHumanConversation
+                                : this.classes.paperHumanCommand} >
                                 <div className={this.classes.conversationText}>            
                                     <p>
-                                        {renderHTML(conversationText)}
+                                        {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
+                                            : conversationText}
                                     </p>
                                 </div>
                             </Paper>

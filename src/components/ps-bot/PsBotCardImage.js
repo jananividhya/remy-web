@@ -25,10 +25,26 @@ class PsBotCardImage extends Component {
         this.classes = props.classes;
     }
 
+    getImageDetails = async () => {
+        const imageDetails = await fetch(this.props.imageUrl);
+        return await imageDetails.blob();
+    };
+
+    componentDidMount = async () => {
+        try {
+            const imageBlog = await this.getImageDetails();
+            const imageObj = URL.createObjectURL(imageBlog);
+            this.imageSrc = imageObj.src;
+        } catch (err) {
+            this.imageSrc = 'arrow.png';
+        }
+
+    };
+
     render() {
         return ( <p>
             <CardMedia>
-                <img src={this.props.imageUrl} alt="" 
+                <img src={this.imageSrc} alt=""
                     style={{height: this.props.height || '240', width: this.props.width || '240'}} />
             </CardMedia>
         </p> );

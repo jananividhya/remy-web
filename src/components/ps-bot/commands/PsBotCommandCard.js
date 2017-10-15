@@ -10,10 +10,13 @@ import Chip from 'material-ui/Chip';
 
 import isURL from 'validator/lib/isURL';
 
-// Style Imports
-import './PsBotButton.css';
+// App imports
+import PsBotCommandList from './PsBotCommandList';
 
-const styleSheet = createStyleSheet('PsBotCard', theme => ({
+// Style Imports
+import '../PsBotButton.css';
+
+const styleSheet = createStyleSheet('PsBotCommandCard', theme => ({
     buttonResponse: {
         boxShadow: '0px 0px',
         color: '#FFFFFF',
@@ -48,6 +51,7 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         paddingTop: '12px',
     },
     buttonTop: {
+        right: '35px',
         top: '6px',
         textAlign: 'center',
         marginRight: '5px',
@@ -95,7 +99,7 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
  * @extends Component
  * @description pS Bot Card Response
  */
-class PsBotCard extends Component {
+class PsBotCommandCard extends Component {
 
     constructor(props) {
         super(props);
@@ -134,7 +138,7 @@ class PsBotCard extends Component {
 
     render() {
         return ( <div>
-            {((this.state.title || this.state.subtitle || this.state.text) ? <CardContent className={this.classes.leftAlignedText}> {
+            {((this.state.title || this.state.subtitle || this.state.commands) ? <CardContent className={this.classes.leftAlignedText}> {
                 <div>
                     {(this.state.images && this.state.images[0]) ? (
                             <img src={this.state.images[0].url}
@@ -149,15 +153,15 @@ class PsBotCard extends Component {
                     <Typography type="subheading" component="p" className={this.classes.psTextColor}>
                         {this.state.subtitle}
                     </Typography>
-                    { (this.state.text) ? (
-                    <Typography component="p" className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
-                        {this.state.text}
-                    </Typography> ) : '' }
+                    {(this.state.commands) ? (
+                            <PsBotCommandList commandList={this.state.commands} />
+                    ) : '' }
                     {(!this.state.noButtonCard && this.state.buttons) ? (
-                        <div>
+                        <div className={this.classes.quiz}>
                             {this.state.buttons.map((button, buttonId) => {
-                            return (button.type === 'openUrl') ? (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTop].join(' ')}
-                                                                                                                  onClick={() => this.pSBotButtonClick(button)} />) : ''
+                            return ((button.type === 'quizAnswers') ?
+                                (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTopQuiz].join(' ')}
+                                       onClick={() => this.pSBotButtonClick(button)}/>) : '')
                         })}
                         </div>
                     ) : ''}
@@ -168,8 +172,8 @@ class PsBotCard extends Component {
     }
 }
 
-PsBotCard.propTypes = {
+PsBotCommandCard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(PsBotCard);
+export default withStyles(styleSheet)(PsBotCommandCard);

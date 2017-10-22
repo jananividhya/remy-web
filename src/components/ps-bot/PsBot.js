@@ -32,6 +32,7 @@ import PsBotQuizCard from './PsBotQuizCard';
 import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import Contracts from '../../config/PsBotContracts';
+import PsBotWallpapers from './PsBotWallpapers';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -43,7 +44,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10,
-        height: 330,
+        width: '98%',
     },
     conversationInput: {
         fontFamily: 'Lato, sans-serif',
@@ -75,7 +76,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 582,
+        width: '100%',
         fontFamily: 'Lato, sans-serif',
         fontSize: '15px',
     },
@@ -124,6 +125,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         boxShadow: '0px 0px',
         fontSize: '20px',
         float: 'center',
+        align: 'center',
         letterSpacing: '0px',
         paddingRight: '10px',
         paddingLeft: '10px',
@@ -215,6 +217,7 @@ class PsBot extends Component {
             commandSuggestionValue: '',
             commandSuggestions: [],
             noButtonCard: false,
+            loadWallpaper: true,
         };
 
         /**
@@ -559,6 +562,16 @@ class PsBot extends Component {
         this.sendConversationToBot(null, buttonValue, true);
     };
 
+    wallpaperClick = (toLoad) => {
+        if (toLoad) {
+            window.open(toLoad);
+        }
+
+        this.setState({
+            loadWallpaper: false,
+        });
+    };
+
     pSBotSuggestionResponseClick = (button) => {
         const buttonValue = button.value;
         this.pSBotButtonClick(buttonValue);
@@ -596,8 +609,13 @@ class PsBot extends Component {
             hideOptions = false;
         }
 
-        return ( <div>
+        return (
                 <div className={this.classes.root}>
+                    {
+                    (this.state.loadWallpaper) ? (
+                        <PsBotWallpapers action={(loadUrl) => this.wallpaperClick(loadUrl)}/>
+                    ) : (
+                        <div>
                     <PsBotNavbar marginTop={-30} marginLeft={-10} action={this.pSBotButtonClick} />
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {
@@ -839,8 +857,10 @@ class PsBot extends Component {
                             </div>
                         </Grid>
                     </Grid>
+                        </div>
+                    )
+                    }
                 </div>
-            </div>
         );
     }
 }

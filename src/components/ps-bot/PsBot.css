@@ -14,14 +14,14 @@
 }
 
 .Ps-Bot-Conversation-Input-Container {
-    top: 638px;
+    top: 615px;
     margin-left: -10px;
     position: absolute;
     z-index: 1000;
 }
 
 .Ps-Bot-Conversation-Input {
-    width: 490px;
+    width: 100%;
 }
 
 .Ps-Bot-Conversation-Human {

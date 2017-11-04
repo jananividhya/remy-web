@@ -31,8 +31,11 @@ import PsBotCodeCard from './PsBotCodeCard';
 import PsBotQuizCard from './PsBotQuizCard';
 import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
+import PsError from './PsErr';
 import Contracts from '../../config/PsBotContracts';
 import PsBotWallpapers from './PsBotWallpapers';
+
+import HandleErrors from '../../util/HandleErrors';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -390,7 +393,7 @@ class PsBot extends Component {
 
             if (allowedSlashCommands.hasOwnProperty(conversationText)) {
                 const commandResponses = allowedSlashCommands[conversationText];
-                
+
                 for (const response of commandResponses) {
                     if (response.nextConversation) {
                         console.log('Spreading the next conversation to conversations.', response.nextConversation[0]);
@@ -440,9 +443,7 @@ class PsBot extends Component {
 
         if (this.state.sendInputToServer) {
             fetch(request)
-            .then((response) => {
-                return response.json();
-            }).then((json) => {
+                .then(HandleErrors).then((json) => {
             this.setState({
                 conversationId: this.state.conversationId,
                 conversationText: '',
@@ -487,7 +488,16 @@ class PsBot extends Component {
 
             let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 200);
         }).catch((ex) => {
-            console.error('Parsing failed while sending conversation to bot ', ex);
+            console.error('Parsing failed while sending conversation to bot ', JSON.stringify(ex));
+            this.setState({
+                conversationId: this.state.conversationId,
+                conversationText: '',
+                conversations: this.state.conversations.concat([...PsError['unableToConnect']]),
+                conversationHistory: this.state.conversationHistory,
+                conversationInputText: this.state.conversationInputText,
+                responseSuggestions: this.state.responseSuggestions,
+                listMenu: this.state.listMenu,
+            });
         });
         }
     };
@@ -558,7 +568,8 @@ class PsBot extends Component {
                 clearInterval(fetchBotConversationsTimer);
             }
         }).catch((ex) => {
-
+            console.log("Error Occurred while getting conversation from bot", ex);
+            clearInterval(fetchBotConversationsTimer);
         });
     };
 
@@ -644,8 +655,8 @@ class PsBot extends Component {
                         <PsBotWallpapers action={(loadUrl) => this.wallpaperClick(loadUrl)}/>
                     ) : (
                         <div>
-                    <PsBotNavbar marginTop={-30} 
-                                marginLeft={-10} 
+                    <PsBotNavbar marginTop={-30}
+                                marginLeft={-10}
                                 action={this.pSBotButtonClick}
                                 theme={this.props.navbarTheme}
                          />
@@ -774,7 +785,7 @@ class PsBot extends Component {
                                                                 <PsBotQuizCard data={conversation.attachments[0].content}
                                                                            action={this.pSBotButtonClick} /></p>
                                                             : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
-                                                            <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
+                                                            <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} fetchImg={conversation.attachments[0].fetchImg} />
                                                         ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                            <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                     <PsBotCommandCard data={conversation.attachments[0].content} />

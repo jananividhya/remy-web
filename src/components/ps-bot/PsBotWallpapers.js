@@ -3,8 +3,8 @@ import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 
 const botPaperClass = {
-    height: '600px',
-    width: '500px'
+    height: '570px',
+    width: '100%'
 };
 
 const botPapers = [
@@ -84,10 +84,8 @@ const randomBotPaper = Math.floor(Math.random() * (botPapers.length - 2));
 
 export default (props) => (
     <Grid container gutter={8}>
-        <Grid item xs={12} sm={12}>
-            <Paper onClick={() => wallpaperClick(props, randomBotPaper)}>
-                <img src={botPapers[randomBotPaper].src} style={botPaperClass} />
-            </Paper>
+        <Grid item xs={12} sm={12} onClick={() => wallpaperClick(props, randomBotPaper)}>
+            <img src={botPapers[randomBotPaper].src} style={botPaperClass} />
         </Grid>
     </Grid>
 );

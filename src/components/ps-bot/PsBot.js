@@ -218,6 +218,7 @@ class PsBot extends Component {
             commandSuggestions: [],
             noButtonCard: false,
             loadWallpaper: true,
+            sendInputToServer: true,
         };
 
         /**
@@ -388,15 +389,40 @@ class PsBot extends Component {
             };
 
             if (allowedSlashCommands.hasOwnProperty(conversationText)) {
-                this.setState({
-                    conversationId: this.state.conversationId,
-                    conversationText: '',
-                    conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands[conversationText]]),
-                    conversationHistory: this.state.conversationHistory,
-                    conversationInputText: this.state.conversationInputText,
-                    responseSuggestions: this.state.responseSuggestions,
-                    listMenu: this.state.listMenu,
-                });
+                const commandResponses = allowedSlashCommands[conversationText];
+                
+                for (const response of commandResponses) {
+                    if (response.nextConversation) {
+                        console.log('Spreading the next conversation to conversations.', response.nextConversation[0]);
+                        this.setState({
+                            conversationId: this.state.conversationId,
+                            conversationText: '',
+                            conversations: this.state.conversations.concat([slashConversation, ...response.nextConversation]),
+                            conversationHistory: this.state.conversationHistory,
+                            conversationInputText: this.state.conversationInputText,
+                            responseSuggestions: this.state.responseSuggestions,
+                            listMenu: this.state.listMenu,
+                        });
+
+                        for (const nextConv of response.nextConversation) {
+                            if (nextConv.doesExpectInput) {
+                                this.setState({
+                                    sendInputToServer: false
+                                });
+                            }
+                        }
+                    } else {
+                        this.setState({
+                            conversationId: this.state.conversationId,
+                            conversationText: '',
+                            conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands[conversationText]]),
+                            conversationHistory: this.state.conversationHistory,
+                            conversationInputText: this.state.conversationInputText,
+                            responseSuggestions: this.state.responseSuggestions,
+                            listMenu: this.state.listMenu,
+                        });
+                    }
+                }
 
             } else {
                 this.setState({
@@ -412,7 +438,8 @@ class PsBot extends Component {
             return;
         }
 
-        fetch(request)
+        if (this.state.sendInputToServer) {
+            fetch(request)
             .then((response) => {
                 return response.json();
             }).then((json) => {
@@ -462,6 +489,7 @@ class PsBot extends Component {
         }).catch((ex) => {
             console.error('Parsing failed while sending conversation to bot ', ex);
         });
+        }
     };
 
     /**
@@ -616,7 +644,11 @@ class PsBot extends Component {
                         <PsBotWallpapers action={(loadUrl) => this.wallpaperClick(loadUrl)}/>
                     ) : (
                         <div>
-                    <PsBotNavbar marginTop={-30} marginLeft={-10} action={this.pSBotButtonClick} />
+                    <PsBotNavbar marginTop={-30} 
+                                marginLeft={-10} 
+                                action={this.pSBotButtonClick}
+                                theme={this.props.navbarTheme}
+                         />
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {
                             hideOptions ? (

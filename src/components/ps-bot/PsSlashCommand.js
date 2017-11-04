@@ -8,6 +8,7 @@ const commandHighlight = {
 
 export default (props) => (
     <span style={commandHighlight}>
-        {props.commandText.substring(1, props.commandText.length)}
+        {(props.commandText.charAt(0) === '/') ? 
+            (props.commandText.substring(1, props.commandText.length)) : props.commandText}
     </span>
 );

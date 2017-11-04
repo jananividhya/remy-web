@@ -18,6 +18,14 @@ import PsBot from './components/ps-bot/PsBot';
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';
 
+const darkTheme = {
+    navbar: {
+        appBar: {
+            
+        }
+    },
+}
+
 const paperStyle = {
     height: '630px',
     width: '98%',
@@ -38,6 +46,7 @@ ReactDOM.render(
                 <Paper style={paperStyle}>
                     <PsBot conversationInputText="Say Something.."
                            accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
+                           navbarTheme={darkTheme.navbar}
                            />
                 </Paper>
             </div>

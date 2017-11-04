@@ -80,7 +80,7 @@ const wallpaperClick = (props, index) => {
     }
 };
 
-const randomBotPaper = Math.floor(Math.random() * botPapers.length - 2);
+const randomBotPaper = Math.floor(Math.random() * (botPapers.length - 2));
 
 export default (props) => (
     <Grid container gutter={8}>

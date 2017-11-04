@@ -103,7 +103,7 @@ const slashCommands = {
             "name": "fiercebadlands"
         },
         "locale": "en-US",
-        "inputHint": "ignoringInput",
+        "inputHint": "expectingInput",
         "attachments": [
             {
                 "contentType": "application/vnd.ps.card.command",
@@ -207,7 +207,63 @@ const slashCommands = {
                 }
             }
         ]
-    }]
+    }],
+    "/signinwithps": [
+        {
+            "type": "message",
+            "text": "Let's sign in with purpleSlate",
+            "from": {
+                "id": "localbot",
+                "name": "localbot"
+            },
+            "locale": "en-US",
+            'localTimestamp': Date.now(),
+            "textFormat": "plain",
+            "timestamp": new Date(),
+            "id": uuid.v4(),
+            "nextConversation": [{
+                "type": "message",
+                "text": "Please enter your user name",
+                "from": {
+                    "id": "localbot",
+                    "name": "localbot"
+                },
+                "locale": "en-US",
+                'localTimestamp': Date.now(),
+                "textFormat": "plain",
+                "timestamp": new Date(),
+                "id": uuid.v4(),
+                "doesExpectInput": true,
+                "inputType": "text",
+                "action": {
+                    "type": "saveLocal",
+                    "value": "_userId", 
+                },
+                "nextConversation": [{
+                    "type": "message",
+                    "text": "Please enter your password",
+                    "from": {
+                        "id": "localbot",
+                        "name": "localbot"
+                    },
+                    "locale": "en-US",
+                    'localTimestamp': Date.now(),
+                    "textFormat": "plain",
+                    "timestamp": new Date(),
+                    "id": uuid.v4(),
+                    "doesExpectInput": true,
+                    "inputType": "password",
+                    "action": {
+                        "type": "saveLocal",
+                        "value": "_password", 
+                        "submitToServer": true,
+                        "submitParams": ["_user", "_password"],
+                        "serviceAPI": "http://foo.bar/sign-in",
+                    }
+                }]
+            }] 
+        }
+    ]
 };
 
 export default () => {

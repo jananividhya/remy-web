@@ -502,6 +502,8 @@ class PsBot extends Component {
         }
     };
 
+    conversationCounter = 0;
+
     /**
      * @method fetchBotConversations
      * @methodOf PsBot#fetchBotConversations
@@ -510,6 +512,8 @@ class PsBot extends Component {
      * @param fetchBotConversationsTimer
      */
     fetchBotConversations = (fetchBotConversationsTimer) => {
+        this.conversationCounter = this.conversationCounter + 1;
+
         let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
             {method: 'GET', headers: this.headers});
 
@@ -561,6 +565,12 @@ class PsBot extends Component {
                         conversationInputText: this.state.conversationInputText,
                         responseSuggestions: this.state.responseSuggestions,
                     });
+                } else if (this.conversationCounter === 200) {
+                    this.conversationCounter = 0;
+                    clearInterval(fetchBotConversationsTimer);
+                    this.setState({
+                        conversations: this.state.conversations.concat([...PsError['serverError']])
+                    });
                 }
             }
 
@@ -570,6 +580,9 @@ class PsBot extends Component {
         }).catch((ex) => {
             console.log("Error Occurred while getting conversation from bot", ex);
             clearInterval(fetchBotConversationsTimer);
+            this.setState({
+                conversations: this.state.conversations.concat([...PsError['serverError']])
+            });
         });
     };
 

@@ -13,6 +13,7 @@ import renderHTML from 'react-render-html';
 
 // App imports
 import SlashCommand from './PsSlashCommand';
+import isURL from 'validator/lib/isURL';
 
 const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {
@@ -66,6 +67,25 @@ class PsHumanConversation extends Component {
             hover: false
         };
     }
+
+    fetchUrLMetadata = async (url) => {
+        const urlDetails = await fetch(url, {
+            mode: 'no-cors'
+        });
+        return await urlDetails.text();
+    };
+
+    getUrlDetails = async (url) => {
+        return await this.fetchUrLMetadata(url);
+    };
+
+    componentDidMount = () => {
+        if(isURL(this.props.conversationText)) {
+            this.getUrlDetails(this.props.conversationText).then(function (response) {
+                console.log(response);
+            });
+        }
+    };
 
     render() {
 

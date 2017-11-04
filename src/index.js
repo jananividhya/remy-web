@@ -5,7 +5,9 @@ import './index.css';
 
 // Material UI imports
 import Paper from 'material-ui/Paper';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
+import purple from 'material-ui/colors/purple';
+import green from 'material-ui/colors/green';
 
 // Common Imports
 import {IntlProvider} from 'react-intl';
@@ -16,23 +18,35 @@ import PsBot from './components/ps-bot/PsBot';
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';
 
+const darkTheme = {
+    navbar: {
+        appBar: {
+            
+        }
+    },
+}
+
 const paperStyle = {
-    height: 650,
-    width: 600,
-    margin: 20,
+    height: '630px',
+    width: '98%',
+    marginTop: 20,
+    marginLeft: 10,
     display: 'inline-block',
     overflow: 'scroll',
     boxShadow: '0px 0px',
     border: '1px solid #D2D1D2',
 };
 
+const theme = createMuiTheme();
+
 ReactDOM.render(
     <IntlProvider locale="en">
-        <MuiThemeProvider>
+        <MuiThemeProvider theme={theme}>
             <div>
                 <Paper style={paperStyle}>
                     <PsBot conversationInputText="Say Something.."
                            accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
+                           navbarTheme={darkTheme.navbar}
                            />
                 </Paper>
             </div>

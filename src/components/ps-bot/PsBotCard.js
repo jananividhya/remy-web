@@ -2,11 +2,14 @@
 import React, {Component} from 'react';
 
 // Material UI imports
-import {CardContent} from 'material-ui/Card';
+import {CardContent, CardActions} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Chip from 'material-ui/Chip';
+import FavoriteIcon from 'material-ui-icons/Favorite';
+import SaveIcon from 'material-ui-icons/Save';
+import IconButton from 'material-ui/IconButton';
 
 import isURL from 'validator/lib/isURL';
 
@@ -87,6 +90,11 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         textAlign: 'center',
         verticalAlign: 'middle',
         paddingRight: '10px',
+    },
+    cardActions: {
+        marginLeft: -12,
+        marginBottom: -10,
+        marginTop: 10,
     }
 }));
 
@@ -134,7 +142,7 @@ class PsBotCard extends Component {
 
     render() {
         return ( <div>
-            {((this.state.title || this.state.subtitle || this.state.text) ? <CardContent className={this.classes.leftAlignedText}> {
+            {((this.state.title || this.state.subtitle || this.state.text) ? (<div><CardContent className={this.classes.leftAlignedText}> {
                 <div>
                     {(this.state.images && this.state.images[0]) ? (
                             <img src={this.state.images[0].url}
@@ -161,9 +169,24 @@ class PsBotCard extends Component {
                         })}
                         </div>
                     ) : ''}
+                    {(!this.state.noButtonCard && this.state.buttons && this.state.buttons.length > 0 && this.state.buttons[0].type === 'openUrl') ? (
+                        <CardActions disableActionSpacing className={this.classes.cardActions}>
+                            <IconButton aria-label="Add to favorites">
+                                <FavoriteIcon />
+                            </IconButton>
+                            <IconButton aria-label="Share">
+                                <SaveIcon />
+                            </IconButton>
+                        </CardActions>
+                    ) : <CardActions disableActionSpacing className={this.classes.cardActions}>
+                        <IconButton aria-label="Share">
+                            <SaveIcon />
+                        </IconButton>
+                    </CardActions>}
                 </div>
             }
-            </CardContent> : '') }
+            </CardContent>
+            </div>): '') }
         </div> );
     }
 }

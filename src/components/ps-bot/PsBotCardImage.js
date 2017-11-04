@@ -31,12 +31,16 @@ class PsBotCardImage extends Component {
     };
 
     componentDidMount = async () => {
-        try {
-            const imageBlog = await this.getImageDetails();
-            const imageObj = URL.createObjectURL(imageBlog);
-            this.imageSrc = imageObj.src;
-        } catch (err) {
-            this.imageSrc = 'arrow.png';
+        if (!this.props.fetchImage) {
+            try {
+                const imageBlog = await this.getImageDetails();
+                const imageObj = URL.createObjectURL(imageBlog);
+                this.imageSrc = imageObj.src;
+            } catch (err) {
+                this.imageSrc = 'arrow.png';
+            }
+        } else {
+            this.imageSrc = this.props.imageUrl;
         }
 
     };

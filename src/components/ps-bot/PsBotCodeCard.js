@@ -3,10 +3,8 @@ import React, {Component} from 'react';
 
 // Material UI imports
 import {CardContent} from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Chip from 'material-ui/Chip';
 import Highlight from 'react-highlight';
 import '../../../node_modules/highlight.js/styles/vs.css';
 

@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Input from 'material-ui/Input/Input';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -26,13 +25,12 @@ import PsHumanConversation from './PsHumanConversation';
 import PsBotCard from './PsBotCard';
 import PsBotCardImage from './PsBotCardImage';
 import PsBotConversationTime from './PsBotConversationTime';
-import AutoSuggestTheme from './AutoSuggestTheme.css';
+import AutoSuggestTheme from './AutoSuggestTheme.css'; // eslint-disable-line no-unused-vars
 import PsBotCodeCard from './PsBotCodeCard';
 import PsBotQuizCard from './PsBotQuizCard';
 import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import PsError from './PsErr';
-import Contracts from '../../config/PsBotContracts';
 import PsBotWallpapers from './PsBotWallpapers';
 
 import HandleErrors from '../../util/HandleErrors';

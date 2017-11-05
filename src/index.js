@@ -6,8 +6,6 @@ import './index.css';
 // Material UI imports
 import Paper from 'material-ui/Paper';
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
-import purple from 'material-ui/colors/purple';
-import green from 'material-ui/colors/green';
 
 // Common Imports
 import {IntlProvider} from 'react-intl';
@@ -21,10 +19,10 @@ import registerServiceWorker from './registerServiceWorker';
 const darkTheme = {
     navbar: {
         appBar: {
-            
+            background: '#FFFFFF'
         }
     },
-}
+};
 
 const paperStyle = {
     height: '630px',
@@ -53,4 +51,5 @@ ReactDOM.render(
         </MuiThemeProvider>
     </IntlProvider>,
     document.getElementById('root'));
+
 registerServiceWorker();

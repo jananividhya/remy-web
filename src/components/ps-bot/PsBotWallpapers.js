@@ -1,5 +1,4 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 
 const botPaperClass = {
@@ -85,7 +84,7 @@ const randomBotPaper = Math.floor(Math.random() * (botPapers.length - 2));
 export default (props) => (
     <Grid container gutter={8}>
         <Grid item xs={12} sm={12} onClick={() => wallpaperClick(props, randomBotPaper)}>
-            <img src={botPapers[randomBotPaper].src} style={botPaperClass} />
+            <img src={botPapers[randomBotPaper].src} style={botPaperClass} alt="Bot Wallpaper" />
         </Grid>
     </Grid>
 );

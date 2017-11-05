@@ -9,8 +9,6 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 import {Motion, spring} from 'react-motion';
 
-import renderHTML from 'react-render-html';
-
 // App imports
 import SlashCommand from './PsSlashCommand';
 import isURL from 'validator/lib/isURL';

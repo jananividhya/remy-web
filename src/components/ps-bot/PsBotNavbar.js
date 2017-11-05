@@ -6,10 +6,10 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import TocIcon from 'material-ui-icons/Toc';
-import SearchIcon from 'material-ui-icons/Search';
+import LightBulbIcon from 'material-ui-icons/LightbulbOutline';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
-import {MuiThemeProvider, createMuiTheme, withStyles, createStyleSheet} from 'material-ui/styles';
+import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import classNames from 'classnames';
@@ -20,30 +20,7 @@ import {TransitionMotion, spring} from 'react-motion';
 
 const drawerWidth = 601;
 
-const menuOptions = [
-    {
-        key: '/hello',
-        title: 'Say Hello to purpleBot',
-        value: 'hello',
-    },
-    {
-        key: '/learn',
-        title: 'Learn with purpleBot',
-        value: 'learn',
-    },
-    {
-        key: '/aboutus',
-        title: 'About Us',
-        value: 'About us',
-    },
-    {
-        key: '/quit',
-        title: 'Talk to you later',
-        value: 'quit',
-    }
-];
-
-const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
+let styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     root: {
         overflow: 'hidden',
     },
@@ -52,7 +29,6 @@ const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     },
     appBar: {
         position: 'absolute',
-        backgroundColor: '#FFFFFF !important',
         width: '98%',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
@@ -150,16 +126,6 @@ const styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     },
 }));
 
-const theme = createMuiTheme({
-    overrides: {
-        AppBar: {
-            position: 'absolute',
-            backgroundColor: 'green !important',
-            width: '98%',
-        }
-    },
-});
-
 /**
  * @class PsBotCardImage
  * @extends Component
@@ -170,13 +136,11 @@ class PsBotNavbar extends Component {
     constructor(props) {
         super(props);
         this.classes = props.classes;
-        console.log('Theme ', props.theme);
-
+        this.state = {
+            open: false,
+            theme: props.theme
+        };
     }
-
-    state = {
-        open: false,
-    };
 
     handleDrawerOpen = () => {
         this.setState({open: true});
@@ -193,15 +157,24 @@ class PsBotNavbar extends Component {
         this.props.action(buttonValue);
     };
 
+    switchTheme = (themeObj) => {
+        this.setState({
+            theme: themeObj
+        }, () => {
+            console.info(`Appbar color used ${this.state.theme.appBar.background}`);
+        });
+
+    };
+
     render() {
-        return (<MuiThemeProvider theme={theme}>
-            <div className={this.classes.root}>
+        return (<div className={this.classes.root}>
                 <div className={this.classes.appFrame}>
                     <AppBar position="static"
                             className={classNames(this.classes.appBar, this.state.open && this.classes.appBarShift)}
                             style={{
                                 marginTop: this.props.marginTop,
                                 marginLeft: this.props.marginLeft || 0,
+                                backgroundColor: this.state.theme.appBar.background
                             }}>
                         <Toolbar disableGutters={!this.state.open}>
                             <IconButton aria-label="Share" onClick={this.handleDrawerOpen}
@@ -213,6 +186,13 @@ class PsBotNavbar extends Component {
                                     <img src="psbot-logo.jpg" alt="PsBot" className={this.classes.logo}/>
                                 </IconButton>
                             </Typography>
+                            <IconButton aria-label="Toggle light/dark theme" onClick={() => this.switchTheme({
+                                appBar: {
+                                    background: '#766E6A'
+                                }
+                            })}>
+                                <LightBulbIcon/>
+                            </IconButton>
                         </Toolbar>
                     </AppBar>
                     <Drawer
@@ -332,8 +312,7 @@ class PsBotNavbar extends Component {
                         </div>
                     </Drawer>
                 </div>
-            </div>
-        </MuiThemeProvider>);
+            </div>);
     }
 }
 

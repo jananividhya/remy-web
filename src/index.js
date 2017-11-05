@@ -21,10 +21,10 @@ import registerServiceWorker from './registerServiceWorker';
 const darkTheme = {
     navbar: {
         appBar: {
-            
+            background: '#803A15'
         }
     },
-}
+};
 
 const paperStyle = {
     height: '630px',
@@ -53,4 +53,5 @@ ReactDOM.render(
         </MuiThemeProvider>
     </IntlProvider>,
     document.getElementById('root'));
+
 registerServiceWorker();

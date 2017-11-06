@@ -835,7 +835,10 @@ class PsBot extends Component {
                                         { key: id.toString(), style: {marginLeft: -50}},
                                     ]}
                                                       styles={[
-                                                          { key: id.toString(), style: { marginLeft: spring(0) }, data: conversation.text},
+                                                          { key: id.toString(), style: { marginLeft: spring(0) }, data: {
+                                                              text: conversation.text,
+                                                              theme: this.props.humanConversation,
+                                                          }},
                                                       ]}
                                     >
                                         {(styles) => (
@@ -844,7 +847,8 @@ class PsBot extends Component {
                                                     <div key={key} style={{
                                                         ...style
                                                     }}>
-                                                        <PsHumanConversation conversationText={data} />
+                                                        <PsHumanConversation conversationText={data.text}
+                                                                            theme={data.theme} />
                                                     </div>
                                                 ))}
                                             </div>

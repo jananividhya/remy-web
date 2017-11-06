@@ -138,7 +138,8 @@ class PsBotNavbar extends Component {
         this.classes = props.classes;
         this.state = {
             open: false,
-            theme: props.theme
+            theme: props.theme,
+            themeType: 'light',
         };
     }
 
@@ -157,16 +158,42 @@ class PsBotNavbar extends Component {
         this.props.action(buttonValue);
     };
 
-    switchTheme = (themeObj) => {
-        this.setState({
-            theme: themeObj
-        }, () => {
-            console.info(`Appbar color used ${this.state.theme.appBar.background}`);
-        });
-
+    switchTheme = () => {
+        if (this.state.themeType === 'light') {
+            this.setState({
+                theme: {
+                    appBar: {
+                        background: '#766E6A'
+                    },
+                    logo: {
+                        imageUrl: 'arrow.png'
+                    }
+                },
+                themeType: 'dark'
+            }, () => {
+                console.info(`Appbar color used ${this.state.theme.appBar.background}`);
+            });
+        } else {
+            this.setState({
+                theme: {
+                    appBar: {
+                        background: '#FFFFFF'
+                    },
+                    logo: {
+                        imageUrl: 'psbot-logo.png'
+                    }
+                },
+                themeType: 'light'
+            }, () => {
+                console.info(`Appbar color used ${this.state.theme.appBar.background}`);
+            });
+        }
     };
 
     render() {
+
+        const botLogo = (this.state.theme.logo) ? this.state.theme.logo.imageUrl : 'arrow.png';
+
         return (<div className={this.classes.root}>
                 <div className={this.classes.appFrame}>
                     <AppBar position="static"
@@ -183,14 +210,10 @@ class PsBotNavbar extends Component {
                             </IconButton>
                             <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
                                 <IconButton aria-label="Share">
-                                    <img src="psbot-logo.jpg" alt="PsBot" className={this.classes.logo}/>
+                                    <img src={botLogo} alt="PsBot" className={this.classes.logo}/>
                                 </IconButton>
                             </Typography>
-                            <IconButton aria-label="Toggle light/dark theme" onClick={() => this.switchTheme({
-                                appBar: {
-                                    background: '#766E6A'
-                                }
-                            })}>
+                            <IconButton aria-label="Toggle light/dark theme" onClick={() => this.switchTheme()}>
                                 <LightBulbIcon/>
                             </IconButton>
                         </Toolbar>

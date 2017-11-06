@@ -15,7 +15,6 @@ import isURL from 'validator/lib/isURL';
 
 const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {
-        background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
@@ -62,8 +61,11 @@ class PsHumanConversation extends Component {
         super(props);
         this.classes = props.classes;
         this.state = {
-            hover: false
+            hover: false,
+            theme: props.theme,
         };
+
+        console.log('props theme ', props.theme);
     }
 
     fetchUrLMetadata = async (url) => {
@@ -94,6 +96,8 @@ class PsHumanConversation extends Component {
             isSlashCommand = true;
         }
 
+        const theme = (this.state.theme) ? this.state.theme : null;
+
         return (
             <Motion style={{x: spring(400)}}> 
             {
@@ -103,7 +107,10 @@ class PsHumanConversation extends Component {
                             transform: "scale(" + x + ")"
                         }}>
                             <Paper className={(!isSlashCommand) ? this.classes.paperHumanConversation
-                                : this.classes.paperHumanCommand} >
+                                : this.classes.paperHumanCommand}
+                                style={{
+                                    backgroundColor: (theme) ? theme.background : 'rgba(150, 101, 171, 0.87)'
+                                }}>
                                 <div className={this.classes.conversationText}>            
                                     <p>
                                         {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)

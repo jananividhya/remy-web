@@ -20,7 +20,13 @@ const darkTheme = {
     navbar: {
         appBar: {
             background: '#FFFFFF'
+        },
+        logo: {
+            imageUrl: 'psbot-logo.png'
         }
+    },
+    humanConversation: {
+        background: 'rgba(150, 101, 171, 0.87)',
     },
 };
 
@@ -45,6 +51,7 @@ ReactDOM.render(
                     <PsBot conversationInputText="Say Something.."
                            accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
                            navbarTheme={darkTheme.navbar}
+                           humanConversationTheme={darkTheme.humanConversation}
                            />
                 </Paper>
             </div>

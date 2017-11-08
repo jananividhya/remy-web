@@ -19,9 +19,10 @@ export default () => {
                     "contentType": "application/vnd.microsoft.card.quiz",
                     "content": {
                         "title": "Multiple Choice Question",
+                        "allowedTime": 20000,
                         "text": [
-                            "What is the answer to this question?",
-                            "This is the second line to the quiz card..",
+                            "What is the answer to this question?\n\nThis is the second line to the quiz card..",
+                            "This is the actual second line",
                         ],
                         "subtitle": "Choose from below list of answers",
                         "buttons": [

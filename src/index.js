@@ -12,6 +12,7 @@ import {IntlProvider} from 'react-intl';
 
 // App imports
 import PsBot from './components/ps-bot/PsBot';
+import PsBotPoweredBy from './components/ps-bot/PsBotPoweredBy';
 
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';
@@ -54,6 +55,12 @@ ReactDOM.render(
                            humanConversationTheme={darkTheme.humanConversation}
                            />
                 </Paper>
+                <div style={{
+                    marginRight: 9,
+                    float: 'right'
+                }}>
+                    <PsBotPoweredBy/>
+                </div>
             </div>
         </MuiThemeProvider>
     </IntlProvider>,

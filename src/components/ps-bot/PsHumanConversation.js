@@ -64,8 +64,6 @@ class PsHumanConversation extends Component {
             hover: false,
             theme: props.theme,
         };
-
-        console.log('props theme ', props.theme);
     }
 
     fetchUrLMetadata = async (url) => {

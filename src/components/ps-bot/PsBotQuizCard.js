@@ -6,9 +6,12 @@ import {CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
+import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 
 import isURL from 'validator/lib/isURL';
+
+import PsBotTimer from './PsBotTimer';
 
 // Style Imports
 import './PsBotButton.css';
@@ -45,7 +48,6 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         top: '6px',
         textAlign: 'center',
         marginRight: '5px',
-        paddingTop: '12px',
     },
     buttonTop: {
         right: '35px',
@@ -88,7 +90,10 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
         textAlign: 'center',
         verticalAlign: 'middle',
         paddingRight: '10px',
-    }
+    },
+    quizTimer: {
+        marginLeft: '100px',
+    },
 }));
 
 /**
@@ -131,44 +136,78 @@ class PsBotCard extends Component {
         } else {
             this.props.action(buttonValue);
         }
+
+        this.refs.psBotTimer.turnOffTimer();
+    };
+
+    quizTimerOff = (timerResponse) => {
+        console.log(timerResponse);
+        this.disableButtons = true;
+        this.props.action('You skipped the question', timerResponse);
     };
 
     render() {
+
+        const quizTimer = (this.state.allowedTime) ? (
+            <PsBotTimer ref="psBotTimer"
+                        options={{totalTime: this.state.allowedTime}}
+                        action={this.quizTimerOff}/>
+        ) : '';
+
         return ( <div>
-            {((this.state.title || this.state.subtitle || this.state.text) ? <CardContent className={this.classes.leftAlignedText}> {
-                <div>
-                    {(this.state.images && this.state.images[0]) ? (
+            {((this.state.title || this.state.subtitle || this.state.text) ?
+                <CardContent className={this.classes.leftAlignedText}> {
+                    <div>
+                        {(this.state.images && this.state.images[0]) ? (
                             <img src={this.state.images[0].url}
-                                alt={this.state.title}
-                                height={50}
-                                width={50}
-                                style={{marginLeft: -10}} />
+                                 alt={this.state.title}
+                                 height={50}
+                                 width={50}
+                                 style={{marginLeft: -10}}/>
                         ) : ''}
-                    <Typography type="headline" component="h2" className={this.classes.psTextColor}>
+                        <Typography type="headline" component="h2" className={this.classes.psTextColor}>
                             {this.state.title}
-                    </Typography>
-                    <Typography type="subheading" component="p" className={this.classes.psTextColor}>
-                        {this.state.subtitle}
-                    </Typography>
-                    { (this.state.text) ? (
+                            <span style={{
+                                marginLeft: 80
+                            }}>
+                                {quizTimer}
+                            </span>
+                        </Typography>
+                        <Typography type="subheading" component="p" className={this.classes.psTextColor}>
+                            {this.state.subtitle}
+                        </Typography>
+                        {(this.state.text) ? (
                             this.state.text.map((textVal, key) => (
-                                <Typography component="p" key={key} className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
-                                    {textVal}
+                                <Typography component="p" key={key}
+                                            className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
+                                    {(textVal.split('\n\n').length > 0) ? (
+                                        textVal.split('\n\n').map((text, k) => (
+                                            <p key={k}>{text}</p>
+                                        ))
+                                        ) : {textVal}
+                                    }
                                 </Typography>
                             ))
-                    ) : '' }
-                    {(!this.state.noButtonCard && this.state.buttons) ? (
-                        <div className={this.classes.quiz}>
-                            {this.state.buttons.map((button, buttonId) => {
-                            return ((button.type === 'quizAnswers') ?
-                                (<Chip key={buttonId} label={button.title} className={[this.classes.chip, this.classes.nextLine, this.classes.buttonTopQuiz].join(' ')}
-                                       onClick={() => this.pSBotButtonClick(button)}/>) : '')
-                        })}
-                        </div>
-                    ) : ''}
-                </div>
-            }
-            </CardContent> : '') }
+                        ) : ''}
+                        {(!this.state.noButtonCard && this.state.buttons) ? (
+                            <div className={this.classes.quiz} style={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                            }}>
+                                {this.state.buttons.map((button, buttonId) => {
+                                    return ((button.type === 'quizAnswers') ?
+                                        (<Chip  key={buttonId}
+                                                avatar={<Avatar>{button.title.charAt(button.title.length -1)}</Avatar>}
+                                                label={button.title}
+                                                onClick={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}
+                                                className={[this.classes.chip, this.classes.buttonTopQuiz].join(' ')}
+                                            />) : '')
+                                })}
+                            </div>
+                        ) : ''}
+                    </div>
+                }
+                </CardContent> : '')}
         </div> );
     }
 }

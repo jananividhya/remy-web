@@ -13,6 +13,7 @@ import {Emoji} from 'emoji-mart';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Autosuggest from 'react-autosuggest';
+import renderHTML from 'react-render-html';
 
 // Common imports
 import 'whatwg-fetch';
@@ -32,6 +33,9 @@ import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import PsError from './PsErr';
 import PsBotWallpapers from './PsBotWallpapers';
+import PsBotContracts from '../../config/PsBotContracts';
+import PsBotGreeting from './PsBotGreeting';
+import PsBotPoweredBy from './PsBotPoweredBy';
 
 import HandleErrors from '../../util/HandleErrors';
 
@@ -343,9 +347,6 @@ class PsBot extends Component {
             'localTimestamp': Date.now(),
             "textFormat": "plain",
             "timestamp": new Date(),
-            "channelData": {
-                "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
-            },
             "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
         };
 
@@ -383,9 +384,6 @@ class PsBot extends Component {
                 "textFormat": "plain",
                 "timestamp": new Date(),
                 "localTimestamp": Date.now(),
-                "channelData": {
-                    "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
-                },
                 "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
             };
 
@@ -465,9 +463,6 @@ class PsBot extends Component {
                 "img": "thinking.gif",
                 "timestamp": new Date(),
                 "localTimestamp": Date.now(),
-                "channelData": {
-                    "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
-                },
                 "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
             });
 
@@ -660,6 +655,7 @@ class PsBot extends Component {
         }
 
         return (
+            <div>
                 <div className={this.classes.root}>
                     {
                     (this.state.loadWallpaper) ? (
@@ -675,8 +671,10 @@ class PsBot extends Component {
                         {
                             hideOptions ? (
                                 <TransitionMotion defaultStyles={[
+                                    { key: 'greet-time', style: {marginTop: 0}},
                                     { key: 'greet-welcome', style: {marginTop: 0}},
                                     { key: 'greet-what', style: {marginTop: 0}},
+                                    { key: 'sign-in', style: {marginTop: 0}},
                                     { key: 'hello', style: {marginTop: 0}},
                                     { key: 'learn', style: {marginTop: 0}},
                                     { key: 'about-us', style: {marginTop: 0}},
@@ -685,7 +683,11 @@ class PsBot extends Component {
                                     { key: 'quit', style: {marginTop: 0}}
                                 ]}
                                                   styles={[
-                                                      { key: 'greet-welcome', style: { marginTop: spring(60) }, data: {
+                                                      { key: 'greet-time', style: { marginTop: spring(40) }, data: {
+                                                          type: 'Greet',
+                                                          title: "",
+                                                      }},
+                                                      { key: 'greet-welcome', style: { marginTop: spring(10) }, data: {
                                                           type: 'Greet',
                                                           title: "Hello, I'm purpleBot",
                                                       }},
@@ -693,7 +695,12 @@ class PsBot extends Component {
                                                           type: 'Greet',
                                                           title: 'Some things you can ask me..',
                                                       }},
-                                                      { key: 'hello', style: { marginTop: spring(30) }, data: {
+                                                      { key: 'sign-in', style: { marginTop: spring(30) }, data: {
+                                                          type: 'Command',
+                                                          title: 'Sign-in to purpleSlate',
+                                                          value: '/sign-in',
+                                                      }},
+                                                      { key: 'hello', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
                                                           title: 'Say Hello to purpleBot',
                                                           value: 'Hello',
@@ -730,18 +737,28 @@ class PsBot extends Component {
                                             { styles.map(({ key, style, data}) => (
                                                 <div key={key} style={{
                                                     textAlign: 'center',
-                                                    marginLeft: '190px',
+                                                    marginLeft: '360px',
                                                     cursor: 'pointer',
                                                     ...style
                                                 }}>
                                                     { (data.type === 'Greet') ? (
-                                                    <Paper className={this.classes.conversationGreeting}>
-                                                        <div className={this.classes.conversationText}>
-                                                            <p>
-                                                                {data.title}
-                                                            </p>
-                                                        </div>
-                                                    </Paper>
+                                                        (key === 'greet-time') ? (
+                                                            <Paper className={this.classes.conversationGreeting}>
+                                                                <div className={this.classes.conversationText}>
+                                                                    <p>
+                                                                        <PsBotGreeting/>
+                                                                    </p>
+                                                                </div>
+                                                            </Paper>
+                                                        ) : (
+                                                            <Paper className={this.classes.conversationGreeting}>
+                                                                <div className={this.classes.conversationText}>
+                                                                    <p>
+                                                                        {data.title}
+                                                                    </p>
+                                                                </div>
+                                                            </Paper>
+                                                        )
                                                     ) : (
                                                     <Paper className={this.classes.conversationOptions}
                                                            onClick={() => this.pSBotButtonClick(data.value)}>
@@ -918,7 +935,9 @@ class PsBot extends Component {
                         </div>
                     )
                     }
+
                 </div>
+            </div>
         );
     }
 }

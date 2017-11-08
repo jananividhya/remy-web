@@ -263,7 +263,50 @@ const slashCommands = {
                 }]
             }] 
         }
-    ]
+    ],
+    "/quiz-card": [{
+        "type": "message",
+        "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "application/vnd.microsoft.card.quiz",
+                "content": {
+                    "title": "Multiple Choice Question",
+                    "allowedTime": 20000,
+                    "text": [
+                        "What is the answer to this question?\n\nThis is the second line to the quiz card..",
+                        "This is the actual second line",
+                    ],
+                    "subtitle": "Choose from below list of answers",
+                    "buttons": [
+                        {
+                            "type": "quizAnswers",
+                            "title": "Answer A",
+                            "value": "Answer A"
+                        },
+                        {
+                            "type": "quizAnswers",
+                            "title": "Answer B",
+                            "value": "Answer B"
+                        },
+                        {
+                            "type": "quizAnswers",
+                            "title": "Answer C",
+                            "value": "Answer C"
+                        }
+                    ]
+                }
+            }
+        ],
+    }],
 };
 
 export default () => {

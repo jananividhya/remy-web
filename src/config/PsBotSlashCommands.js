@@ -148,7 +148,7 @@ const slashCommands = {
                         {
                             "type": "quizAnswers",
                             "title": "Facebook",
-                            "value": "/signinwithfacebook"
+                            "value": "/signin-with-fb"
                         },
                         {
                             "type": "quizAnswers",
@@ -304,6 +304,39 @@ const slashCommands = {
                         }
                     ]
                 }
+            }
+        ],
+    }],
+    "/signin-with-fb": [{
+        "type": "message",
+        "id": uuid.v4(),
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "application/vnd.ps.card.like.fb",
+            }
+        ],
+    }, {
+        "type": "message",
+        "id": uuid.v4(),
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "application/vnd.ps.card.signin.fb",
             }
         ],
     }],

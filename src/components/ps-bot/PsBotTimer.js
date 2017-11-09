@@ -59,7 +59,7 @@ class PsBotTimer extends Component {
     };
 
     psTick = () => {
-        const timerValue = parseInt(this.state.timerValue);
+        const timerValue = parseInt(this.state.timerValue, 10);
 
         if (timerValue > 0) {
             this.setState({

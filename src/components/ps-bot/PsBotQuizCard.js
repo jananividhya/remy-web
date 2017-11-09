@@ -137,7 +137,9 @@ class PsBotCard extends Component {
             this.props.action(buttonValue);
         }
 
-        this.refs.psBotTimer.turnOffTimer();
+        if (this.refs.psBotTimer) {
+            this.refs.psBotTimer.turnOffTimer();
+        }
     };
 
     quizTimerOff = (timerResponse) => {
@@ -199,6 +201,7 @@ class PsBotCard extends Component {
                                         (<Chip  key={buttonId}
                                                 avatar={<Avatar>{button.title.charAt(button.title.length -1)}</Avatar>}
                                                 label={button.title}
+                                                // eslint-disable-next-line
                                                 onClick={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}
                                                 className={[this.classes.chip, this.classes.buttonTopQuiz].join(' ')}
                                             />) : '')

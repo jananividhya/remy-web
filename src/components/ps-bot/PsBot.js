@@ -13,7 +13,6 @@ import {Emoji} from 'emoji-mart';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Autosuggest from 'react-autosuggest';
-import renderHTML from 'react-render-html';
 
 // Common imports
 import 'whatwg-fetch';
@@ -33,9 +32,9 @@ import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import PsError from './PsErr';
 import PsBotWallpapers from './PsBotWallpapers';
-import PsBotContracts from '../../config/PsBotContracts';
 import PsBotGreeting from './PsBotGreeting';
-import PsBotPoweredBy from './PsBotPoweredBy';
+import PsBotFbSignInCard from './PsBotFbSignInCard';
+import PsBotFbLikeCard from './PsBotFbLikeCard';
 
 import HandleErrors from '../../util/HandleErrors';
 
@@ -697,8 +696,8 @@ class PsBot extends Component {
                                                       }},
                                                       { key: 'sign-in', style: { marginTop: spring(30) }, data: {
                                                           type: 'Command',
-                                                          title: 'Sign-in to purpleSlate',
-                                                          value: '/sign-in',
+                                                          title: 'Sign-in to purpleSlate with Facebook',
+                                                          value: '/signin-with-fb',
                                                       }},
                                                       { key: 'hello', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
@@ -812,12 +811,16 @@ class PsBot extends Component {
                                                             <p>
                                                                 <PsBotQuizCard data={conversation.attachments[0].content}
                                                                            action={this.pSBotButtonClick} /></p>
-                                                            : ((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
+                                                            : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.fb')) ?
+                                                                (<p><PsBotFbSignInCard /></p>)
+                                                                : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
+                                                                    (<p><PsBotFbLikeCard /></p>)
+                                                                    : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                             <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} fetchImg={conversation.attachments[0].fetchImg} />
                                                         ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                            <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                     <PsBotCommandCard data={conversation.attachments[0].content} />
-                                                                    : data.text)))
+                                                                    : data.text)))))
                                                 }
                                             </div>
                                         </Paper>

@@ -117,19 +117,19 @@ class PsBotFbSignInCard extends Component {
      * @param {Object} button Button object passed from onClick
      */
     signInResponse = (data) => {
-        console.log(data);
+        console.log('Logged in ', data);
     };
 
     signInError = (err) => {
-        console.log(err);
+        console.log('Unable to login user ', err);
     };
 
     render() {
         return ( <div>
             <FacebookProvider appId="1896270490692668">
                 <Login
-                    onResponse={() => this.signInResponse}
-                    onError={() => this.signInError}
+                    onResponse={this.signInResponse}
+                    onError={this.signInError}
                     render={({ isLoading, isWorking, onClick }) => (
                         <Chip
                                avatar={<Avatar>FB</Avatar>}

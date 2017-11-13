@@ -99,36 +99,6 @@ const slashCommands = {
         "timestamp": Date.now(),
         "localTimestamp": Date.now(),
         "from": {
-            "id": "fiercebadlands",
-            "name": "fiercebadlands"
-        },
-        "locale": "en-US",
-        "inputHint": "expectingInput",
-        "attachments": [
-            {
-                "contentType": "application/vnd.ps.card.command",
-                "content": {
-                    "title": "",
-                    "commands": [{
-                        "identifier": "/signin-with-fb",
-                        "description": "sign in with fb"
-                    }, {
-                        "identifier": "/help",
-                        "description": "Lists the menu options"
-                    }, {
-                        "identifier": "/help",
-                        "description": "Sign-in and make more context sensitive conversations.."
-                    }],
-                    "subtitle": "How do you want to authenticate yourself? You have few options.",
-                }
-            }
-        ]
-    }, {
-        "type": "message",
-        "id": uuid.v4(),
-        "timestamp": Date.now(),
-        "localTimestamp": Date.now(),
-        "from": {
             "id": "localbot",
             "name": "localbot"
         },
@@ -138,12 +108,11 @@ const slashCommands = {
             {
                 "contentType": "application/vnd.microsoft.card.quiz",
                 "content": {
-                    "title": "",
+                    "title": "Sign-in to purpleSlate",
                     "text": [
-                        "How do you want to authenticate yourself?",
                         "You have few options.",
                     ],
-                    "subtitle": "Sign-in to purpleSlate",
+                    "subtitle": "How do you want to authenticate yourself?",
                     "buttons": [
                         {
                             "type": "quizAnswers",
@@ -308,22 +277,6 @@ const slashCommands = {
         ],
     }],
     "/signin-with-fb": [{
-        "type": "message",
-        "id": uuid.v4(),
-        "timestamp": Date.now(),
-        "localTimestamp": Date.now(),
-        "from": {
-            "id": "fiercebadlands",
-            "name": "fiercebadlands"
-        },
-        "locale": "en-US",
-        "inputHint": "ignoringInput",
-        "attachments": [
-            {
-                "contentType": "application/vnd.ps.card.like.fb",
-            }
-        ],
-    }, {
         "type": "message",
         "id": uuid.v4(),
         "timestamp": Date.now(),

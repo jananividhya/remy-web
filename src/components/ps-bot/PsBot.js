@@ -290,7 +290,33 @@ class PsBot extends Component {
                       'localTimestamp': Date.now(),
                       "textFormat": "plain",
                       "timestamp": new Date(),
-                  }];
+                  }, {
+                      "type": "message",
+                      "text": "Like and share us on Facebook",
+                      "from": {
+                          "id": "fiercebadlands",
+                          "name": "fiercebadlands"
+                      },
+                      "locale": "en-US",
+                      'localTimestamp': Date.now(),
+                      "textFormat": "plain",
+                      "timestamp": new Date(),
+                  }, {
+                      "type": "message",
+                      "timestamp": Date.now(),
+                      "localTimestamp": Date.now(),
+                      "from": {
+                          "id": "fiercebadlands",
+                          "name": "fiercebadlands"
+                      },
+                      "locale": "en-US",
+                      "inputHint": "ignoringInput",
+                      "attachments": [
+                          {
+                              "contentType": "application/vnd.ps.card.like.fb",
+                          }
+                      ],
+                  }, ];
 
                   this.setState({
                       conversations: this.state.conversations.concat([...signInWelcome])
@@ -780,8 +806,8 @@ class PsBot extends Component {
                                                       }},
                                                       { key: 'sign-in', style: { marginTop: spring(30) }, data: {
                                                           type: 'Command',
-                                                          title: 'Sign-in to purpleSlate with Facebook',
-                                                          value: '/signin-with-fb',
+                                                          title: 'Sign-in to purpleSlate',
+                                                          value: '/signin',
                                                       }},
                                                       { key: 'hello', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',

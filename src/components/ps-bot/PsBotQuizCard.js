@@ -199,7 +199,7 @@ class PsBotCard extends Component {
                                 {this.state.buttons.map((button, buttonId) => {
                                     return ((button.type === 'quizAnswers') ?
                                         (<Chip  key={buttonId}
-                                                avatar={<Avatar>{button.title.charAt(button.title.length -1)}</Avatar>}
+                                                avatar={<Avatar>{button.title.charAt(0)}</Avatar>}
                                                 label={button.title}
                                                 // eslint-disable-next-line
                                                 onClick={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}

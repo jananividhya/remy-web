@@ -240,7 +240,39 @@ class PsBot extends Component {
           switch (data.status) {
               case 'success':
                   const {id, name, gender} = data.profile;
-                  console.log('Signed in ', id, name, gender);
+
+                  // Set in session
+                  window.sessionStorage.setItem("user.name", name);
+                  window.sessionStorage.setItem("user.id", id);
+                  window.sessionStorage.setItem("user.gender", gender);
+
+                  const signInWelcome = [{
+                      "type": "message",
+                      "text": "Hello, " + name,
+                      "from": {
+                          "id": "fiercebadlands",
+                          "name": "fiercebadlands"
+                      },
+                      "locale": "en-US",
+                      'localTimestamp': Date.now(),
+                      "textFormat": "plain",
+                      "timestamp": new Date(),
+                  }, {
+                      "type": "message",
+                      "text": "Welcome to pS",
+                      "from": {
+                          "id": "fiercebadlands",
+                          "name": "fiercebadlands"
+                      },
+                      "locale": "en-US",
+                      'localTimestamp': Date.now(),
+                      "textFormat": "plain",
+                      "timestamp": new Date(),
+                  }];
+
+                  this.setState({
+                      conversations: this.state.conversations.concat([...signInWelcome])
+                  });
                   break;
               case 'error':
                   console.log('Error occurred while signing in ', JSON.stringify(data));

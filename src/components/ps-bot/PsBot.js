@@ -236,10 +236,10 @@ class PsBot extends Component {
         this.initConversation(this.directLineBaseUrl);
     }
 
-    onSignIn = (data) => {
-          switch (data.status) {
+    onSignIn = ({ status, id, name, gender }) => {
+          switch (status) {
               case 'success':
-                  console.log('Signed in ', JSON.stringify(data));
+                  console.log('Signed in ', id, name, gender);
                   break;
               case 'error':
                   console.log('Error occurred while signing in ', JSON.stringify(data));

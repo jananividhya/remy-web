@@ -236,8 +236,8 @@ class PsBot extends Component {
         this.initConversation(this.directLineBaseUrl);
     }
 
-    onSignIn = ({ status, data }) => {
-          switch (status) {
+    onSignIn = (data) => {
+          switch (data.status) {
               case 'success':
                   console.log('Signed in ', JSON.stringify(data));
                   break;

@@ -117,11 +117,17 @@ class PsBotFbSignInCard extends Component {
      * @param {Object} button Button object passed from onClick
      */
     signInResponse = (data) => {
-        console.log('Logged in ', data);
+        this.props.action({
+            status: 'success',
+            ...data
+        });
     };
 
     signInError = (err) => {
-        console.log('Unable to login user ', err);
+        this.props.action({
+            status: 'error',
+            ...err
+        });
     };
 
     render() {

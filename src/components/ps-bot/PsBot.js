@@ -236,6 +236,19 @@ class PsBot extends Component {
         this.initConversation(this.directLineBaseUrl);
     }
 
+    onSignIn = ({ status, data }) => {
+          switch (status) {
+              case 'success':
+                  console.log('Signed in ', JSON.stringify(data));
+                  break;
+              case 'error':
+                  console.log('Error occurred while signing in ', JSON.stringify(data));
+                  break;
+              default:
+                  break;
+          }
+    };
+
     onSuggestionChange = (event, { newValue }) => {
         this.setState({
             commandSuggestionValue: newValue
@@ -812,7 +825,7 @@ class PsBot extends Component {
                                                                 <PsBotQuizCard data={conversation.attachments[0].content}
                                                                            action={this.pSBotButtonClick} /></p>
                                                             : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.fb')) ?
-                                                                (<p><PsBotFbSignInCard /></p>)
+                                                                (<p><PsBotFbSignInCard action={this.onSignIn} /></p>)
                                                                 : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
                                                                     (<p><PsBotFbLikeCard /></p>)
                                                                     : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (

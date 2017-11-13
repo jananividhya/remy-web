@@ -112,7 +112,7 @@ class PsBotFbLikeCard extends Component {
     render() {
         return ( <div>
             <FacebookProvider appId="1896270490692668">
-                <Like href="http://www.facebook.com" colorScheme="light" showFaces share />
+                <Like href="https://www.facebook.com/PurpleSlateLearning" colorScheme="light" showFaces share />
             </FacebookProvider>
         </div> );
     }

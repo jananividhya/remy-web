@@ -233,8 +233,28 @@ class PsBot extends Component {
         this.headers.append('Authorization', 'Bearer ' + this.props.accessSecret);
         this.headers.append('Content-Type', 'application/json');
 
+        this.clearSession();
         this.initConversation(this.directLineBaseUrl);
     }
+
+    getSessionDetails = () => {
+        return {
+            id: window.sessionStorage.getItem("user.id"),
+            name: window.sessionStorage.getItem("user.name"),
+            gender: window.sessionStorage.getItem("user.gender")
+        };
+    };
+
+    setSessionDetails = (objToStore) => {
+        const keys = Object.keys(objToStore);
+        for (let i=0; i<keys.length; i++) {
+            window.sessionStorage.setItem(keys[i], objToStore[keys[i]]);
+        }
+    };
+
+    clearSession = () => {
+        window.sessionStorage.clear();
+    };
 
     onSignIn = (data) => {
           switch (data.status) {
@@ -242,9 +262,11 @@ class PsBot extends Component {
                   const {id, name, gender} = data.profile;
 
                   // Set in session
-                  window.sessionStorage.setItem("user.name", name);
-                  window.sessionStorage.setItem("user.id", id);
-                  window.sessionStorage.setItem("user.gender", gender);
+                  this.setSessionDetails({
+                      "user.name": name,
+                      "user.id": id,
+                      "user.gender": gender
+                  });
 
                   const signInWelcome = [{
                       "type": "message",
@@ -275,7 +297,23 @@ class PsBot extends Component {
                   });
                   break;
               case 'error':
-                  console.log('Error occurred while signing in ', JSON.stringify(data));
+                  const signInError = [{
+                      "type": "message",
+                      "text": "We are unable to sign you in",
+                      "from": {
+                          "id": "fiercebadlands",
+                          "name": "fiercebadlands"
+                      },
+                      "locale": "en-US",
+                      'localTimestamp': Date.now(),
+                      "textFormat": "plain",
+                      "timestamp": new Date(),
+                  }];
+
+                  this.setState({
+                      conversations: this.state.conversations.concat([...signInError])
+                  });
+                  console.error('Error occurred while signing in ', JSON.stringify(data));
                   break;
               default:
                   break;

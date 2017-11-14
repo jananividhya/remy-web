@@ -450,8 +450,10 @@ class PsBot extends Component {
             "text": this.state.conversationText || conversationText,
             "from": {
                 "id": "default-user",
-                "name": "User"
+                "name": "User",
+                "channelId": "PSClient"
             },
+            "channelId": "PSClient",
             "locale": "en-US",
             'localTimestamp': Date.now(),
             "textFormat": "plain",
@@ -487,8 +489,10 @@ class PsBot extends Component {
                 "text": conversationText,
                 "from": {
                     "id": "default-user",
-                    "name": "User"
+                    "name": "User",
+                    "channelId": "PSClient"
                 },
+                "channelId": "PSClient",
                 "locale": "en-US",
                 "textFormat": "plain",
                 "timestamp": new Date(),
@@ -564,8 +568,10 @@ class PsBot extends Component {
                 "text": "Thinking...",
                 "from": {
                     "id": "ps-public-bot",
-                    "name": "bot"
+                    "name": "bot",
+                    "channelId": "PSClient"
                 },
+                "channelId": "PSClient",
                 "locale": "en-US",
                 "textFormat": "plain",
                 "contentType": "typing",

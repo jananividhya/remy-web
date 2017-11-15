@@ -59,7 +59,7 @@ ReactDOM.render(
                     marginRight: 9,
                     float: 'right'
                 }}>
-                    <PsBotPoweredBy/>
+                    <PsBotPoweredBy imgPath="Group1@10x.png"/>
                 </div>
             </div>
         </MuiThemeProvider>

@@ -393,6 +393,10 @@ class PsBot extends Component {
         }
     };
 
+    componentWillMount = () => {
+        window.resizeTo(600, 900);
+    };
+
     /**
      * @method initConversation
      * @methodOf PsBot#initConversation
@@ -451,9 +455,9 @@ class PsBot extends Component {
             "from": {
                 "id": "default-user",
                 "name": "User",
-                "channelId": "PSClient"
+                "channelId": "webchat"
             },
-            "channelId": "PSClient",
+            "channelId": "webchat",
             "locale": "en-US",
             'localTimestamp': Date.now(),
             "textFormat": "plain",
@@ -490,9 +494,9 @@ class PsBot extends Component {
                 "from": {
                     "id": "default-user",
                     "name": "User",
-                    "channelId": "PSClient"
+                    "channelId": "webchat"
                 },
-                "channelId": "PSClient",
+                "channelId": "webchat",
                 "locale": "en-US",
                 "textFormat": "plain",
                 "timestamp": new Date(),
@@ -569,9 +573,9 @@ class PsBot extends Component {
                 "from": {
                     "id": "ps-public-bot",
                     "name": "bot",
-                    "channelId": "PSClient"
+                    "channelId": "webchat"
                 },
-                "channelId": "PSClient",
+                "channelId": "webchat",
                 "locale": "en-US",
                 "textFormat": "plain",
                 "contentType": "typing",

@@ -143,7 +143,6 @@ class PsBotCard extends Component {
     };
 
     quizTimerOff = (timerResponse) => {
-        console.log(timerResponse);
         this.disableButtons = true;
         this.props.action('You skipped the question', timerResponse);
     };
@@ -152,7 +151,7 @@ class PsBotCard extends Component {
 
         const quizTimer = (this.state.allowedTime) ? (
             <PsBotTimer ref="psBotTimer"
-                        options={{totalTime: this.state.allowedTime}}
+                        options={{totalTime: this.state.timer}}
                         action={this.quizTimerOff}/>
         ) : '';
 

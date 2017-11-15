@@ -13,6 +13,6 @@ export default ({imgPath, height, width}) => (
         fontWeight: 'bold',
         color: 'rgba(150, 101, 171, 0.87)',
     }}>
-        <img src={imgPath} height={getHeight(height)} width={getWidth(width)} />
+        <img src={imgPath} height={getHeight(height)} width={getWidth(width)} alt="Powered By purpleSlate" />
     </span>
 );

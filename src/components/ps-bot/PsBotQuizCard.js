@@ -131,25 +131,27 @@ class PsBotCard extends Component {
     pSBotButtonClick = (button) => {
         const buttonValue = button.value;
 
+        if (this.refs.psBotTimer) {
+            this.refs.psBotTimer.turnOffTimer();
+        }
+
         if (this.isURL(buttonValue)) {
             window.open(buttonValue);
         } else {
             this.props.action(buttonValue);
         }
-
-        if (this.refs.psBotTimer) {
-            this.refs.psBotTimer.turnOffTimer();
-        }
     };
 
     quizTimerOff = (timerResponse) => {
         this.disableButtons = true;
-        this.props.action('You skipped the question', timerResponse);
+        if (timerResponse.timerAutoOff) {
+            this.props.action('Chosen Answer <Skip> ', timerResponse);
+        }
     };
 
     render() {
 
-        const quizTimer = (this.state.allowedTime) ? (
+        const quizTimer = (this.state.timer) ? (
             <PsBotTimer ref="psBotTimer"
                         options={{totalTime: this.state.timer}}
                         action={this.quizTimerOff}/>
@@ -169,15 +171,15 @@ class PsBotCard extends Component {
                         <Typography type="headline" component="h2" className={this.classes.psTextColor}>
                             {this.state.title}
                             <span style={{
-                                marginLeft: 80
+                                marginLeft: 50
                             }}>
                                 {quizTimer}
                             </span>
                         </Typography>
                         <Typography type="subheading" component="p" className={this.classes.psTextColor}>
-                            {this.state.subtitle}
+                            {this.state.subTitle}
                         </Typography>
-                        {(this.state.text) ? (
+                        {(this.state.text && Array.isArray(this.state.text)) ? (
                             this.state.text.map((textVal, key) => (
                                 <Typography component="p" key={key}
                                             className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
@@ -189,14 +191,23 @@ class PsBotCard extends Component {
                                     }
                                 </Typography>
                             ))
-                        ) : ''}
-                        {(!this.state.noButtonCard && this.state.buttons) ? (
+                        ) : (
+                            <Typography component="p"
+                                        className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
+                                {(this.state.text.split('\n\n').length > 0) ? (
+                                    this.state.text.split('\n\n').map((text, k) => (
+                                        <p key={k}>{text}</p>
+                                    ))
+                                ) : this.state.text}
+                            </Typography>
+                        )}
+                        {(this.state.choices) ? (
                             <div className={this.classes.quiz} style={{
                                 display: 'flex',
                                 flexWrap: 'wrap',
                             }}>
-                                {this.state.buttons.map((button, buttonId) => {
-                                    return ((button.type === 'quizAnswers') ?
+                                {this.state.choices.map((button, buttonId) => {
+                                    return ((button.type === 'imBack') ?
                                         (<Chip  key={buttonId}
                                                 avatar={<Avatar>{button.title.charAt(0)}</Avatar>}
                                                 label={button.title}

@@ -919,20 +919,19 @@ class PsBot extends Component {
                                                             
                                                                                 <PsBotThinking thinkingImg={data.img} />
                                                         )
-                                                        : (
+                                                        : (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (
+                                                            <p>
+                                                                <PsBotQuizCard data={conversation.channelData.attachment.payload.quiz_card}
+                                                                               action={this.pSBotButtonClick} /></p>
+                                                        ) : ((
                                                                         <p>
                                                                             {data.text}
                                                                         </p>
-                                                         )) :
+                                                         ))) :
                                                         ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                            (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (
-                                                                <p>
-                                                                    <PsBotQuizCard data={conversation.channelData.attachment.payload.quiz_card}
-                                                                                   action={this.pSBotButtonClick} /></p>
-                                                            ) : (
                                                             <p>
                                                             <PsBotCard data={conversation.attachments[0].content}
-                                                                       action={this.pSBotButtonClick} /></p>)) : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
+                                                                       action={this.pSBotButtonClick} /></p>) : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
                                                             <p>
                                                                 <PsBotQuizCard data={conversation.attachments[0].content}
                                                                            action={this.pSBotButtonClick} /></p>

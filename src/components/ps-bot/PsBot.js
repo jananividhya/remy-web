@@ -449,13 +449,19 @@ class PsBot extends Component {
             responseSuggestions: [],
         });
 
+        const loggedDetails = this.getSessionDetails();
+
         let conversation = {
             "type": "message",
             "text": this.state.conversationText || conversationText,
             "from": {
-                "id": "default-user",
-                "name": "User",
+                "id": loggedDetails.id || "default-user",
+                "name": loggedDetails.name || "User",
                 "channelId": "webchat"
+            },
+            "address": {
+                channelId: 'PSClient',
+                user: { id: loggedDetails.id || 'default-user', name: loggedDetails.name || 'User' },
             },
             "channelId": "webchat",
             "locale": "en-US",

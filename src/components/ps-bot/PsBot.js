@@ -306,7 +306,7 @@ class PsBot extends Component {
                   }, ];
 
                   if (data.provider === 'facebook') {
-                      signInWelcome.concat({
+                      signInWelcome.push({
                           "type": "message",
                           "text": "Like and share us on Facebook",
                           "from": {

@@ -103,7 +103,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
     responseSuggestionButton: {
         borderRadius: '60px',
-        marginBottom: '20px',
+        marginBottom: '55px',
         marginLeft: '4px',
         background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
@@ -1024,7 +1024,12 @@ class PsBot extends Component {
                             </Paper>)
                             )
                         })}
-                        <Grid item xs={12} sm={12} md={12}>
+                        <Grid item xs={12} sm={12} md={12} style={{
+                            backgroundColor: 'lightgrey',
+                            position: 'absolute',
+                            top: '597px',
+                            width: '995px'
+                        }}>
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 {(this.state.listMenu && this.state.listMenu.length === 0) ?
                                 (<form onSubmit={this.sendConversationToBot} autoComplete="off">

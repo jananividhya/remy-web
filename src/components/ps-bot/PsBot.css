@@ -14,9 +14,10 @@
 }
 
 .Ps-Bot-Conversation-Input-Container {
-    top: 615px;
-    margin-left: -10px;
-    position: absolute;
+    bottom: 300px;
+    width: 99%;
+    /*margin-left: -10px;*/
+    /*position: absolute;*/
     z-index: 1000;
 }
 

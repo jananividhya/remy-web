@@ -44,6 +44,8 @@ const paperStyle = {
 
 const theme = createMuiTheme();
 
+window.resizeTo(200, 200);
+
 ReactDOM.render(
     <IntlProvider locale="en">
         <MuiThemeProvider theme={theme}>

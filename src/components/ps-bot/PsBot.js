@@ -1027,7 +1027,7 @@ class PsBot extends Component {
                         <Grid item xs={12} sm={12} md={12} style={{
                             backgroundColor: 'lightgrey',
                             position: 'absolute',
-                            top: '597px',
+                            top: '598px',
                             width: '995px'
                         }}>
                             <div className="Ps-Bot-Conversation-Input-Container">

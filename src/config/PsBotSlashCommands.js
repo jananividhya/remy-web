@@ -121,8 +121,8 @@ const slashCommands = {
                         },
                         {
                             "type": "quizAnswers",
-                            "title": "purpleSlate",
-                            "value": "/signinwithps"
+                            "title": "Google",
+                            "value": "/signin-with-google"
                         },
                         {
                             "type": "quizAnswers",
@@ -290,6 +290,23 @@ const slashCommands = {
         "attachments": [
             {
                 "contentType": "application/vnd.ps.card.signin.fb",
+            }
+        ],
+    }],
+    "/signin-with-google": [{
+        "type": "message",
+        "id": uuid.v4(),
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "application/vnd.ps.card.signin.google",
             }
         ],
     }],

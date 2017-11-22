@@ -35,6 +35,7 @@ import PsBotWallpapers from './PsBotWallpapers';
 import PsBotGreeting from './PsBotGreeting';
 import PsBotFbSignInCard from './PsBotFbSignInCard';
 import PsBotFbLikeCard from './PsBotFbLikeCard';
+import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
 
 import HandleErrors from '../../util/HandleErrors';
 
@@ -257,9 +258,20 @@ class PsBot extends Component {
     };
 
     onSignIn = (data) => {
+        console.log("data ", data);
           switch (data.status) {
               case 'success':
-                  const {id, name, gender} = data.profile;
+                  let id, name, gender;
+
+                  if (data.provider === 'google') {
+                      name = data.profileObj.name;
+                      id = data.profileObj.googleId;
+                      gender = 'Male';
+                  } else {
+                      let {id, name, gender} = data.profile;
+                  }
+
+
 
                   // Set in session
                   this.setSessionDetails({
@@ -268,7 +280,7 @@ class PsBot extends Component {
                       "user.gender": gender
                   });
 
-                  const signInWelcome = [{
+                  let signInWelcome = [{
                       "type": "message",
                       "text": "Hello, " + name,
                       "from": {
@@ -290,33 +302,37 @@ class PsBot extends Component {
                       'localTimestamp': Date.now(),
                       "textFormat": "plain",
                       "timestamp": new Date(),
-                  }, {
-                      "type": "message",
-                      "text": "Like and share us on Facebook",
-                      "from": {
-                          "id": "fiercebadlands",
-                          "name": "fiercebadlands"
-                      },
-                      "locale": "en-US",
-                      'localTimestamp': Date.now(),
-                      "textFormat": "plain",
-                      "timestamp": new Date(),
-                  }, {
-                      "type": "message",
-                      "timestamp": Date.now(),
-                      "localTimestamp": Date.now(),
-                      "from": {
-                          "id": "fiercebadlands",
-                          "name": "fiercebadlands"
-                      },
-                      "locale": "en-US",
-                      "inputHint": "ignoringInput",
-                      "attachments": [
-                          {
-                              "contentType": "application/vnd.ps.card.like.fb",
-                          }
-                      ],
                   }, ];
+
+                  if (data.provider === 'facebook') {
+                      signInWelcome.concat({
+                          "type": "message",
+                          "text": "Like and share us on Facebook",
+                          "from": {
+                              "id": "fiercebadlands",
+                              "name": "fiercebadlands"
+                          },
+                          "locale": "en-US",
+                          'localTimestamp': Date.now(),
+                          "textFormat": "plain",
+                          "timestamp": new Date(),
+                      }, {
+                          "type": "message",
+                          "timestamp": Date.now(),
+                          "localTimestamp": Date.now(),
+                          "from": {
+                              "id": "fiercebadlands",
+                              "name": "fiercebadlands"
+                          },
+                          "locale": "en-US",
+                          "inputHint": "ignoringInput",
+                          "attachments": [
+                              {
+                                  "contentType": "application/vnd.ps.card.like.fb",
+                              }
+                          ],
+                      },)
+                  }
 
                   this.setState({
                       conversations: this.state.conversations.concat([...signInWelcome])
@@ -943,14 +959,16 @@ class PsBot extends Component {
                                                                                                        action={this.pSBotButtonClick} /></p>
                                                                                     : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.fb')) ?
                                                                                         (<p><PsBotFbSignInCard action={this.onSignIn} /></p>)
-                                                                                        : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
+                                                                                        : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.google')) ?
+                                                                                            (<p><PsBotGoogleSignInCard action={this.onSignIn} /></p>)
+                                                                                            : (((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
                                                                                             (<p><PsBotFbLikeCard /></p>)
                                                                                             : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                                                                 <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} fetchImg={conversation.attachments[0].fetchImg} />
                                                                                             ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                                 <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                                     <PsBotCommandCard data={conversation.attachments[0].content} />
-                                                                                                    : data.text)))))
+                                                                                                    : data.text))))))
                                                                         }
                                                                     </div>
                                                                 </Paper>

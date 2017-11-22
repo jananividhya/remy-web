@@ -3,19 +3,16 @@ import React, {Component} from 'react';
 
 // Material UI imports
 import PropTypes from 'prop-types';
-import {CardContent} from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import FacebookProvider, { Login, Like } from 'react-facebook';
+import { GoogleLogin } from 'react-google-login';
 
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
-import FaceIcon from 'material-ui-icons/Face';
 
 // Style Imports
 import './PsBotButton.css';
 
-const styleSheet = createStyleSheet('PsBotFbSignInCard', theme => ({
+const styleSheet = createStyleSheet('PsBotGoogleSignInCard', theme => ({
     buttonResponse: {
         boxShadow: '0px 0px',
         color: '#FFFFFF',
@@ -96,11 +93,11 @@ const styleSheet = createStyleSheet('PsBotFbSignInCard', theme => ({
 }));
 
 /**
- * @class PsBotFbSignInCard
+ * @class PsBotGoogleSignInCard
  * @extends Component
  * @description pS Bot Card Response
  */
-class PsBotFbSignInCard extends Component {
+class PsBotGoogleSignInCard extends Component {
 
     constructor(props) {
         super(props);
@@ -119,7 +116,7 @@ class PsBotFbSignInCard extends Component {
     signInResponse = (data) => {
         this.props.action({
             status: 'success',
-            provider: 'facebook',
+            provider: 'google',
             ...data
         });
     };
@@ -127,33 +124,24 @@ class PsBotFbSignInCard extends Component {
     signInError = (err) => {
         this.props.action({
             status: 'error',
-            provider: 'facebook',
+            provider: 'google',
             ...err
         });
     };
 
     render() {
         return ( <div>
-            <FacebookProvider appId="1896270490692668">
-                <Login
-                    onResponse={this.signInResponse}
-                    onError={this.signInError}
-                    render={({ isLoading, isWorking, onClick }) => (
-                        <Chip
-                               avatar={<Avatar>FB</Avatar>}
-                               label="Login with Facebook"
-                            // eslint-disable-next-line
-                               onClick={onClick}
-                               className={[this.classes.chip, this.classes.buttonTopQuiz].join(' ')}
-                        />
-                    )}/>
-            </FacebookProvider>
+            <GoogleLogin clientId="921814792691-reh6oij417djlfh12pv311a0t0e5pjin.apps.googleusercontent.com"
+                              buttonText="Login with Google"
+                              onSuccess={this.signInResponse}
+                              onFailure={this.signInError}>
+            </GoogleLogin>
         </div> );
     }
 }
 
-PsBotFbSignInCard.propTypes = {
+PsBotGoogleSignInCard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(PsBotFbSignInCard);
+export default withStyles(styleSheet)(PsBotGoogleSignInCard);

@@ -258,7 +258,6 @@ class PsBot extends Component {
     };
 
     onSignIn = (data) => {
-        console.log("data ", data);
           switch (data.status) {
               case 'success':
                   let id, name, gender;
@@ -268,7 +267,9 @@ class PsBot extends Component {
                       id = data.profileObj.googleId;
                       gender = 'Male';
                   } else {
-                      let {id, name, gender} = data.profile;
+                      id = data.profile.id;
+                      name = data.profile.name;
+                      gender = data.profile.gender;
                   }
 
 

@@ -49,7 +49,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10,
-        width: '98%',
+        width: '97%',
     },
     conversationInput: {
         fontFamily: 'Lato, sans-serif',
@@ -709,7 +709,7 @@ class PsBot extends Component {
                 }
             }
 
-            if (lastItem.inputHint === 'expectingInput' || lastItem.inputHint === 'acceptingInput' || lastItem.code === 'completedSuccessfully') {
+            if (lastItem.inputHint === 'expectingInput' || lastItem.code === 'completedSuccessfully') {
                 clearInterval(fetchBotConversationsTimer);
             }
         }).catch((ex) => {
@@ -879,7 +879,7 @@ class PsBot extends Component {
                                             { styles.map(({ key, style, data}) => (
                                                 <div key={key} style={{
                                                     textAlign: 'center',
-                                                    marginLeft: '360px',
+                                                    marginLeft: '180px',
                                                     cursor: 'pointer',
                                                     ...style
                                                 }}>
@@ -1046,8 +1046,8 @@ class PsBot extends Component {
                         <Grid item xs={12} sm={12} md={12} style={{
                             backgroundColor: 'lightgrey',
                             position: 'absolute',
-                            top: '598px',
-                            width: '995px'
+                            top: '802px',
+                            width: '100%'
                         }}>
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 {(this.state.listMenu && this.state.listMenu.length === 0) ?

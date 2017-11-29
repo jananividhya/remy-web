@@ -5,14 +5,14 @@ let win = null;
 
 function createWindow() {
     // Initialize the window to our specified dimensions
-    win = new BrowserWindow({width: 642, height: 630});
+    win = new BrowserWindow({
+        width: 600,
+        height: 900,
+        resizable: false
+    });
 
     // Specify entry point
-    win.loadURL('https://public-ps-bot.herokuapp.com/');
-
-    // Show dev tools
-    // Remove this line before distributing
-    //win.webContents.openDevTools();
+    win.loadURL('http://localhost:3000');
 
     // Remove window once app is closed
     win.on('closed', function () {

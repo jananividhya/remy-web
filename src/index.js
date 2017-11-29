@@ -32,10 +32,10 @@ const darkTheme = {
 };
 
 const paperStyle = {
-    height: '630px',
-    width: '98%',
-    marginTop: 20,
-    marginLeft: 10,
+    height: '850px',
+    width: '99.6%',
+    marginTop: 0,
+    marginLeft: 0,
     display: 'inline-block',
     overflow: 'scroll',
     boxShadow: '0px 0px',
@@ -43,8 +43,6 @@ const paperStyle = {
 };
 
 const theme = createMuiTheme();
-
-window.resizeTo(200, 200);
 
 ReactDOM.render(
     <IntlProvider locale="en">

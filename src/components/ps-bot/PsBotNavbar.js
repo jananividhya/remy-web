@@ -29,7 +29,7 @@ let styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     },
     appBar: {
         position: 'absolute',
-        width: '98%',
+        width: '100%',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,

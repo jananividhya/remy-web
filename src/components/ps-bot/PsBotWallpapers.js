@@ -2,17 +2,17 @@ import React from 'react';
 import Grid from 'material-ui/Grid';
 
 const botPaperClass = {
-    height: '570px',
-    width: '100%'
+    height: '900px',
+    width: '600px',
+    marginTop: '-30px',
+    marginLeft: '-10px',
 };
 
 const botPapers = [
     {
         type: "image",
-        action: {
-            "type": "external",
-            "load": "https://google.com"
-        },
+        actionType: "",
+        action: {},
         src: "botpapers/Wallpaper 1@3x.jpg"
     },
     {

@@ -446,6 +446,14 @@ class PsBot extends Component {
         });
     };
 
+    wait = (ms) => {
+        let start = Date.now(),
+            now = start;
+        while (now - start < ms) {
+            now = Date.now();
+        }
+    };
+
 
     /**
      * @method sendConversationToBot()
@@ -532,39 +540,16 @@ class PsBot extends Component {
 
             if (allowedSlashCommands.hasOwnProperty(conversationText)) {
                 const commandResponses = allowedSlashCommands[conversationText];
-
-                for (const response of commandResponses) {
-                    if (response.nextConversation) {
-                        console.log('Spreading the next conversation to conversations.', response.nextConversation[0]);
-                        this.setState({
-                            conversationId: this.state.conversationId,
-                            conversationText: '',
-                            conversations: this.state.conversations.concat([slashConversation, ...response.nextConversation]),
-                            conversationHistory: this.state.conversationHistory,
-                            conversationInputText: this.state.conversationInputText,
-                            responseSuggestions: this.state.responseSuggestions,
-                            listMenu: this.state.listMenu,
-                        });
-
-                        for (const nextConv of response.nextConversation) {
-                            if (nextConv.doesExpectInput) {
-                                this.setState({
-                                    sendInputToServer: false
-                                });
-                            }
-                        }
-                    } else {
-                        this.setState({
-                            conversationId: this.state.conversationId,
-                            conversationText: '',
-                            conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands[conversationText]]),
-                            conversationHistory: this.state.conversationHistory,
-                            conversationInputText: this.state.conversationInputText,
-                            responseSuggestions: this.state.responseSuggestions,
-                            listMenu: this.state.listMenu,
-                        });
-                    }
-                }
+                console.log('commandResponses ', commandResponses);
+                this.setState({
+                    conversationId: this.state.conversationId,
+                    conversationText: '',
+                    conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands[conversationText]]),
+                    conversationHistory: this.state.conversationHistory,
+                    conversationInputText: this.state.conversationInputText,
+                    responseSuggestions: this.state.responseSuggestions,
+                    listMenu: this.state.listMenu,
+                });
 
             } else {
                 this.setState({
@@ -694,15 +679,21 @@ class PsBot extends Component {
                         conversations.push(newConversation);
                     }
 
-
-                    this.setState({
-                        conversationId: this.state.conversationId,
-                        conversationText: '',
-                        conversations: conversations,
-                        conversationHistory: conversationHistory,
-                        conversationInputText: this.state.conversationInputText,
-                        responseSuggestions: this.state.responseSuggestions,
-                    });
+                    console.log('conversation text ', newConversation.text);
+                    let i = 0;
+                    (() => {
+                        if (i++ > 10) return;
+                       setTimeout(() => {
+                           this.setState({
+                               conversationId: this.state.conversationId,
+                               conversationText: '',
+                               conversations: conversations,
+                               conversationHistory: conversationHistory,
+                               conversationInputText: this.state.conversationInputText,
+                               responseSuggestions: this.state.responseSuggestions,
+                           });
+                       }, 1000);
+                    })();
                 } else if (this.conversationCounter === 200) {
                     this.conversationCounter = 0;
                     clearInterval(fetchBotConversationsTimer);
@@ -952,8 +943,9 @@ class PsBot extends Component {
                                                                                 ) : ((
                                                                                     <p>
                                                                                         <Typist cursor={{
-                                                                                            element: '...',
+                                                                                            element: '',
                                                                                             hideWhenDone: true,
+                                                                                            hideWhenDoneDelay: 0,
                                                                                         }}>
                                                                                             {data.text}
                                                                                         </Typist>

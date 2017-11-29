@@ -61,8 +61,8 @@ const slashCommands = {
         "type": "message",
         "text": "Hey, there!",
         "from": {
-            "id": "localbot",
-            "name": "localbot"
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
         },
         "locale": "en-US",
         'localTimestamp': Date.now(),
@@ -73,8 +73,8 @@ const slashCommands = {
         "type": "message",
         "text": "I am purpleBot, your anytime learning companion.",
         "from": {
-            "id": "localbot",
-            "name": "localbot"
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
         },
         "locale": "en-US",
         'localTimestamp': Date.now(),
@@ -85,8 +85,8 @@ const slashCommands = {
         "type": "message",
         "text": "Help me know you better.",
         "from": {
-            "id": "localbot",
-            "name": "localbot"
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
         },
         "locale": "en-US",
         'localTimestamp': Date.now(),
@@ -99,8 +99,8 @@ const slashCommands = {
         "timestamp": Date.now(),
         "localTimestamp": Date.now(),
         "from": {
-            "id": "localbot",
-            "name": "localbot"
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
         },
         "locale": "en-US",
         "inputHint": "ignoringInput",

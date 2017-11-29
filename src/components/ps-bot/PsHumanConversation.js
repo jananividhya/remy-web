@@ -66,25 +66,6 @@ class PsHumanConversation extends Component {
         };
     }
 
-    fetchUrLMetadata = async (url) => {
-        const urlDetails = await fetch(url, {
-            mode: 'no-cors'
-        });
-        return await urlDetails.text();
-    };
-
-    getUrlDetails = async (url) => {
-        return await this.fetchUrLMetadata(url);
-    };
-
-    componentDidMount = () => {
-        if(isURL(this.props.conversationText)) {
-            this.getUrlDetails(this.props.conversationText).then(function (response) {
-                console.log(response);
-            });
-        }
-    };
-
     render() {
 
         let conversationText = this.props.conversationText;

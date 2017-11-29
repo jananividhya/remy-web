@@ -540,16 +540,72 @@ class PsBot extends Component {
 
             if (allowedSlashCommands.hasOwnProperty(conversationText)) {
                 const commandResponses = allowedSlashCommands[conversationText];
-                console.log('commandResponses ', commandResponses);
+                this.state.conversations.push(slashConversation);
                 this.setState({
                     conversationId: this.state.conversationId,
                     conversationText: '',
-                    conversations: this.state.conversations.concat([slashConversation, ...allowedSlashCommands[conversationText]]),
+                    conversations: this.state.conversations,
                     conversationHistory: this.state.conversationHistory,
                     conversationInputText: this.state.conversationInputText,
                     responseSuggestions: this.state.responseSuggestions,
                     listMenu: this.state.listMenu,
                 });
+
+                const convSetState = (conv) => {
+                    this.state.conversations.push(conv);
+
+                    this.setState({
+                        conversationId: this.state.conversationId,
+                        conversationText: '',
+                        conversations: this.state.conversations,
+                        conversationHistory: this.state.conversationHistory,
+                        conversationInputText: this.state.conversationInputText,
+                        responseSuggestions: this.state.responseSuggestions,
+                        listMenu: this.state.listMenu,
+                    });
+                };
+
+                const thinkingSetState = () => {
+                    this.state.conversations.push({
+                        "type": "message",
+                        "text": "Thinking...",
+                        "from": {
+                            "id": "ps-public-bot",
+                            "name": "bot",
+                            "channelId": "webchat"
+                        },
+                        "channelId": "webchat",
+                        "locale": "en-US",
+                        "textFormat": "plain",
+                        "contentType": "typing",
+                        "img": "thinking.gif",
+                        "timestamp": new Date(),
+                        "localTimestamp": Date.now(),
+                        "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+                    });
+
+                    this.setState({
+                        conversationId: this.state.conversationId,
+                        conversationText: '',
+                        conversations: this.state.conversations,
+                        conversationHistory: this.state.conversationHistory,
+                        conversationInputText: this.state.conversationInputText,
+                        responseSuggestions: this.state.responseSuggestions,
+                        listMenu: this.state.listMenu,
+                    });
+                };
+
+                let i = 0, l = commandResponses.length;
+                (function iterator() {
+                    convSetState(commandResponses[i]);
+                    if(++i<l) {
+                        setTimeout(() => {
+                            iterator()
+                        }, (commandResponses[i].text) ? commandResponses[i].text.length * 200 : 3000);
+                    }
+                })();
+
+
 
             } else {
                 this.setState({
@@ -679,21 +735,14 @@ class PsBot extends Component {
                         conversations.push(newConversation);
                     }
 
-                    console.log('conversation text ', newConversation.text);
-                    let i = 0;
-                    (() => {
-                        if (i++ > 10) return;
-                       setTimeout(() => {
-                           this.setState({
-                               conversationId: this.state.conversationId,
-                               conversationText: '',
-                               conversations: conversations,
-                               conversationHistory: conversationHistory,
-                               conversationInputText: this.state.conversationInputText,
-                               responseSuggestions: this.state.responseSuggestions,
-                           });
-                       }, 1000);
-                    })();
+                    this.setState({
+                        conversationId: this.state.conversationId,
+                        conversationText: '',
+                        conversations: conversations,
+                        conversationHistory: conversationHistory,
+                        conversationInputText: this.state.conversationInputText,
+                        responseSuggestions: this.state.responseSuggestions,
+                    });
                 } else if (this.conversationCounter === 200) {
                     this.conversationCounter = 0;
                     clearInterval(fetchBotConversationsTimer);

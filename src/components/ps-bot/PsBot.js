@@ -16,6 +16,8 @@ import Autosuggest from 'react-autosuggest';
 
 // Common imports
 import 'whatwg-fetch';
+// React Typist
+import Typist from 'react-typist';
 
 // App imports
 import './PsBot.css';
@@ -26,6 +28,7 @@ import PsBotCard from './PsBotCard';
 import PsBotCardImage from './PsBotCardImage';
 import PsBotConversationTime from './PsBotConversationTime';
 import AutoSuggestTheme from './AutoSuggestTheme.css'; // eslint-disable-line no-unused-vars
+import TypistTheme from './Typist.css'; // eslint-disable-line no-unused-vars
 import PsBotCodeCard from './PsBotCodeCard';
 import PsBotQuizCard from './PsBotQuizCard';
 import PsBotCommandCard from './commands/PsBotCommandCard';
@@ -948,7 +951,12 @@ class PsBot extends Component {
                                                                                                        action={this.pSBotButtonClick} /></p>
                                                                                 ) : ((
                                                                                     <p>
-                                                                                        {data.text}
+                                                                                        <Typist cursor={{
+                                                                                            element: '...',
+                                                                                            hideWhenDone: true,
+                                                                                        }}>
+                                                                                            {data.text}
+                                                                                        </Typist>
                                                                                     </p>
                                                                                 ))) :
                                                                                 ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
@@ -1017,7 +1025,7 @@ class PsBot extends Component {
                                                             ...style
                                                         }}>
                                                             <PsHumanConversation conversationText={data.text}
-                                                                                 theme={data.theme} />
+                                                                                    theme={data.theme} />
                                                         </div>
                                                     ))}
                                                 </div>

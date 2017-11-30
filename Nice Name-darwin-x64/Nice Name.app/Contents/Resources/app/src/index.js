@@ -14,7 +14,6 @@ import DocumentTitle from 'react-document-title';
 // App imports
 import PsBot from './components/ps-bot/PsBot';
 import PsBotPoweredBy from './components/ps-bot/PsBotPoweredBy';
-import PsBotTermsOfService from './components/ps-bot/PsBotTermsOfService';
 
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';
@@ -48,10 +47,6 @@ const cuiTheme = {
     botDetails: {
         name: 'Nice Name',
         description: 'Reason for existence',
-    },
-    termsOfService: {
-        text: 'Nice Name Terms of Service',
-        link: 'http://purpleslate.in'
     }
 };
 
@@ -84,14 +79,6 @@ ReactDOM.render(
                            />
                 </Paper>
                 </DocumentTitle>
-                <div style={{
-                    marginLeft: 9,
-                    marginTop: '-5px',
-                    float: 'left'
-                }}>
-                    <PsBotTermsOfService text={cuiTheme.termsOfService.text}
-                                        link={cuiTheme.termsOfService.link} />
-                </div>
                 <div style={{
                     marginRight: 9,
                     float: 'right'

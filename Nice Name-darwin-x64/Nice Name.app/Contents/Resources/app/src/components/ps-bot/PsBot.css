@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300');
+
+.Ps-Bot {
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    color: #9B9B9B;
+    letter-spacing: 0;
+    line-height: 20px;
+}
+
+@keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.Ps-Bot-Conversation-Input-Container {
+    bottom: 300px;
+    width: 98%;
+    z-index: 1000;
+}
+
+.Ps-Bot-Conversation-Input {
+    width: 100%;
+}
+
+.Ps-Bot-Conversation-Human {
+    background: #FFFFFF;
+    border: 1px solid #D2D1D2;
+    border-radius: 3px;
+    float: right;
+    text-align: right;
+    line-height: 20px;
+    width: 240px;
+    /** Remove after confirmation **/
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.Ps-Bot-Conversation-Bot {
+    background: #FFFFFF;
+    border: 1px solid #D2D1D2;
+    border-radius: 3px;
+    float: right;
+    text-align: left;
+    line-height: 20px;
+    width: 240px;
+    /** Remove after confirmation **/
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+/* #human-input {
+    background: url('conversation-cursor.gif') no-repeat top left;
+    margin-left: 92px;
+    bottom: 7px;
+    position: relative;
+}
+
+#human-input:focus {
+    background: none;
+    margin-left: 0px;
+    bottom: 0px;
+} */
+
+.material-icons.md-36 { font-size: 42px; }

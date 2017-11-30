@@ -1,5 +1,5 @@
 // ./main.js
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow} = require('electron');
 
 let win = null;
 
@@ -13,7 +13,8 @@ function createWindow() {
     });
 
     // Specify entry point
-    win.loadURL('https://ps-nice-name-cui.herokuapp.com');
+    win.loadURL('http://localhost:3000');
+    //win.loadURL('https://public-ps-bot.herokuapp.com');
 
     // Remove window once app is closed
     win.on('closed', function () {

@@ -4,14 +4,10 @@
   <dict>
     <key>BuildMachineOSBuild</key>
     <string>15G31</string>
-    <key>CFBundleDisplayName</key>
-    <string>Nice Name Helper NP</string>
-    <key>CFBundleExecutable</key>
-    <string>Nice Name Helper NP</string>
     <key>CFBundleIdentifier</key>
-    <string>com.electron.nice-name.helper.NP</string>
+    <string>com.electron.purplebot.helper</string>
     <key>CFBundleName</key>
-    <string>Nice Name Helper NP</string>
+    <string>purpleBot</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>DTSDKBuild</key>
@@ -26,5 +22,9 @@
     <true/>
     <key>NSSupportsAutomaticGraphicsSwitching</key>
     <true/>
+    <key>CFBundleDisplayName</key>
+    <string>purpleBot Helper</string>
+    <key>CFBundleExecutable</key>
+    <string>purpleBot Helper</string>
   </dict>
 </plist>

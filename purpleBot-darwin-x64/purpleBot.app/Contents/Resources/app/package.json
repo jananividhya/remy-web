@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "ps-electron.js",
-  "productName": "Nice Name",
+  "productName": "purpleBot",
   "dependencies": {
     "autoprefixer": "7.1.1",
     "babel-core": "6.25.0",

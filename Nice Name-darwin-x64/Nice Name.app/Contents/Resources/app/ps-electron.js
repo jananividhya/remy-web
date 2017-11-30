@@ -8,11 +8,12 @@ function createWindow() {
     win = new BrowserWindow({
         width: 600,
         height: 900,
-        resizable: false
+        resizable: false,
+        scrollable: false
     });
 
     // Specify entry point
-    win.loadURL('http://localhost:3000');
+    win.loadURL('https://ps-nice-name-cui.herokuapp.com');
 
     // Remove window once app is closed
     win.on('closed', function () {

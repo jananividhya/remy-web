@@ -702,7 +702,7 @@ class PsBot extends Component {
             }).then((json) => {
             const lastItem = json.activities[json.activities.length - 1];
 
-            for (let newConversation of json.activities) {
+            const convSetState = (newConversation) => {
                 if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
 
                     let conversationHistory = this.state.conversationHistory.slice();
@@ -750,7 +750,17 @@ class PsBot extends Component {
                         conversations: this.state.conversations.concat([...PsError['serverError']])
                     });
                 }
-            }
+            };
+
+            let i = 0, l = json.activities.length;
+            (function iterator() {
+                convSetState(json.activities[i]);
+                if(++i<l) {
+                    setTimeout(() => {
+                        iterator()
+                    }, (json.activities[i].text) ? ((json.activities[i].text.length > 30) ? json.activities[i].text.length : json.activities[i].text.length * 200) : 3000);
+                }
+            })();
 
             if (lastItem.inputHint === 'expectingInput' || lastItem.code === 'completedSuccessfully') {
                 clearInterval(fetchBotConversationsTimer);

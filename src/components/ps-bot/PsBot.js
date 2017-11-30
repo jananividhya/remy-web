@@ -18,6 +18,7 @@ import Autosuggest from 'react-autosuggest';
 import 'whatwg-fetch';
 // React Typist
 import Typist from 'react-typist';
+import Slider from 'react-slick';
 
 // App imports
 import './PsBot.css';
@@ -39,6 +40,8 @@ import PsBotGreeting from './PsBotGreeting';
 import PsBotFbSignInCard from './PsBotFbSignInCard';
 import PsBotFbLikeCard from './PsBotFbLikeCard';
 import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
+import PsBotSliderArrowLeft from './slider/PsBotSliderArrowLeft';
+import PsBotSliderArrowRight from './slider/PsBotSliderArrowRight';
 
 import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords';
 import HandleErrors from '../../util/HandleErrors';
@@ -143,6 +146,19 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         width: '400px',
     },
 }));
+
+const cardSliderOptions = {
+    dots: true,
+    infinite: true,
+    arrows: true,
+    speed: 500,
+    fade: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+    nextArrow: <PsBotSliderArrowRight/>,
+    prevArrow: <PsBotSliderArrowLeft/>
+};
 
 /**
  * @todo make the class modular
@@ -742,7 +758,7 @@ class PsBot extends Component {
                         } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
                             this.setState({
                                 listMenu: newConversation.attachments[0].content.buttons,
-                                listMenuTitle: newConversation.attachments[0].content.subtitle || newConversation.attachments[0].content.title 
+                                listMenuTitle: newConversation.attachments[0].content.subtitle || newConversation.attachments[0].content.title
                             });
                         } else {
                             this.setState({
@@ -779,7 +795,7 @@ class PsBot extends Component {
                 if(++i<l) {
                     setTimeout(() => {
                         iterator()
-                    }, (json.activities[i].text) ? ((json.activities[i].text.length > 30) ? json.activities[i].text.length : json.activities[i].text.length * 200) : 3000);
+                    }, (json.activities[i].text) ? ((json.activities[i].text.length > 10) ? json.activities[i].text.length : json.activities[i].text.length * 50) : 100);
                 }
             })();
 
@@ -998,6 +1014,9 @@ class PsBot extends Component {
                             ) : ('')
                         }
                         {this.state.conversations.map((conversation, id) => {
+
+                            const multipleCards = (conversation.attachments) ? conversation.attachments.length > 1 : false;
+
                             return ((conversation.from.name === 'fiercebadlands' || conversation.contentType === 'typing') ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                             <TransitionMotion defaultStyles={[
@@ -1047,9 +1066,27 @@ class PsBot extends Component {
                                                                                     )
                                                                                 )) :
                                                                                 ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                                                (multipleCards) ?
+                                                                                    (
+                                                                                        <Slider {...cardSliderOptions}>
+                                                                                            {conversation.attachments.map((attachment, key) => {
+                                                                                                return (
+                                                                                                    <div key={key}>
+                                                                                                            <PsBotCard data={attachment.content}
+                                                                                                                       action={this.pSBotButtonClick} />
+                                                                                                    </div>
+                                                                                                );
+                                                                                            })}
+                                                                                        </Slider>
+                                                                                    )
+                                                                                    : (
                                                                                     <p>
                                                                                         <PsBotCard data={conversation.attachments[0].content}
-                                                                                                   action={this.pSBotButtonClick} /></p>) : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
+                                                                                                   action={this.pSBotButtonClick} /></p>
+                                                                                    )
+
+                                                                                    ) :
+                                                                                    ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
                                                                                     <p>
                                                                                         <PsBotQuizCard data={conversation.attachments[0].content}
                                                                                                        action={this.pSBotButtonClick} /></p>

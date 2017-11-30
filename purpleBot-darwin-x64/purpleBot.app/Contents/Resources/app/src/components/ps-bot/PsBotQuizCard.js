@@ -209,12 +209,11 @@ class PsBotCard extends Component {
                                 {this.state.choices.map((button, buttonId) => {
                                     return ((button.type === 'imBack') ?
                                         (<Chip  key={buttonId}
-                                                avatar={<Avatar>{button.title.charAt(0)}</Avatar>}
                                                 label={button.title}
-                                                // eslint-disable-next-line
+                                            // eslint-disable-next-line
                                                 onClick={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}
                                                 className={[this.classes.chip, this.classes.buttonTopQuiz].join(' ')}
-                                            />) : '')
+                                        />) : '')
                                 })}
                             </div>
                         ) : ''}

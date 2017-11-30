@@ -310,6 +310,92 @@ const slashCommands = {
             }
         ],
     }],
+    "/local-test": [{
+        "type": "message",
+        "id": uuid.v4(),
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "application/vnd.microsoft.card.hero",
+                "content": {
+                    "title": "Your total score 1",
+                    "subtitle": "Scroll through for individual questions details"
+                }
+            },
+            {
+                "contentType": "application/vnd.microsoft.card.hero",
+                "content": {
+                    "title": "Question No : 1",
+                    "subtitle": "Who was the first Nobel winner from India?",
+                    "text": "\nYour Answer : Kailash Satyarthi\n\nCorrect Answer : Rabindranath Tagore\n\nObtained Score : -1\n\n",
+                    "images": [
+                        {
+                            "url": "https://fierce-badlands-72686.herokuapp.com/images/wrong.png"
+                        }
+                    ]
+                }
+            },
+            {
+                "contentType": "application/vnd.microsoft.card.hero",
+                "content": {
+                    "title": "Question No : 2",
+                    "subtitle": "Who wrote the constitution of India?",
+                    "text": "\nYour Answer : Gandhi\n\nCorrect Answer : Ambedkar\n\nObtained Score : -1\n\n",
+                    "images": [
+                        {
+                            "url": "https://fierce-badlands-72686.herokuapp.com/images/wrong.png"
+                        }
+                    ]
+                }
+            },
+            {
+                "contentType": "application/vnd.microsoft.card.hero",
+                "content": {
+                    "title": "Question No : 3",
+                    "subtitle": "Which President of India served the longest?",
+                    "text": "\nCorrect Answer : Rajendra Prasad\n\nObtained Score : 2\n\n",
+                    "images": [
+                        {
+                            "url": "https://fierce-badlands-72686.herokuapp.com/images/right.png"
+                        }
+                    ]
+                }
+            },
+            {
+                "contentType": "application/vnd.microsoft.card.hero",
+                "content": {
+                    "title": "Question No : 4",
+                    "subtitle": "Where was the first Railroad of India constructed?",
+                    "text": "\nYour Answer : Hyderabad to Secunderabad\n\nCorrect Answer : Bombay to Thane\n\nObtained Score : -1\n\n",
+                    "images": [
+                        {
+                            "url": "https://fierce-badlands-72686.herokuapp.com/images/wrong.png"
+                        }
+                    ]
+                }
+            },
+            {
+                "contentType": "application/vnd.microsoft.card.hero",
+                "content": {
+                    "title": "Question No : 5",
+                    "subtitle": "What is the capital of India?",
+                    "text": "\nCorrect Answer : Delhi\n\nObtained Score : 2\n\n",
+                    "images": [
+                        {
+                            "url": "https://fierce-badlands-72686.herokuapp.com/images/right.png"
+                        }
+                    ]
+                }
+            }
+        ],
+    }],
 };
 
 export default () => {

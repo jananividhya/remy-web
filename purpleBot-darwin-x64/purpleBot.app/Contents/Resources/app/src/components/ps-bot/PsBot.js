@@ -18,6 +18,7 @@ import Autosuggest from 'react-autosuggest';
 import 'whatwg-fetch';
 // React Typist
 import Typist from 'react-typist';
+import Slider from 'react-slick';
 
 // App imports
 import './PsBot.css';
@@ -39,7 +40,10 @@ import PsBotGreeting from './PsBotGreeting';
 import PsBotFbSignInCard from './PsBotFbSignInCard';
 import PsBotFbLikeCard from './PsBotFbLikeCard';
 import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
+import PsBotSliderArrowLeft from './slider/PsBotSliderArrowLeft';
+import PsBotSliderArrowRight from './slider/PsBotSliderArrowRight';
 
+import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords';
 import HandleErrors from '../../util/HandleErrors';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
@@ -143,6 +147,19 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
 }));
 
+const cardSliderOptions = {
+    dots: true,
+    infinite: true,
+    arrows: true,
+    speed: 500,
+    fade: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+    nextArrow: <PsBotSliderArrowRight/>,
+    prevArrow: <PsBotSliderArrowLeft/>
+};
+
 /**
  * @todo make the class modular
  * @class PsBot
@@ -222,6 +239,7 @@ class PsBot extends Component {
             conversationInputText: this.props.conversationInputText || 'Begin your conversation here..',
             responseSuggestions: [],
             listMenu: [],
+            listMenuTitle: '',
             anchorEl: undefined,
             menuOpen: false,
             commandSuggestionValue: '',
@@ -667,7 +685,7 @@ class PsBot extends Component {
             // Remove thinking before pushing the content
             conversations.splice(-1, 1);
 
-            let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 200);
+            let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 1000);
         }).catch((ex) => {
             console.error('Parsing failed while sending conversation to bot ', JSON.stringify(ex));
             this.setState({
@@ -681,6 +699,20 @@ class PsBot extends Component {
             });
         });
         }
+    };
+
+    skipConversation = (conversation) => {
+        const skipKeywords = ConversationSkipKeywords().filter(function (keyword) {
+            if (conversation.text && conversation.text.toUpperCase().startsWith(keyword.toUpperCase())) {
+                return keyword.toUpperCase();
+            }
+        });
+
+        if (skipKeywords.length > 0) {
+            return true;
+        }
+
+        return false;
     };
 
     conversationCounter = 0;
@@ -705,52 +737,55 @@ class PsBot extends Component {
             const lastItem = json.activities[json.activities.length - 1];
 
             const convSetState = (newConversation) => {
-                if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
+                if(!this.skipConversation(newConversation)) {
+                    if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
 
-                    let conversationHistory = this.state.conversationHistory.slice();
-                    let conversations = this.state.conversations.slice();
+                        let conversationHistory = this.state.conversationHistory.slice();
+                        let conversations = this.state.conversations.slice();
 
-                    if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.text) {
-                        const textConversation = Object.assign({}, newConversation);
-                        delete textConversation.attachments;
-                        conversations.push(textConversation);
+                        if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.text) {
+                            const textConversation = Object.assign({}, newConversation);
+                            delete textConversation.attachments;
+                            conversations.push(textConversation);
 
-                        if (newConversation.attachments[0].content.buttons) {
-                            let responseSuggestions = newConversation.attachments[0].content.buttons;
+                            if (newConversation.attachments[0].content.buttons) {
+                                let responseSuggestions = newConversation.attachments[0].content.buttons;
+                                this.setState({
+                                    responseSuggestions: responseSuggestions,
+                                });
+                            }
+
+                        } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
                             this.setState({
-                                responseSuggestions: responseSuggestions,
+                                listMenu: newConversation.attachments[0].content.buttons,
+                                listMenuTitle: newConversation.attachments[0].content.subtitle || newConversation.attachments[0].content.title
+                            });
+                        } else {
+                            this.setState({
+                                noButtonCard: true,
                             });
                         }
 
-                    } else if (newConversation.attachments && newConversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && newConversation.attachments[0].content.buttons && newConversation.attachments[0].content.buttons[0].type === 'imBack') {
-                        this.setState({
-                            listMenu: newConversation.attachments[0].content.buttons
-                        });
-                    } else {
-                        this.setState({
-                            noButtonCard: true,
-                        });
-                    }
+                        conversationHistory.push(newConversation.id);
+                        if (this.state.responseSuggestions.length === 0) {
+                            conversations.push(newConversation);
+                        }
 
-                    conversationHistory.push(newConversation.id);
-                    if (this.state.responseSuggestions.length === 0) {
-                        conversations.push(newConversation);
+                        this.setState({
+                            conversationId: this.state.conversationId,
+                            conversationText: '',
+                            conversations: conversations,
+                            conversationHistory: conversationHistory,
+                            conversationInputText: this.state.conversationInputText,
+                            responseSuggestions: this.state.responseSuggestions,
+                        });
+                    } else if (this.conversationCounter === 200) {
+                        this.conversationCounter = 0;
+                        /*clearInterval(fetchBotConversationsTimer);
+                        this.setState({
+                            conversations: this.state.conversations.concat([...PsError['serverError']])
+                        });*/
                     }
-
-                    this.setState({
-                        conversationId: this.state.conversationId,
-                        conversationText: '',
-                        conversations: conversations,
-                        conversationHistory: conversationHistory,
-                        conversationInputText: this.state.conversationInputText,
-                        responseSuggestions: this.state.responseSuggestions,
-                    });
-                } else if (this.conversationCounter === 200) {
-                    this.conversationCounter = 0;
-                    clearInterval(fetchBotConversationsTimer);
-                    this.setState({
-                        conversations: this.state.conversations.concat([...PsError['serverError']])
-                    });
                 }
             };
 
@@ -760,7 +795,7 @@ class PsBot extends Component {
                 if(++i<l) {
                     setTimeout(() => {
                         iterator()
-                    }, (json.activities[i].text) ? ((json.activities[i].text.length > 30) ? json.activities[i].text.length : json.activities[i].text.length * 200) : 3000);
+                    }, (json.activities[i].text) ? ((json.activities[i].text.length > 10) ? json.activities[i].text.length : json.activities[i].text.length * 50) : 100);
                 }
             })();
 
@@ -979,6 +1014,9 @@ class PsBot extends Component {
                             ) : ('')
                         }
                         {this.state.conversations.map((conversation, id) => {
+
+                            const multipleCards = (conversation.attachments) ? conversation.attachments.length > 1 : false;
+
                             return ((conversation.from.name === 'fiercebadlands' || conversation.contentType === 'typing') ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                             <TransitionMotion defaultStyles={[
@@ -1011,21 +1049,44 @@ class PsBot extends Component {
                                                                                     <p>
                                                                                         <PsBotQuizCard data={conversation.channelData.attachment.payload.quiz_card}
                                                                                                        action={this.pSBotButtonClick} /></p>
-                                                                                ) : ((
-                                                                                    <p>
-                                                                                        <Typist cursor={{
-                                                                                            element: '',
-                                                                                            hideWhenDone: true,
-                                                                                            hideWhenDoneDelay: 0,
-                                                                                        }}>
+                                                                                ) : ((this.props.typing) ? (
+                                                                                        <p>
+                                                                                            <Typist cursor={{
+                                                                                                element: '',
+                                                                                                hideWhenDone: true,
+                                                                                                hideWhenDoneDelay: 0,
+                                                                                            }}>
+                                                                                                {data.text}
+                                                                                            </Typist>
+                                                                                        </p>
+                                                                                    ) : (
+                                                                                        <p>
                                                                                             {data.text}
-                                                                                        </Typist>
-                                                                                    </p>
-                                                                                ))) :
+                                                                                        </p>
+                                                                                    )
+                                                                                )) :
                                                                                 ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                                                (multipleCards) ?
+                                                                                    (
+                                                                                        <Slider {...cardSliderOptions}>
+                                                                                            {conversation.attachments.map((attachment, key) => {
+                                                                                                return (
+                                                                                                    <div key={key}>
+                                                                                                            <PsBotCard data={attachment.content}
+                                                                                                                       action={this.pSBotButtonClick} />
+                                                                                                    </div>
+                                                                                                );
+                                                                                            })}
+                                                                                        </Slider>
+                                                                                    )
+                                                                                    : (
                                                                                     <p>
                                                                                         <PsBotCard data={conversation.attachments[0].content}
-                                                                                                   action={this.pSBotButtonClick} /></p>) : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
+                                                                                                   action={this.pSBotButtonClick} /></p>
+                                                                                    )
+
+                                                                                    ) :
+                                                                                    ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
                                                                                     <p>
                                                                                         <PsBotQuizCard data={conversation.attachments[0].content}
                                                                                                        action={this.pSBotButtonClick} /></p>
@@ -1141,7 +1202,7 @@ class PsBot extends Component {
                                         aria-haspopup="true"
                                         onClick={this.handleMenuClick}
                                     >
-                                        What would you like to know about?
+                                        {this.state.listMenuTitle || 'What would you like to know about?'}
                                     </Button>
                                     <Menu
                                         id="simple-menu"

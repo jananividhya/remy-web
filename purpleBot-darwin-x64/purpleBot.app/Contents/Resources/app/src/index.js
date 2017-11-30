@@ -62,6 +62,7 @@ ReactDOM.render(
                            accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
                            navbarTheme={cuiTheme.navbar}
                            botDetailsTheme={cuiTheme.botDetails}
+                           typing={false}
                            />
                 </Paper>
                 </DocumentTitle>

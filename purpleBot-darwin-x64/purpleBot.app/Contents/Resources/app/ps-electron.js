@@ -13,8 +13,8 @@ function createWindow() {
     });
 
     // Specify entry point
-    win.loadURL('http://localhost:3000');
-    //win.loadURL('https://public-ps-bot.herokuapp.com');
+    //win.loadURL('http://localhost:3000');
+    win.loadURL('https://ps-nice-name-cui.herokuapp.com/');
 
     // Remove window once app is closed
     win.on('closed', function () {

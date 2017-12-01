@@ -933,7 +933,7 @@ class PsBot extends Component {
                                                       }},
                                                       { key: 'sign-in', style: { marginTop: spring(30) }, data: {
                                                           type: 'Command',
-                                                          title: 'Sign-in to purpleSlate',
+                                                          title: 'Sign-in to ' + botName,
                                                           value: '/signin',
                                                       }},
                                                       { key: 'hello', style: { marginTop: spring(10) }, data: {
@@ -958,7 +958,7 @@ class PsBot extends Component {
                                                       }},
                                                       { key: 'careers', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
-                                                          title: 'Careers @ Purpleslate',
+                                                          title: 'Careers @ ' + botName,
                                                           value: 'Careers',
                                                       }},
                                                       { key: 'quit', style: { marginTop: spring(10) }, data: {
@@ -1166,7 +1166,13 @@ class PsBot extends Component {
                             (suggestion.type === 'emoji') ? (
                                 <Emoji size={30} emoji={suggestion.title} className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id} />
                             ) : (<Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
-                                           onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}>
+                                           onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}
+                                        style={{
+                                            background: (this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background,
+                                            color: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontColor : botConversationClass.color,
+                                            fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
+                                            fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
+                                        }}>
                                 <div className={this.classes.conversationText}>
                                     <p>
                                         {suggestion.title}

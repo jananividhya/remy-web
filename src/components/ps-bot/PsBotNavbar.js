@@ -204,7 +204,7 @@ class PsBotNavbar extends Component {
                                 backgroundColor: this.state.theme.appBar.background
                             }}>
                         <Toolbar disableGutters={!this.state.open}>
-                            <IconButton aria-label="Share" onClick={this.handleDrawerOpen}
+                            <IconButton aria-label="Share"
                                         className={classNames(this.classes.menuButton, this.state.open && this.classes.hide)}>
                                 <TocIcon/>
                             </IconButton>

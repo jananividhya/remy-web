@@ -11,7 +11,7 @@ const greeting = () => {
         case (currentHour >= 12 && currentHour <= 15):
             greetingText = 'Good Noon';
             break;
-        case (currentHour > 15 && currentHour <= 19):
+        case (currentHour > 15 && currentHour <= 24):
             greetingText = 'Good Evening';
             break;
         default:

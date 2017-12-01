@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from 'material-ui/Grid';
 
 const botPaperClass = {
-    height: '900px',
+    height: '830px',
     width: '600px',
     marginTop: '-30px',
     marginLeft: '-10px',

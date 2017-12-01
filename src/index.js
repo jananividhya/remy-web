@@ -20,37 +20,21 @@ import PsBotTermsOfService from './components/ps-bot/PsBotTermsOfService';
 import registerServiceWorker from './registerServiceWorker';
 
 const cuiTheme = {
-    title: 'Nice Name',
+    title: 'purpleBot',
     navbar: {
         appBar: {
             background: '#FFFFFF'
         },
         logo: {
-            imageUrl: 'https://img.buzzfeed.com/buzzfeed-static/static/2016-11/3/5/asset/buzzfeed-prod-web03/sub-buzz-12185-1478166849-1.png?downsize=715:*&output-format=auto&output-quality=auto'
+            imageUrl: 'psbot-logo.png'
         }
     },
-    humanConversation: {
-        background: '#FFFFFF',
-        fontColor: '#000000',
-        fontSize: '12px',
-        fontFamily: 'Lato-Regular',
-    },
-    botConversation: {
-        background: '#0D47A1',
-        fontColor: '#FFFFFF',
-        fontSize: '12px',
-        fontFamily: 'Lato-Regular',
-    },
-    prompt: {
-        background: '#F0EFF2',
-        text: "Don't say anything"
-    },
     botDetails: {
-        name: 'Nice Name',
-        description: 'Reason for existence',
+        name: 'purpleBot',
+        description: 'Some things you can ask me..',
     },
     termsOfService: {
-        text: 'Nice Name Terms of Service',
+        text: 'pS Terms of Service',
         link: 'http://purpleslate.in'
     }
 };
@@ -73,16 +57,14 @@ ReactDOM.render(
         <MuiThemeProvider theme={theme}>
             <div>
                 <DocumentTitle title={cuiTheme.title || 'purpleBot'}>
-                <Paper style={paperStyle}>
-                    <PsBot conversationInputText="Say Something.."
-                           accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
-                           navbarTheme={cuiTheme.navbar}
-                           humanConversationTheme={cuiTheme.humanConversation}
-                           botConversationTheme={cuiTheme.botConversation}
-                           botDetailsTheme={cuiTheme.botDetails}
-                           promptTheme={cuiTheme.prompt}
-                    />
-                </Paper>
+                    <Paper style={paperStyle}>
+                        <PsBot conversationInputText="Say Something.."
+                               accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
+                               navbarTheme={cuiTheme.navbar}
+                               botDetailsTheme={cuiTheme.botDetails}
+                               typing={false}
+                        />
+                    </Paper>
                 </DocumentTitle>
                 <div style={{
                     marginLeft: 9,
@@ -90,7 +72,7 @@ ReactDOM.render(
                     float: 'left'
                 }}>
                     <PsBotTermsOfService text={cuiTheme.termsOfService.text}
-                                        link={cuiTheme.termsOfService.link} />
+                                         link={cuiTheme.termsOfService.link} />
                 </div>
                 <div style={{
                     marginRight: 9,

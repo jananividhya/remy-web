@@ -1,74 +1,349 @@
-[
-  {
-    "contentType": "application/vnd.microsoft.card.hero",
-    "content": {
-      "title": "Your total score 1",
-      "subtitle": "Scroll through for individual questions details"
-    }
-  },
-  {
-    "contentType": "application/vnd.microsoft.card.hero",
-    "content": {
-      "title": "Question No : 1",
-      "subtitle": "Who was the first Nobel winner from India?",
-      "text": "\nYour Answer : Kailash Satyarthi\n\nCorrect Answer : Rabindranath Tagore\n\nObtained Score : -1\n\n",
-      "images": [
+{
+  "activities": [
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000000",
+      "timestamp": "2017-07-21T11:25:58.4895939Z",
+      "channelId": "webchat",
+      "from": {
+        "id": "default-user",
+        "name": "User"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "textFormat": "plain",
+      "locale": "en-US",
+      "text": "hello",
+      "channelData": {
+        "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
+      }
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000001",
+      "timestamp": "2017-07-21T11:26:01.7157442Z",
+      "localTimestamp": "2017-07-21T11:26:00.71+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "Hello, Hola, Vanakkam",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000000"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000002",
+      "timestamp": "2017-07-21T11:26:01.8464682Z",
+      "localTimestamp": "2017-07-21T11:26:01.058+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "Glad you stop by.",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000000"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000003",
+      "timestamp": "2017-07-21T11:26:01.2257585Z",
+      "localTimestamp": "2017-07-21T11:26:01.184+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "So...",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000000"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000004",
+      "timestamp": "2017-07-21T11:26:02.5974118Z",
+      "localTimestamp": "2017-07-21T11:26:01.606+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "Before we get going",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000000"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000005",
+      "timestamp": "2017-07-21T11:26:01.6826119Z",
+      "localTimestamp": "2017-07-21T11:26:01.849+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "What describes you the Best ?",
+      "inputHint": "expectingInput",
+      "attachments": [
         {
-          "url": "https://fierce-badlands-72686.herokuapp.com/images/wrong.png"
+          "contentType": "application/vnd.microsoft.card.hero",
+          "content": {
+            "buttons": [
+              {
+                "type": "imBack",
+                "title": "Student",
+                "value": "Student"
+              },
+              {
+                "type": "imBack",
+                "title": "Tech Geek",
+                "value": "Tech Geek"
+              }
+            ]
+          }
         }
-      ]
-    }
-  },
-  {
-    "contentType": "application/vnd.microsoft.card.hero",
-    "content": {
-      "title": "Question No : 2",
-      "subtitle": "Who wrote the constitution of India?",
-      "text": "\nYour Answer : Gandhi\n\nCorrect Answer : Ambedkar\n\nObtained Score : -1\n\n",
-      "images": [
+      ],
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000000"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000006",
+      "timestamp": "2017-07-21T11:26:05.4585848Z",
+      "channelId": "webchat",
+      "from": {
+        "id": "default-user",
+        "name": "User"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "textFormat": "plain",
+      "locale": "en-US",
+      "text": "Tech Geek",
+      "channelData": {
+        "clientActivityId": "31a9cca1-0245-47f1-9889-5aebd49ccbbf"
+      }
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000007",
+      "timestamp": "2017-07-21T11:26:06.686658Z",
+      "localTimestamp": "2017-07-21T11:26:05.896+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "Awesome, Join the Pack",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000008",
+      "timestamp": "2017-07-21T11:26:06.1088436Z",
+      "localTimestamp": "2017-07-21T11:26:06.162+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "Would love to get your thoughts on few things, as we chat",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000009",
+      "timestamp": "2017-07-21T11:26:07.9502557Z",
+      "localTimestamp": "2017-07-21T11:26:06.478+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "I read something interesting today",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000010",
+      "timestamp": "2017-07-21T11:26:08.2799418Z",
+      "localTimestamp": "2017-07-21T11:26:06.804+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "Written by Bill Gates",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000011",
+      "timestamp": "2017-07-21T11:26:05.1525744Z",
+      "localTimestamp": "2017-07-21T11:26:07.056+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "'The Best Teacher I never had' where he talks about the great physicist Richard Feyman",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000012",
+      "timestamp": "2017-07-21T11:26:07.5953701Z",
+      "localTimestamp": "2017-07-21T11:26:07.162+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "inputHint": "ignoringInput",
+      "attachments": [
         {
-          "url": "https://fierce-badlands-72686.herokuapp.com/images/wrong.png"
+          "contentType": "application/vnd.microsoft.card.hero",
+          "content": {
+            "title": "The Best Teacher I never had",
+            "subtitle": "Blog by Bill Gates",
+            "text": "Where he talks about the great physicist Richard Feyman",
+            "buttons": [
+              {
+                "type": "openUrl",
+                "title": "Take me to the blog",
+                "value": "https://www.gatesnotes.com/Education/The-Best-Teacher-I-Never-Had"
+              }
+            ]
+          }
         }
-      ]
-    }
-  },
-  {
-    "contentType": "application/vnd.microsoft.card.hero",
-    "content": {
-      "title": "Question No : 3",
-      "subtitle": "Which President of India served the longest?",
-      "text": "\nCorrect Answer : Rajendra Prasad\n\nObtained Score : 2\n\n",
-      "images": [
+      ],
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000013",
+      "timestamp": "2017-07-21T11:26:07.0519558Z",
+      "localTimestamp": "2017-07-21T11:26:07.282+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "Thoughts? ",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000014",
+      "timestamp": "2017-07-21T11:26:08.4994997Z",
+      "localTimestamp": "2017-07-21T11:26:07.497+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "At purpleSlate, we always believe the Best way to build talent is through Passionate Teachers",
+      "inputHint": "ignoringInput",
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
+    },
+    {
+      "type": "message",
+      "id": "EZ4IqiZZmlJFn03K7Gaoa0|0000015",
+      "timestamp": "2017-07-21T11:26:07.5439417Z",
+      "localTimestamp": "2017-07-21T11:26:07.734+00:00",
+      "channelId": "webchat",
+      "from": {
+        "id": "fiercebadlands",
+        "name": "fiercebadlands"
+      },
+      "conversation": {
+        "id": "EZ4IqiZZmlJFn03K7Gaoa0"
+      },
+      "locale": "en-US",
+      "text": "Do you Agree?",
+      "inputHint": "expectingInput",
+      "attachments": [
         {
-          "url": "https://fierce-badlands-72686.herokuapp.com/images/right.png"
+          "contentType": "application/vnd.microsoft.card.hero",
+          "content": {
+            "buttons": [
+              {
+                "type": "imBack",
+                "title": "Agree",
+                "value": "Agree"
+              },
+              {
+                "type": "imBack",
+                "title": "No",
+                "value": "No"
+              }
+            ]
+          }
         }
-      ]
+      ],
+      "replyToId": "EZ4IqiZZmlJFn03K7Gaoa0|0000006"
     }
-  },
-  {
-    "contentType": "application/vnd.microsoft.card.hero",
-    "content": {
-      "title": "Question No : 4",
-      "subtitle": "Where was the first Railroad of India constructed?",
-      "text": "\nYour Answer : Hyderabad to Secunderabad\n\nCorrect Answer : Bombay to Thane\n\nObtained Score : -1\n\n",
-      "images": [
-        {
-          "url": "https://fierce-badlands-72686.herokuapp.com/images/wrong.png"
-        }
-      ]
-    }
-  },
-  {
-    "contentType": "application/vnd.microsoft.card.hero",
-    "content": {
-      "title": "Question No : 5",
-      "subtitle": "What is the capital of India?",
-      "text": "\nCorrect Answer : Delhi\n\nObtained Score : 2\n\n",
-      "images": [
-        {
-          "url": "https://fierce-badlands-72686.herokuapp.com/images/right.png"
-        }
-      ]
-    }
-  }
-]
+  ],
+  "watermark": "15"
+}

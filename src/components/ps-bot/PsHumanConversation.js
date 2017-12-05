@@ -11,7 +11,6 @@ import {Motion, spring} from 'react-motion';
 
 // App imports
 import SlashCommand from './PsSlashCommand';
-import isURL from 'validator/lib/isURL';
 
 const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {

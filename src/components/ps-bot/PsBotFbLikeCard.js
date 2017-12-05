@@ -3,14 +3,8 @@ import React, {Component} from 'react';
 
 // Material UI imports
 import PropTypes from 'prop-types';
-import {CardContent} from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import FacebookProvider, { Login, Like } from 'react-facebook';
-
-import Chip from 'material-ui/Chip';
-import Avatar from 'material-ui/Avatar';
-import FaceIcon from 'material-ui-icons/Face';
+import FacebookProvider, { Like } from 'react-facebook';
 
 // Style Imports
 import './PsBotButton.css';

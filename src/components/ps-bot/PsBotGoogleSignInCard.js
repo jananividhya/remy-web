@@ -6,9 +6,6 @@ import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import { GoogleLogin } from 'react-google-login';
 
-import Chip from 'material-ui/Chip';
-import Avatar from 'material-ui/Avatar';
-
 // Style Imports
 import './PsBotButton.css';
 

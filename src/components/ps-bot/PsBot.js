@@ -707,7 +707,7 @@ class PsBot extends Component {
     };
 
     skipConversation = (conversation) => {
-        const skipKeywords = ConversationSkipKeywords().filter(function (keyword) {
+        const skipKeywords = ConversationSkipKeywords().filter(function (keyword) { // eslint-disable-line array-callback-return
             if (conversation.text && conversation.text.toUpperCase().startsWith(keyword.toUpperCase())) {
                 return keyword.toUpperCase();
             }

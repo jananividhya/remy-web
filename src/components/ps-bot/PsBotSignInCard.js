@@ -6,15 +6,10 @@ import {CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
-
-import isURL from 'validator/lib/isURL';
 
 import PsBotTimer from './PsBotTimer';
 
 import PsBotFbSignInCard from './PsBotFbSignInCard';
-import PsBotFbLikeCard from './PsBotFbLikeCard';
 import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
 
 // Style Imports
@@ -113,17 +108,6 @@ class PsBotSignInCard extends Component {
 
         this.state = this.props.data;
     }
-
-    /**
-     * @method isURL
-     * @methodOf PsBotCard#isURL
-     * @description Checks if a given string is an url or not
-     * @param str
-     * @returns {boolean}
-     */
-    isURL = (str) => {
-        return isURL(str);
-    };
 
     /**
      * @method pSBotButtonClick

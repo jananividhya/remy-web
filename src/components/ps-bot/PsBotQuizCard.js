@@ -6,7 +6,6 @@ import {CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 
 import isURL from 'validator/lib/isURL';

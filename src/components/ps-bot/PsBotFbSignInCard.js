@@ -139,13 +139,18 @@ class PsBotFbSignInCard extends Component {
                     onResponse={this.signInResponse}
                     onError={this.signInError}
                     render={({ isLoading, isWorking, onClick }) => (
-                        <Chip
+                        <img src="https://scontent-lga3-1.xx.fbcdn.net/v/t39.2365-6/18928641_251957295286418_4362086450741641216_n.png?oh=7868a8b2f5e36f0981472d9134828e5a&oe=5AC61F05"
+                         alt="Login with Facebook"
+                             height="30px"
+                             width="200px"
+                             onClick={onClick}/>
+                        /*<Chip
                                avatar={<Avatar>FB</Avatar>}
                                label="Login with Facebook"
                             // eslint-disable-next-line
-                               onClick={onClick}
+
                                className={[this.classes.chip, this.classes.buttonTopQuiz].join(' ')}
-                        />
+                        />*/
                     )}/>
             </FacebookProvider>
         </div> );

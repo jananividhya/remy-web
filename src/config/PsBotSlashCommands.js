@@ -106,28 +106,18 @@ const slashCommands = {
         "inputHint": "ignoringInput",
         "attachments": [
             {
-                "contentType": "application/vnd.microsoft.card.quiz",
+                "contentType": "application/vnd.ps.card.signin",
                 "content": {
                     "title": "Sign-in to purpleSlate",
                     "text": [
                         "You have few options.",
                     ],
                     "subtitle": "How do you want to authenticate yourself?",
-                    "buttons": [
+                    "choices": [
                         {
-                            "type": "quizAnswers",
+                            "type": "fbSignIn",
                             "title": "Facebook",
                             "value": "/signin-with-fb"
-                        },
-                        {
-                            "type": "quizAnswers",
-                            "title": "Google",
-                            "value": "/signin-with-google"
-                        },
-                        {
-                            "type": "quizAnswers",
-                            "title": "LinkedIn",
-                            "value": "/signinwithlinkedin"
                         }
                     ]
                 }

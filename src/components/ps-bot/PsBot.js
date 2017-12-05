@@ -32,6 +32,7 @@ import AutoSuggestTheme from './AutoSuggestTheme.css'; // eslint-disable-line no
 import TypistTheme from './Typist.css'; // eslint-disable-line no-unused-vars
 import PsBotCodeCard from './PsBotCodeCard';
 import PsBotQuizCard from './PsBotQuizCard';
+import PsBotSignInCard from './PsBotSignInCard';
 import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import PsError from './PsErr';
@@ -1096,12 +1097,16 @@ class PsBot extends Component {
                                                                                             (<p><PsBotGoogleSignInCard action={this.onSignIn} /></p>)
                                                                                             : (((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
                                                                                             (<p><PsBotFbLikeCard /></p>)
-                                                                                            : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
+                                                                                            : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin') ? (
+                                                                                                <p>
+                                                                                                    <PsBotSignInCard data={conversation.attachments[0].content}
+                                                                                                                   action={this.onSignIn} /></p>
+                                                                                                    ) : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                                                                 <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} fetchImg={conversation.attachments[0].fetchImg} />
                                                                                             ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                                 <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                                     <PsBotCommandCard data={conversation.attachments[0].content} />
-                                                                                                    : data.text))))))
+                                                                                                    : data.text)))))))
                                                                         }
                                                                     </div>
                                                                 </Paper>

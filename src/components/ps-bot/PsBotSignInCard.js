@@ -13,10 +13,14 @@ import isURL from 'validator/lib/isURL';
 
 import PsBotTimer from './PsBotTimer';
 
+import PsBotFbSignInCard from './PsBotFbSignInCard';
+import PsBotFbLikeCard from './PsBotFbLikeCard';
+import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
+
 // Style Imports
 import './PsBotButton.css';
 
-const styleSheet = createStyleSheet('PsBotCard', theme => ({
+const styleSheet = createStyleSheet('PsBotSignInCard', theme => ({
     buttonResponse: {
         boxShadow: '0px 0px',
         color: '#FFFFFF',
@@ -97,11 +101,11 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
 }));
 
 /**
- * @class PsBotCard
+ * @class PsBotSignInCard
  * @extends Component
  * @description pS Bot Card Response
  */
-class PsBotCard extends Component {
+class PsBotSignInCard extends Component {
 
     constructor(props) {
         super(props);
@@ -149,6 +153,10 @@ class PsBotCard extends Component {
         }
     };
 
+    onSignIn = (props) => {
+        this.props.action(props);
+    };
+
     render() {
 
         const quizTimer = (this.state.timer) ? (
@@ -156,6 +164,23 @@ class PsBotCard extends Component {
                         options={{totalTime: this.state.timer}}
                         action={this.quizTimerOff}/>
         ) : '';
+
+        const signInButtonHandler = (buttonType, key) => {
+            let button = '';
+
+            switch (buttonType) {
+                case 'fbSignIn':
+                    button = (<p key={key}><PsBotFbSignInCard action={this.onSignIn} /></p>);
+                    break;
+                case 'googleSignIn':
+                    button = (<p key={key}><PsBotGoogleSignInCard action={this.onSignIn} /></p>);
+                    break;
+                default:
+                    break;
+            }
+
+            return button;
+        };
 
         return ( <div>
             {((this.state.title || this.state.subtitle || this.state.text) ?
@@ -207,15 +232,7 @@ class PsBotCard extends Component {
                                 flexWrap: 'wrap',
                             }}>
                                 {this.state.choices.map((button, buttonId) => {
-                                    return ((button.type === 'imBack') ?
-                                        ((button.buttonImage) ? (
-                                            <img src={button.buttonImage} height="30px" width="100px" alt="" />
-                                        ) : (<Chip  key={buttonId}
-                                                label={button.title}
-                                            // eslint-disable-next-line
-                                                onClick={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}
-                                                className={[this.classes.chip, this.classes.buttonTopQuiz].join(' ')}
-                                        />)) : '')
+                                    return signInButtonHandler(button.type, buttonId);
                                 })}
                             </div>
                         ) : ''}
@@ -226,8 +243,8 @@ class PsBotCard extends Component {
     }
 }
 
-PsBotCard.propTypes = {
+PsBotSignInCard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(PsBotCard);
+export default withStyles(styleSheet)(PsBotSignInCard);

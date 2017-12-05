@@ -132,9 +132,16 @@ class PsBotGoogleSignInCard extends Component {
     render() {
         return ( <div>
             <GoogleLogin clientId="921814792691-reh6oij417djlfh12pv311a0t0e5pjin.apps.googleusercontent.com"
-                              buttonText="Login with Google"
+                              buttonText=""
                               onSuccess={this.signInResponse}
-                              onFailure={this.signInError}>
+                              onFailure={this.signInError}
+            style={{
+                background: 'url("./btn_google_signin_dark_focus_web@2x.png") no-repeat',
+                cursor: 'pointer',
+                border: 'none',
+                height: '30px',
+                width: '200px'
+            }}>
             </GoogleLogin>
         </div> );
     }

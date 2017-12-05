@@ -300,7 +300,7 @@ const slashCommands = {
             }
         ],
     }],
-    "/local-test": [{
+    "/quiz-response": [{
         "type": "message",
         "id": uuid.v4(),
         "timestamp": Date.now(),

@@ -157,10 +157,28 @@ class PsBotCard extends Component {
                     <Typography type="subheading" component="p" className={this.classes.psTextColor}>
                         {this.state.subtitle}
                     </Typography>
-                    { (this.state.text) ? (
-                    <Typography component="p" className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
-                        {this.state.text}
-                    </Typography> ) : '' }
+                    {(this.state.text && Array.isArray(this.state.text)) ? (
+                        this.state.text.map((textVal, key) => (
+                            <Typography component="p" key={key}
+                                        className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
+                                {(textVal.split('\n\n').length > 0) ? (
+                                    textVal.split('\n\n').map((text, k) => (
+                                        <p key={k}>{text}</p>
+                                    ))
+                                ) : {textVal}
+                                }
+                            </Typography>
+                        ))
+                    ) : (
+                        <Typography component="p"
+                                    className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
+                            {(this.state.text && this.state.text.split('\n\n').length > 0) ? (
+                                this.state.text.split('\n\n').map((text, k) => (
+                                    <p key={k}>{text}</p>
+                                ))
+                            ) : this.state.text}
+                        </Typography>
+                    )}
                     {(!this.state.noButtonCard && this.state.buttons) ? (
                         <div>
                             {this.state.buttons.map((button, buttonId) => {

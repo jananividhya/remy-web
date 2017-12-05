@@ -7,7 +7,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 const styleSheet = createStyleSheet('PsBotThinking', theme => ({
     emojis: {
-        width: '36px',
+        width: '80px',
         height: '36px'
     },
 }));

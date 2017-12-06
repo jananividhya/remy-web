@@ -151,16 +151,31 @@ class PsBotCard extends Component {
                                 width={50}
                                 style={{marginLeft: -10}} />
                         ) : ''}
-                    <Typography type="headline" component="h2" className={this.classes.psTextColor}>
+                    <Typography type="headline" component="h2" className={this.classes.psTextColor} style={{
+                        background: (this.props.theme) ? this.props.theme.background : '',
+                        color: (this.props.theme) ? this.props.theme.fontColor : '',
+                        fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
+                        fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                    }}>
                             {this.state.title}
                     </Typography>
-                    <Typography type="subheading" component="p" className={this.classes.psTextColor}>
+                    <Typography type="subheading" component="p" className={this.classes.psTextColor} style={{
+                        background: (this.props.theme) ? this.props.theme.background : '',
+                        color: (this.props.theme) ? this.props.theme.fontColor : '',
+                        fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
+                        fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                    }}>
                         {this.state.subtitle}
                     </Typography>
                     {(this.state.text && Array.isArray(this.state.text)) ? (
                         this.state.text.map((textVal, key) => (
                             <Typography component="p" key={key}
-                                        className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
+                                        className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')} style={{
+                                background: (this.props.theme) ? this.props.theme.background : '',
+                                color: (this.props.theme) ? this.props.theme.fontColor : '',
+                                fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
+                                fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                            }}>
                                 {(textVal.split('\n\n').length > 0) ? (
                                     textVal.split('\n\n').map((text, k) => (
                                         <p key={k}>{text}</p>
@@ -171,7 +186,12 @@ class PsBotCard extends Component {
                         ))
                     ) : (
                         <Typography component="p"
-                                    className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}>
+                                    className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')} style={{
+                            background: (this.props.theme) ? this.props.theme.background : '',
+                            color: (this.props.theme) ? this.props.theme.fontColor : '',
+                            fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
+                            fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                        }}>
                             {(this.state.text && this.state.text.split('\n\n').length > 0) ? (
                                 this.state.text.split('\n\n').map((text, k) => (
                                     <p key={k}>{text}</p>

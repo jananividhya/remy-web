@@ -776,6 +776,8 @@ class PsBot extends Component {
                             conversations.push(newConversation);
                         }
 
+                        //thinkingSetState();
+
                         this.setState({
                             conversationId: this.state.conversationId,
                             conversationText: '',
@@ -785,7 +787,7 @@ class PsBot extends Component {
                             responseSuggestions: this.state.responseSuggestions,
                         });
 
-                        thinkingSetState();
+
                     } else if (this.conversationCounter === 200) {
                         this.conversationCounter = 0;
                         /*clearInterval(fetchBotConversationsTimer);
@@ -828,6 +830,12 @@ class PsBot extends Component {
 
             const removeThinkingState = () => {
                 let conversations = this.state.conversations;
+                let newConv = conversations.filter((ele, index, arr) => {
+                    if (ele.contentType === 'typing') {
+                        return index;
+                    }
+                });
+
                 conversations.splice(-1, 1);
 
                 this.setState({
@@ -840,16 +848,17 @@ class PsBot extends Component {
                 convSetState(json.activities[i]);
                 if(++i<l) {
                     setTimeout(() => {
-                        removeThinkingState();
+                        //removeThinkingState();
                         iterator()
                     }, (json.activities[i].text) ? ((json.activities[i].text.length > 10) ? json.activities[i].text.length : json.activities[i].text.length * 50) : 100);
                 } else {
-                    removeThinkingState();
+                    //removeThinkingState();
                 }
             })();
 
             if (lastItem.inputHint === 'expectingInput' || lastItem.code === 'completedSuccessfully') {
                 clearInterval(fetchBotConversationsTimer);
+                //removeThinkingState();
             }
         }).catch((ex) => {
             console.log("Error Occurred while getting conversation from bot", ex);
@@ -1081,7 +1090,7 @@ class PsBot extends Component {
                                                             }}>
                                                                 <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : botConversationClass}
                                                                     style={{
-                                                                        background: (this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background,
+                                                                        background: (this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background,
                                                                         color: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontColor : botConversationClass.color,
                                                                         fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
                                                                         fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
@@ -1092,7 +1101,10 @@ class PsBot extends Component {
                                                                                 (conversation.contentType === 'typing') ?
                                                                                     (
 
-                                                                                        <PsBotThinking thinkingImg={data.img} />
+                                                                                        <PsBotThinking thinkingImg={data.img} style={{
+                                                                                            border: 'none',
+                                                                                            background: botConversationClass.background,
+                                                                                        }} />
                                                                                     )
                                                                                     : (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (
                                                                                     <p>
@@ -1131,7 +1143,7 @@ class PsBot extends Component {
                                                                                     : (
                                                                                     <p>
                                                                                         <PsBotCard data={conversation.attachments[0].content}
-                                                                                                   action={this.pSBotButtonClick} /></p>
+                                                                                                   action={this.pSBotButtonClick} theme={this.props.botConversationTheme} /></p>
                                                                                     )
 
                                                                                     ) :
@@ -1148,12 +1160,13 @@ class PsBot extends Component {
                                                                                             : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin') ? (
                                                                                                 <p>
                                                                                                     <PsBotSignInCard data={conversation.attachments[0].content}
-                                                                                                                   action={this.onSignIn} /></p>
+                                                                                                                   action={this.onSignIn}
+                                                                                                    theme={this.props.botConversationTheme} /></p>
                                                                                                     ) : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
                                                                                                 <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} fetchImg={conversation.attachments[0].fetchImg} />
                                                                                             ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                                 <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
-                                                                                                    <PsBotCommandCard data={conversation.attachments[0].content} />
+                                                                                                    <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
                                                                                                     : data.text)))))))
                                                                         }
                                                                     </div>

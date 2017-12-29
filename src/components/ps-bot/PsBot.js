@@ -743,7 +743,7 @@ class PsBot extends Component {
 
             const convSetState = (newConversation) => {
                 if(!this.skipConversation(newConversation)) {
-                    if (newConversation.from.name !== 'User' && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
+                    if ((newConversation.from.name === 'fiercebadlands' || newConversation.contentType === 'typing') && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
 
                         let conversationHistory = this.state.conversationHistory.slice();
                         let conversations = this.state.conversations.slice();

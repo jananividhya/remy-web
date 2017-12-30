@@ -193,6 +193,7 @@ class PsBotNavbar extends Component {
     };
 
     setUserIcon = (userIcon) => {
+        console.log('Called ', userIcon);
         this.setState({
            userIcon: userIcon
         });

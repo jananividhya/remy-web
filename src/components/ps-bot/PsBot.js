@@ -332,6 +332,8 @@ class PsBot extends Component {
                   }, ];
 
                   if (data.provider === 'facebook') {
+                      this.setNavbarIcon('https://graph.facebook.com/' + id + '/picture');
+
                       signInWelcome.push({
                           "type": "message",
                           "text": "Like and share us on Facebook",
@@ -364,8 +366,6 @@ class PsBot extends Component {
                   this.setState({
                       conversations: this.state.conversations.concat([...signInWelcome])
                   });
-                  
-                  this.setNavbarIcon('https://graph.facebook.com/' + id + '/picture');
                   break;
               case 'error':
                   const signInError = [{

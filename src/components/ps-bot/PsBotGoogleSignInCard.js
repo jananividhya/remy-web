@@ -133,7 +133,7 @@ class PsBotGoogleSignInCard extends Component {
                               onSuccess={this.signInResponse}
                               onFailure={this.signInError}
             style={{
-                background: 'url("./btn_google_signin_dark_focus_web@2x.png") no-repeat',
+                background: 'url("./googlelogin.png") no-repeat',
                 cursor: 'pointer',
                 border: 'none',
                 height: '30px',

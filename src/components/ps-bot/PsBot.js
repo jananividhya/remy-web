@@ -288,7 +288,6 @@ class PsBot extends Component {
                   let id, name, gender, imageUrl;
 
                   if (data.provider === 'google') {
-                      console.log('data.profileObj ', data.profileObj);
                       name = data.profileObj.name;
                       id = data.profileObj.googleId;
                       imageUrl = data.profileObj.imageUrl;
@@ -297,7 +296,7 @@ class PsBot extends Component {
                       id = data.profile.id;
                       name = data.profile.name;
                       gender = data.profile.gender;
-                      imageUrl = 'https://graph.facebook.com' + data.profile.id + '/picture';
+                      imageUrl = 'https://graph.facebook.com/' + data.profile.id + '/picture';
                   }
 
                   this.setState({

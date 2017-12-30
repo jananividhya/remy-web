@@ -98,7 +98,6 @@ let styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     logo: {
         height: '42px',
         fontSize: '42px',
-        marginLeft: '100px',
     },
     conversationOptions: {
         background: 'rgba(150, 101, 171, 0.87)',
@@ -192,13 +191,6 @@ class PsBotNavbar extends Component {
         }
     };
 
-    setUserIcon = (userIcon) => {
-        console.log('Called ', userIcon);
-        this.setState({
-           userIcon: userIcon
-        });
-    };
-
     render() {
 
         const botLogo = (this.state.theme.logo) ? this.state.theme.logo.imageUrl : 'arrow.png';
@@ -221,12 +213,6 @@ class PsBotNavbar extends Component {
                                     <img src={botLogo} alt="PsBot" className={this.classes.logo}/>
                                 </IconButton>
                             </Typography>
-                            {
-                                this.props.userImage &&<IconButton aria-label="Logout User"
-                                                                   className={classNames(this.state.open && this.classes.hide)}>
-                                    <LogoutIcon/>
-                                </IconButton>
-                            }
                             <IconButton aria-label="User"
                                         className={classNames(this.state.open && this.classes.hide)}>
                                 {

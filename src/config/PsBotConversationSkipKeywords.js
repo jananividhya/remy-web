@@ -1,10 +1,10 @@
 const skipConversationKeywords = [
-    /args received$/i,
-    /Intent Received$/i,
-    /Entities Received$/i,
-    /Entities Filled up with$/i,
-    /Chosen Subject$/i,
-    /start quiz$/i,
+    "args received",
+    "Intent Received",
+    "Entities Received",
+    "Entities Filled up with",
+    "Chosen Subject",
+    "start quiz ",
 ];
 
 export default () => {

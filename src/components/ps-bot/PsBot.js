@@ -521,19 +521,19 @@ class PsBot extends Component {
 
         let conversations = this.state.conversations.slice();
 
-        if(this.skipConversation(conversation)) {
+        if(!this.skipConversation(conversation)) {
             conversations.push(conversation);
-
-            this.setState({
-                conversationId: this.state.conversationId,
-                conversationText: '',
-                conversations: conversations,
-                conversationHistory: this.state.conversationHistory,
-                conversationInputText: this.state.conversationInputText,
-                responseSuggestions: [],
-                listMenu: [],
-            });
         }
+
+        this.setState({
+            conversationId: this.state.conversationId,
+            conversationText: '',
+            conversations: conversations,
+            conversationHistory: this.state.conversationHistory,
+            conversationInputText: this.state.conversationInputText,
+            responseSuggestions: [],
+            listMenu: [],
+        });
 
         if (conversationText.charAt(0) === '/') {
             const allowedSlashCommands = SlashCommands();
@@ -701,18 +701,17 @@ class PsBot extends Component {
     };
 
     skipConversation = (conversation) => {
-        /*for (const regEx of ConversationSkipKeywords()) {
-            if (conversation.text && conversation.text.match(regEx) !== null) {
-                console.log(conversation.text, "did it match? ", conversation.text.match(regEx));
-                return false;
+        const skipKeywords = ConversationSkipKeywords().filter(function (keyword) { // eslint-disable-line array-callback-return
+            if (conversation.text && conversation.text.toUpperCase().startsWith(keyword.toUpperCase())) {
+                return keyword.toUpperCase();
             }
-        }*/
+        });
 
-        if (conversation.text && conversation.text.toUpperCase().startsWith("Chosen Subject")) {
-            console.log(conversation.text, ' : ', conversation.text.match(/chosen subject$/i));
+        if (skipKeywords.length > 0) {
+            return true;
         }
 
-        return !(conversation.text && (conversation.text.match(/start quiz $/i) !== null || conversation.text.match(/chosen subject$/i) !== null));
+        return false;
     };
 
     conversationCounter = 0;
@@ -737,7 +736,7 @@ class PsBot extends Component {
             const lastItem = json.activities[json.activities.length - 1];
 
             const convSetState = (newConversation) => {
-                    if (this.skipConversation(newConversation) &&
+                    if (!this.skipConversation(newConversation) &&
                         (newConversation.from.name === 'fiercebadlands' || newConversation.contentType === 'typing') && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
 
                         let conversationHistory = this.state.conversationHistory.slice();

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const greeting = () => {
+const greeting = ({ userName }) => {
     const currentHour = new Date().getHours();
     let greetingText = 'Good Morning';
 
@@ -18,11 +18,11 @@ const greeting = () => {
             break;
     }
 
-    return greetingText;
+    return greetingText + ' ' + userName;
 };
 
-export default () => (
+export default (props) => (
     <span>
-        {greeting()}
+        {greeting(props)}
     </span>
 )

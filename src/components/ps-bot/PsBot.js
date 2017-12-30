@@ -248,7 +248,8 @@ class PsBot extends Component {
             noButtonCard: false,
             loadWallpaper: true,
             sendInputToServer: true,
-            navBarUserImage: '',
+            user: {},
+            hideOptions: true,
         };
 
         /**
@@ -259,55 +260,66 @@ class PsBot extends Component {
         this.headers.append('Authorization', 'Bearer ' + this.props.accessSecret);
         this.headers.append('Content-Type', 'application/json');
 
-        this.clearSession();
         this.initConversation(this.directLineBaseUrl);
     }
 
     getSessionDetails = () => {
         return {
-            id: window.sessionStorage.getItem("user.id"),
-            name: window.sessionStorage.getItem("user.name"),
-            gender: window.sessionStorage.getItem("user.gender")
+            id: localStorage.getItem("user.id"),
+            name: localStorage.getItem("user.name"),
+            gender: localStorage.getItem("user.gender"),
+            authProvider: localStorage.getItem("user.authProvider"),
+            imageUrl: localStorage.getItem("user.imageUrl")
         };
     };
 
     setSessionDetails = (objToStore) => {
         const keys = Object.keys(objToStore);
         for (let i=0; i<keys.length; i++) {
-            window.sessionStorage.setItem(keys[i], objToStore[keys[i]]);
+            localStorage.setItem(keys[i], objToStore[keys[i]]);
         }
     };
 
     clearSession = () => {
-        window.sessionStorage.clear();
+        localStorage.clear();
     };
 
     onSignIn = (data) => {
           switch (data.status) {
               case 'success':
-                  let id, name, gender, imageUrl;
+                  let id, name, gender, imageUrl, authProvider;
 
                   if (data.provider === 'google') {
                       name = data.profileObj.name;
                       id = data.profileObj.googleId;
                       imageUrl = data.profileObj.imageUrl;
+                      authProvider = "Google";
                       gender = 'Male';
                   } else {
                       id = data.profile.id;
                       name = data.profile.name;
                       gender = data.profile.gender;
                       imageUrl = 'https://graph.facebook.com/' + data.profile.id + '/picture';
+                      authProvider = "Facebook";
                   }
 
                   this.setState({
-                      navBarUserImage: imageUrl
+                      user: {
+                          name: name,
+                          id: id,
+                          imageUrl: imageUrl,
+                      },
+                      hideOptions: false,
+                      conversations: []
                   });
 
                   // Set in session
                   this.setSessionDetails({
                       "user.name": name,
                       "user.id": id,
-                      "user.gender": gender
+                      "user.gender": gender,
+                      "user.authProvider": authProvider,
+                      "user.imageUrl": imageUrl,
                   });
 
                   let signInWelcome = [{
@@ -366,6 +378,16 @@ class PsBot extends Component {
 
                   this.setState({
                       conversations: this.state.conversations.concat([...signInWelcome])
+                  });
+
+                  this.setState({
+                      user: {
+                          name: name,
+                          id: id,
+                          imageUrl: imageUrl,
+                      },
+                      hideOptions: false,
+                      conversations: []
                   });
 
                   break;
@@ -472,6 +494,20 @@ class PsBot extends Component {
             };
 
             this.setState(stateObj);
+
+            if (!this.getSessionDetails().id) {
+                this.sendConversationToBot(null, "/signin", true);
+            } else {
+                this.setState({
+                    user: {
+                        name: this.getSessionDetails().name,
+                        id: this.getSessionDetails().id,
+                        imageUrl: this.getSessionDetails().imageUrl,
+                    },
+                    hideOptions: false
+                });
+            }
+
         }).catch((ex) => {
             console.error('Exception Occurred while parsing json ', ex);
         });
@@ -531,19 +567,18 @@ class PsBot extends Component {
 
         let conversations = this.state.conversations.slice();
 
-        if(!this.skipConversation(conversation)) {
+        if(!this.skipConversation(conversation) && conversationText.charAt(0) !== '/') {
             conversations.push(conversation);
+            this.setState({
+                conversationId: this.state.conversationId,
+                conversationText: '',
+                conversations: conversations,
+                conversationHistory: this.state.conversationHistory,
+                conversationInputText: this.state.conversationInputText,
+                responseSuggestions: [],
+                listMenu: [],
+            });
         }
-
-        this.setState({
-            conversationId: this.state.conversationId,
-            conversationText: '',
-            conversations: conversations,
-            conversationHistory: this.state.conversationHistory,
-            conversationInputText: this.state.conversationInputText,
-            responseSuggestions: [],
-            listMenu: [],
-        });
 
         if (conversationText.charAt(0) === '/') {
             const allowedSlashCommands = SlashCommands();
@@ -935,7 +970,7 @@ class PsBot extends Component {
         };
 
         let responseSuggestions = [],
-        hideOptions = true;
+        hideOptions = this.state.hideOptions || true;
 
         if (this.state.responseSuggestions) {
             responseSuggestions = this.state.responseSuggestions;
@@ -961,7 +996,7 @@ class PsBot extends Component {
                         <div>
                     <PsBotNavbar marginTop={-30}
                                 marginLeft={-10}
-                                userImage={this.state.navBarUserImage}
+                                user={this.state.user}
                                 action={this.pSBotButtonClick}
                                 theme={this.props.navbarTheme}
                          />
@@ -987,7 +1022,7 @@ class PsBot extends Component {
                                                       }},
                                                       { key: 'greet-welcome', style: { marginTop: spring(10) }, data: {
                                                           type: 'Greet',
-                                                          title: "Hello, I'm " + botName,
+                                                          title: "I'm " + botName,
                                                       }},
                                                       { key: 'greet-what', style: { marginTop: spring(10) }, data: {
                                                           type: 'Greet',
@@ -997,36 +1032,43 @@ class PsBot extends Component {
                                                           type: 'Command',
                                                           title: 'Sign-in to ' + botName,
                                                           value: '/signin',
+                                                          display: !this.state.user.id
                                                       }},
                                                       { key: 'hello', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
                                                           title: 'Say Hello to ' + botName,
                                                           value: 'Hello',
+                                                          display: true
                                                       }},
                                                       { key: 'learn', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
                                                           title: 'Learn with ' + botName,
                                                           value: 'learn',
+                                                          display: true
                                                       }},
                                                       { key: 'about-us', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
                                                           title: 'About us',
                                                           value: 'About us',
+                                                          display: true
                                                       }},
                                                       { key: 'our-philosophy', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
                                                           title: 'Our Philosophy',
                                                           value: 'Our Philosophy',
+                                                          display: true
                                                       }},
                                                       { key: 'careers', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
                                                           title: 'Careers @ ' + botName,
                                                           value: 'Careers',
+                                                          display: true
                                                       }},
                                                       { key: 'quit', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
                                                           title: 'Talk to you later',
                                                           value: 'quit',
+                                                          display: true
                                                       }}
                                                   ]}
                                 >
@@ -1044,7 +1086,7 @@ class PsBot extends Component {
                                                             <Paper className={this.classes.conversationGreeting}>
                                                                 <div className={this.classes.conversationText}>
                                                                     <p>
-                                                                        <PsBotGreeting/>
+                                                                        <PsBotGreeting userName={this.state.user.name} />
                                                                     </p>
                                                                 </div>
                                                             </Paper>
@@ -1058,14 +1100,16 @@ class PsBot extends Component {
                                                             </Paper>
                                                         )
                                                     ) : (
-                                                    <Paper className={this.classes.conversationOptions}
-                                                           onClick={() => this.pSBotButtonClick(data.value)}>
-                                                        <div className={this.classes.conversationText}>
-                                                            <p>
-                                                                {data.title}
-                                                            </p>
-                                                        </div>
-                                                    </Paper>
+                                                    (data.display) ? (
+                                                        <Paper className={this.classes.conversationOptions}
+                                                               onClick={() => this.pSBotButtonClick(data.value)}>
+                                                            <div className={this.classes.conversationText}>
+                                                                <p>
+                                                                    {data.title}
+                                                                </p>
+                                                            </div>
+                                                        </Paper>
+                                                    ) : ''
                                                     )
                                                     }
                                                 </div>
@@ -1230,75 +1274,79 @@ class PsBot extends Component {
                             )
                         })}
                     </Grid>
-                    <Grid container className={this.classes.conversationInput}>
-                        {responseSuggestions.map((suggestion, id) => {
-                            return (
-                            (suggestion.type === 'emoji') ? (
-                                <Emoji size={30} emoji={suggestion.title} className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id} />
-                            ) : (<Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
-                                           onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}
-                                        style={{
-                                            background: (this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background,
-                                            color: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontColor : botConversationClass.color,
-                                            fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                            fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
+                            {
+                                this.getSessionDetails().id ? (
+                                    <Grid container className={this.classes.conversationInput}>
+                                        {responseSuggestions.map((suggestion, id) => {
+                                            return (
+                                                (suggestion.type === 'emoji') ? (
+                                                    <Emoji size={30} emoji={suggestion.title} className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id} />
+                                                ) : (<Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
+                                                            onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}
+                                                            style={{
+                                                                background: (this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background,
+                                                                color: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontColor : botConversationClass.color,
+                                                                fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
+                                                                fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
+                                                            }}>
+                                                    <div className={this.classes.conversationText}>
+                                                        <p>
+                                                            {suggestion.title}
+                                                        </p>
+                                                    </div>
+                                                </Paper>)
+                                            )
+                                        })}
+                                        <Grid item xs={12} sm={12} md={12} style={{
+                                            backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : 'lightgrey',
+                                            position: 'absolute',
+                                            marginLeft: '-3px',
+                                            top: '802px',
+                                            width: '100%'
                                         }}>
-                                <div className={this.classes.conversationText}>
-                                    <p>
-                                        {suggestion.title}
-                                    </p>
-                                </div>
-                            </Paper>)
-                            )
-                        })}
-                        <Grid item xs={12} sm={12} md={12} style={{
-                            backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : 'lightgrey',
-                            position: 'absolute',
-                            marginLeft: '-3px',
-                            top: '802px',
-                            width: '100%'
-                        }}>
-                            <div className="Ps-Bot-Conversation-Input-Container">
-                                {(this.state.listMenu && this.state.listMenu.length === 0) ?
-                                (<form onSubmit={this.sendConversationToBot} autoComplete="off">
-                                    <Autosuggest
-                                        autoFocus="on"
-                                        suggestions={commandSuggestions}
-                                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                                        onSuggestionSelected={this.onSuggestionSelected}
-                                        getSuggestionValue={this.getSuggestionValue}
-                                        renderSuggestion={this.renderSuggestion}
-                                        inputProps={inputProps}
-                                    />
-                                </form>) : (
-                                    <div className={this.classes.input}>
-                                    <Button
-                                        aria-owns={this.state.menuOpen ? 'simple-menu' : null}
-                                        aria-haspopup="true"
-                                        onClick={this.handleMenuClick}
-                                    >
-                                        {this.state.listMenuTitle || 'What would you like to know about?'}
-                                    </Button>
-                                    <Menu
-                                        id="simple-menu"
-                                        anchorEl={this.state.anchorEl}
-                                        open={this.state.menuOpen}
-                                        onRequestClose={this.handleMenuClose}
-                                    >   
-                                        {
-                                            this.state.listMenu.map((menu, id) => {
-                                                return (
-                                                    <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
-                                                )
-                                            })
-                                        }
-                                    </Menu>
-                                    </div>
-                                )}
-                            </div>
-                        </Grid>
-                    </Grid>
+                                            <div className="Ps-Bot-Conversation-Input-Container">
+                                                {(this.state.listMenu && this.state.listMenu.length === 0) ?
+                                                    (<form onSubmit={this.sendConversationToBot} autoComplete="off">
+                                                        <Autosuggest
+                                                            autoFocus="on"
+                                                            suggestions={commandSuggestions}
+                                                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                            onSuggestionSelected={this.onSuggestionSelected}
+                                                            getSuggestionValue={this.getSuggestionValue}
+                                                            renderSuggestion={this.renderSuggestion}
+                                                            inputProps={inputProps}
+                                                        />
+                                                    </form>) : (
+                                                        <div className={this.classes.input}>
+                                                            <Button
+                                                                aria-owns={this.state.menuOpen ? 'simple-menu' : null}
+                                                                aria-haspopup="true"
+                                                                onClick={this.handleMenuClick}
+                                                            >
+                                                                {this.state.listMenuTitle || 'What would you like to know about?'}
+                                                            </Button>
+                                                            <Menu
+                                                                id="simple-menu"
+                                                                anchorEl={this.state.anchorEl}
+                                                                open={this.state.menuOpen}
+                                                                onRequestClose={this.handleMenuClose}
+                                                            >
+                                                                {
+                                                                    this.state.listMenu.map((menu, id) => {
+                                                                        return (
+                                                                            <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </Menu>
+                                                        </div>
+                                                    )}
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                ) : ''
+                            }
                         </div>
                     )
                     }

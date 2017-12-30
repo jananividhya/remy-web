@@ -216,13 +216,13 @@ class PsBotNavbar extends Component {
                             <IconButton aria-label="User"
                                         className={classNames(this.state.open && this.classes.hide)}>
                                 {
-                                    this.props.userImage ? (<Avatar
-                                        alt="Adelle Charles"
+                                    this.props.user.id ? (<Avatar
+                                        alt={this.props.user.name}
                                         style={{
                                             width: 30,
                                             height: 30,
                                         }}
-                                        src={this.props.userImage} />) : (<AccountIcon/>)
+                                        src={this.props.user.imageUrl} />) : (<AccountIcon/>)
                                 }
                             </IconButton>
                             {/*<IconButton aria-label="Toggle light/dark theme" onClick={() => this.switchTheme()}>

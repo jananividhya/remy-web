@@ -138,13 +138,6 @@ class PsBotFbSignInCard extends Component {
                              height="30px"
                              width="200px"
                              onClick={onClick}/>
-                        /*<Chip
-                               avatar={<Avatar>FB</Avatar>}
-                               label="Login with Facebook"
-                            // eslint-disable-next-line
-
-                               className={[this.classes.chip, this.classes.buttonTopQuiz].join(' ')}
-                        />*/
                     )}/>
             </FacebookProvider>
         </div> );

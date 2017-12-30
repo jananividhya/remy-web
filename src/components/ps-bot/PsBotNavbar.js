@@ -7,6 +7,8 @@ import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import TocIcon from 'material-ui-icons/Toc';
 import LightBulbIcon from 'material-ui-icons/LightbulbOutline';
+import AccountIcon from 'material-ui-icons/AccountCircle';
+import LogoutIcon from 'material-ui-icons/ExitToApp';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -96,7 +98,7 @@ let styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     logo: {
         height: '42px',
         fontSize: '42px',
-        marginLeft: '-50px',
+        marginLeft: '100px',
     },
     conversationOptions: {
         background: 'rgba(150, 101, 171, 0.87)',
@@ -204,8 +206,7 @@ class PsBotNavbar extends Component {
                                 backgroundColor: this.state.theme.appBar.background
                             }}>
                         <Toolbar disableGutters={!this.state.open}>
-                            <IconButton aria-label="Share"
-                                        className={classNames(this.classes.menuButton, this.state.open && this.classes.hide)}>
+                            <IconButton aria-label="App List">
                                 <TocIcon/>
                             </IconButton>
                             <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
@@ -213,6 +214,14 @@ class PsBotNavbar extends Component {
                                     <img src={botLogo} alt="PsBot" className={this.classes.logo}/>
                                 </IconButton>
                             </Typography>
+                            <IconButton aria-label="User"
+                                        className={classNames(this.state.open && this.classes.hide)}>
+                                <AccountIcon/>
+                            </IconButton>
+                            <IconButton aria-label="Logout User"
+                                        className={classNames(this.state.open && this.classes.hide)}>
+                                <LogoutIcon/>
+                            </IconButton>
                             <IconButton aria-label="Toggle light/dark theme" onClick={() => this.switchTheme()}>
                                 <LightBulbIcon/>
                             </IconButton>

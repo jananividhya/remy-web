@@ -286,6 +286,8 @@ class PsBot extends Component {
               case 'success':
                   let id, name, gender;
 
+                  console.log('response msg ', data.profile);
+
                   if (data.provider === 'google') {
                       name = data.profileObj.name;
                       id = data.profileObj.googleId;
@@ -362,6 +364,7 @@ class PsBot extends Component {
                   this.setState({
                       conversations: this.state.conversations.concat([...signInWelcome])
                   });
+                  this.setNavbarIcon();
                   break;
               case 'error':
                   const signInError = [{

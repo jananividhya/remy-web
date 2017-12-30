@@ -364,7 +364,8 @@ class PsBot extends Component {
                   this.setState({
                       conversations: this.state.conversations.concat([...signInWelcome])
                   });
-                  this.setNavbarIcon();
+                  
+                  this.setNavbarIcon('https://graph.facebook.com/' + id + '/picture');
                   break;
               case 'error':
                   const signInError = [{
@@ -388,6 +389,10 @@ class PsBot extends Component {
               default:
                   break;
           }
+    };
+
+    setNavbarIcon = (userIcon) => {
+        this.refs.navbar.setUserIcon(userIcon);
     };
 
     onSuggestionChange = (event, { newValue }) => {
@@ -954,6 +959,7 @@ class PsBot extends Component {
                         <div>
                     <PsBotNavbar marginTop={-30}
                                 marginLeft={-10}
+                                 ref="navbar"
                                 action={this.pSBotButtonClick}
                                 theme={this.props.navbarTheme}
                          />

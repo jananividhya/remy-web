@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import {TransitionMotion, spring} from 'react-motion';
-
+import Avatar from 'material-ui/Avatar';
 
 const drawerWidth = 601;
 
@@ -192,6 +192,12 @@ class PsBotNavbar extends Component {
         }
     };
 
+    setUserIcon = (userIcon) => {
+        this.setState({
+           userIcon: userIcon
+        });
+    };
+
     render() {
 
         const botLogo = (this.state.theme.logo) ? this.state.theme.logo.imageUrl : 'arrow.png';
@@ -216,7 +222,11 @@ class PsBotNavbar extends Component {
                             </Typography>
                             <IconButton aria-label="User"
                                         className={classNames(this.state.open && this.classes.hide)}>
-                                <AccountIcon/>
+                                {
+                                    this.state.userIcon ? (<Avatar
+                                        alt="Adelle Charles"
+                                        src={this.state.userIcon} />) : (<AccountIcon/>)
+                                }
                             </IconButton>
                             <IconButton aria-label="Logout User"
                                         className={classNames(this.state.open && this.classes.hide)}>

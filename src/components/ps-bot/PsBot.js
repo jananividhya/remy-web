@@ -520,17 +520,20 @@ class PsBot extends Component {
             {method: 'POST', headers: this.headers, body: JSON.stringify(conversation)});
 
         let conversations = this.state.conversations.slice();
-        conversations.push(conversation);
 
-        this.setState({
-            conversationId: this.state.conversationId,
-            conversationText: '',
-            conversations: conversations,
-            conversationHistory: this.state.conversationHistory,
-            conversationInputText: this.state.conversationInputText,
-            responseSuggestions: [],
-            listMenu: [],
-        });
+        if(this.skipConversation(conversation)) {
+            conversations.push(conversation);
+
+            this.setState({
+                conversationId: this.state.conversationId,
+                conversationText: '',
+                conversations: conversations,
+                conversationHistory: this.state.conversationHistory,
+                conversationInputText: this.state.conversationInputText,
+                responseSuggestions: [],
+                listMenu: [],
+            });
+        }
 
         if (conversationText.charAt(0) === '/') {
             const allowedSlashCommands = SlashCommands();
@@ -649,15 +652,6 @@ class PsBot extends Component {
         if (this.state.sendInputToServer) {
             fetch(request)
                 .then(HandleErrors).then((json) => {
-            this.setState({
-                conversationId: this.state.conversationId,
-                conversationText: '',
-                conversations: conversations,
-                conversationHistory: this.state.conversationHistory,
-                conversationInputText: this.state.conversationInputText,
-                responseSuggestions: this.state.responseSuggestions,
-                listMenu: this.state.listMenu,
-            });
 
             conversations.push({
                 "type": "message",
@@ -707,17 +701,18 @@ class PsBot extends Component {
     };
 
     skipConversation = (conversation) => {
-        const skipKeywords = ConversationSkipKeywords().filter(function (keyword) { // eslint-disable-line array-callback-return
-            if (conversation.text && conversation.text.toUpperCase().startsWith(keyword.toUpperCase())) {
-                return keyword.toUpperCase();
+        /*for (const regEx of ConversationSkipKeywords()) {
+            if (conversation.text && conversation.text.match(regEx) !== null) {
+                console.log(conversation.text, "did it match? ", conversation.text.match(regEx));
+                return false;
             }
-        });
+        }*/
 
-        if (skipKeywords.length > 0) {
-            return true;
+        if (conversation.text && conversation.text.toUpperCase().startsWith("Chosen Subject")) {
+            console.log(conversation.text, ' : ', conversation.text.match(/chosen subject$/i));
         }
 
-        return false;
+        return !(conversation.text && (conversation.text.match(/start quiz $/i) !== null || conversation.text.match(/chosen subject$/i) !== null));
     };
 
     conversationCounter = 0;
@@ -742,8 +737,8 @@ class PsBot extends Component {
             const lastItem = json.activities[json.activities.length - 1];
 
             const convSetState = (newConversation) => {
-                if(!this.skipConversation(newConversation)) {
-                    if ((newConversation.from.name === 'fiercebadlands' || newConversation.contentType === 'typing') && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
+                    if (this.skipConversation(newConversation) &&
+                        (newConversation.from.name === 'fiercebadlands' || newConversation.contentType === 'typing') && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
 
                         let conversationHistory = this.state.conversationHistory.slice();
                         let conversations = this.state.conversations.slice();
@@ -795,7 +790,6 @@ class PsBot extends Component {
                             conversations: this.state.conversations.concat([...PsError['serverError']])
                         });*/
                     }
-                }
             };
 
             const thinkingSetState = () => {

@@ -221,21 +221,27 @@ class PsBotNavbar extends Component {
                                     <img src={botLogo} alt="PsBot" className={this.classes.logo}/>
                                 </IconButton>
                             </Typography>
+                            {
+                                this.props.userImage &&<IconButton aria-label="Logout User"
+                                                                   className={classNames(this.state.open && this.classes.hide)}>
+                                    <LogoutIcon/>
+                                </IconButton>
+                            }
                             <IconButton aria-label="User"
                                         className={classNames(this.state.open && this.classes.hide)}>
                                 {
-                                    this.state.userIcon ? (<Avatar
+                                    this.props.userImage ? (<Avatar
                                         alt="Adelle Charles"
-                                        src={this.state.userIcon} />) : (<AccountIcon/>)
+                                        style={{
+                                            width: 30,
+                                            height: 30,
+                                        }}
+                                        src={this.props.userImage} />) : (<AccountIcon/>)
                                 }
                             </IconButton>
-                            <IconButton aria-label="Logout User"
-                                        className={classNames(this.state.open && this.classes.hide)}>
-                                <LogoutIcon/>
-                            </IconButton>
-                            <IconButton aria-label="Toggle light/dark theme" onClick={() => this.switchTheme()}>
+                            {/*<IconButton aria-label="Toggle light/dark theme" onClick={() => this.switchTheme()}>
                                 <LightBulbIcon/>
-                            </IconButton>
+                            </IconButton>*/}
                         </Toolbar>
                     </AppBar>
                     <Drawer

@@ -118,6 +118,11 @@ const slashCommands = {
                             "type": "fbSignIn",
                             "title": "Facebook",
                             "value": "/signin-with-fb"
+                        },
+                        {
+                            "type": "googleSignIn",
+                            "title": "Google",
+                            "value": "/signin-with-google"
                         }
                     ]
                 }

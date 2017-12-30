@@ -248,6 +248,7 @@ class PsBot extends Component {
             noButtonCard: false,
             loadWallpaper: true,
             sendInputToServer: true,
+            navBarUserImage: '',
         };
 
         /**
@@ -284,21 +285,24 @@ class PsBot extends Component {
     onSignIn = (data) => {
           switch (data.status) {
               case 'success':
-                  let id, name, gender;
-
-                  console.log('response msg ', data.profile);
+                  let id, name, gender, imageUrl;
 
                   if (data.provider === 'google') {
+                      console.log('data.profileObj ', data.profileObj);
                       name = data.profileObj.name;
                       id = data.profileObj.googleId;
+                      imageUrl = data.profileObj.imageUrl;
                       gender = 'Male';
                   } else {
                       id = data.profile.id;
                       name = data.profile.name;
                       gender = data.profile.gender;
+                      imageUrl = 'https://graph.facebook.com' + data.profile.id + '/picture';
                   }
 
-
+                  this.setState({
+                      navBarUserImage: imageUrl
+                  });
 
                   // Set in session
                   this.setSessionDetails({
@@ -332,8 +336,6 @@ class PsBot extends Component {
                   }, ];
 
                   if (data.provider === 'facebook') {
-                      this.setNavbarIcon('https://graph.facebook.com/' + id + '/picture');
-
                       signInWelcome.push({
                           "type": "message",
                           "text": "Like and share us on Facebook",
@@ -366,6 +368,7 @@ class PsBot extends Component {
                   this.setState({
                       conversations: this.state.conversations.concat([...signInWelcome])
                   });
+
                   break;
               case 'error':
                   const signInError = [{
@@ -392,7 +395,7 @@ class PsBot extends Component {
     };
 
     setNavbarIcon = (userIcon) => {
-        this.refs.navbar.setUserIcon(userIcon);
+        this.refs.psBotNavbar.setUserIcon(userIcon);
     };
 
     onSuggestionChange = (event, { newValue }) => {
@@ -959,7 +962,7 @@ class PsBot extends Component {
                         <div>
                     <PsBotNavbar marginTop={-30}
                                 marginLeft={-10}
-                                 ref="navbar"
+                                userImage={this.state.navBarUserImage}
                                 action={this.pSBotButtonClick}
                                 theme={this.props.navbarTheme}
                          />

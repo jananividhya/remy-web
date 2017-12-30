@@ -84,8 +84,7 @@ class PsHumanConversation extends Component {
                         <Grid item xs={12} sm={12} style={{
                             transform: "scale(" + x + ")"
                         }}>
-                            <Paper className={(!isSlashCommand) ? this.classes.paperHumanConversation
-                                : this.classes.paperHumanCommand}
+                            <Paper className={this.classes.paperHumanConversation}
                                 style={{
                                     backgroundColor: (theme) ? theme.background : 'rgba(150, 101, 171, 0.87)',
                                     color: (theme) ? theme.fontColor : '#FFFFFF',
@@ -94,7 +93,7 @@ class PsHumanConversation extends Component {
                                 }}>
                                 <div className={this.classes.conversationText}>            
                                     <p>
-                                        {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
+                                        {(isSlashCommand) ? (<SlashCommand commandText={conversationText} background="transparent" color="#FFFFFF" />)
                                             : conversationText}
                                     </p>
                                 </div>

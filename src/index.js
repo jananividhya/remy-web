@@ -40,7 +40,7 @@ const cuiTheme = {
 };
 
 const paperStyle = {
-    height: '850px',
+    height: window.innerHeight - 30,
     width: '99.6%',
     marginTop: 0,
     marginLeft: 0,
@@ -59,8 +59,12 @@ ReactDOM.render(
                 <DocumentTitle title={cuiTheme.title || 'purpleBot'}>
                     <Paper style={paperStyle}>
                         <PsBot conversationInputText="Say Something.."
-                               accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
+                               //accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
+                               accessSecret="lSj0yyrnrq4.cwA.ANY.yD-Brn5lp4ocATIJgqw85bjTdyqGI8rbe6XhOPzEHDY"
                                navbarTheme={cuiTheme.navbar}
+                               navbarEnabled={true}
+                               showGreeting={true}
+                               containerHeight={window.innerHeight - 80}
                                botDetailsTheme={cuiTheme.botDetails}
                                typing={false}
                         />

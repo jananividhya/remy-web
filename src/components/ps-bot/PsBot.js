@@ -504,7 +504,7 @@ class PsBot extends Component {
                         id: this.getSessionDetails().id,
                         imageUrl: this.getSessionDetails().imageUrl,
                     },
-                    hideOptions: false
+                    hideOptions: true
                 });
             }
 
@@ -534,6 +534,7 @@ class PsBot extends Component {
 
         this.setState({
             responseSuggestions: [],
+            hideOptions: false
         });
 
         const loggedDetails = this.getSessionDetails();
@@ -782,7 +783,7 @@ class PsBot extends Component {
 
             const convSetState = (newConversation) => {
                     if (!this.skipConversation(newConversation) &&
-                        (newConversation.from.name === 'fiercebadlands' || newConversation.contentType === 'typing') && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
+                        (newConversation.from.name === 'fiercebadlands' || newConversation.from.name === 'psbot-demo' || newConversation.contentType === 'typing') && this.state.conversationHistory.indexOf(newConversation.id) < 0 && newConversation.code !== 'completedSuccessfully') {
 
                         let conversationHistory = this.state.conversationHistory.slice();
                         let conversations = this.state.conversations.slice();
@@ -970,16 +971,12 @@ class PsBot extends Component {
         };
 
         let responseSuggestions = [],
-        hideOptions = this.state.hideOptions || true;
+        hideOptions = this.state.hideOptions;
 
         if (this.state.responseSuggestions) {
             responseSuggestions = this.state.responseSuggestions;
         } else {
             responseSuggestions = [];
-        }
-
-        if (this.state.conversations.length > 0) {
-            hideOptions = false;
         }
 
         const botName = (this.props.botDetailsTheme) ? (this.props.botDetailsTheme.name || "purpleBot") : "purpleBot";
@@ -994,12 +991,12 @@ class PsBot extends Component {
                         <PsBotWallpapers action={(loadUrl) => this.wallpaperClick(loadUrl)}/>
                     ) : (
                         <div>
-                    <PsBotNavbar marginTop={-30}
+                    { this.props.navbarEnabled &&<PsBotNavbar marginTop={-30}
                                 marginLeft={-10}
                                 user={this.state.user}
                                 action={this.pSBotButtonClick}
                                 theme={this.props.navbarTheme}
-                         />
+                         />}
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {
                             hideOptions ? (
@@ -1123,7 +1120,7 @@ class PsBot extends Component {
 
                             const multipleCards = (conversation.attachments) ? conversation.attachments.length > 1 : false;
 
-                            return ((conversation.from.name === 'fiercebadlands' || conversation.contentType === 'typing') ?
+                            return ((conversation.from.name === 'fiercebadlands' || conversation.from.name === 'psbot-demo' || conversation.contentType === 'typing') ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
                                             <TransitionMotion defaultStyles={[
                                                 {key: id.toString(), style: {marginRight: -50}},
@@ -1301,7 +1298,7 @@ class PsBot extends Component {
                                             backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : 'lightgrey',
                                             position: 'absolute',
                                             marginLeft: '-3px',
-                                            top: '802px',
+                                            top: this.props.containerHeight || '802px',
                                             width: '100%'
                                         }}>
                                             <div className="Ps-Bot-Conversation-Input-Container">

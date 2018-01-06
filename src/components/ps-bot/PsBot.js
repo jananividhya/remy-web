@@ -520,6 +520,7 @@ class PsBot extends Component {
 
         this.setState({
             responseSuggestions: [],
+            hideOptions: false,
         });
 
         const loggedDetails = this.getSessionDetails();

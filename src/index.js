@@ -20,7 +20,7 @@ import PsBotTermsOfService from './components/ps-bot/PsBotTermsOfService';
 import registerServiceWorker from './registerServiceWorker';
 
 const cuiTheme = {
-    title: 'Remy',
+    title: 'Remy 👨‍🍳 ',
     navbar: {
         appBar: {
             background: '#FFFFFF'
@@ -30,7 +30,7 @@ const cuiTheme = {
         }
     },
     botDetails: {
-        name: 'Remy',
+        name: 'Remy 👨‍🍳 ',
         description: 'Some things you can ask me..',
     },
     termsOfService: {

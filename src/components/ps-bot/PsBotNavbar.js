@@ -6,7 +6,6 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import TocIcon from 'material-ui-icons/Toc';
-import LightBulbIcon from 'material-ui-icons/LightbulbOutline';
 import AccountIcon from 'material-ui-icons/AccountCircle';
 import LogoutIcon from 'material-ui-icons/ExitToApp';
 import Typography from 'material-ui/Typography';
@@ -209,8 +208,8 @@ class PsBotNavbar extends Component {
                                 <TocIcon/>
                             </IconButton>
                             <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
-                                <IconButton aria-label="Share">
-                                    <img src={botLogo} alt="PsBot" className={this.classes.logo}/>
+                                <IconButton aria-label="Remy">
+                                    <img src={botLogo} alt="Remy" className={this.classes.logo}/>
                                 </IconButton>
                             </Typography>
                             <IconButton aria-label="User"
@@ -225,6 +224,11 @@ class PsBotNavbar extends Component {
                                         src={this.props.user.imageUrl} />) : (<AccountIcon/>)
                                 }
                             </IconButton>
+                            {
+                                this.props.user.id &&<IconButton aria-label="Logout" onClick={() => this.switchTheme()}>
+                                <LogoutIcon />
+                            </IconButton>
+                            }
                             {/*<IconButton aria-label="Toggle light/dark theme" onClick={() => this.switchTheme()}>
                                 <LightBulbIcon/>
                             </IconButton>*/}

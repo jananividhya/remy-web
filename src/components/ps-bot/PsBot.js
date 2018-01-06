@@ -837,67 +837,18 @@ class PsBot extends Component {
                     }
             };
 
-            const thinkingSetState = () => {
-                this.state.conversations.push({
-                    "type": "message",
-                    "text": "Thinking...",
-                    "from": {
-                        "id": "ps-public-bot",
-                        "name": "bot",
-                        "channelId": "webchat"
-                    },
-                    "channelId": "webchat",
-                    "locale": "en-US",
-                    "textFormat": "plain",
-                    "contentType": "typing",
-                    "img": "thinking.gif",
-                    "timestamp": new Date(),
-                    "localTimestamp": Date.now(),
-                    "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
-                });
-
-                this.setState({
-                    conversationId: this.state.conversationId,
-                    conversationText: '',
-                    conversations: this.state.conversations,
-                    conversationHistory: this.state.conversationHistory,
-                    conversationInputText: this.state.conversationInputText,
-                    responseSuggestions: this.state.responseSuggestions,
-                    listMenu: this.state.listMenu,
-                });
-            };
-
-            const removeThinkingState = () => {
-                let conversations = this.state.conversations;
-                let newConv = conversations.filter((ele, index, arr) => {
-                    if (ele.contentType === 'typing') {
-                        return index;
-                    }
-                });
-
-                conversations.splice(-1, 1);
-
-                this.setState({
-                    conversations: conversations,
-                });
-            };
-
             let i = 0, l = json.activities.length;
             (function iterator() {
                 convSetState(json.activities[i]);
                 if(++i<l) {
                     setTimeout(() => {
-                        //removeThinkingState();
                         iterator()
                     }, (json.activities[i].text) ? ((json.activities[i].text.length > 10) ? json.activities[i].text.length : json.activities[i].text.length * 50) : 100);
-                } else {
-                    //removeThinkingState();
                 }
             })();
 
             if (lastItem.inputHint === 'expectingInput' || lastItem.code === 'completedSuccessfully') {
                 clearInterval(fetchBotConversationsTimer);
-                //removeThinkingState();
             }
         }).catch((ex) => {
             console.log("Error Occurred while getting conversation from bot", ex);

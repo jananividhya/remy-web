@@ -158,6 +158,10 @@ class PsBotNavbar extends Component {
         this.props.action(buttonValue);
     };
 
+    psBotLogout = () => {
+        this.props.logout();
+    }
+
     switchTheme = () => {
         if (this.state.themeType === 'light') {
             this.setState({
@@ -225,7 +229,7 @@ class PsBotNavbar extends Component {
                                 }
                             </IconButton>
                             {
-                                this.props.user.id &&<IconButton aria-label="Logout" onClick={() => this.switchTheme()}>
+                                this.props.user.id &&<IconButton aria-label="Logout" onClick={() => this.psBotLogout()}>
                                 <LogoutIcon />
                             </IconButton>
                             }

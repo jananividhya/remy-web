@@ -281,7 +281,12 @@ class PsBot extends Component {
     };
 
     clearSession = () => {
+        this.setState({
+            user: {},
+            hideOptions: false,
+        });
         localStorage.clear();
+        this.sendConversationToBot(null, "/signin", true);
     };
 
     onSignIn = (data) => {
@@ -932,6 +937,7 @@ class PsBot extends Component {
                                 user={this.state.user}
                                 action={this.pSBotButtonClick}
                                 theme={this.props.navbarTheme}
+                                logout={this.clearSession}
                          />}
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {

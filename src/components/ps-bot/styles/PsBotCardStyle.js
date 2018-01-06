@@ -23,14 +23,14 @@ const psBotCardStyle = {
     },
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
-        color: '#9B9B9B',
+        color: '#212121',
     },
     buttonTop: {
         bottom: '4px',
     },
     paperBotConversation: {
         background: '#FFFFFF',
-        color: '#9B9B9B',
+        color: '#212121',
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
         borderRadius: '15px',

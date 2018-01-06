@@ -52,7 +52,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         flexGrow: 1,
         fontFamily: 'Lato, sans-serif',
         fontSize: '14px',
-        color: '#9B9B9B',
+        color: '#212121',
         marginTop: 30,
         marginLeft: 10,
         marginRight: 10,
@@ -62,7 +62,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     conversationInput: {
         fontFamily: 'Lato, sans-serif',
         fontSize: '12px',
-        color: '#9B9B9B',
+        color: '#212121',
     },
     conversationContainer: {
         marginTop: 60,
@@ -70,7 +70,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
     paperBotConversation: {
         background: '#FFFFFF',
-        color: '#9B9B9B',
+        color: '#212121',
         boxShadow: '0px 0px',
         border: '1px solid #D2D1D2',
         borderRadius: '15px',
@@ -920,7 +920,7 @@ class PsBot extends Component {
             responseSuggestions = [];
         }
 
-        const botName = (this.props.botDetailsTheme) ? (this.props.botDetailsTheme.name || "purpleBot") : "purpleBot";
+        const botName = (this.props.botDetailsTheme) ? (this.props.botDetailsTheme.name || "Remy") : "Remy";
         const botDescription = (this.props.botDetailsTheme) ? (this.props.botDetailsTheme.description || "Some things you can ask me..") : "Some things you can ask me..";
         const botConversationClass = this.classes.paperBotConversation;
 
@@ -1150,7 +1150,7 @@ class PsBot extends Component {
                                                                                                                    action={this.onSignIn}
                                                                                                     theme={this.props.botConversationTheme} /></p>
                                                                                                     ) : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
-                                                                                                <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} fetchImg={conversation.attachments[0].fetchImg} />
+                                                                                                <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
                                                                                             ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                                 <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                                     <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
@@ -1186,10 +1186,10 @@ class PsBot extends Component {
                                     :
                                     (
                                         <TransitionMotion key={id} defaultStyles={[
-                                            { key: id.toString(), style: {marginLeft: -50}},
+                                            { key: id.toString(), style: {marginLeft: -20}},
                                         ]}
                                                           styles={[
-                                                              { key: id.toString(), style: { marginLeft: spring(0) }, data: {
+                                                              { key: id.toString(), style: { marginLeft: spring(0)}, data: {
                                                                   text: conversation.text,
                                                                   theme: this.props.humanConversationTheme,
                                                               }},
@@ -1199,7 +1199,8 @@ class PsBot extends Component {
                                                 <div>
                                                     { styles.map(({ key, style, data}) => (
                                                         <div key={key} style={{
-                                                            ...style
+                                                            ...style,
+                                                            transition: 'all .1s ease'
                                                         }}>
                                                             <PsHumanConversation conversationText={data.text}
                                                                                     theme={data.theme} />
@@ -1235,7 +1236,7 @@ class PsBot extends Component {
                                             )
                                         })}
                                         <Grid item xs={12} sm={12} md={12} style={{
-                                            backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : 'lightgrey',
+                                            backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : 'rgba(150, 101, 171, 0.87)',
                                             position: 'absolute',
                                             marginLeft: '-3px',
                                             top: this.props.containerHeight || '802px',

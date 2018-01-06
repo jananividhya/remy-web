@@ -3,7 +3,7 @@ import PsSlashCommand from '../PsSlashCommand';
 
 const commandListClass = {
     fontFamily: 'Lato, sans-serif',
-    color: '#9B9B9B',
+    color: '#212121',
     marginTop: 10,
     marginBottom: 10,
 };

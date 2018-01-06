@@ -31,7 +31,7 @@ class PsBotCardImage extends Component {
     };
 
     componentDidMount = async () => {
-        if (!this.props.fetchImage) {
+        if (this.props.fetchImage) {
             try {
                 const imageBlog = await this.getImageDetails();
                 const imageObj = URL.createObjectURL(imageBlog);

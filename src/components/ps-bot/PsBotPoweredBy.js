@@ -1,18 +1,13 @@
 import React from 'react';
+import 'font-awesome/css/font-awesome.min.css';
 
-const getHeight = (height) => {
-    return (height) ? height : '15px';
-};
-
-const getWidth = (width) => {
-    return (width) ? width : '130px';
-};
-
-export default ({imgPath, height, width}) => (
+export default ({imgPath, height, width, poweredBySymbol = 'fa fa-bolt', text = 'purpleSlate'}) => (
     <span style={{
-        fontWeight: 'bold',
-        color: 'rgba(150, 101, 171, 0.87)',
+        fontSize: '14px',
     }}>
-        <img src={imgPath} height={getHeight(height)} width={getWidth(width)} alt="Powered By purpleSlate" />
+        <span style={{
+            color: 'rgba(150, 101, 171, 0.87)',
+            paddingRight: 3
+        }}><i className={poweredBySymbol} /></span> by {text}
     </span>
 );

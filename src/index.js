@@ -56,10 +56,9 @@ ReactDOM.render(
     <IntlProvider locale="en">
         <MuiThemeProvider theme={theme}>
             <div>
-                <DocumentTitle title={cuiTheme.title || 'purpleBot'}>
+                <DocumentTitle title={cuiTheme.title || 'Remy'}>
                     <Paper style={paperStyle}>
                         <PsBot conversationInputText="Say Something.."
-                               //accessSecret="052B98YOnWs.cwA.VvI.cQBah7daXBPxhRRJwxMwGVc06fh0-G4rB3hwLFtS7S4"
                                accessSecret="lSj0yyrnrq4.cwA.ANY.yD-Brn5lp4ocATIJgqw85bjTdyqGI8rbe6XhOPzEHDY"
                                navbarTheme={cuiTheme.navbar}
                                navbarEnabled={true}
@@ -82,7 +81,7 @@ ReactDOM.render(
                     marginRight: 9,
                     float: 'right'
                 }}>
-                    <PsBotPoweredBy imgPath="Group1@10x.png"/>
+                    <PsBotPoweredBy />
                 </div>
             </div>
         </MuiThemeProvider>

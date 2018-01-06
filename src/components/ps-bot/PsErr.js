@@ -21,7 +21,7 @@ const PsErr = {
         ]
     }, {
         "type": "message",
-        "text": "Am so sorry.",
+        "text": "Am so sorry :disappointed:",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

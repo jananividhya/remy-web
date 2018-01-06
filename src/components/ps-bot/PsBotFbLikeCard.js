@@ -35,7 +35,7 @@ const styleSheet = createStyleSheet('PsBotFbLikeCard', theme => ({
     },
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
-        color: '#9B9B9B',
+        color: '#212121',
     },
     buttonTopQuiz: {
         top: '6px',

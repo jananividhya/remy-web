@@ -3,14 +3,14 @@
 }
 
 .react-autosuggest__input {
-    width: 100%;
+    width: 98%;
     height: 15px;
-    padding: 10px 5px;
-    font-family: 'Open Sans', sans-serif;
+    padding: 10px 10px 10px 15px;
+    font-family: 'Lato', sans-serif;
     font-weight: 300;
     font-size: 16px;
     border: 0px solid #aaa;
-    border-radius: 4px;
+    border-radius: 15px;
     -webkit-appearance: none;
 }
 
@@ -39,7 +39,7 @@
     width: 280px;
     border: 1px solid #aaa;
     background-color: #fff;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 300;
     font-size: 16px;
     border-bottom-left-radius: 4px;

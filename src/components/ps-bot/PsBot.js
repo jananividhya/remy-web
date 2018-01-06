@@ -249,7 +249,7 @@ class PsBot extends Component {
             loadWallpaper: true,
             sendInputToServer: true,
             user: {},
-            hideOptions: true,
+            hideOptions: false,
         };
 
         /**
@@ -304,13 +304,13 @@ class PsBot extends Component {
                   }
 
                   this.setState({
+                      conversations: [],
                       user: {
                           name: name,
                           id: id,
                           imageUrl: imageUrl,
                       },
-                      hideOptions: false,
-                      conversations: []
+                      hideOptions: true,
                   });
 
                   // Set in session
@@ -375,20 +375,6 @@ class PsBot extends Component {
                           ],
                       },)
                   }
-
-                  this.setState({
-                      conversations: this.state.conversations.concat([...signInWelcome])
-                  });
-
-                  this.setState({
-                      user: {
-                          name: name,
-                          id: id,
-                          imageUrl: imageUrl,
-                      },
-                      hideOptions: false,
-                      conversations: []
-                  });
 
                   break;
               case 'error':
@@ -534,7 +520,6 @@ class PsBot extends Component {
 
         this.setState({
             responseSuggestions: [],
-            hideOptions: false
         });
 
         const loggedDetails = this.getSessionDetails();
@@ -921,8 +906,7 @@ class PsBot extends Component {
             onChange: this.onSuggestionChange
         };
 
-        let responseSuggestions = [],
-        hideOptions = this.state.hideOptions;
+        let responseSuggestions = [];
 
         if (this.state.responseSuggestions) {
             responseSuggestions = this.state.responseSuggestions;
@@ -950,7 +934,7 @@ class PsBot extends Component {
                          />}
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {
-                            hideOptions ? (
+                            this.state.hideOptions ? (
                                 <TransitionMotion defaultStyles={[
                                     { key: 'greet-time', style: {marginTop: 0}},
                                     { key: 'greet-welcome', style: {marginTop: 0}},

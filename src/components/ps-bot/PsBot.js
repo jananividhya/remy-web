@@ -9,10 +9,10 @@ import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { TransitionMotion, spring } from 'react-motion';
-import {Emoji} from 'emoji-mart';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Autosuggest from 'react-autosuggest';
+import Emoji from 'react-emoji-render';
 
 // Common imports
 import 'whatwg-fetch';
@@ -1113,12 +1113,12 @@ class PsBot extends Component {
                                                                                                 hideWhenDone: true,
                                                                                                 hideWhenDoneDelay: 0,
                                                                                             }}>
-                                                                                                {data.text}
+                                                                                                <Emoji text={data.text} />
                                                                                             </Typist>
                                                                                         </p>
                                                                                     ) : (
                                                                                         <p>
-                                                                                            {data.text}
+                                                                                            <Emoji text={data.text} />
                                                                                         </p>
                                                                                     )
                                                                                 )) :
@@ -1163,7 +1163,7 @@ class PsBot extends Component {
                                                                                             ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                                 <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                                     <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
-                                                                                                    : data.text)))))))
+                                                                                                    : <Emoji text={data.text} />)))))))
                                                                         }
                                                                     </div>
                                                                 </Paper>
@@ -1227,9 +1227,7 @@ class PsBot extends Component {
                                     <Grid container className={this.classes.conversationInput}>
                                         {responseSuggestions.map((suggestion, id) => {
                                             return (
-                                                (suggestion.type === 'emoji') ? (
-                                                    <Emoji size={30} emoji={suggestion.title} className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id} />
-                                                ) : (<Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
+                                                <Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
                                                             onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}
                                                             style={{
                                                                 background: (this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background,
@@ -1242,7 +1240,7 @@ class PsBot extends Component {
                                                             {suggestion.title}
                                                         </p>
                                                     </div>
-                                                </Paper>)
+                                                </Paper>
                                             )
                                         })}
                                         <Grid item xs={12} sm={12} md={12} style={{

@@ -43,6 +43,7 @@
     "react-dev-utils": "^3.0.2",
     "react-document-title": "^2.0.3",
     "react-dom": "^15.6.1",
+    "react-emoji-render": "^0.4.4",
     "react-error-overlay": "^1.0.9",
     "react-facebook": "^4.0.16",
     "react-google-login": "^3.0.2",

@@ -71,7 +71,7 @@ const slashCommands = {
         "id": uuid.v4()
     }, {
         "type": "message",
-        "text": "I am purpleBot, your anytime learning companion.",
+        "text": "I am Remy 👨‍🍳 , your anytime learning companion.",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

@@ -10,7 +10,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'npm run build'
+                sh 'sudo npm run build'
             }
         }
         stage('ready-to-deploy') {

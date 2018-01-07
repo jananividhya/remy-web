@@ -4,7 +4,7 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 process.env.PUBLIC_URL = '/remy-web';
-process.env.PS_BUILD_PATH = '../../var/www/html';
+process.env.PS_BUILD_PATH = '/var/www/html';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will

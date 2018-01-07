@@ -36,6 +36,13 @@ const cuiTheme = {
     termsOfService: {
         text: 'pS Terms of Service',
         link: 'http://purpleslate.in'
+    },
+    botConversationTheme: {
+        color: '#FCFCFC'
+    },
+    humanConversationTheme: {
+        background: '#6476FF',
+        color: '#FCFCFC'
     }
 };
 
@@ -48,6 +55,7 @@ const paperStyle = {
     overflow: 'scroll',
     boxShadow: '0px 0px',
     border: '1px solid #D2D1D2',
+    background: '#F3F4FB',
 };
 
 const theme = createMuiTheme();
@@ -66,6 +74,8 @@ ReactDOM.render(
                                containerHeight={window.innerHeight - 80}
                                botDetailsTheme={cuiTheme.botDetails}
                                typing={false}
+                               botConversationTheme={cuiTheme.botConversationTheme}
+                               humanConversationTheme={cuiTheme.humanConversationTheme}
                         />
                     </Paper>
                 </DocumentTitle>

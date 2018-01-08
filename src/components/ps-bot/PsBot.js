@@ -1104,12 +1104,12 @@ class PsBot extends Component {
                                                                                                 hideWhenDone: true,
                                                                                                 hideWhenDoneDelay: 0,
                                                                                             }}>
-                                                                                                <Emoji text={data.text} />
+                                                                                                <Emoji text={data.text || ''} />
                                                                                             </Typist>
                                                                                         </p>
                                                                                     ) : (
                                                                                         <p>
-                                                                                            <Emoji text={data.text} />
+                                                                                            <Emoji text={data.text || ''} />
                                                                                         </p>
                                                                                     )
                                                                                 )) :

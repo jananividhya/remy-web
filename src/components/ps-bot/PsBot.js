@@ -513,7 +513,7 @@ class PsBot extends Component {
      * @description Sends the user conversation to pS Bot
      */
     sendConversationToBot = (event, conversationText, isAutoResponse) => {
-        if (conversationText instanceof Event) {
+        if (conversationText instanceof Event || !conversationText) {
             conversationText = this.state.commandSuggestionValue;
             this.setState({
                 commandSuggestionValue: ''

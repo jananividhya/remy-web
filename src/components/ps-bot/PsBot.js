@@ -1127,7 +1127,7 @@ class PsBot extends Component {
                                                                                         </p>
                                                                                     ) : (
                                                                                         <p>
-                                                                                            <Emoji text={data.text} />
+                                                                                            <PsMarkdown text={data.text} />
                                                                                         </p>
                                                                                     )
                                                                                 )) :

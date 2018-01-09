@@ -12,6 +12,7 @@ import SaveIcon from 'material-ui-icons/Save';
 import IconButton from 'material-ui/IconButton';
 
 import isURL from 'validator/lib/isURL';
+import PsMarkdown from './PsMarkdown';
 
 // Style Imports
 import './PsBotButton.css';
@@ -157,7 +158,7 @@ class PsBotCard extends Component {
                         fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                     }}>
-                            {this.state.title}
+                            <PsMarkdown text={this.state.title} />
                     </Typography>
                     <Typography type="subheading" component="p" className={this.classes.psTextColor} style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
@@ -165,7 +166,7 @@ class PsBotCard extends Component {
                         fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                     }}>
-                        {this.state.subtitle}
+                        <PsMarkdown text={this.state.subtitle} />
                     </Typography>
                     {(this.state.text && Array.isArray(this.state.text)) ? (
                         this.state.text.map((textVal, key) => (
@@ -176,12 +177,7 @@ class PsBotCard extends Component {
                                 fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                 fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                             }}>
-                                {(textVal.split('\n\n').length > 0) ? (
-                                    textVal.split('\n\n').map((text, k) => (
-                                        <p key={k}>{text}</p>
-                                    ))
-                                ) : {textVal}
-                                }
+                                <PsMarkdown text={textVal} />
                             </Typography>
                         ))
                     ) : (
@@ -192,11 +188,7 @@ class PsBotCard extends Component {
                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                         }}>
-                            {(this.state.text && this.state.text.split('\n\n').length > 0) ? (
-                                this.state.text.split('\n\n').map((text, k) => (
-                                    <p key={k}>{text}</p>
-                                ))
-                            ) : this.state.text}
+                            <PsMarkdown text={this.state.text} />
                         </Typography>
                     )}
                     {(!this.state.noButtonCard && this.state.buttons) ? (

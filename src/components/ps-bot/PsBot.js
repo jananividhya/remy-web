@@ -47,6 +47,7 @@ import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords
 import HandleErrors from '../../util/HandleErrors';
 
 import PsMarkdown from './PsMarkdown';
+import Emoji from 'react-emoji-render';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -1011,6 +1012,12 @@ class PsBot extends Component {
                                                           title: 'Talk to you later',
                                                           value: 'quit',
                                                           display: true
+                                                      }},
+                                                      { key: 'available-cards', style: { marginTop: spring(10) }, data: {
+                                                          type: 'Command',
+                                                          title: 'Available Components',
+                                                          value: '/components',
+                                                          display: true
                                                       }}
                                                   ]}
                                 >
@@ -1121,7 +1128,7 @@ class PsBot extends Component {
                                                                                         </p>
                                                                                     ) : (
                                                                                         <p>
-                                                                                            <PsMarkdown text={data.text} />
+                                                                                            <Emoji text={data.text} />
                                                                                         </p>
                                                                                     )
                                                                                 )) :

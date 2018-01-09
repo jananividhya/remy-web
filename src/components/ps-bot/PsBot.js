@@ -116,7 +116,6 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         borderRadius: '60px',
         marginBottom: '55px',
         marginLeft: '4px',
-        background: 'rgba(150, 101, 171, 0.87)',
         color: '#FFFFFF',
         fontFamily: 'Lato, sans-serif !important',
         cursor: 'pointer',
@@ -1241,7 +1240,7 @@ class PsBot extends Component {
                                                 <Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
                                                             onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}
                                                             style={{
-                                                                background: (this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background,
+                                                                background: this.props.baseColor ? this.props.baseColor : ((this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background),
                                                                 color: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontColor : botConversationClass.color,
                                                                 fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
                                                                 fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,

@@ -1017,11 +1017,13 @@ class PsBot extends Component {
                                                   ]}
                                 >
                                     {(styles) => (
-                                        <div>
+                                        <div style={{
+                                            paddingLeft: '50%',
+                                            marginLeft: '-120px'
+                                        }}>
                                             { styles.map(({ key, style, data}) => (
                                                 <div key={key} style={{
                                                     textAlign: 'center',
-                                                    marginLeft: '180px',
                                                     cursor: 'pointer',
                                                     ...style
                                                 }}>
@@ -1095,7 +1097,7 @@ class PsBot extends Component {
 
                                                                                         <PsBotThinking thinkingImg={data.img} style={{
                                                                                             border: 'none',
-                                                                                            backround: 'transparent !important'
+                                                                                            background: 'transparent !important'
                                                                                         }} />
                                                                                     )
                                                                                     : (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (

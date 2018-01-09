@@ -16,8 +16,8 @@ const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {
         color: '#FFFFFF',
         boxShadow: '0px 0px',
-        border: '0px solid #D2D1D2',
-        borderRadius: '15px',
+        border: '0px',
+        borderRadius: '0px 15px 15px 15px',
         fontSize: '14px',
         float: 'left',
         textAlign: 'left',
@@ -28,8 +28,8 @@ const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     },
     paperHumanCommand: {
         boxShadow: '0px 0px',
-        border: '0px solid #D2D1D2',
-        borderRadius: '15px',
+        border: '0px',
+        borderRadius: '0px 15px 15px 15px',
         fontSize: '14px',
         float: 'left',
         textAlign: 'left',

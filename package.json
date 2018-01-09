@@ -32,6 +32,7 @@
     "html-metadata": "^1.6.3",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "marked": "^0.3.12",
     "material-ui": "^1.0.0-alpha.21",
     "material-ui-icons": "^1.0.0-alpha.19",
     "metascraper": "^1.0.7",

@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const slashCommands = {
     "/help": [{
         "type": "message",
-        "text": "We are here to help you",
+        "text": "### We are here to help you\n\nThat's the _next_ paragraph.",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

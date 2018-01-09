@@ -47,6 +47,8 @@ import PsBotSliderArrowRight from './slider/PsBotSliderArrowRight';
 import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords';
 import HandleErrors from '../../util/HandleErrors';
 
+import PsMarkdown from './PsMarkdown';
+
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
         flexGrow: 1,
@@ -72,8 +74,8 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         background: '#FFFFFF',
         color: '#212121',
         boxShadow: '0px 0px',
-        border: '0px solid #D2D1D2',
-        borderRadius: '15px',
+        border: '0px',
+        borderRadius: '15px 0px 15px 15px',
         fontSize: '14px',
         float: 'right',
         textAlign: 'right',
@@ -97,7 +99,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         maxWidth: 345,
     },
     psBotThinking: {
-        background: '#FFFFFF',
+        background: 'transparent',
         float: 'right',
         position: 'relative',
         maxWidth: '350px',
@@ -130,11 +132,14 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         letterSpacing: '0px',
         paddingRight: '10px',
         paddingLeft: '10px',
+        paddingTop: '3px',
+        paddingBottom: '3px',
         position: 'relative',
         width: '200px',
     },
     conversationGreeting: {
         color: 'purple',
+        background: 'transparent',
         boxShadow: '0px 0px',
         fontSize: '20px',
         float: 'center',
@@ -1090,7 +1095,7 @@ class PsBot extends Component {
 
                                                                                         <PsBotThinking thinkingImg={data.img} style={{
                                                                                             border: 'none',
-                                                                                            background: botConversationClass.background,
+                                                                                            backround: 'transparent !important'
                                                                                         }} />
                                                                                     )
                                                                                     : (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (
@@ -1104,12 +1109,12 @@ class PsBot extends Component {
                                                                                                 hideWhenDone: true,
                                                                                                 hideWhenDoneDelay: 0,
                                                                                             }}>
-                                                                                                <Emoji text={data.text || ''} />
+                                                                                                <PsMarkdown text={data.text} />
                                                                                             </Typist>
                                                                                         </p>
                                                                                     ) : (
                                                                                         <p>
-                                                                                            <Emoji text={data.text || ''} />
+                                                                                            <PsMarkdown text={data.text} />
                                                                                         </p>
                                                                                     )
                                                                                 )) :
@@ -1154,7 +1159,7 @@ class PsBot extends Component {
                                                                                             ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                                 <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                                     <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
-                                                                                                    : <Emoji text={data.text} />)))))))
+                                                                                                    : <PsMarkdown text={data.text} />)))))))
                                                                         }
                                                                     </div>
                                                                 </Paper>

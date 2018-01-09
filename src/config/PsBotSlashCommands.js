@@ -15,7 +15,7 @@ const slashCommands = {
         "id": uuid.v4()
     }, {
         "type": "message",
-        "text": "This is a sample help",
+        "text": "This is a sample help :)",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

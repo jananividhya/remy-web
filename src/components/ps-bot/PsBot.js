@@ -12,7 +12,6 @@ import { TransitionMotion, spring } from 'react-motion';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Autosuggest from 'react-autosuggest';
-import Emoji from 'react-emoji-render';
 
 // Common imports
 import 'whatwg-fetch';

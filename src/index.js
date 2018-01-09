@@ -37,13 +37,14 @@ const cuiTheme = {
         text: 'pS Terms of Service',
         link: 'http://purpleslate.in'
     },
+    baseColor: '#6476FF',
     botConversationTheme: {
         color: '#FCFCFC'
     },
     humanConversationTheme: {
         background: '#6476FF',
         color: '#FCFCFC'
-    }
+    },
 };
 
 const paperStyle = {
@@ -54,7 +55,7 @@ const paperStyle = {
     display: 'inline-block',
     overflow: 'scroll',
     boxShadow: '0px 0px',
-    border: '1px solid #D2D1D2',
+    border: '0px solid #D2D1D2',
     background: '#F3F4FB',
 };
 
@@ -76,12 +77,12 @@ ReactDOM.render(
                                typing={false}
                                botConversationTheme={cuiTheme.botConversationTheme}
                                humanConversationTheme={cuiTheme.humanConversationTheme}
+                               baseColor={cuiTheme.baseColor}
                         />
                     </Paper>
                 </DocumentTitle>
                 <div style={{
-                    marginLeft: 9,
-                    marginTop: '-5px',
+                    paddingLeft: 9,
                     float: 'left'
                 }}>
                     <PsBotTermsOfService text={cuiTheme.termsOfService.text}

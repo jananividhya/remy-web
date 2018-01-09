@@ -138,7 +138,6 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         width: '200px',
     },
     conversationGreeting: {
-        color: 'purple',
         background: 'transparent',
         boxShadow: '0px 0px',
         fontSize: '20px',
@@ -1029,7 +1028,9 @@ class PsBot extends Component {
                                                 }}>
                                                     { (data.type === 'Greet') ? (
                                                         (key === 'greet-time') ? (
-                                                            <Paper className={this.classes.conversationGreeting}>
+                                                            <Paper className={this.classes.conversationGreeting} style={{
+                                                                color: this.props.baseColor || 'purple'
+                                                            }}>
                                                                 <div className={this.classes.conversationText}>
                                                                     <p>
                                                                         <PsBotGreeting userName={this.state.user.name} />
@@ -1037,7 +1038,9 @@ class PsBot extends Component {
                                                                 </div>
                                                             </Paper>
                                                         ) : (
-                                                            <Paper className={this.classes.conversationGreeting}>
+                                                            <Paper className={this.classes.conversationGreeting} style={{
+                                                                color: this.props.baseColor || 'purple'
+                                                            }}>
                                                                 <div className={this.classes.conversationText}>
                                                                     <p>
                                                                         {data.title}
@@ -1048,7 +1051,10 @@ class PsBot extends Component {
                                                     ) : (
                                                     (data.display) ? (
                                                         <Paper className={this.classes.conversationOptions}
-                                                               onClick={() => this.pSBotButtonClick(data.value)}>
+                                                               onClick={() => this.pSBotButtonClick(data.value)} 
+                                                               style={{
+                                                                   background: this.props.baseColor || 'rgba(150, 101, 171, 0.87)',
+                                                               }}>
                                                             <div className={this.classes.conversationText}>
                                                                 <p>
                                                                     {data.title}
@@ -1243,7 +1249,7 @@ class PsBot extends Component {
                                             )
                                         })}
                                         <Grid item xs={12} sm={12} md={12} style={{
-                                            backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : 'rgba(150, 101, 171, 0.87)',
+                                            backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : this.props.baseColor,
                                             position: 'absolute',
                                             marginLeft: '-3px',
                                             top: this.props.containerHeight || '802px',

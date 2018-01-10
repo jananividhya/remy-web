@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const slashCommands = {
     "/help": [{
         "type": "message",
-        "text": "We are here to help you",
+        "text": "# _We_ are here to help you :package:",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"
@@ -15,7 +15,7 @@ const slashCommands = {
         "id": uuid.v4()
     }, {
         "type": "message",
-        "text": "This is a sample help :)",
+        "text": "a \n\n ![Bug](http://via.placeholder.com/50x50)",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"
@@ -26,6 +26,60 @@ const slashCommands = {
         "timestamp": new Date(),
         "id": uuid.v4()
     }],
+    "/ga": [{
+        "type": "message",
+        "id": "CjVKDZid96YJs54JWXCowG|0000003",
+        "timestamp": "2018-01-10T03:03:44.3566538Z",
+        "localTimestamp": "2018-01-10T03:03:43.965+00:00",
+        "channelId": "directline",
+        "from": {
+          "id": "psbot-demo",
+          "name": "psbot-demo"
+        },
+        "conversation": {
+          "id": "CjVKDZid96YJs54JWXCowG"
+        },
+        "locale": "en-US",
+        "text": "You are in Google Analytics App",
+        "inputHint": "ignoringInput",
+        "replyToId": "CjVKDZid96YJs54JWXCowG|0000002"
+      },
+      {
+        "type": "message",
+        "id": "CjVKDZid96YJs54JWXCowG|0000004",
+        "timestamp": "2018-01-10T03:03:45.0182875Z",
+        "localTimestamp": "2018-01-10T03:03:44.803+00:00",
+        "channelId": "directline",
+        "from": {
+          "id": "psbot-demo",
+          "name": "psbot-demo"
+        },
+        "conversation": {
+          "id": "CjVKDZid96YJs54JWXCowG"
+        },
+        "locale": "en-US",
+        "text": "You can get to know the usage details, user details and exception details of your website",
+        "inputHint": "ignoringInput",
+        "replyToId": "CjVKDZid96YJs54JWXCowG|0000002"
+      },
+      {
+        "type": "message",
+        "id": "CjVKDZid96YJs54JWXCowG|0000005",
+        "timestamp": "2018-01-10T03:03:45.6611235Z",
+        "localTimestamp": "2018-01-10T03:03:45.452+00:00",
+        "channelId": "directline",
+        "from": {
+          "id": "psbot-demo",
+          "name": "psbot-demo"
+        },
+        "conversation": {
+          "id": "CjVKDZid96YJs54JWXCowG"
+        },
+        "locale": "en-US",
+        "text": "You can ask questions like ```what is the usage today?```",
+        "inputHint": "ignoringInput",
+        "replyToId": "CjVKDZid96YJs54JWXCowG|0000002"
+      }],
     "/menu": [{
         "type": "message",
         "id": uuid.v4(),

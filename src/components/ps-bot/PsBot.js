@@ -47,7 +47,6 @@ import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords
 import HandleErrors from '../../util/HandleErrors';
 
 import PsMarkdown from './PsMarkdown';
-import Emoji from 'react-emoji-render';
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -976,48 +975,24 @@ class PsBot extends Component {
                                                           value: '/signin',
                                                           display: !this.state.user.id
                                                       }},
-                                                      { key: 'hello', style: { marginTop: spring(10) }, data: {
+                                                      { key: 'apps', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
-                                                          title: 'Say Hello to ' + botName,
-                                                          value: 'Hello',
-                                                          display: true
-                                                      }},
-                                                      { key: 'learn', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Command',
-                                                          title: 'Learn with ' + botName,
-                                                          value: 'learn',
+                                                          title: '📦  Apps',
+                                                          value: 'apps',
                                                           display: true
                                                       }},
                                                       { key: 'about-us', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
-                                                          title: 'About us',
+                                                          title: '🎅🏻  About us',
                                                           value: 'About us',
-                                                          display: true
-                                                      }},
-                                                      { key: 'our-philosophy', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Command',
-                                                          title: 'Our Philosophy',
-                                                          value: 'Our Philosophy',
-                                                          display: true
-                                                      }},
-                                                      { key: 'careers', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Command',
-                                                          title: 'Careers @ ' + botName,
-                                                          value: 'Careers',
                                                           display: true
                                                       }},
                                                       { key: 'quit', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
-                                                          title: 'Talk to you later',
+                                                          title: '🚪  Talk to you later',
                                                           value: 'quit',
                                                           display: true
                                                       }},
-                                                      { key: 'available-cards', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Command',
-                                                          title: 'Available Components',
-                                                          value: '/components',
-                                                          display: true
-                                                      }}
                                                   ]}
                                 >
                                     {(styles) => (

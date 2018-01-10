@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import marked from 'marked';
-import { emojify } from 'react-emojione';
-import Emoji from 'react-emoji-render';
+
+import MDReactComponent from 'markdown-react-js';
+import emoji from 'markdown-it-emoji';
 
 class PsMarkdown extends Component {
     render() {
         const { text } = this.props;
-        const html = marked(text || '');
         
         return (
-            <div dangerouslySetInnerHTML={{__html: html}} />
+            <MDReactComponent text={text} plugins={[
+                emoji
+              ]} />
         );
     }
 }

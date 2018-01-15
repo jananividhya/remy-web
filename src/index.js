@@ -19,7 +19,7 @@ import PsBotTermsOfService from './components/ps-bot/PsBotTermsOfService';
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';
 
-const remyTheme = window.parent.remy.theme;
+const remyTheme = window.parent.remy ? window.parent.remy.theme : null;
 const cuiTheme = remyTheme || {
     title: 'Remy 👨‍🍳 ',
     navbar: {

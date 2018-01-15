@@ -248,7 +248,7 @@ class PsBot extends Component {
             commandSuggestionValue: '',
             commandSuggestions: [],
             noButtonCard: false,
-            loadWallpaper: true,
+            loadWallpaper: this.props.botpaperEnabled ? true : false,
             sendInputToServer: true,
             user: {},
             hideOptions: false,
@@ -499,6 +499,10 @@ class PsBot extends Component {
                     },
                     hideOptions: true
                 });
+
+                if (this.props.conversationStarter) {
+                    this.sendConversationToBot(null, this.props.conversationStarter, true);    
+                }
             }
 
         }).catch((ex) => {
@@ -928,7 +932,9 @@ class PsBot extends Component {
 
         return (
             <div>
-                <div className={this.classes.root}>
+                <div className={this.classes.root} style={{
+                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 30
+                }}>
                     {
                     (this.state.loadWallpaper) ? (
                         <PsBotWallpapers action={(loadUrl) => this.wallpaperClick(loadUrl)}/>
@@ -1228,7 +1234,7 @@ class PsBot extends Component {
                                                 </Paper>
                                             )
                                         })}
-                                        <Grid item xs={12} sm={12} md={12} style={{
+                                        {!this.props.inputEnabled &&<Grid item xs={12} sm={12} md={12} style={{
                                             backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : this.props.baseColor,
                                             position: 'absolute',
                                             marginLeft: '-3px',
@@ -1274,7 +1280,7 @@ class PsBot extends Component {
                                                         </div>
                                                     )}
                                             </div>
-                                        </Grid>
+                                        </Grid>}
                                     </Grid>
                                 ) : ''
                             }

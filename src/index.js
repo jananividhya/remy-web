@@ -19,8 +19,7 @@ import PsBotTermsOfService from './components/ps-bot/PsBotTermsOfService';
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';
 
-const remyTheme = window.parent.remy ? window.parent.remy.theme : null;
-const cuiTheme = remyTheme || {
+const remyTheme = window.parent.remy ? window.parent.remy.theme : {
     title: 'Remy 👨‍🍳 ',
     navbar: {
         appBar: {
@@ -47,11 +46,12 @@ const cuiTheme = remyTheme || {
         color: '#FCFCFC'
     },
 };
+const cuiTheme = remyTheme;
 
 const paperStyle = {
     height: window.innerHeight - 30,
     width: '99.6%',
-    marginTop: 0,
+    marginTop: (window.parent.remy) ? ((cuiTheme.hideHeader) ? -50 : 0) : 0,
     marginLeft: 0,
     display: 'inline-block',
     overflow: 'scroll',
@@ -71,7 +71,8 @@ ReactDOM.render(
                         <PsBot conversationInputText="Say Something.."
                                accessSecret="lSj0yyrnrq4.cwA.ANY.yD-Brn5lp4ocATIJgqw85bjTdyqGI8rbe6XhOPzEHDY"
                                navbarTheme={cuiTheme.navbar}
-                               navbarEnabled={true}
+                               navbarEnabled={cuiTheme.hideHeader !== 'true'}
+                               botpaperEnabled={cuiTheme.hideBotpaper !== 'true'}
                                showGreeting={true}
                                containerHeight={window.innerHeight - 80}
                                botDetailsTheme={cuiTheme.botDetails}
@@ -79,12 +80,15 @@ ReactDOM.render(
                                botConversationTheme={cuiTheme.botConversationTheme}
                                humanConversationTheme={cuiTheme.humanConversationTheme}
                                baseColor={cuiTheme.baseColor}
+                               conversationStarter={cuiTheme.startText}
+                               inputEnabled={cuiTheme.hideInput === 'true'}
                         />
                     </Paper>
                 </DocumentTitle>
                 {cuiTheme.termsOfService &&<div style={{
                     paddingLeft: 9,
-                    float: 'left'
+                    float: 'left',
+                    marginTop: (window.parent.remy) ? (cuiTheme.hideHeader) ? ((cuiTheme.hideInput) ? 0 : 53) : (cuiTheme.hideInput) ? 0 : 53 : 0
                 }}>
                     <PsBotTermsOfService text={cuiTheme.termsOfService.text}
                                          link={cuiTheme.termsOfService.link} />
@@ -92,7 +96,8 @@ ReactDOM.render(
                 }
                 <div style={{
                     marginRight: 9,
-                    float: 'right'
+                    float: 'right',
+                    marginTop: (window.parent.remy) ? (cuiTheme.hideHeader) ? ((cuiTheme.hideInput) ? 0 : 53) : (cuiTheme.hideInput) ? 0 : 53 : 0
                 }}>
                     <PsBotPoweredBy />
                 </div>

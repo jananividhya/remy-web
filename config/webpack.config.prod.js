@@ -326,7 +326,7 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new CopyWebpackPlugin([
       {
-        from: 'loader.js',
+        from: 'public/loader.js',
         to: 'loader.js'
       },
     ]),

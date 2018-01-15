@@ -19,7 +19,8 @@ import PsBotTermsOfService from './components/ps-bot/PsBotTermsOfService';
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';
 
-const cuiTheme = {
+const remyTheme = window.parent.remy.theme;
+const cuiTheme = remyTheme || {
     title: 'Remy 👨‍🍳 ',
     navbar: {
         appBar: {
@@ -81,13 +82,14 @@ ReactDOM.render(
                         />
                     </Paper>
                 </DocumentTitle>
-                <div style={{
+                {cuiTheme.termsOfService &&<div style={{
                     paddingLeft: 9,
                     float: 'left'
                 }}>
                     <PsBotTermsOfService text={cuiTheme.termsOfService.text}
                                          link={cuiTheme.termsOfService.link} />
                 </div>
+                }
                 <div style={{
                     marginRight: 9,
                     float: 'right'
@@ -99,4 +101,4 @@ ReactDOM.render(
     </IntlProvider>,
     document.getElementById('root'));
 
-registerServiceWorker();
+    registerServiceWorker();

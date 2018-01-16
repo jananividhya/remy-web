@@ -1104,12 +1104,12 @@ class PsBot extends Component {
                                                                                                 hideWhenDone: true,
                                                                                                 hideWhenDoneDelay: 0,
                                                                                             }}>
-                                                                                                <PsMarkdown text={data.text} />
+                                                                                                <PsMarkdown text={data.text || ''} />
                                                                                             </Typist>
                                                                                         </p>
                                                                                     ) : (
                                                                                         <p>
-                                                                                            <PsMarkdown text={data.text} />
+                                                                                            <PsMarkdown text={data.text || ''} />
                                                                                         </p>
                                                                                     )
                                                                                 )) :
@@ -1156,7 +1156,7 @@ class PsBot extends Component {
                                                                                             ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                                 <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                                     <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
-                                                                                                    : <PsMarkdown text={data.text} />)))))))
+                                                                                                    : <PsMarkdown text={data.text || ''} />)))))))
                                                                         }
                                                                     </div>
                                                                 </Paper>

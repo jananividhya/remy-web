@@ -93,7 +93,7 @@ class PsHumanConversation extends Component {
                                 }}>
                                 <div className={this.classes.conversationText}>            
                                     <p>
-                                        {(isSlashCommand) ? (<SlashCommand commandText={conversationText} background="transparent" color="#FFFFFF" />)
+                                        {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
                                             : conversationText}
                                     </p>
                                 </div>

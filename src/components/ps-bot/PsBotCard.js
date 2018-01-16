@@ -158,7 +158,7 @@ class PsBotCard extends Component {
                         fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                     }}>
-                            <PsMarkdown text={this.state.title} />
+                            {this.state.title &&<PsMarkdown text={this.state.title} />}
                     </Typography>
                     <Typography type="subheading" component="p" className={this.classes.psTextColor} style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
@@ -166,7 +166,7 @@ class PsBotCard extends Component {
                         fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                     }}>
-                        <PsMarkdown text={this.state.subtitle} />
+                        {this.state.subtitle &&<PsMarkdown text={this.state.subtitle} />}
                     </Typography>
                     {(this.state.text && Array.isArray(this.state.text)) ? (
                         this.state.text.map((textVal, key) => (
@@ -177,7 +177,7 @@ class PsBotCard extends Component {
                                 fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                 fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                             }}>
-                                <PsMarkdown text={textVal} />
+                                {textVal &&<PsMarkdown text={textVal} />}
                             </Typography>
                         ))
                     ) : (
@@ -188,7 +188,7 @@ class PsBotCard extends Component {
                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                         }}>
-                            <PsMarkdown text={this.state.text} />
+                            {this.state.text &&<PsMarkdown text={this.state.text} />}
                         </Typography>
                     )}
                     {(!this.state.noButtonCard && this.state.buttons) ? (

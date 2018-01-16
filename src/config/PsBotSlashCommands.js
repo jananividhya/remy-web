@@ -15,7 +15,7 @@ const slashCommands = {
         "id": uuid.v4()
     }, {
         "type": "message",
-        "text": "a \n\n ![Bug](http://via.placeholder.com/50x50)",
+        "text": "This is a non-formatted message.",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

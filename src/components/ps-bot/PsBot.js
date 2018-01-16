@@ -983,19 +983,19 @@ class PsBot extends Component {
                                                       }},
                                                       { key: 'apps', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
-                                                          title: '📦  Apps',
+                                                          title: 'Apps',
                                                           value: 'apps',
                                                           display: true
                                                       }},
                                                       { key: 'about-us', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
-                                                          title: '🎅🏻  About us',
+                                                          title: 'About us',
                                                           value: 'About us',
                                                           display: true
                                                       }},
                                                       { key: 'quit', style: { marginTop: spring(10) }, data: {
                                                           type: 'Command',
-                                                          title: '🚪  Talk to you later',
+                                                          title: 'Talk to you later',
                                                           value: 'quit',
                                                           display: true
                                                       }},
@@ -1015,7 +1015,7 @@ class PsBot extends Component {
                                                     { (data.type === 'Greet') ? (
                                                         (key === 'greet-time') ? (
                                                             <Paper className={this.classes.conversationGreeting} style={{
-                                                                color: this.props.baseColor || 'purple'
+                                                                color: (this.props.humanConversationTheme ? this.props.humanConversationTheme.color : 'purple') || 'purple'
                                                             }}>
                                                                 <div className={this.classes.conversationText}>
                                                                     <p>
@@ -1025,7 +1025,7 @@ class PsBot extends Component {
                                                             </Paper>
                                                         ) : (
                                                             <Paper className={this.classes.conversationGreeting} style={{
-                                                                color: this.props.baseColor || 'purple'
+                                                                color: (this.props.humanConversationTheme ? this.props.humanConversationTheme.color : 'purple') || 'purple'
                                                             }}>
                                                                 <div className={this.classes.conversationText}>
                                                                     <p>
@@ -1040,6 +1040,7 @@ class PsBot extends Component {
                                                                onClick={() => this.pSBotButtonClick(data.value)} 
                                                                style={{
                                                                    background: this.props.baseColor || 'rgba(150, 101, 171, 0.87)',
+                                                                   color: (this.props.humanConversationTheme ? this.props.humanConversationTheme.color : 'purple') || 'purple'
                                                                }}>
                                                             <div className={this.classes.conversationText}>
                                                                 <p>
@@ -1077,7 +1078,7 @@ class PsBot extends Component {
                                                                 <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : botConversationClass}
                                                                     style={{
                                                                         background: (this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background,
-                                                                        color: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontColor : botConversationClass.color,
+                                                                        color: (this.props.botConversationTheme) ? this.props.botConversationTheme.color : botConversationClass.color,
                                                                         fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
                                                                         fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
                                                                     }}>
@@ -1120,7 +1121,8 @@ class PsBot extends Component {
                                                                                                 return (
                                                                                                     <div key={key}>
                                                                                                             <PsBotCard data={attachment.content}
-                                                                                                                       action={this.pSBotButtonClick} />
+                                                                                                                       action={this.pSBotButtonClick}
+                                                                                                                       theme={this.props.botConversationTheme} />
                                                                                                     </div>
                                                                                                 );
                                                                                             })}
@@ -1136,7 +1138,8 @@ class PsBot extends Component {
                                                                                     ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
                                                                                     <p>
                                                                                         <PsBotQuizCard data={conversation.attachments[0].content}
-                                                                                                       action={this.pSBotButtonClick} /></p>
+                                                                                                       action={this.pSBotButtonClick}
+                                                                                                       theme={this.props.botConversationTheme} /></p>
                                                                                     : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.fb')) ?
                                                                                         (<p><PsBotFbSignInCard action={this.onSignIn} /></p>)
                                                                                         : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.google')) ?
@@ -1149,7 +1152,7 @@ class PsBot extends Component {
                                                                                                                    action={this.onSignIn}
                                                                                                     theme={this.props.botConversationTheme} /></p>
                                                                                                     ) : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
-                                                                                                <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} />
+                                                                                                <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} theme={this.props.botConversationTheme} />
                                                                                             ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                                 <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                                     <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
@@ -1222,7 +1225,7 @@ class PsBot extends Component {
                                                             onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}
                                                             style={{
                                                                 background: this.props.baseColor ? this.props.baseColor : ((this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background),
-                                                                color: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontColor : botConversationClass.color,
+                                                                color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
                                                                 fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
                                                                 fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
                                                             }}>
@@ -1236,6 +1239,7 @@ class PsBot extends Component {
                                         })}
                                         {!this.props.inputEnabled &&<Grid item xs={12} sm={12} md={12} style={{
                                             backgroundColor: (this.props.promptTheme) ? this.props.promptTheme.background : this.props.baseColor,
+                                            color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
                                             position: 'absolute',
                                             marginLeft: '-3px',
                                             top: this.props.containerHeight || '802px',

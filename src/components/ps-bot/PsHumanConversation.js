@@ -87,7 +87,7 @@ class PsHumanConversation extends Component {
                             <Paper className={this.classes.paperHumanConversation}
                                 style={{
                                     backgroundColor: (theme) ? theme.background : 'rgba(150, 101, 171, 0.87)',
-                                    color: (theme) ? theme.fontColor : '#FFFFFF',
+                                    color: (theme) ? theme.color : '#FFFFFF',
                                     fontSize: (theme) ? theme.fontSize : '14px',
                                     fontFamily: (theme) ? theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                 }}>

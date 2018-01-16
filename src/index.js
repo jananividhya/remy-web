@@ -37,13 +37,15 @@ const remyTheme = window.parent.remy ? window.parent.remy.theme : {
         text: 'pS Terms of Service',
         link: 'http://purpleslate.in'
     },
-    baseColor: '#6476FF',
+    baseColor: '#EEEDEE',
+    baseFontColor: '#212121',
     botConversationTheme: {
-        color: '#FCFCFC'
+        background: '#9A69B2',
+        color: '#FFFFFF',
     },
     humanConversationTheme: {
-        background: '#6476FF',
-        color: '#FCFCFC'
+        background: '#EEEDEE',
+        color: '#212121'
     },
 };
 const cuiTheme = remyTheme;
@@ -57,7 +59,7 @@ const paperStyle = {
     overflow: 'scroll',
     boxShadow: '0px 0px',
     border: '0px solid #D2D1D2',
-    background: '#F3F4FB',
+    background: '#FFFFFF',
 };
 
 const theme = createMuiTheme();

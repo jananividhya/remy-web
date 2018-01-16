@@ -147,14 +147,28 @@ class PsBotCommandCard extends Component {
                                 width={50}
                                 style={{marginLeft: -10}} />
                         ) : ''}
-                    <Typography type="headline" component="h2" className={this.classes.psTextColor}>
+                    <Typography type="headline" component="h2" className={this.classes.psTextColor}
+                    style={{
+                            background: (this.props.theme) ? this.props.theme.background : '',
+                            color: (this.props.theme) ? this.props.theme.color : '',
+                            fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
+                            fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                        }}
+                    >
                             {this.state.title}
                     </Typography>
-                    <Typography type="subheading" component="p" className={this.classes.psTextColor}>
+                    <Typography type="subheading" component="p" className={this.classes.psTextColor}
+                    style={{
+                            background: (this.props.theme) ? this.props.theme.background : '',
+                            color: (this.props.theme) ? this.props.theme.color : '',
+                            fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
+                            fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                        }}
+                    >
                         {this.state.subtitle}
                     </Typography>
                     {(this.state.commands) ? (
-                            <PsBotCommandList commandList={this.state.commands} />
+                            <PsBotCommandList commandList={this.state.commands} theme={this.props.theme} />
                     ) : '' }
                     {(!this.state.noButtonCard && this.state.buttons) ? (
                         <div className={this.classes.quiz}>

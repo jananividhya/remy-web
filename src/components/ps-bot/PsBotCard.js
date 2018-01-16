@@ -154,7 +154,7 @@ class PsBotCard extends Component {
                         ) : ''}
                     <Typography type="headline" component="h2" className={this.classes.psTextColor} style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
-                        color: (this.props.theme) ? this.props.theme.fontColor : '',
+                        color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                     }}>
@@ -162,7 +162,7 @@ class PsBotCard extends Component {
                     </Typography>
                     <Typography type="subheading" component="p" className={this.classes.psTextColor} style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
-                        color: (this.props.theme) ? this.props.theme.fontColor : '',
+                        color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                     }}>
@@ -173,7 +173,7 @@ class PsBotCard extends Component {
                             <Typography component="p" key={key}
                                         className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')} style={{
                                 background: (this.props.theme) ? this.props.theme.background : '',
-                                color: (this.props.theme) ? this.props.theme.fontColor : '',
+                                color: (this.props.theme) ? this.props.theme.color : '',
                                 fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                 fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                             }}>
@@ -184,7 +184,7 @@ class PsBotCard extends Component {
                         <Typography component="p"
                                     className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')} style={{
                             background: (this.props.theme) ? this.props.theme.background : '',
-                            color: (this.props.theme) ? this.props.theme.fontColor : '',
+                            color: (this.props.theme) ? this.props.theme.color : '',
                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                         }}>

@@ -26,4 +26,7 @@ The quickest way to get started is to copy and paste the below snippet in the pl
 
 **Remy Web Client** can be customized in the below two ways :
 1. Data Attributes
-2. Data 
+2. Remy JavaScript theme object
+
+
+

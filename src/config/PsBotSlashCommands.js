@@ -445,9 +445,39 @@ const slashCommands = {
             }
         ],
     }],
+    "/image-card": [{
+        "type": "message",
+        "text": "This will **show** you all the components that are available :smile:",
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        'localTimestamp': Date.now(),
+        "textFormat": "plain",
+        "timestamp": new Date(),
+        "id": uuid.v4()
+    }, {
+        "type": "message",
+        "id": uuid.v4(),
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "psbot-demo",
+            "name": "psbot-demo"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "image/png",
+                "contentUrl": "https://avatars3.githubusercontent.com/u/6422482?s%3D400%26v%3D4",
+            }
+        ],
+    }],
     "/components": [{
         "type": "message",
-        "text": "This show you all the components that are available :smile:",
+        "text": "This will *show* you all the components that are available :smile:",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

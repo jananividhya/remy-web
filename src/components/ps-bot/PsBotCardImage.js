@@ -3,15 +3,6 @@ import React, {Component} from 'react';
 
 // Material UI imports
 import {CardMedia} from 'material-ui/Card';
-import PropTypes from 'prop-types';
-import {withStyles, createStyleSheet} from 'material-ui/styles';
-
-const styleSheet = createStyleSheet('PsBotCardImage', theme => ({
-    responseImage: {
-        height: '240px',
-        width: '240px'
-    },
-}));
 
 /**
  * @class PsBotCardImage
@@ -19,11 +10,6 @@ const styleSheet = createStyleSheet('PsBotCardImage', theme => ({
  * @description pS Bot Image Card Response
  */
 class PsBotCardImage extends Component {
-
-    constructor(props) {
-        super(props);
-        this.classes = props.classes;
-    }
 
     getImageDetails = async () => {
         const imageDetails = await fetch(this.props.imageUrl);
@@ -46,17 +32,16 @@ class PsBotCardImage extends Component {
     };
 
     render() {
-        return ( <p>
-            <CardMedia>
+        return (
+            <CardMedia style={{
+                paddingTop: 10,
+                paddingBottom: 10
+            }}>
                 <img src={this.imageSrc} alt=""
-                    style={{height: this.props.height || '240', width: this.props.width || '240'}} />
+                    style={{height: this.props.height || '240px', width: this.props.width || '240px'}} />
             </CardMedia>
-        </p> );
+        );
     }
 }
 
-PsBotCardImage.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styleSheet)(PsBotCardImage);
+export default PsBotCardImage;

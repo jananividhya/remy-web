@@ -599,33 +599,13 @@ class PsBot extends Component {
 
             if (allowedSlashCommands.hasOwnProperty(conversationText)) {
                 const commandResponses = allowedSlashCommands[conversationText];
-                this.state.conversations.push(slashConversation);
-                this.setState({
-                    conversationId: this.state.conversationId,
+                this.setState((prevState) => ({
                     conversationText: '',
-                    conversations: this.state.conversations,
-                    conversationHistory: this.state.conversationHistory,
-                    conversationInputText: this.state.conversationInputText,
-                    responseSuggestions: this.state.responseSuggestions,
-                    listMenu: this.state.listMenu,
-                });
+                    conversations: [...prevState.conversations, slashConversation],
+                }));
 
-                const convSetState = (conv) => {
-                    this.state.conversations.push(conv);
-                    thinkingSetState();
-                    this.setState({
-                        conversationId: this.state.conversationId,
-                        conversationText: '',
-                        conversations: this.state.conversations,
-                        conversationHistory: this.state.conversationHistory,
-                        conversationInputText: this.state.conversationInputText,
-                        responseSuggestions: this.state.responseSuggestions,
-                        listMenu: this.state.listMenu,
-                    });
-                };
-
-                const thinkingSetState = () => {
-                    this.state.conversations.push({
+                const convSetState = (conv, i) => {
+                    const thinkingObj = {
                         "type": "message",
                         "text": "Thinking...",
                         "from": {
@@ -641,21 +621,15 @@ class PsBot extends Component {
                         "timestamp": new Date(),
                         "localTimestamp": Date.now(),
                         "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
-                    });
+                    };
 
-                    this.setState({
-                        conversationId: this.state.conversationId,
-                        conversationText: '',
-                        conversations: this.state.conversations,
-                        conversationHistory: this.state.conversationHistory,
-                        conversationInputText: this.state.conversationInputText,
-                        responseSuggestions: this.state.responseSuggestions,
-                        listMenu: this.state.listMenu,
-                    });
+                    this.setState((prevState) => ({
+                        conversations: [...prevState.conversations, conv, thinkingObj],
+                    }));
                 };
 
                 const removeThinkingState = () => {
-                    let conversations = this.state.conversations;
+                    let conversations = this.state.conversations.slice();
                     conversations.splice(-1, 1);
 
                     this.setState({
@@ -663,20 +637,19 @@ class PsBot extends Component {
                     });
                 };
 
-                let i = 0, l = commandResponses.length;
+                let i = 0, l = commandResponses.length, setTimeoutTimerId;
                 (function iterator() {
-                    convSetState(commandResponses[i]);
-                    if(++i<l) {
-                        setTimeout(() => {
+                    convSetState(commandResponses[i], i);
+                    if(++i < l) {
+                        setTimeoutTimerId = setTimeout(() => {
                             removeThinkingState();
                             iterator();
-                        }, (commandResponses[i].text) ? commandResponses[i].text.length * 200 : 3000);
+                        }, 100);
                     } else {
+                        clearTimeout(setTimeoutTimerId);
                         removeThinkingState();
                     }
                 })();
-
-
 
             } else {
                 this.setState({
@@ -1098,19 +1071,15 @@ class PsBot extends Component {
                                                                                         <PsBotQuizCard data={conversation.channelData.attachment.payload.quiz_card}
                                                                                                        action={this.pSBotButtonClick} /></p>
                                                                                 ) : ((this.props.typing) ? (
-                                                                                        <p>
-                                                                                            <Typist cursor={{
-                                                                                                element: '',
-                                                                                                hideWhenDone: true,
-                                                                                                hideWhenDoneDelay: 0,
-                                                                                            }}>
-                                                                                                <PsMarkdown text={data.text || ''} />
-                                                                                            </Typist>
-                                                                                        </p>
-                                                                                    ) : (
-                                                                                        <p>
+                                                                                        <Typist cursor={{
+                                                                                            element: '',
+                                                                                            hideWhenDone: true,
+                                                                                            hideWhenDoneDelay: 0,
+                                                                                        }}>
                                                                                             <PsMarkdown text={data.text || ''} />
-                                                                                        </p>
+                                                                                        </Typist>
+                                                                                    ) : (
+                                                                                        <PsMarkdown text={data.text || ''} />
                                                                                     )
                                                                                 )) :
                                                                                 ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (

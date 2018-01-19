@@ -1170,8 +1170,7 @@ class PsBot extends Component {
                                                 <div>
                                                     { styles.map(({ key, style, data}) => (
                                                         <div key={key} style={{
-                                                            ...style,
-                                                            transition: 'all .1s ease'
+                                                            ...style
                                                         }}>
                                                             <PsHumanConversation conversationText={data.text}
                                                                                     theme={data.theme} />

@@ -11,6 +11,7 @@ import Grid from 'material-ui/Grid';
 import { TransitionMotion, spring } from 'react-motion';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import Input from 'material-ui/Input';
 import Autosuggest from 'react-autosuggest';
 
 // Common imports
@@ -176,6 +177,7 @@ class PsBot extends Component {
      */
     directLineBaseUrl = "https://directline.botframework.com/v3/directline";
     headers;
+    remyActivitySocket;
     getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
@@ -235,6 +237,7 @@ class PsBot extends Component {
          * @type {{conversationId: string, conversationText: string, conversations: Array, conversationHistory: Array, conversationInputText: string}}
          */
         this.state = {
+            activityStreamUrl: '',
             conversationId: '',
             conversationText: '',
             conversations: [],
@@ -483,11 +486,13 @@ class PsBot extends Component {
             .then((response) => {
                 return response.json();
             }).then((json) => {
-            let stateObj = {
-                conversationId: json.conversationId
-            };
 
-            this.setState(stateObj);
+            this.setState({
+                conversationId: json.conversationId,
+                activityStreamUrl: json.streamUrl,
+            });
+
+            this.remyActivitySocket = new WebSocket(this.state.activityStreamUrl);
 
             if (!this.getSessionDetails().id) {
                 this.sendConversationToBot(null, "/signin", true);
@@ -701,6 +706,15 @@ class PsBot extends Component {
             // Remove thinking before pushing the content
             conversations.splice(-1, 1);
 
+            /*this.remyActivitySocket.addEventListener('message', (event) => {
+                if (event.data && JSON.parse(event.data).activities) {
+                    console.log('Event data ', JSON.parse(event.data));
+                    //this.setConversationToView(JSON.parse(event.data).activities);
+                } else {
+                    console.info('No more activities!');
+                }
+            });*/
+
             let fetchBotConversationsTimer = setInterval(() => this.fetchBotConversations(fetchBotConversationsTimer), 1000);
         }).catch((ex) => {
             console.error('Parsing failed while sending conversation to bot ', JSON.stringify(ex));
@@ -732,6 +746,58 @@ class PsBot extends Component {
     };
 
     conversationCounter = 0;
+
+    setConversationToView = (activities) => {
+        for (const activity of activities) {
+            if (!this.skipConversation(activity) &&
+                (activity.from.name === 'fiercebadlands' || activity.from.name === 'psbot-demo' || activity.contentType === 'typing') && this.state.conversationHistory.indexOf(activity.id) < 0 && activity.code !== 'completedSuccessfully') {
+
+                let conversationHistory = this.state.conversationHistory.slice();
+                let conversations = this.state.conversations.slice();
+
+                if (activity.attachments && activity.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && activity.text) {
+                    const textConversation = Object.assign({}, activity);
+                    delete textConversation.attachments;
+                    conversations.push(textConversation);
+
+                    if (activity.attachments[0].content.buttons) {
+                        let responseSuggestions = activity.attachments[0].content.buttons;
+                        this.setState({
+                            responseSuggestions: responseSuggestions,
+                        });
+                    }
+
+                } else if (activity.attachments && activity.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && activity.attachments[0].content.buttons && activity.attachments[0].content.buttons[0].type === 'imBack') {
+                    this.setState({
+                        listMenu: activity.attachments[0].content.buttons,
+                        listMenuTitle: activity.attachments[0].content.subtitle || activity.attachments[0].content.title
+                    });
+                } else {
+                    this.setState({
+                        noButtonCard: true,
+                    });
+                }
+
+                conversationHistory.push(activity.id);
+                if (this.state.responseSuggestions.length === 0) {
+                    conversations.push(activity);
+                }
+
+                this.setState({
+                    conversationId: this.state.conversationId,
+                    conversationText: '',
+                    conversations: conversations,
+                    conversationHistory: conversationHistory,
+                    conversationInputText: this.state.conversationInputText,
+                    responseSuggestions: this.state.responseSuggestions,
+                });
+
+
+            } else if (this.conversationCounter === 200) {
+                this.conversationCounter = 0;
+            }
+        }
+    };
 
     /**
      * @method fetchBotConversations
@@ -799,10 +865,6 @@ class PsBot extends Component {
 
                     } else if (this.conversationCounter === 200) {
                         this.conversationCounter = 0;
-                        /*clearInterval(fetchBotConversationsTimer);
-                        this.setState({
-                            conversations: this.state.conversations.concat([...PsError['serverError']])
-                        });*/
                     }
             };
 
@@ -829,9 +891,6 @@ class PsBot extends Component {
         }).catch((ex) => {
             console.log("Error Occurred while getting conversation from bot", ex);
             clearInterval(fetchBotConversationsTimer);
-            this.setState({
-                conversations: this.state.conversations.concat([...PsError['serverError']])
-            });
         });
     };
 
@@ -1222,6 +1281,22 @@ class PsBot extends Component {
                                                             renderSuggestion={this.renderSuggestion}
                                                             inputProps={inputProps}
                                                         />
+                                                        {
+                                                            /*
+                                                            <Input
+                                                            autoFocus
+                                                            fullWidth
+                                                            id="human-input"
+                                                            placeholder={this.state.conversationInputText}
+                                                            className={this.classes.input}
+                                                            value={this.state.conversationText}
+                                                            inputProps={{
+                                                                'aria-label': this.state.conversationInputText,
+                                                            }}
+                                                            onChange={this.setConversation}
+                                                        />
+                                                            */
+                                                        }
                                                     </form>) : (
                                                         <div className={this.classes.input}>
                                                             <Button

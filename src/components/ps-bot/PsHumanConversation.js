@@ -6,8 +6,7 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-
-import {Motion, spring} from 'react-motion';
+import './styles/remy-style-transitions.css';
 
 // App imports
 import SlashCommand from './PsSlashCommand';
@@ -77,32 +76,24 @@ class PsHumanConversation extends Component {
         const theme = (this.state.theme) ? this.state.theme : null;
 
         return (
-            <Motion style={{x: spring(400)}}> 
-            {
-                (x) => {
-                    return (
-                        <Grid item xs={12} sm={12} style={{
-                            transform: "scale(" + x + ")"
-                        }}>
-                            <Paper className={this.classes.paperHumanConversation}
-                                style={{
-                                    backgroundColor: (theme) ? theme.background : 'rgba(150, 101, 171, 0.87)',
-                                    color: (theme) ? theme.color : '#FFFFFF',
-                                    fontSize: (theme) ? theme.fontSize : '14px',
-                                    fontFamily: (theme) ? theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                }}>
-                                <div className={this.classes.conversationText}>            
-                                    <p>
-                                        {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
-                                            : conversationText}
-                                    </p>
-                                </div>
-                            </Paper>
-                        </Grid>
-                    );
-                }
-            }
-            </Motion>);
+            <Grid item xs={12} sm={12}>
+                <Paper className={[this.classes.paperHumanConversation, "slideInFromLeft"].join(" ")}
+                       style={{
+                           backgroundColor: (theme) ? theme.background : 'rgba(150, 101, 171, 0.87)',
+                           color: (theme) ? theme.color : '#FFFFFF',
+                           fontSize: (theme) ? theme.fontSize : '14px',
+                           fontFamily: (theme) ? theme.fontFamily + ' !important' : 'Lato, sans-serif',
+                           transition: 'all 0.75s ease-in'
+                       }}>
+                    <div className={this.classes.conversationText}>
+                        <p>
+                            {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
+                                : conversationText}
+                        </p>
+                    </div>
+                </Paper>
+            </Grid>
+        );
     }
 }
 

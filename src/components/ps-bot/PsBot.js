@@ -21,12 +21,12 @@ import Slider from 'react-slick';
 
 // App imports
 import './PsBot.css';
+import './styles/remy-style-transitions.css';
 import PsBotNavbar from './PsBotNavbar';
 import PsBotThinking from './PsBotThinking';
 import PsHumanConversation from './PsHumanConversation';
 import PsBotCard from './PsBotCard';
 import PsBotCardImage from './PsBotCardImage';
-import PsBotConversationTime from './PsBotConversationTime';
 import AutoSuggestTheme from './AutoSuggestTheme.css'; // eslint-disable-line no-unused-vars
 import TypistTheme from './Typist.css'; // eslint-disable-line no-unused-vars
 import PsBotCodeCard from './PsBotCodeCard';
@@ -248,10 +248,11 @@ class PsBot extends Component {
             commandSuggestionValue: '',
             commandSuggestions: [],
             noButtonCard: false,
-            loadWallpaper: this.props.botpaperEnabled ? true : false,
+            loadWallpaper: !!this.props.botpaperEnabled,
             sendInputToServer: true,
             user: {},
             hideOptions: false,
+            emulateTyping: !!this.props.emulateTyping,
         };
 
         /**
@@ -786,8 +787,6 @@ class PsBot extends Component {
                             conversations.push(newConversation);
                         }
 
-                        //thinkingSetState();
-
                         this.setState({
                             conversationId: this.state.conversationId,
                             conversationText: '',
@@ -808,16 +807,23 @@ class PsBot extends Component {
             };
 
             let i = 0, l = json.activities.length;
-            (function iterator() {
-                convSetState(json.activities[i]);
-                if(++i<l) {
-                    setTimeout(() => {
-                        iterator()
-                    }, (json.activities[i].text) ? ((json.activities[i].text.length > 10) ? json.activities[i].text.length : json.activities[i].text.length * 50) : 100);
-                }
-            })();
 
-            if (lastItem.inputHint === 'expectingInput' || lastItem.code === 'completedSuccessfully') {
+            if (this.state.emulateTyping) {
+                (function iterator() {
+                    convSetState(json.activities[i]);
+                    if(++i<l) {
+                        setTimeout(() => {
+                            iterator()
+                        }, (json.activities[i].text) ? ((json.activities[i].text.length > 10) ? json.activities[i].text.length : json.activities[i].text.length * 50) : 100);
+                    }
+                })();
+            } else {
+                for (const activity of json.activities) {
+                    convSetState(activity);
+                }
+            }
+
+            if (lastItem.inputHint === 'expectingInput' || lastItem.code === 'completedSuccessfully' || lastItem.inputHint === 'acceptingInput' || lastItem.type === 'endOfConversation') {
                 clearInterval(fetchBotConversationsTimer);
             }
         }).catch((ex) => {
@@ -1037,104 +1043,88 @@ class PsBot extends Component {
 
                             return ((conversation.from.name === 'fiercebadlands' || conversation.from.name === 'psbot-demo' || conversation.contentType === 'typing') ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
-                                            <TransitionMotion defaultStyles={[
-                                                {key: id.toString(), style: {marginRight: -50}},
-                                            ]} styles={[
-                                                { key: id.toString(), style: { marginRight: spring(0) }, data: conversation},
-                                            ]}>
-                                                {(styles) => (
-                                                    <div>
-                                                        { styles.map(({ key, style, data}) => (
-                                                            <div key={key} style={{
-                                                                ...style
-                                                            }}>
-                                                                <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : botConversationClass}
-                                                                    style={{
-                                                                        background: (this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background,
-                                                                        color: (this.props.botConversationTheme) ? this.props.botConversationTheme.color : botConversationClass.color,
-                                                                        fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                                                        fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
+                                            <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : [botConversationClass, "slideInFromRight"].join(" ")}
+                                                   style={{
+                                                       background: (this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background,
+                                                       color: (this.props.botConversationTheme) ? this.props.botConversationTheme.color : botConversationClass.color,
+                                                       fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
+                                                       fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
+                                                   }}>
+                                                <div className={this.classes.conversationText}>
+                                                    {
+                                                        !conversation.attachments ? (
+                                                            (conversation.contentType === 'typing') ?
+                                                                (
+
+                                                                    <PsBotThinking thinkingImg={conversation.img} style={{
+                                                                        border: 'none',
+                                                                        background: 'transparent !important'
+                                                                    }} />
+                                                                )
+                                                                : (conversation.channelData && conversation.channelconversation.attachment.payload.template_type === 'QuizCard') ? (
+                                                                <p>
+                                                                    <PsBotQuizCard data={conversation.channelconversation.attachment.payload.quiz_card}
+                                                                                   action={this.pSBotButtonClick} /></p>
+                                                            ) : ((this.props.typing) ? (
+                                                                    <Typist cursor={{
+                                                                        element: '',
+                                                                        hideWhenDone: true,
+                                                                        hideWhenDoneDelay: 0,
                                                                     }}>
-                                                                    <div className={this.classes.conversationText}>
-                                                                        {
-                                                                            !conversation.attachments ? (
-                                                                                (conversation.contentType === 'typing') ?
-                                                                                    (
+                                                                        <PsMarkdown text={conversation.text || ''} />
+                                                                    </Typist>
+                                                                ) : (
+                                                                    <PsMarkdown text={conversation.text || ''} />
+                                                                )
+                                                            )) :
+                                                            ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                                (multipleCards) ?
+                                                                    (
+                                                                        <Slider {...cardSliderOptions}>
+                                                                            {conversation.attachments.map((attachment, key) => {
+                                                                                return (
+                                                                                    <div key={key}>
+                                                                                        <PsBotCard data={attachment.content}
+                                                                                                   action={this.pSBotButtonClick}
+                                                                                                   theme={this.props.botConversationTheme} />
+                                                                                    </div>
+                                                                                );
+                                                                            })}
+                                                                        </Slider>
+                                                                    )
+                                                                    : (
+                                                                    <p>
+                                                                        <PsBotCard data={conversation.attachments[0].content}
+                                                                                   action={this.pSBotButtonClick} theme={this.props.botConversationTheme} /></p>
+                                                                )
 
-                                                                                        <PsBotThinking thinkingImg={data.img} style={{
-                                                                                            border: 'none',
-                                                                                            background: 'transparent !important'
-                                                                                        }} />
-                                                                                    )
-                                                                                    : (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (
+                                                            ) :
+                                                                ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
+                                                                    <p>
+                                                                        <PsBotQuizCard data={conversation.attachments[0].content}
+                                                                                       action={this.pSBotButtonClick}
+                                                                                       theme={this.props.botConversationTheme} /></p>
+                                                                    : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.fb')) ?
+                                                                        (<p><PsBotFbSignInCard action={this.onSignIn} /></p>)
+                                                                        : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.google')) ?
+                                                                            (<p><PsBotGoogleSignInCard action={this.onSignIn} /></p>)
+                                                                            : (((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
+                                                                                (<p><PsBotFbLikeCard /></p>)
+                                                                                : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin') ? (
                                                                                     <p>
-                                                                                        <PsBotQuizCard data={conversation.channelData.attachment.payload.quiz_card}
-                                                                                                       action={this.pSBotButtonClick} /></p>
-                                                                                ) : ((this.props.typing) ? (
-                                                                                        <Typist cursor={{
-                                                                                            element: '',
-                                                                                            hideWhenDone: true,
-                                                                                            hideWhenDoneDelay: 0,
-                                                                                        }}>
-                                                                                            <PsMarkdown text={data.text || ''} />
-                                                                                        </Typist>
-                                                                                    ) : (
-                                                                                        <PsMarkdown text={data.text || ''} />
-                                                                                    )
-                                                                                )) :
-                                                                                ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                                                (multipleCards) ?
-                                                                                    (
-                                                                                        <Slider {...cardSliderOptions}>
-                                                                                            {conversation.attachments.map((attachment, key) => {
-                                                                                                return (
-                                                                                                    <div key={key}>
-                                                                                                            <PsBotCard data={attachment.content}
-                                                                                                                       action={this.pSBotButtonClick}
-                                                                                                                       theme={this.props.botConversationTheme} />
-                                                                                                    </div>
-                                                                                                );
-                                                                                            })}
-                                                                                        </Slider>
-                                                                                    )
-                                                                                    : (
-                                                                                    <p>
-                                                                                        <PsBotCard data={conversation.attachments[0].content}
-                                                                                                   action={this.pSBotButtonClick} theme={this.props.botConversationTheme} /></p>
-                                                                                    )
-
-                                                                                    ) :
-                                                                                    ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
-                                                                                    <p>
-                                                                                        <PsBotQuizCard data={conversation.attachments[0].content}
-                                                                                                       action={this.pSBotButtonClick}
-                                                                                                       theme={this.props.botConversationTheme} /></p>
-                                                                                    : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.fb')) ?
-                                                                                        (<p><PsBotFbSignInCard action={this.onSignIn} /></p>)
-                                                                                        : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.google')) ?
-                                                                                            (<p><PsBotGoogleSignInCard action={this.onSignIn} /></p>)
-                                                                                            : (((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
-                                                                                            (<p><PsBotFbLikeCard /></p>)
-                                                                                            : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin') ? (
-                                                                                                <p>
-                                                                                                    <PsBotSignInCard data={conversation.attachments[0].content}
-                                                                                                                   action={this.onSignIn}
-                                                                                                    theme={this.props.botConversationTheme} /></p>
-                                                                                                    ) : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
-                                                                                                <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} theme={this.props.botConversationTheme} />
-                                                                                            ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
-                                                                                                <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
-                                                                                                    <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
-                                                                                                    : <PsMarkdown text={data.text || ''} />)))))))
-                                                                        }
-                                                                    </div>
-                                                                </Paper>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </TransitionMotion>
-                                            {(this.state.conversations.length === id + 1) ?
+                                                                                        <PsBotSignInCard data={conversation.attachments[0].content}
+                                                                                                         action={this.onSignIn}
+                                                                                                         theme={this.props.botConversationTheme} /></p>
+                                                                                ) : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
+                                                                                    <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} theme={this.props.botConversationTheme} />
+                                                                                ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
+                                                                                    <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
+                                                                                        <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
+                                                                                        : <PsMarkdown text={conversation.text || ''} />)))))))
+                                                    }
+                                                </div>
+                                            </Paper>
+                                            {/*{(this.state.conversations.length === id + 1) ?
                                                 (<TransitionMotion defaultStyles={[
                                                     { key: id.toString(), style: {marginLeft: -50}},
                                                 ]} styles={[
@@ -1151,17 +1141,18 @@ class PsBot extends Component {
 
                                                     )}
 
-                                                </TransitionMotion>) : ''}
+                                                </TransitionMotion>) : ''}*/}
                                         </Grid>
                                     )
                                     :
                                     (
-                                        <TransitionMotion key={id} defaultStyles={[
+                                    (this.state.motionEnabled) ? (<TransitionMotion key={id} defaultStyles={[
                                             { key: id.toString(), style: {marginLeft: -20}},
                                         ]}
                                                           styles={[
                                                               { key: id.toString(), style: { marginLeft: spring(0)}, data: {
                                                                   text: conversation.text,
+                                                                  timestamp: conversation.timestamp,
                                                                   theme: this.props.humanConversationTheme,
                                                               }},
                                                           ]}
@@ -1178,7 +1169,12 @@ class PsBot extends Component {
                                                     ))}
                                                 </div>
                                             )}
-                                        </TransitionMotion>
+                                        </TransitionMotion>) :
+                                        (
+                                            <PsHumanConversation key={id}
+                                                                 conversationText={conversation.text}
+                                                                 theme={this.props.humanConversationTheme} />
+                                        )
                                     )
 
                             )

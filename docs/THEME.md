@@ -5,6 +5,8 @@ Remy allows one to customize itself by exposing few stylesheet properties.
 In Remy's words :
 > When `humans` can wear different dresses why can't i
 
+[Path to config](https://gitlab.com/purpleslate/ps-public/blob/master/src/theme/remy-dress.json)
+
 ```javascript
 {
   "title": "Remy 👨‍🍳 ", // Title of the client as it appears on the browser window
@@ -37,3 +39,12 @@ In Remy's words :
   }
 }
 ```
+
+#### How to update the config through Gitlab
+
+1. Login to Gitlab using your PurpleSlate Google account.
+2. Edit [Remy's Dress](https://gitlab.com/purpleslate/ps-public/edit/master/src/theme/remy-dress.json)
+3. Change the desired properties, provide appropriate `commit message` and commit the changes.
+
+After the end of Step 3 a CD job will be triggered which will deploy the latest changes to Demo.
+ 

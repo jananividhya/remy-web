@@ -35,7 +35,7 @@ In Remy's words :
   },
   "humanConversationTheme": {
     "background": "#EEEDEE", // User response bubble color
-    "color": "#212121" // User response font color
+    "color": "#9E9E9E" // User response font color
   }
 }
 ```

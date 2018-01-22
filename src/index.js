@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import remyDress from './theme/remy-dress.json';
 
 // Material UI imports
 import Paper from 'material-ui/Paper';
@@ -19,36 +20,7 @@ import PsBotTermsOfService from './components/ps-bot/PsBotTermsOfService';
 // Service Worker import for offline app
 import registerServiceWorker from './registerServiceWorker';
 
-const remyTheme = window.parent.remy ? window.parent.remy.theme : {
-    title: 'Remy 👨‍🍳 ',
-    navbar: {
-        appBar: {
-            background: '#FFFFFF'
-        },
-        logo: {
-            imageUrl: 'psbot-logo.png'
-        }
-    },
-    botDetails: {
-        name: 'Remy 👨‍🍳 ',
-        description: 'Some things you can ask me..',
-    },
-    termsOfService: {
-        text: 'pS Terms of Service',
-        link: 'http://purpleslate.in'
-    },
-    baseColor: '#EEEDEE',
-    baseFontColor: '#212121',
-    botConversationTheme: {
-        background: '#9A69B2',
-        color: '#FFFFFF',
-    },
-    humanConversationTheme: {
-        background: '#EEEDEE',
-        color: '#212121'
-    },
-};
-const cuiTheme = remyTheme;
+const cuiTheme = window.parent.remy ? window.parent.remy.theme : remyDress;
 
 const paperStyle = {
     height: window.innerHeight - 30,
@@ -56,10 +28,10 @@ const paperStyle = {
     marginTop: (window.parent.remy) ? ((cuiTheme.hideHeader) ? -50 : 0) : 0,
     marginLeft: 0,
     display: 'inline-block',
-    overflow: 'scroll',
+    overflowY: 'hidden !important',
     boxShadow: '0px 0px',
     border: '0px solid #D2D1D2',
-    background: '#FFFFFF',
+    background: remyDress.background || '#FFFFFF',
 };
 
 const theme = createMuiTheme();

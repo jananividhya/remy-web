@@ -1,0 +1,30 @@
+{
+  "title": "Remy 👨‍🍳 ",
+  "navbar": {
+    "appBar": {
+      "background": "#FFFFFF"
+    },
+    "logo": {
+      "imageUrl": "psbot-logo.png"
+    }
+  },
+  "botDetails": {
+    "name": "Remy 👨‍🍳 ",
+    "description": "Some things you can ask me.."
+  },
+  "termsOfService": {
+    "text": "pS Terms of Service",
+    "link": "http://purpleslate.in"
+  },
+  "baseColor": "#EEEDEE",
+  "baseFontColor": "#212121",
+  "background": "#FFFFFF",
+  "botConversationTheme": {
+    "background": "#9A69B2",
+    "color": "#FFFFFF"
+  },
+  "humanConversationTheme": {
+    "background": "#EEEDEE",
+    "color": "#212121"
+  }
+}

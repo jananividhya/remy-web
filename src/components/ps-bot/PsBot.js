@@ -1053,7 +1053,7 @@ class PsBot extends Component {
                                                     { (data.type === 'Greet') ? (
                                                         (key === 'greet-time') ? (
                                                             <Paper className={this.classes.conversationGreeting} style={{
-                                                                color: (this.props.humanConversationTheme ? this.props.humanConversationTheme.color : 'purple') || 'purple'
+                                                                color: (this.props.baseFontColor ? this.props.baseFontColor : 'purple') || 'purple'
                                                             }}>
                                                                 <div className={this.classes.conversationText}>
                                                                     <p>
@@ -1063,7 +1063,7 @@ class PsBot extends Component {
                                                             </Paper>
                                                         ) : (
                                                             <Paper className={this.classes.conversationGreeting} style={{
-                                                                color: (this.props.humanConversationTheme ? this.props.humanConversationTheme.color : 'purple') || 'purple'
+                                                                color: (this.props.baseFontColor ? this.props.baseFontColor : 'purple') || 'purple'
                                                             }}>
                                                                 <div className={this.classes.conversationText}>
                                                                     <p>
@@ -1078,7 +1078,7 @@ class PsBot extends Component {
                                                                onClick={() => this.pSBotButtonClick(data.value)} 
                                                                style={{
                                                                    background: this.props.baseColor || 'rgba(150, 101, 171, 0.87)',
-                                                                   color: (this.props.humanConversationTheme ? this.props.humanConversationTheme.color : 'purple') || 'purple'
+                                                                   color: (this.props.baseFontColor ? this.props.baseFontColor : 'purple') || 'purple'
                                                                }}>
                                                             <div className={this.classes.conversationText}>
                                                                 <p>

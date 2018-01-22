@@ -56,6 +56,7 @@ ReactDOM.render(
                                baseColor={cuiTheme.baseColor}
                                conversationStarter={cuiTheme.startText}
                                inputEnabled={cuiTheme.hideInput === 'true'}
+                               baseFontColor={cuiTheme.baseFontColor}
                         />
                     </Paper>
                 </DocumentTitle>

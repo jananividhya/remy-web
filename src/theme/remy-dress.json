@@ -20,11 +20,11 @@
   "baseFontColor": "#212121",
   "background": "#FFFFFF",
   "botConversationTheme": {
-    "background": "#9A69B2",
+    "background": "#B3A062",
     "color": "#FFFFFF"
   },
   "humanConversationTheme": {
-    "background": "#EEEDEE",
+    "background": "#EFF0E8",
     "color": "#212121"
   }
 }

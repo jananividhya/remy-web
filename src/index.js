@@ -43,7 +43,7 @@ ReactDOM.render(
                 <DocumentTitle title={cuiTheme.title || 'Remy'}>
                     <Paper style={paperStyle}>
                         <PsBot conversationInputText="Say Something.."
-                               accessSecret="lSj0yyrnrq4.cwA.ANY.yD-Brn5lp4ocATIJgqw85bjTdyqGI8rbe6XhOPzEHDY"
+                               accessSecret="eSuQ3mxu61Q.cwA.fxU.ShH6-q_lglxbBiXo6CniDfj-CBbBIEOEG-MkKgJzVWw"
                                navbarTheme={cuiTheme.navbar}
                                navbarEnabled={cuiTheme.hideHeader !== 'true'}
                                botpaperEnabled={cuiTheme.hideBotpaper !== 'true'}

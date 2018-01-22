@@ -16,15 +16,15 @@
     "text": "pS Terms of Service",
     "link": "http://purpleslate.in"
   },
-  "baseColor": "#EEEDEE",
+  "baseColor": "#B293C1",
   "baseFontColor": "#212121",
   "background": "#FFFFFF",
   "botConversationTheme": {
-    "background": "#EFF0E8",
+    "background": "#F8FAFB",
     "color": "#212121"
   },
   "humanConversationTheme": {
-    "background": "#B3A062",
+    "background": "#C9BBCA",
     "color": "#FFFFFF"
   }
 }

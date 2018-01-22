@@ -26,16 +26,16 @@ In Remy's words :
     "text": "pS Terms of Service", // Terms of service text
     "link": "http://purpleslate.in" // Terms of service external URL
   },
-  "baseColor": "#EEEDEE", // Background shade of the input bar
+  "baseColor": "#EFAF18", // Background shade of the input bar
   "baseFontColor": "#212121", // Font color in the input bar
   "background": "#FFFFFF", // Background color of conversation panel
   "botConversationTheme": {
-    "background": "#9A69B2", // Bot response bubble color
-    "color": "#FFFFFF" // Bot response font color
+    "background": "#F2D151", // Bot response bubble color
+    "color": "#F8FAF9" // Bot response font color
   },
   "humanConversationTheme": {
-    "background": "#EEEDEE", // User response bubble color
-    "color": "#9E9E9E" // User response font color
+    "background": "#F8FAF9", // User response bubble color
+    "color": "#BDBDBD" // User response font color
   }
 }
 ```

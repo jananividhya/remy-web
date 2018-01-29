@@ -22,11 +22,9 @@ pipeline {
      post {
         success {
           echo 'posting success to GitLab'
-              updateGitlabCommitStatus(name: 'jenkins-build', state: 'success')
         }
         failure {
           echo 'posting failure to GitLab'
-              updateGitlabCommitStatus(name: 'jenkins-build', state: 'failed')
         }
       }
 }

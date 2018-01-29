@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage('prepare') {
             steps {
-                sh 'npm --version'
                 echo 'Installing Node Modules..'
                 sh 'sudo npm install'
             }

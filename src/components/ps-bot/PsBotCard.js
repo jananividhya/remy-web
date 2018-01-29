@@ -2,17 +2,13 @@
 import React, {Component} from 'react';
 
 // Material UI imports
-import {CardContent, CardActions} from 'material-ui/Card';
+import {CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Chip from 'material-ui/Chip';
-import FavoriteIcon from 'material-ui-icons/Favorite';
-import SaveIcon from 'material-ui-icons/Save';
-import IconButton from 'material-ui/IconButton';
 
 import isURL from 'validator/lib/isURL';
-import PsMarkdown from './PsMarkdown';
 
 // Style Imports
 import './PsBotButton.css';
@@ -40,6 +36,8 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     leftAlignedText: {
         float: 'left !important',
         textAlign: 'left !important',
+        padding: '8px !important',
+        marginTop: '8px',
     },
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
@@ -142,8 +140,7 @@ class PsBotCard extends Component {
     };
 
     render() {
-        return ( <div>
-            {((this.state.title || this.state.subtitle || this.state.text) ? (<div><CardContent className={this.classes.leftAlignedText}> {
+        return ( ((this.state.title || this.state.subtitle || this.state.text) ? (<CardContent className={this.classes.leftAlignedText}> {
                 <div>
                     {(this.state.images && this.state.images[0]) ? (
                             <img src={this.state.images[0].url}
@@ -152,22 +149,22 @@ class PsBotCard extends Component {
                                 width={50}
                                 style={{marginLeft: -10}} />
                         ) : ''}
-                    <Typography type="headline" component="h2" className={this.classes.psTextColor} style={{
+                    {this.state.title &&<Typography type="headline" component="h2" className={this.classes.psTextColor} style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
                         color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                     }}>
-                            {this.state.title &&<PsMarkdown text={this.state.title} />}
-                    </Typography>
-                    <Typography type="subheading" component="p" className={this.classes.psTextColor} style={{
+                            <span>{this.state.title}</span>
+                    </Typography>}
+                    {this.state.subtitle &&<Typography type="subheading" component="h4" className={this.classes.psTextColor} style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
                         color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                     }}>
-                        {this.state.subtitle &&<PsMarkdown text={this.state.subtitle} />}
-                    </Typography>
+                        <span>{this.state.subtitle}</span>
+                    </Typography>}
                     {(this.state.text && Array.isArray(this.state.text)) ? (
                         this.state.text.map((textVal, key) => (
                             <Typography component="p" key={key}
@@ -177,18 +174,18 @@ class PsBotCard extends Component {
                                 fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                 fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                             }}>
-                                {textVal &&<PsMarkdown text={textVal} />}
+                                {textVal &&<span>{textVal}</span>}
                             </Typography>
                         ))
                     ) : (
-                        <Typography component="p"
+                        this.state.text &&<Typography component="p"
                                     className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')} style={{
                             background: (this.props.theme) ? this.props.theme.background : '',
                             color: (this.props.theme) ? this.props.theme.color : '',
                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                         }}>
-                            {this.state.text &&<PsMarkdown text={this.state.text} />}
+                            <span>{this.state.text}</span>
                         </Typography>
                     )}
                     {(!this.state.noButtonCard && this.state.buttons) ? (
@@ -199,25 +196,9 @@ class PsBotCard extends Component {
                         })}
                         </div>
                     ) : ''}
-                    {(!this.state.noButtonCard && this.state.buttons && this.state.buttons.length > 0 && this.state.buttons[0].type === 'openUrl') ? (
-                        <CardActions disableActionSpacing className={this.classes.cardActions}>
-                            <IconButton aria-label="Add to favorites">
-                                <FavoriteIcon />
-                            </IconButton>
-                            <IconButton aria-label="Share">
-                                <SaveIcon />
-                            </IconButton>
-                        </CardActions>
-                    ) : <CardActions disableActionSpacing className={this.classes.cardActions}>
-                        <IconButton aria-label="Share">
-                            <SaveIcon />
-                        </IconButton>
-                    </CardActions>}
                 </div>
             }
-            </CardContent>
-            </div>): '') }
-        </div> );
+            </CardContent>): ''));
     }
 }
 

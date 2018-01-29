@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 
 // Material UI imports
-import {CardContent} from 'material-ui/Card';
+import Card, {CardContent, CardMedia} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -38,6 +38,8 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
     leftAlignedText: {
         float: 'left !important',
         textAlign: 'left !important',
+        padding: '8px !important',
+        marginTop: '8px',
     },
     psTextColor: {
         fontFamily: 'Lato, sans-serif',
@@ -158,16 +160,23 @@ class PsBotCard extends Component {
 
         return ( <div>
             {((this.state.title || this.state.subtitle || this.state.text) ?
-                <CardContent className={this.classes.leftAlignedText}> {
-                    <div>
+                <CardContent className={this.classes.leftAlignedText}>
                         {(this.state.images && this.state.images[0]) ? (
-                            <img src={this.state.images[0].url}
-                                 alt={this.state.title}
-                                 height={50}
-                                 width={50}
-                                 style={{marginLeft: -10}}/>
+                            <CardMedia style={{
+                                paddingTop: 10,
+                                paddingBottom: 10
+                            }}>
+                                <img src={this.state.images[0].url} alt={this.state.title}
+                                    style={{
+                                        height: '150px', 
+                                        width: '109%',
+                                        marginLeft: '-20px',
+                                        marginTop: '-15px',
+                                        borderTopLeftRadius: '15px',
+                                    }} />
+                            </CardMedia>
                         ) : ''}
-                        <Typography type="headline" component="h2" className={this.classes.psTextColor}
+                        {this.state.title &&<Typography type="headline" component="h2" className={this.classes.psTextColor}
                         style={{
                                             background: (this.props.theme) ? this.props.theme.background : '',
                                             color: (this.props.theme) ? this.props.theme.color : '',
@@ -181,8 +190,8 @@ class PsBotCard extends Component {
                             }}>
                                 {quizTimer}
                             </span>
-                        </Typography>
-                        <Typography type="subheading" component="p" className={this.classes.psTextColor}
+                        </Typography>}
+                        {this.state.subTitle &&<Typography type="subheading" component="p" className={this.classes.psTextColor}
                         style={{
                                             background: (this.props.theme) ? this.props.theme.background : '',
                                             color: (this.props.theme) ? this.props.theme.color : '',
@@ -191,7 +200,7 @@ class PsBotCard extends Component {
                                         }}
                         >
                             {this.state.subTitle}
-                        </Typography>
+                        </Typography>}
                         {(this.state.text && Array.isArray(this.state.text)) ? (
                             this.state.text.map((textVal, key) => (
                                 <Typography component="p" key={key}
@@ -212,7 +221,7 @@ class PsBotCard extends Component {
                                 </Typography>
                             ))
                         ) : (
-                            <Typography component="p"
+                            this.state.text &&<Typography component="p"
                                         className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}
                                         style={{
                                             background: (this.props.theme) ? this.props.theme.background : '',
@@ -246,8 +255,6 @@ class PsBotCard extends Component {
                                 })}
                             </div>
                         ) : ''}
-                    </div>
-                }
                 </CardContent> : '')}
         </div> );
     }

@@ -976,7 +976,7 @@ class PsBot extends Component {
                                                 float:  'right',
                                                 paddingLeft: '7px'
                                             }}>
-                                                <Avatar className={this.classes.avatar}>B</Avatar>
+                                                <Avatar src="BotAvatar@5x.png" className={this.classes.avatar}></Avatar>
                                             </div>) : (
                                                 <div style={{
                                                     float:  'right',

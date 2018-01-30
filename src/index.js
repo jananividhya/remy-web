@@ -32,7 +32,7 @@ const paperStyle = {
     boxShadow: '0px 0px',
     border: '0px solid #D2D1D2',
     background: remyDress.background || '#FFFFFF',
-    backgroundImage: "url('background.png')",
+    backgroundImage: remyDress.backgroundImage || "url('background.png')",
 };
 
 const theme = createMuiTheme();

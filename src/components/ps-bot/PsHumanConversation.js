@@ -78,12 +78,13 @@ class PsHumanConversation extends Component {
         }
 
         const theme = (this.state.theme) ? this.state.theme : null;
-
+        const userAvatar = (this.props.user) ? (this.props.user.name ? this.props.user.name.charAt(0) : 'U') : 'U';
+        
         return (
             <div>
                 <Grid item xs={6} sm={6}>
                     {this.props.user.imageUrl &&<Avatar src={this.props.user.imageUrl} className={this.classes.avatar}></Avatar>}
-                    {!this.props.user.imageUrl &&<Avatar className={this.classes.avatar}>{this.props.user.name.charAt(0)}</Avatar>}
+                    {!this.props.user.imageUrl &&<Avatar className={this.classes.avatar}>{userAvatar}</Avatar>}
                 </Grid>
                 <Grid item xs={12} sm={12}>
                     <Paper className={[this.classes.paperHumanConversation, "slideInFromLeft"].join(" ")}

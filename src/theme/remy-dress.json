@@ -19,6 +19,7 @@
   "baseColor": "#443E79",
   "baseFontColor": "#212121",
   "background": "#FFFFFF",
+  "backgroundImage": "url('Background 2@10x.jpg')",
   "botConversationTheme": {
     "background": "#F3F0F0",
     "color": "#19191B"

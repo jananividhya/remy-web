@@ -20,7 +20,7 @@
   "baseFontColor": "#0D222F",
   "background": "#FFFFFF",
   "botConversationTheme": {
-    "background": "#F4F6F8",
+    "background": "#FAFDFF",
     "color": "#091720"
   },
   "humanConversationTheme": {

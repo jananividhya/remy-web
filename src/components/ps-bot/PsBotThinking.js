@@ -26,7 +26,7 @@ class PsBotThinking extends Component {
     }
 
     render() {
-        return ( <p><img src="Typing-color-transparent.gif" alt="thinking aloud.." className={this.classes.emojis} /></p> );
+        return ( <p><img src={this.props.thinkingImg} alt="thinking aloud.." className={this.classes.emojis} /></p> );
     }
 }
 

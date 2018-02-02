@@ -58,6 +58,7 @@ ReactDOM.render(
                                conversationStarter={cuiTheme.startText}
                                inputEnabled={cuiTheme.hideInput === 'true'}
                                baseFontColor={cuiTheme.baseFontColor}
+                               thinkingImg={cuiTheme.thinkingImg || 'thinking.gif'}
                         />
                     </Paper>
                 </DocumentTitle>

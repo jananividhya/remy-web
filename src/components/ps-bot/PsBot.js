@@ -113,7 +113,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
     responseSuggestionButton: {
         borderRadius: '60px',
-        marginBottom: '55px',
+        marginBottom: '10px',
         marginLeft: '4px',
         color: '#FFFFFF',
         boxShadow: '0 1px 0.5px rgba(0,0,0,0.13)',
@@ -556,6 +556,11 @@ class PsBot extends Component {
 
         if (event) event.preventDefault();
 
+        if (this.psBotQuiz) {
+            console.log('call turnTimerOff from quiz..', this.psBotQuiz);
+            this.psBotQuiz.turnTimerOff();
+        }
+
         this.setState({
             responseSuggestions: [],
             hideOptions: false,
@@ -687,14 +692,19 @@ class PsBot extends Component {
         }
 
         if (this.state.sendInputToServer) {
+            this.setState({
+                conversationText: '',
+            });
+
             fetch(request)
                 .then(HandleErrors).then((json) => {
 
             this.remyActivitySocket.addEventListener('message', (event) => {
                 if (event.data && JSON.parse(event.data).activities && JSON.parse(event.data).watermark) {
+                    console.log(JSON.parse(event.data));
                     if (this.watermark !== JSON.parse(event.data).watermark) {
                         this.watermark = JSON.parse(event.data).watermark;
-                        this.setConversationToView(JSON.parse(event.data).activities);    
+                        this.setConversationToView(JSON.parse(event.data).activities);
                     }
                 }
             });
@@ -815,6 +825,12 @@ class PsBot extends Component {
         this.setState({ menuOpen: false });
     };
 
+    updateInputState = (e) => {
+        this.setState({
+            conversationText: e.target.value
+        });
+    };
+
     render() {
 
         const value = this.state.commandSuggestionValue;
@@ -840,21 +856,19 @@ class PsBot extends Component {
 
         return (
             <div>
+                { this.props.navbarEnabled &&<PsBotNavbar
+                    user={this.state.user}
+                    action={this.pSBotButtonClick}
+                    theme={this.props.navbarTheme}
+                    logout={this.clearSession}
+                />}
                 <div className={this.classes.root} style={{
-                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 30
+                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 0
                 }}>
-                    {
-                    (this.state.loadWallpaper) ? (
-                        <PsBotWallpapers action={(loadUrl) => this.wallpaperClick(loadUrl)}/>
-                    ) : (
-                        <div>
-                    { this.props.navbarEnabled &&<PsBotNavbar marginTop={-30}
-                                marginLeft={-10}
-                                user={this.state.user}
-                                action={this.pSBotButtonClick}
-                                theme={this.props.navbarTheme}
-                                logout={this.clearSession}
-                         />}
+                    <div style={{
+                        minHeight: '700px',
+                        marginTop: '30px',
+                    }}>
                     <Grid container gutter={8} className={this.classes.conversationContainer}>
                         {
                             this.state.hideOptions ? (
@@ -998,7 +1012,8 @@ class PsBot extends Component {
                                                         !conversation.attachments ? (
                                                             (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (
                                                                 <PsBotQuizCard data={conversation.channelData.attachment.payload.quiz_card}
-                                                                                   action={this.pSBotButtonClick} />
+                                                                               ref={(ref) => {this.psBotQuiz = ref;} }
+                                                                               action={this.pSBotButtonClick} />
                                                             ) : ((this.props.typing) ? (
                                                                     <Typist cursor={{
                                                                         element: '',
@@ -1104,62 +1119,51 @@ class PsBot extends Component {
                                                 </Paper>
                                             )
                                         })}
-                                        {!this.props.inputEnabled &&<Grid item xs={12} sm={12} md={12} style={{
-                                            backgroundColor: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.background : this.props.baseColor,
-                                            color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
-                                            position: 'absolute',
-                                            marginLeft: '-3px',
-                                            top: this.props.containerHeight || '802px',
-                                            width: '100%'
-                                        }}>
-                                            <div className="Ps-Bot-Conversation-Input-Container">
-                                                {(this.state.listMenu && this.state.listMenu.length === 0) ?
-                                                    (<form onSubmit={this.sendConversationToBot} autoComplete="off">
-                                                        <Autosuggest
-                                                            autoFocus="on"
-                                                            suggestions={commandSuggestions}
-                                                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                                                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                                                            onSuggestionSelected={this.onSuggestionSelected}
-                                                            getSuggestionValue={this.getSuggestionValue}
-                                                            renderSuggestion={this.renderSuggestion}
-                                                            inputProps={inputProps}
-                                                        />
-                                                    </form>) : (
-                                                        <div className={this.classes.input}>
-                                                            <Button
-                                                                aria-owns={this.state.menuOpen ? 'simple-menu' : null}
-                                                                aria-haspopup="true"
-                                                                onClick={this.handleMenuClick}
-                                                            >
-                                                                {this.state.listMenuTitle || 'What would you like to know about?'}
-                                                            </Button>
-                                                            <Menu
-                                                                id="simple-menu"
-                                                                anchorEl={this.state.anchorEl}
-                                                                open={this.state.menuOpen}
-                                                                onRequestClose={this.handleMenuClose}
-                                                            >
-                                                                {
-                                                                    this.state.listMenu.map((menu, id) => {
-                                                                        return (
-                                                                            <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
-                                                                        )
-                                                                    })
-                                                                }
-                                                            </Menu>
-                                                        </div>
-                                                    )}
-                                            </div>
-                                        </Grid>}
                                     </Grid>
                                 ) : ''
                             }
                         </div>
-                    )
-                    }
-
                 </div>
+                {!this.props.inputEnabled &&<div style={{
+                    backgroundColor: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.background : this.props.baseColor,
+                    color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
+                    position: 'relative',
+                    bottom: '0',
+                    width: '100%',
+                }}>
+                    <div className="Ps-Bot-Conversation-Input-Container">
+                        {(this.state.listMenu && this.state.listMenu.length === 0) ?
+                            (<form onSubmit={this.sendConversationToBot} autoComplete="off">
+                                <input type="text" placeholder="Say Something..." className="remy-input"
+                                       onChange={this.updateInputState}
+                                       value={this.state.conversationText} />
+                            </form>) : (
+                                <div className={this.classes.input}>
+                                    <Button
+                                        aria-owns={this.state.menuOpen ? 'simple-menu' : null}
+                                        aria-haspopup="true"
+                                        onClick={this.handleMenuClick}
+                                    >
+                                        {this.state.listMenuTitle || 'What would you like to know about?'}
+                                    </Button>
+                                    <Menu
+                                        id="simple-menu"
+                                        anchorEl={this.state.anchorEl}
+                                        open={this.state.menuOpen}
+                                        onRequestClose={this.handleMenuClose}
+                                    >
+                                        {
+                                            this.state.listMenu.map((menu, id) => {
+                                                return (
+                                                    <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
+                                                )
+                                            })
+                                        }
+                                    </Menu>
+                                </div>
+                            )}
+                    </div>
+                </div>}
             </div>
         );
     }

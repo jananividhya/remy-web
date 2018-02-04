@@ -17,10 +17,45 @@
     bottom: 300px;
     width: 98%;
     z-index: 1000;
+::-webkit-input-placeholder {
+    text-align: center;
 }
 
-.Ps-Bot-Conversation-Input {
-    width: 100%;
+:-moz-placeholder { /* Firefox 18- */
+    text-align: center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    text-align: center;
+}
+
+:-ms-input-placeholder {
+    text-align: center;
+}
+}
+
+.remy-input {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    color: #565867;
+    background-color: #f4f7f9;
+    resize: none;
+    width: 99%;
+    height: 40px;
+    padding-left: 6px;
+    border-color: black;
+    font-size: 14px;
+}
+
+.remy-input:focus {
+    background-color: green;
+}
+
+@media (min-width: 1200px) {
+    .remy-input {
+        width: 100%;
+    }
 }
 
 .Ps-Bot-Conversation-Human {

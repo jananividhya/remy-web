@@ -102,7 +102,7 @@ const styleSheet = createStyleSheet('PsBotCard', theme => ({
  * @extends Component
  * @description pS Bot Card Response
  */
-class PsBotCard extends Component {
+class PsBotQuizCard extends Component {
 
     constructor(props) {
         super(props);
@@ -150,6 +150,11 @@ class PsBotCard extends Component {
         }
     };
 
+    turnTimerOff = () => {
+        console.log('Turn timer off called!');
+        this.refs.psBotTimer.turnOffTimer();
+    };
+
     render() {
 
         const quizTimer = (this.state.timer) ? (
@@ -160,7 +165,12 @@ class PsBotCard extends Component {
 
         return ( <div>
             {((this.state.title || this.state.subtitle || this.state.text) ?
-                <CardContent className={this.classes.leftAlignedText}>
+                <CardContent style={{
+                    float: 'left !important',
+                    textAlign: 'left !important',
+                    padding: '8px !important',
+                    marginTop: '8px',
+                }}>
                         {(this.state.images && this.state.images[0]) ? (
                             <CardMedia style={{
                                 paddingTop: 10,
@@ -176,27 +186,29 @@ class PsBotCard extends Component {
                                     }} />
                             </CardMedia>
                         ) : ''}
-                        {this.state.title &&<Typography type="headline" component="h2" className={this.classes.psTextColor}
+                        {this.state.title &&<Typography type="headline" component="h2"
                         style={{
                                             background: (this.props.theme) ? this.props.theme.background : '',
-                                            color: (this.props.theme) ? this.props.theme.color : '',
+                                            color: (this.props.theme) ? this.props.theme.color : '#212121',
                                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                                            float: 'left',
                                         }}
                         >
                             {this.state.title}
                             <span style={{
-                                marginLeft: 50
+                                marginRight: 50
                             }}>
                                 {quizTimer}
                             </span>
                         </Typography>}
-                        {this.state.subTitle &&<Typography type="subheading" component="p" className={this.classes.psTextColor}
+                        {this.state.subTitle &&<Typography type="subheading" component="p"
                         style={{
                                             background: (this.props.theme) ? this.props.theme.background : '',
-                                            color: (this.props.theme) ? this.props.theme.color : '',
+                                            color: (this.props.theme) ? this.props.theme.color : '#212121',
                                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                                            float: 'left',
                                         }}
                         >
                             {this.state.subTitle}
@@ -204,17 +216,20 @@ class PsBotCard extends Component {
                         {(this.state.text && Array.isArray(this.state.text)) ? (
                             this.state.text.map((textVal, key) => (
                                 <Typography component="p" key={key}
-                                            className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}
                                             style={{
                                             background: (this.props.theme) ? this.props.theme.background : '',
-                                            color: (this.props.theme) ? this.props.theme.color : '',
+                                            color: (this.props.theme) ? this.props.theme.color : '#212121',
                                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                                            marginTop: (!this.state.noButtonCard) ? 10 : 0,
+                                            marginBottom: (!this.state.noButtonCard) ? 10 : 0,
                                         }}
                                             >
                                     {(textVal.split('\n\n').length > 0) ? (
                                         textVal.split('\n\n').map((text, k) => (
-                                            <p key={k}>{text}</p>
+                                            <p key={k} style={{
+                                                float: 'left',
+                                            }}>{text}</p>
                                         ))
                                         ) : {textVal}
                                     }
@@ -222,25 +237,31 @@ class PsBotCard extends Component {
                             ))
                         ) : (
                             this.state.text &&<Typography component="p"
-                                        className={[this.classes.psTextColor, (this.state.noButtonCard) ? '' : this.classes.cardText].join(' ')}
                                         style={{
                                             background: (this.props.theme) ? this.props.theme.background : '',
                                             color: (this.props.theme) ? this.props.theme.color : '',
                                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                                            marginTop: (!this.state.noButtonCard) ? 10 : 0,
+                                            marginBottom: (!this.state.noButtonCard) ? 10 : 0,
                                         }}
                                         >
                                 {(this.state.text.split('\n\n').length > 0) ? (
                                     this.state.text.split('\n\n').map((text, k) => (
-                                        <p key={k}>{text}</p>
+                                        <p key={k} style={{
+                                            float: 'left',
+                                        }}>{text}</p>
                                     ))
                                 ) : this.state.text}
                             </Typography>
                         )}
                         {(this.state.choices) ? (
-                            <div className={this.classes.quiz} style={{
+                            <div style={{
                                 display: 'flex',
                                 flexWrap: 'wrap',
+                                textAlign: 'center',
+                                verticalAlign: 'middle',
+                                paddingRight: '10px',
                             }}>
                                 {this.state.choices.map((button, buttonId) => {
                                     return ((button.type === 'imBack') ?
@@ -250,7 +271,11 @@ class PsBotCard extends Component {
                                                 label={button.title}
                                             // eslint-disable-next-line
                                                 onClick={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}
-                                                className={[this.classes.chip, this.classes.buttonTopQuiz].join(' ')}
+                                                    style={{
+                                                        top: '6px',
+                                                        textAlign: 'center',
+                                                        marginRight: '5px',
+                                                    }}
                                         />)) : '')
                                 })}
                             </div>
@@ -260,8 +285,4 @@ class PsBotCard extends Component {
     }
 }
 
-PsBotCard.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styleSheet)(PsBotCard);
+export default PsBotQuizCard;

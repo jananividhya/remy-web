@@ -16,15 +16,16 @@
     "text": "pS Terms of Service",
     "link": "http://purpleslate.in"
   },
-  "baseColor": "#443E79",
-  "baseFontColor": "#212121",
+  "baseColor": "#97B44D",
+  "baseFontColor": "#0D222F",
   "background": "#FFFFFF",
   "botConversationTheme": {
-    "background": "#F3F0F0",
-    "color": "#19191B"
+    "background": "#FAFDFF",
+    "color": "#091720"
   },
   "humanConversationTheme": {
-    "background": "#60A5DA",
-    "color": "#F3F0F0"
-  }
+    "background": "#0AA4DC",
+    "color": "#F4F6F8"
+  },
+  "thinkingImg": "ezgif.com-crop.gif"
 }

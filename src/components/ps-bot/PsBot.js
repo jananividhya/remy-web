@@ -1092,7 +1092,7 @@ class PsBot extends Component {
                         })}
                     </Grid>
                     {this.state.showTyping &&<Grid item xs={12} sm={12} className={this.classes.psBotThinking}>
-                                            <PsBotThinking thinkingImg="thinking.gif" style={{
+                                            <PsBotThinking thinkingImg={this.props.thinkingImg} style={{
                                                             border: 'none',
                                                             background: 'transparent !important',
                                                         }} /> 

@@ -1101,7 +1101,9 @@ class PsBot extends Component {
                                             }
                             {
                                 this.getSessionDetails().id ? (
-                                    <Grid container className={this.classes.conversationInput}>
+                                    <Grid container className={this.classes.conversationInput} style={{
+                                        marginBottom: '35px',
+                                    }}>
                                         {responseSuggestions.map((suggestion, id) => {
                                             return (
                                                 <Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}

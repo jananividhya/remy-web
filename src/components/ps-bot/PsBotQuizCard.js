@@ -163,8 +163,8 @@ class PsBotQuizCard extends Component {
                         action={this.quizTimerOff}/>
         ) : '';
 
-        return ( <div>
-            {((this.state.title || this.state.subtitle || this.state.text) ?
+        return (
+            ((this.state.title || this.state.subtitle || this.state.text) ?
                 <CardContent style={{
                     float: 'left !important',
                     textAlign: 'left !important',
@@ -280,8 +280,8 @@ class PsBotQuizCard extends Component {
                                 })}
                             </div>
                         ) : ''}
-                </CardContent> : '')}
-        </div> );
+                </CardContent> : '')
+        );
     }
 }
 

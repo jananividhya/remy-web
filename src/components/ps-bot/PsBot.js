@@ -68,6 +68,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     conversationContainer: {
         marginTop: 60,
         marginBottom: 60,
+        paddingTop: 15,
     },
     paperBotConversation: {
         background: '#FFFFFF',
@@ -1125,11 +1126,11 @@ class PsBot extends Component {
                         </div>
                 </div>
                 {!this.props.inputEnabled &&<div style={{
-                    backgroundColor: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.background : this.props.baseColor,
                     color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
                     position: 'relative',
                     bottom: '0',
                     width: '100%',
+                    paddingTop: '25px',
                 }}>
                     <div className="Ps-Bot-Conversation-Input-Container">
                         {(this.state.listMenu && this.state.listMenu.length === 0) ?

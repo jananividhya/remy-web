@@ -2,27 +2,12 @@ import React from 'react';
 import Grid from 'material-ui/Grid';
 
 const botPaperClass = {
-    height: window.innerHeight - 30,
-    width: window.outerWidth,
-    marginTop: '-30px',
-    marginLeft: '-15px',
-    marginBottom: '-30px',
+    height: window.innerHeight - 15,
+    width: window.innerWidth,
 };
 
 const botPapers = {
     'MORNING': [
-        {
-            type: "image",
-            actionType: "",
-            action: {},
-            src: "botpapers/Wallpaper 1@3x.jpg"
-        },
-        {
-            type: "image",
-            actionType: "",
-            action: {},
-            src: "botpapers/Wallpaper 2@3x.jpg"
-        },
         {
             type: "image",
             actionType: "",
@@ -35,40 +20,10 @@ const botPapers = {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 4@3x.jpg"
-        },
-        {
-            type: "image",
-            actionType: "",
-            action: {},
-            src: "botpapers/Wallpaper 5@3x.jpg"
-        },
-        {
-            type: "image",
-            actionType: "",
-            action: {},
-            src: "botpapers/Wallpaper 6@3x.jpg"
-        },
-        {
-            type: "image",
-            actionType: "",
-            action: {},
             src: "botpapers/Wallpaper 7@3x.jpg"
         }
     ],
     'EVENING': [
-        {
-            type: "image",
-            actionType: "",
-            action: {},
-            src: "botpapers/Wallpaper 8@3x.jpg"
-        },
-        {
-            type: "image",
-            actionType: "",
-            action: {},
-            src: "botpapers/Wallpaper 9@3x.jpg"
-        },
         {
             type: "image",
             actionType: "",

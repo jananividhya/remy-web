@@ -37,19 +37,26 @@
 .remy-input {
     position: fixed;
     bottom: 20px;
-    left: 0;
     color: #565867;
-    background-color: #f4f7f9;
-    resize: none;
+    background-color: #A7A5A5;
+    resize: none; 
     width: 99%;
     height: 40px;
-    padding-left: 6px;
+    padding-left: 10px;
+    border: none;
     border-color: black;
     font-size: 14px;
+    opacity: 0.5;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    -webkit-box-shadow: 6px -6px 34px 1px rgba(167,165,165,0.68);
+-moz-box-shadow: 6px -6px 34px 1px rgba(167,165,165,0.68);
+box-shadow: 6px -6px 34px 1px rgba(167,165,165,0.68);
 }
 
 .remy-input:focus {
-    background-color: green;
+    opacity: 0.65;
 }
 
 @media (min-width: 1200px) {

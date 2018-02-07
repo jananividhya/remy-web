@@ -12,13 +12,16 @@ class PsMarkdown extends Component {
                     className="markdownStrong"
                     value={text}
                     markedOptions={{
-                    gfm: false,
+                    gfm: true,
                     tables: true,
                     breaks: false,
                     pedantic: false,
                     sanitize: true,
                     smartLists: true,
-                    smartypants: true
+                    smartypants: true,
+                    highlight: function (code) {
+                        return require('highlight.js').highlightAuto(code).value;
+                      }
                     }} />
         );
     }

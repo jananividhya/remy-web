@@ -120,14 +120,6 @@ class PsBotNavbar extends Component {
                 background: '#FFFFFF'
             }}>
                 <Toolbar>
-                    <IconButton className={this.classes.menuButton} color="inherit" aria-label="Menu">
-                        <TocIcon />
-                    </IconButton>
-                    <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
-                        <IconButton aria-label="Remy">
-                            <img src={botLogo} alt="Remy" className={this.classes.logo}/>
-                        </IconButton>
-                    </Typography>
                     <IconButton aria-label="User"
                                 className={classNames(this.state.open && this.classes.hide)}>
                         {
@@ -140,6 +132,11 @@ class PsBotNavbar extends Component {
                                 src={this.props.user.imageUrl} />) : (<AccountIcon/>)
                         }
                     </IconButton>
+                    <Typography type="title" color="inherit" className={this.classes.appbarFlex}>
+                        <IconButton aria-label="Remy">
+                            <img src={botLogo} alt="Remy" className={this.classes.logo}/>
+                        </IconButton>
+                    </Typography>
                     {
                         this.props.user.id &&<IconButton aria-label="Logout" onClick={() => this.psBotLogout()}>
                             <LogoutIcon />

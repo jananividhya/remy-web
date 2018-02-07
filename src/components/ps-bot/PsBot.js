@@ -1075,6 +1075,9 @@ class PsBot extends Component {
                                                     }
                                                 </div>
                                             </Paper>
+                                            {(this.state.conversations[id + 1] && this.state.conversations[id + 1].from.name !== 'fiercebadlands' && this.state.conversations[id + 1].from.name !== 'psbot-demo') &&(
+                                                <PsBotConversationTime time={conversation.timestamp} />
+                                            )}
                                             {(this.state.conversations.length === id + 1) ?
                                                 (<div>
                                                     <PsBotConversationTime time={conversation.timestamp} />

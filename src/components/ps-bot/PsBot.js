@@ -561,7 +561,6 @@ class PsBot extends Component {
         if (event) event.preventDefault();
 
         if (this.psBotQuiz) {
-            console.log('call turnTimerOff from quiz..', this.psBotQuiz);
             this.psBotQuiz.turnTimerOff();
         }
 
@@ -705,7 +704,6 @@ class PsBot extends Component {
 
             this.remyActivitySocket.addEventListener('message', (event) => {
                 if (event.data && JSON.parse(event.data).activities && JSON.parse(event.data).watermark) {
-                    console.log(JSON.parse(event.data));
                     if (this.watermark !== JSON.parse(event.data).watermark) {
                         this.watermark = JSON.parse(event.data).watermark;
                         this.setConversationToView(JSON.parse(event.data).activities);

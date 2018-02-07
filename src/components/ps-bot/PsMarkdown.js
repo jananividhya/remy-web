@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import MDReactComponent from 'markdown-react-js';
-import emoji from 'markdown-it-emoji';
+import { MarkdownPreview } from 'react-marked-markdown';
 
 class PsMarkdown extends Component {
     render() {
         const { text } = this.props;
         
         return (
-            <MDReactComponent text={text} plugins={[
-                emoji
-              ]} />
+            <MarkdownPreview
+                    value={text}
+                    markedOptions={{
+                    gfm: true,
+                    tables: true,
+                    breaks: false,
+                    pedantic: false,
+                    sanitize: true,
+                    smartLists: true,
+                    smartypants: false
+                    }} />
         );
     }
 }

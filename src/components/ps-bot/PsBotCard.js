@@ -7,6 +7,7 @@ import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Chip from 'material-ui/Chip';
+import PsMarkdown from './PsMarkdown';
 
 import isURL from 'validator/lib/isURL';
 
@@ -174,7 +175,7 @@ class PsBotCard extends Component {
                                 fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                                 fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                             }}>
-                                {textVal &&<span>{textVal}</span>}
+                                {textVal &&<PsMarkdown text={textVal} />}
                             </Typography>
                         ))
                     ) : (
@@ -185,7 +186,7 @@ class PsBotCard extends Component {
                             fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
                             fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
                         }}>
-                            <span>{this.state.text}</span>
+                            <PsMarkdown text={this.state.text} />
                         </Typography>
                     )}
                     {(!this.state.noButtonCard && this.state.buttons) ? (

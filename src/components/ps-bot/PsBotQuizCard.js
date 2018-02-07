@@ -151,7 +151,6 @@ class PsBotQuizCard extends Component {
     };
 
     turnTimerOff = () => {
-        console.log('Turn timer off called!');
         this.refs.psBotTimer.turnOffTimer();
     };
 

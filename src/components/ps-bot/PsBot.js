@@ -14,6 +14,9 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Avatar from 'material-ui/Avatar';
 import Autosuggest from 'react-autosuggest';
 
+import PsMarkdown from './PsMarkdown';
+import ReactEmoji from 'react-emoji';
+
 // Common imports
 import 'whatwg-fetch';
 // React Typist
@@ -1024,9 +1027,7 @@ class PsBot extends Component {
                                                                         {conversation.text}
                                                                     </Typist>
                                                                 ) : (
-                                                                    <p>
-                                                                        {conversation.text}
-                                                                    </p>
+                                                                    <PsMarkdown text={conversation.text} />
                                                                 )
                                                             )) :
                                                             ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
@@ -1071,7 +1072,7 @@ class PsBot extends Component {
                                                                                 ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                     <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                         <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
-                                                                                        : conversation.text)))))))
+                                                                                        : <PsMarkdown text={conversation.text} />)))))))
                                                     }
                                                 </div>
                                             </Paper>

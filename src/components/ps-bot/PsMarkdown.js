@@ -9,15 +9,16 @@ class PsMarkdown extends Component {
         
         return (
             <MarkdownPreview
+                    className="markdownStrong"
                     value={text}
                     markedOptions={{
-                    gfm: true,
+                    gfm: false,
                     tables: true,
                     breaks: false,
                     pedantic: false,
                     sanitize: true,
                     smartLists: true,
-                    smartypants: false
+                    smartypants: true
                     }} />
         );
     }

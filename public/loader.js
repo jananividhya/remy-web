@@ -29,9 +29,34 @@ for (const widget of remyWidget) {
             hideInput: widget.dataset.hideInput,
             startText: widget.dataset.startText,
             botDetails: {
-                name: widget.dataset.title,
-                description: widget.dataset.description,
-            }
+                name: widget.dataset.title || "Remy 👨‍🍳 ",
+                description: widget.dataset.description || "Some things you can ask me..",
+            },
+            title: "Remy 👨‍🍳 ",
+            navbar: {
+              appBar: {
+                background: "#FFFFFF"
+              },
+              logo: {
+                imageUrl: "psbot-logo.png"
+              }
+            },
+            termsOfService: {
+              text: "pS Terms of Service",
+              link: "http://purpleslate.in"
+            },
+            baseColor: "#97B44D",
+            baseFontColor: "#0D222F",
+            background: "#FFFFFF",
+            botConversationTheme: {
+              background: "#FAFDFF",
+              color: "#091720"
+            },
+            humanConversationTheme: {
+              background: "#0AA4DC",
+              color: "#F4F6F8"
+            },
+            thinkingImg: "ezgif.com-crop.gif"
         }, remy.theme);
     }
 }

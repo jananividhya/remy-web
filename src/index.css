@@ -8,7 +8,7 @@ body {
   overflow-x: hidden;
 }
 
-.powered-by-wrapper {
+.powered-by-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;

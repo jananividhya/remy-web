@@ -7,3 +7,26 @@ body {
   font-family: 'Lato', sans-serif;
   overflow-x: hidden;
 }
+
+.powered-by-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.powered-by-grid-one {
+  grid-column: 1;
+  grid-row: 1;
+}
+.powered-by-grid-two {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: center;
+}
+.powered-by-grid-three {
+  grid-column: 3;
+  grid-row: 1;
+}

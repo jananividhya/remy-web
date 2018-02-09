@@ -85,26 +85,14 @@ class PsBotAdWrapper extends Component {
                                 />
                             </Paper>
                         </DocumentTitle>
-                        {cuiTheme.termsOfService &&<div style={{
-                            paddingLeft: 9,
-                            float: 'left',
-                            position: 'fixed',
-                            bottom: '1px',
-                            marginTop: (window.parent.remy) ? (cuiTheme.hideHeader) ? ((cuiTheme.hideInput) ? 0 : 53) : (cuiTheme.hideInput) ? 0 : 53 : 0
-                        }}>
-                            <PsBotTermsOfService text={cuiTheme.termsOfService.text}
-                                                 link={cuiTheme.termsOfService.link} />
+                        <div className="powered-by-grid">
+                            <div className="powered-by-grid-one"></div>
+                            <div className="powered-by-grid-two">
+                                <PsBotPoweredBy />
+                            </div>
+                            <div className="powered-by-grid-three"></div>                            
                         </div>
-                        }
-                        <div style={{
-                            float: 'right',
-                            position: 'relative',
-                            left: '91%',
-                            bottom: '1px',
-                            marginTop: (window.parent.remy) ? (cuiTheme.hideHeader) ? ((cuiTheme.hideInput) ? 0 : 53) : (cuiTheme.hideInput) ? 0 : 53 : 0
-                        }}>
-                            <PsBotPoweredBy />
-                        </div>
+                        
                     </div>
                 )
         );

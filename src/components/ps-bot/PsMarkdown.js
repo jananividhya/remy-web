@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import emoji from 'node-emoji';
 import { MarkdownPreview } from 'react-marked-markdown';
 
 class PsMarkdown extends Component {
     render() {
-        const { text } = this.props;
+        let { text } = this.props;
+        text = emoji.emojify(text);
         
         return (
             <MarkdownPreview
@@ -15,8 +17,6 @@ class PsMarkdown extends Component {
                     gfm: true,
                     tables: true,
                     breaks: false,
-                    pedantic: false,
-                    sanitize: true,
                     smartLists: true,
                     smartypants: true,
                     highlight: function (code) {

@@ -12,10 +12,8 @@ import { TransitionMotion, spring } from 'react-motion';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Avatar from 'material-ui/Avatar';
-import Autosuggest from 'react-autosuggest';
 
 import PsMarkdown from './PsMarkdown';
-import ReactEmoji from 'react-emoji';
 
 // Common imports
 import 'whatwg-fetch';
@@ -39,7 +37,6 @@ import PsBotSignInCard from './PsBotSignInCard';
 import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import PsError from './PsErr';
-import PsBotWallpapers from './PsBotWallpapers';
 import PsBotGreeting from './PsBotGreeting';
 import PsBotFbSignInCard from './PsBotFbSignInCard';
 import PsBotFbLikeCard from './PsBotFbLikeCard';
@@ -837,12 +834,6 @@ class PsBot extends Component {
 
         const value = this.state.commandSuggestionValue;
         const commandSuggestions = this.state.commandSuggestions;
-
-        const inputProps = {
-            placeholder: (this.props.promptTheme) ? this.props.promptTheme.text : 'Say something..',
-            value,
-            onChange: this.onSuggestionChange
-        };
 
         let responseSuggestions = [];
 

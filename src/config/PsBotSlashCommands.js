@@ -137,7 +137,7 @@ const slashCommands = {
         "id": uuid.v4()
     }, {
         "type": "message",
-        "text": "Help me know you better.",
+        "text": "Help me know you better. :smile:",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

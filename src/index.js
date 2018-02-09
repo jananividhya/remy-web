@@ -16,10 +16,9 @@ import DocumentTitle from 'react-document-title';
 import PsBot from './components/ps-bot/PsBot';
 import PsBotWallpapers from './components/ps-bot/PsBotWallpapers';
 import PsBotPoweredBy from './components/ps-bot/PsBotPoweredBy';
-import PsBotTermsOfService from './components/ps-bot/PsBotTermsOfService';
 
 // Service Worker import for offline app
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 const cuiTheme = window.parent.remy ? window.parent.remy.theme : remyDress;
 

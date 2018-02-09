@@ -24,6 +24,7 @@ const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
         paddingRight: '10px',
         paddingLeft: '10px',
         position: 'relative',
+        marginBottom: '12px',
     },
     paperHumanCommand: {
         boxShadow: '0px 0px',

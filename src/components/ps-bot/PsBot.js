@@ -82,6 +82,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         paddingLeft: '10px',
         position: 'relative',
         maxWidth: '450px',
+        marginBottom: '12px',
     },
     psConversationButton: {
         margin: theme.spacing.unit,

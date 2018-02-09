@@ -58,7 +58,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10,
-        width: '98%',
+        overflowX: 'hidden',
     },
     conversationInput: {
         fontFamily: 'Lato, sans-serif',
@@ -856,13 +856,12 @@ class PsBot extends Component {
                     logout={this.clearSession}
                 />}
                 <div className={this.classes.root} style={{
-                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 0
+                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 0,
                 }}>
                     <div style={{
-                        minHeight: '700px',
                         marginTop: '30px',
                     }}>
-                    <Grid container gutter={8} className={this.classes.conversationContainer}>
+                    <Grid container gutter={0} className={this.classes.conversationContainer}>
                         {
                             this.state.hideOptions ? (
                                 <TransitionMotion defaultStyles={[
@@ -1094,7 +1093,7 @@ class PsBot extends Component {
                                             }
                             {
                                 this.getSessionDetails().id ? (
-                                    <Grid container className={this.classes.conversationInput} style={{
+                                    <Grid container gutter={0} className={this.classes.conversationInput} style={{
                                         marginBottom: '35px',
                                     }}>
                                         {responseSuggestions.map((suggestion, id) => {

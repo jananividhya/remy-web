@@ -1,5 +1,12 @@
 ### Remy Web
 
+#### Release notes v1.1.1
+
+- [x] :unicorn_face: Yayy! Emojis are supported in Remy. Here's the list of supported emojis.
+- [x] :scroll: No more horizontal scrolls in conversation container 
+- [x] :new: Powered By component aligned with CSS Grid
+- [x] :bug: Minor bug fixes
+
 #### Release notes v1.1.0
 
 - [x] :rocket: No more performance issues with input and rendering

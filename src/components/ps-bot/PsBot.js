@@ -468,6 +468,9 @@ class PsBot extends Component {
         if (node) {
             node.scrollIntoView({ behavior: "smooth" });
         }
+
+        // Focus on Conversation input every time the component updates.
+        this.conversationInput.focus();
     };
 
     /**
@@ -1140,6 +1143,7 @@ class PsBot extends Component {
                                         display: 'grid'
                                     }}>
                                         <input type="text" placeholder="Say Something..." className="remy-input"
+                                            ref={(conversationInput) => {this.conversationInput = conversationInput;}}
                                             onChange={this.updateInputState}
                                             value={this.state.conversationText} />
                                     </form>) : (

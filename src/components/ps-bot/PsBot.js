@@ -1069,9 +1069,7 @@ class PsBot extends Component {
                                                 <PsBotConversationTime time={conversation.timestamp} />
                                             )}
                                             {(this.state.conversations.length === id + 1) ?
-                                                (<div>
-                                                    <PsBotConversationTime time={conversation.timestamp} />
-                                                </div>) : ''}
+                                                (<PsBotConversationTime time={conversation.timestamp} />) : ''}
                                         </Grid>
                                     )
                                     :
@@ -1090,8 +1088,15 @@ class PsBot extends Component {
                                                             border: 'none',
                                                             background: 'transparent !important',
                                                         }} /> 
+                                            <div style={{   
+                                                float:  'right',
+                                                paddingLeft: '7px',
+                                                marginTop: '-47px'
+                                            }}>
+                                                <Avatar className={this.classes.avatar}>B</Avatar>
+                                            </div>
                                                         </Grid>
-                                            }
+                    }
                             {
                                 this.getSessionDetails().id ? (
                                     <Grid container gutter={0} className={this.classes.conversationInput} style={{

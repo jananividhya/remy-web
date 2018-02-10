@@ -78,38 +78,6 @@ class PsBotNavbar extends Component {
         this.props.logout();
     };
 
-    switchTheme = () => {
-        if (this.state.themeType === 'light') {
-            this.setState({
-                theme: {
-                    appBar: {
-                        background: '#766E6A'
-                    },
-                    logo: {
-                        imageUrl: 'arrow.png'
-                    }
-                },
-                themeType: 'dark'
-            }, () => {
-                console.info(`Appbar color used ${this.state.theme.appBar.background}`);
-            });
-        } else {
-            this.setState({
-                theme: {
-                    appBar: {
-                        background: '#FFFFFF'
-                    },
-                    logo: {
-                        imageUrl: 'psbot-logo.png'
-                    }
-                },
-                themeType: 'light'
-            }, () => {
-                console.info(`Appbar color used ${this.state.theme.appBar.background}`);
-            });
-        }
-    };
-
     render() {
 
         const botLogo = (this.state.theme.logo) ? this.state.theme.logo.imageUrl : 'arrow.png';

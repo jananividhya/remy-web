@@ -5,18 +5,12 @@ import React, {Component} from 'react';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
-import TocIcon from 'material-ui-icons/Toc';
 import AccountIcon from 'material-ui-icons/AccountCircle';
 import LogoutIcon from 'material-ui-icons/ExitToApp';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Drawer from 'material-ui/Drawer';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import classNames from 'classnames';
-import Divider from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
-import {TransitionMotion, spring} from 'react-motion';
 import Avatar from 'material-ui/Avatar';
 
 let styleSheet = createStyleSheet('PsBotNavbar', theme => ({
@@ -84,7 +78,8 @@ class PsBotNavbar extends Component {
 
         return (<div className={this.classes.root}>
             <AppBar position="static" style={{
-                background: '#FFFFFF'
+                background: '#FFFFFF',
+                boxShadow: 'none',
             }}>
                 <Toolbar>
                     <IconButton aria-label="User"

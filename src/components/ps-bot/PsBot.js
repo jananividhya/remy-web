@@ -1122,42 +1122,48 @@ class PsBot extends Component {
                 </div>
                 {!this.props.inputEnabled &&<div style={{
                     color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
-                    position: 'relative',
-                    bottom: '0',
+                    position: 'fixed',
+                    bottom: '20px',
                     width: '100%',
                     paddingTop: '25px',
                 }}>
-                    <div className="Ps-Bot-Conversation-Input-Container">
-                        {(this.state.listMenu && this.state.listMenu.length === 0) ?
-                            (<form onSubmit={this.sendConversationToBot} autoComplete="off">
-                                <input type="text" placeholder="Say Something..." className="remy-input"
-                                       onChange={this.updateInputState}
-                                       value={this.state.conversationText} />
-                            </form>) : (
-                                <div className={this.classes.input}>
-                                    <Button
-                                        aria-owns={this.state.menuOpen ? 'simple-menu' : null}
-                                        aria-haspopup="true"
-                                        onClick={this.handleMenuClick}
-                                    >
-                                        {this.state.listMenuTitle || 'What would you like to know about?'}
-                                    </Button>
-                                    <Menu
-                                        id="simple-menu"
-                                        anchorEl={this.state.anchorEl}
-                                        open={this.state.menuOpen}
-                                        onRequestClose={this.handleMenuClose}
-                                    >
-                                        {
-                                            this.state.listMenu.map((menu, id) => {
-                                                return (
-                                                    <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
-                                                )
-                                            })
-                                        }
-                                    </Menu>
-                                </div>
-                            )}
+                    <div className="remy-input-grid">
+                        <div className="remy-input-grid-one">
+                            <div className="Ps-Bot-Conversation-Input-Container">
+                                {(this.state.listMenu && this.state.listMenu.length === 0) ?
+                                    (<form onSubmit={this.sendConversationToBot} autoComplete="off" style={{
+                                        display: 'grid'
+                                    }}>
+                                        <input type="text" placeholder="Say Something..." className="remy-input"
+                                            onChange={this.updateInputState}
+                                            value={this.state.conversationText} />
+                                    </form>) : (
+                                        <div className={this.classes.input}>
+                                            <Button
+                                                aria-owns={this.state.menuOpen ? 'simple-menu' : null}
+                                                aria-haspopup="true"
+                                                onClick={this.handleMenuClick}
+                                            >
+                                                {this.state.listMenuTitle || 'What would you like to know about?'}
+                                            </Button>
+                                            <Menu
+                                                id="simple-menu"
+                                                anchorEl={this.state.anchorEl}
+                                                open={this.state.menuOpen}
+                                                onRequestClose={this.handleMenuClose}
+                                            >
+                                                {
+                                                    this.state.listMenu.map((menu, id) => {
+                                                        return (
+                                                            <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
+                                                        )
+                                                    })
+                                                }
+                                            </Menu>
+                                        </div>
+                                    )}
+                            </div>
+                        </div>
                     </div>
                 </div>}
             </div>

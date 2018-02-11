@@ -62,6 +62,7 @@
     "react-motion": "^0.5.0",
     "react-render-html": "^0.5.2",
     "react-slick": "^0.15.4",
+    "react-styleguidist": "^6.2.3",
     "react-tap-event-plugin": "^2.0.1",
     "react-typist": "^2.0.4",
     "slick-carousel": "^1.8.1",
@@ -78,7 +79,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "docs": "styleguidist server",
+    "docs:build": "styleguidist build"
   },
   "jest": {
     "collectCoverageFrom": [

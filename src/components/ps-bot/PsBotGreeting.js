@@ -18,11 +18,18 @@ const greeting = ({ userName }) => {
             break;
     }
 
-    return greetingText + ' ' + userName;
+    if (userName) {
+        return greetingText + ' ' + userName;
+    } else {
+        return greetingText;
+    }
+    
 };
 
-export default (props) => (
+const PsBotGreeting = (props) => (
     <span>
         {greeting(props)}
     </span>
-)
+);
+
+export default PsBotGreeting;

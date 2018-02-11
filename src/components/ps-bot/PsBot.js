@@ -67,7 +67,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
     conversationContainer: {
         marginTop: 60,
-        marginBottom: 60,
+        marginBottom: 20,
         paddingTop: 15,
     },
     paperBotConversation: {
@@ -104,7 +104,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         position: 'relative',
         maxWidth: '350px',
         boxShadow: '0px 0px',
-        marginTop: '-80px',
+        marginTop: '-30px',
     },
     conversationText: {
         marginTop: '-8px',
@@ -1103,7 +1103,7 @@ class PsBot extends Component {
                             {
                                 this.getSessionDetails().id ? (
                                     <Grid container gutter={0} className={this.classes.conversationInput} style={{
-                                        marginBottom: '35px',
+                                        marginBottom: '50px',
                                     }}>
                                         {responseSuggestions.map((suggestion, id) => {
                                             return (

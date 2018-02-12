@@ -55,17 +55,21 @@ export default class PsBotCard extends Component {
         return ( ((this.state.title || this.state.subtitle || this.state.text) ? (
         <CardContent 
                 style={{
-                    float: 'left !important',
-                    textAlign: 'left !important',
-                    padding: '0px 0px 8px 0px',
+                    padding: '8px 8px 8px 8px',
                 }}>
-                <div>
+                <div style={{
+                    float: 'left',
+                    textAlign: 'left',
+                }}>
                     {(this.state.images && this.state.images[0]) ? (
                             <CardMedia style={{
                                 paddingBottom: 10,
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
+                                marginLeft: '-8px',
+                                marginRight: '-8px',
+                                marginTop: '-8px',
                             }}>
                                 <img src={this.state.images[0].url} alt={this.state.title}
                                     style={{
@@ -78,17 +82,15 @@ export default class PsBotCard extends Component {
                         background: (this.props.theme) ? this.props.theme.background : '',
                         color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: 'Lato, sans-serif',
-                        fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
-                        paddingLeft: '10px',
+                        fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
                     }}>
                             <span>{this.state.title}</span>
                     </Typography>}
                     {this.state.subtitle &&<Typography type="subheading" component="h4" style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
                         color: (this.props.theme) ? this.props.theme.color : '',
-                        fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                        fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
-                        paddingLeft: '10px',
+                        fontFamily: 'Lato, sans-serif',
+                        fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
                     }}>
                         <span>{this.state.subtitle}</span>
                     </Typography>}
@@ -97,11 +99,10 @@ export default class PsBotCard extends Component {
                             <Typography component="p" key={key} style={{
                                 background: (this.props.theme) ? this.props.theme.background : '',
                                 color: (this.props.theme) ? this.props.theme.color : '',
-                                fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                                fontFamily: 'Lato, sans-serif',
+                                fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
                                 marginTop: !this.state.noButtonCard ? 10 : 0,
                                 marginBottom: !this.state.noButtonCard ? 10 : 0,
-                                paddingLeft: '10px',
                             }}>
                                 {textVal &&<PsMarkdown text={textVal} />}
                             </Typography>
@@ -110,11 +111,10 @@ export default class PsBotCard extends Component {
                         this.state.text &&<Typography component="p" style={{
                             background: (this.props.theme) ? this.props.theme.background : '',
                             color: (this.props.theme) ? this.props.theme.color : '',
-                            fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                            fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
+                            fontFamily: 'Lato, sans-serif',
+                            fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
                             marginTop: !this.state.noButtonCard ? 10 : 0,
                             marginBottom: !this.state.noButtonCard ? 10 : 0,
-                            paddingLeft: '10px',
                         }}>
                             <PsMarkdown text={this.state.text} />
                         </Typography>

@@ -329,6 +329,10 @@ module.exports = {
         from: 'public/loader.js',
         to: 'loader.js'
       },
+      {
+        from: 'stortbook-static',
+        to: 'docs'
+      },
     ]),
   ],
   // Some libraries import Node modules but don't use them in the browser.

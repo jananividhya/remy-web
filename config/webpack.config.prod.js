@@ -330,7 +330,7 @@ module.exports = {
         to: 'loader.js'
       },
       {
-        from: 'stortbook-static',
+        from: 'storybook-static',
         to: 'docs'
       },
     ]),

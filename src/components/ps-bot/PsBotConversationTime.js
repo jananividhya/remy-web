@@ -9,8 +9,8 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 const styleSheet = createStyleSheet('PsBotConversationTime', theme => ({
     psBotResponseTime: {
-        float: 'right !important',
-        textAlign: 'right !important',
+        float: 'left',
+        textAlign: 'left',
         overflow: 'hidden',
         clear: 'both',
         fontSize: '10px',

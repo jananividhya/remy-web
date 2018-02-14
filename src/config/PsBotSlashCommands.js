@@ -489,6 +489,72 @@ const slashCommands = {
         "id": uuid.v4()
     }, {
         "type": "message",
+        "text": "hi",
+        "from": {
+            "id": "default-user",
+            "name": "User",
+            "channelId": "webchat"
+        },
+        "address": {
+            channelId: 'PSClient',
+            user: { id: 'default-user', name: 'User' },
+        },
+        "channelId": "webchat",
+        "locale": "en-US",
+        'localTimestamp': Date.now(),
+        "textFormat": "plain",
+        "timestamp": new Date(),
+        "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+    }, {
+        "type": "message",
+        "id": "1234",
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "text": "abc",
+        "attachments": [
+            {
+            "contentType": "application/vnd.microsoft.card.hero",
+            "content": {
+                "title": "Question No : 4",
+                "subtitle": "Where was the first Railroad of India constructed?",
+                "text": "\nYour Answer : Hyderabad to Secunderabad\n\nCorrect Answer : Bombay to Thane\n\nObtained Score : -1\n\n",
+                "images": [
+                    {
+                        "url": "https://material-ui-next.com/static/images/cards/contemplative-reptile.jpg"
+                    }
+                ],
+                "buttons": [
+                    {
+                        "type": "openUrl",
+                        "title": "Answer A",
+                        "value": "Answer A"
+                    },
+                    {
+                        "type": "openUrl",
+                        "title": "Answer B",
+                        "value": "Answer B"
+                    },
+                    {
+                        "type": "openUrl",
+                        "title": "Answer C",
+                        "value": "Answer C"
+                    },
+                    {
+                        "type": "openUrl",
+                        "title": "Answer D",
+                        "value": "Answer D"
+                    }
+                ]
+            }
+        }]
+    }, {
+        "type": "message",
         "id": uuid.v4(),
         "timestamp": Date.now(),
         "localTimestamp": Date.now(),

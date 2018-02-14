@@ -16,10 +16,10 @@ const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {
         color: '#FFFFFF',
         border: '0px',
-        borderRadius: '0px 15px 15px 15px',
+        borderRadius: '15px 0px 15px 15px',
         fontSize: '14px',
-        float: 'left',
-        textAlign: 'left',
+        float: 'right',
+        textAlign: 'right',
         letterSpacing: '0px',
         paddingRight: '10px',
         paddingLeft: '10px',
@@ -31,8 +31,8 @@ const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
         border: '0px',
         borderRadius: '0px 15px 15px 15px',
         fontSize: '14px',
-        float: 'left',
-        textAlign: 'left',
+        float: 'right',
+        textAlign: 'right',
         letterSpacing: '0px',
         paddingRight: '10px',
         paddingLeft: '10px',
@@ -83,30 +83,29 @@ class PsHumanConversation extends Component {
         
         return (
             <div>
-                <Grid item xs={6} sm={6}>
+                <div style={{
+                    float:  'right',
+                    paddingLeft: '7px'
+                }}>
                     {this.props.user.imageUrl &&<Avatar src={this.props.user.imageUrl} className={this.classes.avatar}></Avatar>}
                     {!this.props.user.imageUrl &&<Avatar className={this.classes.avatar}>{userAvatar}</Avatar>}
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                    <Paper className={[this.classes.paperHumanConversation, "slideInFromLeft"].join(" ")}
-                            style={{
-                                backgroundColor: (theme) ? theme.background : 'rgba(150, 101, 171, 0.87)',
-                                color: (theme) ? theme.color : '#FFFFFF',
-                                fontSize: (theme) ? theme.fontSize : '14px',
-                                fontFamily: (theme) ? theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                transition: 'all 0.75s ease-in',
-                                marginTop: '-22px',
-                                marginLeft: '30px'
-                            }}
-                    >
-                        <div className={this.classes.conversationText}>
-                            <p>
-                                {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
-                                    : conversationText}
-                            </p>
-                        </div>
-                    </Paper>
-                </Grid>
+                </div>
+                <Paper className={[this.classes.paperHumanConversation, "slideInFromRight"].join(" ")}
+                        style={{
+                            backgroundColor: (theme) ? theme.background : 'rgba(150, 101, 171, 0.87)',
+                            color: (theme) ? theme.color : '#FFFFFF',
+                            fontSize: (theme) ? theme.fontSize : '14px',
+                            fontFamily: (theme) ? theme.fontFamily + ' !important' : 'Lato, sans-serif',
+                            transition: 'all 0.75s ease-in',
+                        }}
+                >
+                    <div className={this.classes.conversationText}>
+                        <p>
+                            {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
+                                : conversationText}
+                        </p>
+                    </div>
+                </Paper>
             </div>
         );
     }

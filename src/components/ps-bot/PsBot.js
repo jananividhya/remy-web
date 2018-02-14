@@ -74,10 +74,10 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         background: '#FFFFFF',
         color: '#212121',
         border: '0px',
-        borderRadius: '15px 0px 15px 15px',
+        borderRadius: '0px 15px 15px 15px',
         fontSize: '14px',
-        float: 'right',
-        textAlign: 'right',
+        float: 'left',
+        textAlign: 'left',
         paddingRight: '10px',
         paddingLeft: '10px',
         position: 'relative',
@@ -118,7 +118,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
         marginBottom: '10px',
         marginLeft: '4px',
         color: '#FFFFFF',
-        boxShadow: '0 1px 0.5px rgba(0,0,0,0.13)',
+        boxShadow: '0px 0px',
         fontFamily: 'Lato, sans-serif !important',
         cursor: 'pointer',
     },
@@ -982,20 +982,20 @@ class PsBot extends Component {
 
                             return ((conversation.from.name === 'fiercebadlands' || conversation.from.name === 'psbot-demo') ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
-                                            {(this.state.conversations[id - 1].from.name !== 'fiercebadlands' && this.state.conversations[id - 1].from.name !== 'psbot-demo') ? (<div style={{
-                                                float:  'right',
-                                                paddingLeft: '7px'
+                                            {(this.state.conversations[id - 1] && this.state.conversations[id - 1].from.name !== 'fiercebadlands' && this.state.conversations[id - 1].from.name !== 'psbot-demo') ? (<div style={{
+                                                float:  'left',
+                                                paddingRight: '7px'
                                             }}>
                                                 <Avatar className={this.classes.avatar}>B</Avatar>
                                             </div>) : (
                                                 <div style={{
-                                                    float:  'right',
-                                                    paddingLeft: '7px'
+                                                    float:  'left',
+                                                    paddingRight: '7px'
                                                 }}>
                                                     <Avatar className={this.classes.avatar}></Avatar>
                                                 </div>
                                             )}
-                                            <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : [botConversationClass, "slideInFromRight"].join(" ")}
+                                            <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : [botConversationClass, "slideInFromLeft"].join(" ")}
                                                    style={{
                                                        background: (conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? 'transparent' : 
                                                         ((this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background),
@@ -1039,7 +1039,7 @@ class PsBot extends Component {
                                                                     )
                                                                     : (
                                                                     <PsBotCard data={conversation.attachments[0].content}
-                                                                                   action={this.pSBotButtonClick} theme={this.props.botConversationTheme} />
+                                                                                   action={this.pSBotButtonClick} theme={this.props.botConversationTheme} baseColor={this.props.baseColor} />
                                                                 )
 
                                                             ) :
@@ -1077,10 +1077,12 @@ class PsBot extends Component {
                                     )
                                     :
                                     (
-                                            <PsHumanConversation key={id}
+                                        <Grid item xs={12} sm={12} key={id}>
+                                            <PsHumanConversation
                                                                  conversationText={conversation.text}
-                                                            user={this.state.user}
+                                                                 user={this.state.user}
                                                                  theme={this.props.humanConversationTheme} />
+                                        </Grid>
                                         )
 
                             )
@@ -1092,8 +1094,8 @@ class PsBot extends Component {
                                                             background: 'transparent !important',
                                                         }} /> 
                                             <div style={{   
-                                                float:  'right',
-                                                paddingLeft: '7px',
+                                                float:  'left',
+                                                paddingRight: '7px',
                                                 marginTop: '-47px'
                                             }}>
                                                 <Avatar className={this.classes.avatar}>B</Avatar>

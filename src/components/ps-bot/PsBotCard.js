@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 // Material UI imports
 import Card, {CardContent, CardMedia} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 import Chip from 'material-ui/Chip';
 import PsMarkdown from './PsMarkdown';
 
@@ -60,21 +61,21 @@ export default class PsBotCard extends Component {
                 <div style={{
                     float: 'left',
                     textAlign: 'left',
+                    maxWidth: '250px',
                 }}>
                     {(this.state.images && this.state.images[0]) ? (
                             <CardMedia style={{
-                                paddingBottom: 10,
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
-                                marginLeft: '-8px',
-                                marginRight: '-8px',
-                                marginTop: '-8px',
+                                marginLeft: '-18px',
+                                marginRight: '-18px',
                             }}>
                                 <img src={this.state.images[0].url} alt={this.state.title}
                                     style={{
                                         height: '150px', 
-                                        width: '100%'
+                                        width: '100%',
+                                        borderTopRightRadius: '15px',
                                     }} />
                             </CardMedia>
                         ) : ''}
@@ -83,6 +84,7 @@ export default class PsBotCard extends Component {
                         color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
+                        paddingTop: 10,
                     }}>
                             <span>{this.state.title}</span>
                     </Typography>}
@@ -120,22 +122,25 @@ export default class PsBotCard extends Component {
                         </Typography>
                     )}
                     {(!this.state.noButtonCard && this.state.buttons) ? (
-                        <div>
+                        <div style={{
+                            marginBottom: '10px',
+                        }}>
                             {this.state.buttons.map((button, buttonId) => {
-                            return (button.type === 'openUrl') ? (<Chip key={buttonId} label={button.title} 
-                                onClick={() => this.pSBotButtonClick(button)}
-                                style={{
-                                    wordWrap: 'break-word',
-                                    clear: 'both',
-                                    position: 'relative',
-                                    overflowY: 'scroll',
-                                    display: 'inline-block',
-                                    top: '6px',
-                                    textAlign: 'center',
-                                    marginRight: '5px',
-                                    paddingTop: '12px',
-                                    paddingLeft: '10px',
-                                }} />) : ''
+                            return (button.type === 'openUrl') ? (
+                                <Button size="small" 
+                                        key={buttonId}
+                                        onTouchTap={() => this.pSBotButtonClick(button)}
+                                        style={{
+                                            background: (this.props.baseColor) ? this.props.baseColor  : ((this.props.theme) ? this.props.theme.background : '#FFFFFF'),
+                                            color: this.props.theme ? this.props.theme.color : '#FFFFFF',
+                                            marginRight: '10px',
+                                            marginBottom: '10px',
+                                            boxShadow: '0px 0px',
+                                            fontFamily: 'Lato sans-serif',
+                                            borderRadius: '15px',
+                                        }}>
+                                    {button.title}
+                                </Button>) : ''
                         })}
                         </div>
                     ) : ''}

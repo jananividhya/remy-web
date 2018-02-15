@@ -2,10 +2,9 @@
 import React, {Component} from 'react';
 
 // Material UI imports
-import Card, {CardContent, CardMedia} from 'material-ui/Card';
+import {CardContent, CardMedia} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Chip from 'material-ui/Chip';
 import PsMarkdown from './PsMarkdown';
 
 import isURL from 'validator/lib/isURL';

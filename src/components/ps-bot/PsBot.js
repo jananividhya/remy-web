@@ -8,7 +8,6 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import { TransitionMotion, spring } from 'react-motion';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Avatar from 'material-ui/Avatar';
@@ -37,7 +36,6 @@ import PsBotSignInCard from './PsBotSignInCard';
 import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import PsError from './PsErr';
-import PsBotGreeting from './PsBotGreeting';
 import PsBotFbSignInCard from './PsBotFbSignInCard';
 import PsBotFbLikeCard from './PsBotFbLikeCard';
 import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
@@ -185,52 +183,6 @@ class PsBot extends Component {
     directLineBaseUrl = "https://directline.botframework.com/v3/directline";
     headers;
     remyActivitySocket;
-    getSuggestions = (value) => {
-        const inputValue = value.trim().toLowerCase();
-        const inputLength = inputValue.length;
-
-        return inputLength === 0 ? [] : this.commandSuggestions.filter(command =>
-                command.key.toLowerCase().slice(0, inputLength) === inputValue
-            );
-    };
-
-    // When suggestion is clicked, Autosuggest needs to populate the input
-    // based on the clicked suggestion. Teach Autosuggest how to calculate the
-    // input value for every given suggestion.
-    getSuggestionValue = suggestion => suggestion.value;
-
-    // Use your imagination to render suggestions.
-    renderSuggestion = suggestion => (
-        <div>
-            {suggestion.title}
-        </div>
-    );
-    /**
-     * @description Command suggestions
-     * @type {[*]}
-     */
-    commandSuggestions = [
-        {
-            key: '/hello',
-            title: 'Say Hello to purpleBot - /hello',
-            value: 'hello',
-        },
-        {
-            key: '/learn',
-            title: 'Learn with purpleBot - /learn',
-            value: 'learn',
-        },
-        {
-            key: '/aboutus',
-            title: 'About Us - /aboutus',
-            value: 'About us',
-        },
-        {
-            key: '/quit',
-            title: 'Talk to you later - /quit',
-            value: 'quit',
-        }
-    ];
 
     constructor(props) {
         super(props);
@@ -255,8 +207,6 @@ class PsBot extends Component {
             listMenuTitle: '',
             anchorEl: undefined,
             menuOpen: false,
-            commandSuggestionValue: '',
-            commandSuggestions: [],
             noButtonCard: false,
             loadWallpaper: !!this.props.botpaperEnabled,
             sendInputToServer: true,
@@ -424,35 +374,6 @@ class PsBot extends Component {
         this.refs.psBotNavbar.setUserIcon(userIcon);
     };
 
-    onSuggestionChange = (event, { newValue }) => {
-        this.setState({
-            commandSuggestionValue: newValue
-        });
-    };
-
-    // Autosuggest will call this function every time you need to update suggestions.
-    // You already implemented this logic above, so just use it.
-    onSuggestionsFetchRequested = ({ value }) => {
-        this.setState({
-            commandSuggestions: this.getSuggestions(value)
-        });
-    };
-
-    // Autosuggest will call this function every time you need to clear suggestions.
-    onSuggestionsClearRequested = () => {
-        this.setState({
-            commandSuggestions: []
-        });
-    };
-
-    onSuggestionSelected = (event, {suggestion}) => {
-        event.preventDefault();
-        this.setState({
-            commandSuggestionValue: ''
-        });
-        this.pSBotSuggestionResponseClick(suggestion);
-    };
-
     allowedImageTypes = [
         'image/png',
         'image/jpg',
@@ -553,10 +474,7 @@ class PsBot extends Component {
      */
     sendConversationToBot = (event, conversationText, isAutoResponse) => {
         if (conversationText instanceof Event || !conversationText) {
-            conversationText = this.state.commandSuggestionValue;
-            this.setState({
-                commandSuggestionValue: ''
-            });
+            conversationText = this.state.conversationText;
         }
 
 
@@ -570,6 +488,8 @@ class PsBot extends Component {
             responseSuggestions: [],
             hideOptions: false,
         });
+
+        console.log('conversationText ', conversationText, this.state.conversationText);
 
         const loggedDetails = this.getSessionDetails();
 
@@ -841,9 +761,6 @@ class PsBot extends Component {
     };
 
     render() {
-
-        const value = this.state.commandSuggestionValue;
-        const commandSuggestions = this.state.commandSuggestions;
 
         let responseSuggestions = [];
 

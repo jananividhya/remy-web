@@ -2,107 +2,20 @@
 import React, {Component} from 'react';
 
 // Material UI imports
-import Card, {CardContent, CardMedia} from 'material-ui/Card';
+import {CardContent, CardMedia} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-import PropTypes from 'prop-types';
-import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Chip from 'material-ui/Chip';
-
-import isURL from 'validator/lib/isURL';
-
+import Button from 'material-ui/Button';
+import PsMarkdown from './PsMarkdown';
 import PsBotTimer from './PsBotTimer';
 
-// Style Imports
-import './PsBotButton.css';
-
-const styleSheet = createStyleSheet('PsBotCard', theme => ({
-    buttonResponse: {
-        boxShadow: '0px 0px',
-        color: '#FFFFFF',
-        fontFamily: 'Lato, sans-serif !important',
-        minWidth: '120px',
-        borderRadius: '60px',
-        height: '10px',
-        background: 'rgba(150, 101, 171, 0.87)',
-    },
-    nextLine: {
-        wordWrap: 'break-word',
-        clear: 'both',
-        position: 'relative',
-        overflowY: 'scroll',
-        display: 'inline-block',
-    },
-    card: {
-        maxWidth: 345,
-    },
-    leftAlignedText: {
-        float: 'left !important',
-        textAlign: 'left !important',
-        padding: '8px !important',
-        marginTop: '8px',
-    },
-    psTextColor: {
-        fontFamily: 'Lato, sans-serif',
-        color: '#212121',
-    },
-    buttonTopQuiz: {
-        top: '6px',
-        textAlign: 'center',
-        marginRight: '5px',
-    },
-    buttonTop: {
-        right: '35px',
-        top: '6px',
-        textAlign: 'center',
-        marginRight: '5px',
-        paddingTop: '12px',
-    },
-    paperBotConversation: {
-        background: 'rgba(150, 101, 171, 0.87)',
-        color: '#FFFFFF',
-        boxShadow: '0px 0px',
-        border: '1px solid #D2D1D2',
-        borderRadius: '15px',
-        fontSize: '14px',
-        float: 'center',
-        textAlign: 'center',
-        cursor: 'pointer',
-        paddingRight: '10px',
-        paddingLeft: '10px',
-        position: 'relative',
-    },
-    avatar: {
-        margin: 10,
-        display: 'flex',
-        justifyContent: 'center',
-    },
-    bigAvatar: {
-        width: 60,
-        height: 60,
-    },
-    cardText: {
-        marginTop: 10,
-        marginBottom: 10,
-    },
-    chip: {
-
-    },
-    quiz: {
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        paddingRight: '10px',
-    },
-    quizTimer: {
-        marginLeft: '100px',
-    },
-}));
+import isURL from 'validator/lib/isURL';
 
 /**
  * @class PsBotCard
  * @extends Component
  * @description pS Bot Card Response
  */
-class PsBotQuizCard extends Component {
+export default class PsBotCard extends Component {
 
     constructor(props) {
         super(props);
@@ -162,126 +75,111 @@ class PsBotQuizCard extends Component {
                         action={this.quizTimerOff}/>
         ) : '';
 
-        return (
-            ((this.state.title || this.state.subtitle || this.state.text) ?
-                <CardContent style={{
-                    float: 'left !important',
-                    textAlign: 'left !important',
-                    padding: '8px !important',
-                    marginTop: '8px',
+        return ( ((this.state.title || this.state.subtitle || this.state.text) ? (
+        <CardContent 
+                style={{
+                    padding: '8px 8px 8px 8px',
                 }}>
-                        {(this.state.images && this.state.images[0]) ? (
+                <div style={{
+                    float: 'left',
+                    textAlign: 'left',
+                    maxWidth: '250px',
+                }}>
+                    {(this.state.images && this.state.images[0]) ? (
                             <CardMedia style={{
-                                paddingTop: 10,
-                                paddingBottom: 10
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                marginLeft: '-18px',
+                                marginRight: '-18px',
                             }}>
                                 <img src={this.state.images[0].url} alt={this.state.title}
                                     style={{
                                         height: '150px', 
-                                        width: '109%',
-                                        marginLeft: '-20px',
-                                        marginTop: '-15px',
-                                        borderTopLeftRadius: '15px',
+                                        width: '100%',
+                                        borderTopRightRadius: '15px',
                                     }} />
                             </CardMedia>
                         ) : ''}
-                        {this.state.title &&<Typography type="headline" component="h2"
-                        style={{
-                                            background: (this.props.theme) ? this.props.theme.background : '',
-                                            color: (this.props.theme) ? this.props.theme.color : '#212121',
-                                            fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                            fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
-                                            float: 'left',
-                                        }}
-                        >
-                            {this.state.title}
-                            <span style={{
-                                marginRight: 50
+                    {this.state.title &&<Typography type="headline" component="h2" style={{
+                        background: (this.props.theme) ? this.props.theme.background : '',
+                        color: (this.props.theme) ? this.props.theme.color : '',
+                        fontFamily: 'Lato, sans-serif',
+                        fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
+                        paddingTop: 10,
+                        paddingBottom: (this.state.subtitle) ? 0 : 10,
+                    }}>
+                            <span>{this.state.title}</span>
+                    </Typography>}
+                    {this.state.subtitle &&<Typography type="subheading" component="h4" style={{
+                        background: (this.props.theme) ? this.props.theme.background : '',
+                        color: (this.props.theme) ? this.props.theme.color : '',
+                        fontFamily: 'Lato, sans-serif',
+                        fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
+                        marginTop: '-10px',
+                    }}>
+                        <span>
+                            <PsMarkdown text={this.state.subtitle} />
+                        </span>
+                    </Typography>}
+                    {(this.state.text && Array.isArray(this.state.text)) ? (
+                        this.state.text.map((textVal, key) => (
+                            <Typography component="p" key={key} style={{
+                                background: (this.props.theme) ? this.props.theme.background : '',
+                                color: (this.props.theme) ? this.props.theme.color : '',
+                                fontFamily: 'Lato, sans-serif',
+                                fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
+                                marginTop: !this.state.noButtonCard ? 10 : 0,
+                                marginBottom: !this.state.noButtonCard ? 10 : 0,
+                            }}>
+                                {textVal &&<PsMarkdown text={textVal} />}
+                            </Typography>
+                        ))
+                    ) : (
+                        this.state.text &&<Typography component="p" style={{
+                            background: (this.props.theme) ? this.props.theme.background : '',
+                            color: (this.props.theme) ? this.props.theme.color : '',
+                            fontFamily: 'Lato, sans-serif',
+                            fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
+                            marginTop: !this.state.noButtonCard ? 10 : 0,
+                            marginBottom: !this.state.noButtonCard ? 10 : 0,
+                        }}>
+                            <PsMarkdown text={this.state.text} />
+                        </Typography>
+                    )}
+                    {(!this.state.noButtonCard && this.state.buttons) ? (
+                        <div style={{
+                            marginBottom: '10px',
+                        }}>
+                            {this.state.buttons.map((button, buttonId) => {
+                            return (button.type === 'imBack') ? (
+                                <Button size="small" 
+                                        key={buttonId}
+                                        // eslint-disable-next-line
+                                        onTouchTap={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}
+                                        style={{
+                                            background: (this.props.baseColor) ? this.props.baseColor  : ((this.props.theme) ? this.props.theme.background : '#FFFFFF'),
+                                            color: this.props.theme ? this.props.theme.color : '#FFFFFF',
+                                            marginRight: '10px',
+                                            marginBottom: '10px',
+                                            boxShadow: '0px 0px',
+                                            fontFamily: 'Lato sans-serif',
+                                            borderRadius: '15px',
+                                        }}>
+                                    {button.title}
+                                </Button>) : ''
+                        })}
+                        </div>
+                    ) : ''}
+                    {(this.state.timer) &&
+                            <div style={{
+                                paddingBottom: 10,
+                                float: 'right',
                             }}>
                                 {quizTimer}
-                            </span>
-                        </Typography>}
-                        {this.state.subTitle &&<Typography type="subheading" component="p"
-                        style={{
-                                            background: (this.props.theme) ? this.props.theme.background : '',
-                                            color: (this.props.theme) ? this.props.theme.color : '#212121',
-                                            fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                            fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
-                                            float: 'left',
-                                        }}
-                        >
-                            {this.state.subTitle}
-                        </Typography>}
-                        {(this.state.text && Array.isArray(this.state.text)) ? (
-                            this.state.text.map((textVal, key) => (
-                                <Typography component="p" key={key}
-                                            style={{
-                                            background: (this.props.theme) ? this.props.theme.background : '',
-                                            color: (this.props.theme) ? this.props.theme.color : '#212121',
-                                            fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                            fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
-                                            marginTop: (!this.state.noButtonCard) ? 10 : 0,
-                                            marginBottom: (!this.state.noButtonCard) ? 10 : 0,
-                                        }}
-                                            >
-                                    {(textVal.split('\n\n').length > 0) ? (
-                                        textVal.split('\n\n').map((text, k) => (
-                                            <p key={k} style={{
-                                                float: 'left',
-                                            }}>{text}</p>
-                                        ))
-                                        ) : {textVal}
-                                    }
-                                </Typography>
-                            ))
-                        ) : (
-                            this.state.text &&<Typography component="p"
-                                        style={{
-                                            background: (this.props.theme) ? this.props.theme.background : '',
-                                            color: (this.props.theme) ? this.props.theme.color : '',
-                                            fontFamily: (this.props.theme) ? this.props.theme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                            fontSize: (this.props.theme) ? this.props.theme.fontSize + ' !important' : '',
-                                            marginTop: (!this.state.noButtonCard) ? 10 : 0,
-                                            marginBottom: (!this.state.noButtonCard) ? 10 : 0,
-                                        }}
-                                        >
-                                {(this.state.text.split('\n\n').length > 0) ? (
-                                    this.state.text.split('\n\n').map((text, k) => (
-                                        <p key={k} style={{
-                                            float: 'left',
-                                        }}>{text}</p>
-                                    ))
-                                ) : this.state.text}
-                            </Typography>
-                        )}
-                        {(this.state.choices) ? (
-                            <div style={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                textAlign: 'center',
-                                verticalAlign: 'middle',
-                                paddingRight: '10px',
-                            }}>
-                                {this.state.choices.map((button, buttonId) => {
-                                    return ((button.type === 'imBack') ?
-                                        ((button.buttonImage) ? (
-                                            <img src={button.buttonImage} height="30px" width="100px" alt="" />
-                                        ) : (<Chip  key={buttonId}
-                                                label={button.title}
-                                            // eslint-disable-next-line
-                                                onClick={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}
-                                                    style={{
-                                                        top: '6px',
-                                                        textAlign: 'center',
-                                                        marginRight: '5px',
-                                                    }}
-                                        />)) : '')
-                                })}
                             </div>
-                        ) : ''}
-                </CardContent> : '')
-        );
+                        }
+                </div>
+            </CardContent>): ''));
     }
 }
-
-export default PsBotQuizCard;

@@ -767,6 +767,11 @@ class PsBot extends Component {
                             responseSuggestions: responseSuggestions,
                             showTyping: false,
                         }));
+                    } else {
+                        this.setState((prevState) => ({
+                            conversations: [...prevState.conversations, activity],
+                            showTyping: false,
+                        }));
                     }
                 } else {
                     this.setState((prevState) => ({

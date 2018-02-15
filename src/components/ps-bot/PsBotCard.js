@@ -93,8 +93,11 @@ export default class PsBotCard extends Component {
                         color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: 'Lato, sans-serif',
                         fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
+                        marginTop: '-10px',
                     }}>
-                        <span>{this.state.subtitle}</span>
+                        <span>
+                            <PsMarkdown text={this.state.subtitle} />
+                        </span>
                     </Typography>}
                     {(this.state.text && Array.isArray(this.state.text)) ? (
                         this.state.text.map((textVal, key) => (

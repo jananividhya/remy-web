@@ -49,7 +49,7 @@ class PsBotApps extends Component {
                                   { key: 'greeting', style: { marginTop: spring(10) }, data: {
                                     type: 'Command',
                                     title: 'Get Started',
-                                    value: 'greet me',
+                                    value: 'get started',
                                     display: true
                                   }},
                                   { key: 'apps', style: { marginTop: spring(10) }, data: {

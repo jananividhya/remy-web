@@ -22,11 +22,9 @@ class PsBotApps extends Component {
                 { key: 'greet-welcome', style: {marginTop: 0}},
                 { key: 'greet-what', style: {marginTop: 0}},
                 { key: 'sign-in', style: {marginTop: 0}},
-                { key: 'hello', style: {marginTop: 0}},
-                { key: 'learn', style: {marginTop: 0}},
+                { key: 'greeting', style: {marginTop: 0}},
+                { key: 'apps', style: {marginTop: 0}},
                 { key: 'about-us', style: {marginTop: 0}},
-                { key: 'our-philosophy', style: {marginTop: 0}},
-                { key: 'careers', style: {marginTop: 0}},
                 { key: 'quit', style: {marginTop: 0}}
             ]}
                               styles={[
@@ -47,6 +45,12 @@ class PsBotApps extends Component {
                                       title: 'Sign-in to ' + this.props.botDetails.botName,
                                       value: '/signin',
                                       display: !this.props.user.id
+                                  }},
+                                  { key: 'greeting', style: { marginTop: spring(10) }, data: {
+                                    type: 'Command',
+                                    title: 'Get Started',
+                                    value: 'greet me',
+                                    display: true
                                   }},
                                   { key: 'apps', style: { marginTop: spring(10) }, data: {
                                       type: 'Command',

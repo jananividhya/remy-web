@@ -44,6 +44,7 @@ import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
 import PsBotSliderArrowLeft from './slider/PsBotSliderArrowLeft';
 import PsBotSliderArrowRight from './slider/PsBotSliderArrowRight';
 import PsBotConversationTime from './PsBotConversationTime';
+import PsBotApps from './PsBotApps';
 
 import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords';
 import HandleErrors from '../../util/HandleErrors';
@@ -100,7 +101,7 @@ const styleSheet = createStyleSheet('PsBot', theme => ({
     },
     psBotThinking: {
         background: 'transparent',
-        float: 'right',
+        float: 'left',
         position: 'relative',
         maxWidth: '350px',
         boxShadow: '0px 0px',
@@ -868,112 +869,20 @@ class PsBot extends Component {
                     <Grid container gutter={0} className={this.classes.conversationContainer}>
                         {
                             this.state.hideOptions ? (
-                                <TransitionMotion defaultStyles={[
-                                    { key: 'greet-time', style: {marginTop: 0}},
-                                    { key: 'greet-welcome', style: {marginTop: 0}},
-                                    { key: 'greet-what', style: {marginTop: 0}},
-                                    { key: 'sign-in', style: {marginTop: 0}},
-                                    { key: 'hello', style: {marginTop: 0}},
-                                    { key: 'learn', style: {marginTop: 0}},
-                                    { key: 'about-us', style: {marginTop: 0}},
-                                    { key: 'our-philosophy', style: {marginTop: 0}},
-                                    { key: 'careers', style: {marginTop: 0}},
-                                    { key: 'quit', style: {marginTop: 0}}
-                                ]}
-                                                  styles={[
-                                                      { key: 'greet-time', style: { marginTop: spring(40) }, data: {
-                                                          type: 'Greet',
-                                                          title: "",
-                                                      }},
-                                                      { key: 'greet-welcome', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Greet',
-                                                          title: "I'm " + botName,
-                                                      }},
-                                                      { key: 'greet-what', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Greet',
-                                                          title: botDescription,
-                                                      }},
-                                                      { key: 'sign-in', style: { marginTop: spring(30) }, data: {
-                                                          type: 'Command',
-                                                          title: 'Sign-in to ' + botName,
-                                                          value: '/signin',
-                                                          display: !this.state.user.id
-                                                      }},
-                                                      { key: 'apps', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Command',
-                                                          title: 'Apps',
-                                                          value: 'apps',
-                                                          display: true
-                                                      }},
-                                                      { key: 'about-us', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Command',
-                                                          title: 'About us',
-                                                          value: 'About us',
-                                                          display: true
-                                                      }},
-                                                      { key: 'quit', style: { marginTop: spring(10) }, data: {
-                                                          type: 'Command',
-                                                          title: 'Talk to you later',
-                                                          value: 'quit',
-                                                          display: true
-                                                      }},
-                                                  ]}
-                                >
-                                    {(styles) => (
-                                        <div style={{
-                                            paddingLeft: '50%',
-                                            marginLeft: '-120px'
-                                        }}>
-                                            { styles.map(({ key, style, data}) => (
-                                                <div key={key} style={{
-                                                    textAlign: 'center',
-                                                    cursor: 'pointer',
-                                                    ...style
-                                                }}>
-                                                    { (data.type === 'Greet') ? (
-                                                        (key === 'greet-time') ? (
-                                                            <Paper className={this.classes.conversationGreeting} style={{
-                                                                color: (this.props.baseFontColor ? this.props.baseFontColor : 'purple') || 'purple'
-                                                            }}>
-                                                                <div className={this.classes.conversationText}>
-                                                                    <p>
-                                                                        <PsBotGreeting userName={this.state.user.name} />
-                                                                    </p>
-                                                                </div>
-                                                            </Paper>
-                                                        ) : (
-                                                            <Paper className={this.classes.conversationGreeting} style={{
-                                                                color: (this.props.baseFontColor ? this.props.baseFontColor : 'purple') || 'purple'
-                                                            }}>
-                                                                <div className={this.classes.conversationText}>
-                                                                    <p>
-                                                                        {data.title}
-                                                                    </p>
-                                                                </div>
-                                                            </Paper>
-                                                        )
-                                                    ) : (
-                                                    (data.display) ? (
-                                                        <Paper className={this.classes.conversationOptions}
-                                                               onClick={() => this.pSBotButtonClick(data.value)} 
-                                                               style={{
-                                                                   background: this.props.baseColor || 'rgba(150, 101, 171, 0.87)',
-                                                                   color: this.props.botConversationTheme ? this.props.botConversationTheme.background : '#FFFFFF'
-                                                               }}>
-                                                            <div className={this.classes.conversationText}>
-                                                                <p>
-                                                                    {data.title}
-                                                                </p>
-                                                            </div>
-                                                        </Paper>
-                                                    ) : ''
-                                                    )
-                                                    }
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </TransitionMotion>
+                                <PsBotApps  theme={{
+                                                botConversationTheme: this.props.botConversationTheme,
+                                                baseColor: this.props.baseColor,
+                                                baseFontColor: this.props.baseFontColor,
+                                            }}
+                                            botDetails={{
+                                                botName: botName,
+                                                botDescription: botDescription,
+                                            }}
+                                            user={{
+                                                id: this.state.user.id,
+                                                name: this.state.user.name
+                                            }}
+                                            action={this.pSBotButtonClick} />
                             ) : ('')
                         }
                         {this.state.conversations.map((conversation, id) => {

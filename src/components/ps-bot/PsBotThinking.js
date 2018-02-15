@@ -27,7 +27,7 @@ class PsBotThinking extends Component {
 
     render() {
         return ( <p style={{
-            marginRight: '30px',
+            marginLeft: '30px',
         }}><img src={this.props.thinkingImg} alt="thinking aloud.." className={this.classes.emojis} /></p> );
     }
 }

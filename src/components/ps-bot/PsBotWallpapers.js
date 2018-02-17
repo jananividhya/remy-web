@@ -12,19 +12,19 @@ const botPapers = {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 10@3x.jpg"
+            src: "botpapers/Welcome Screen 1.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 3@3x.jpg"
+            src: "botpapers/Welcome Screen 2.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 7@3x.jpg"
+            src: "botpapers/Welcome Screen 3.jpg"
         }
     ],
     'NOON': [
@@ -32,19 +32,19 @@ const botPapers = {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 10@3x.jpg"
+            src: "botpapers/Welcome Screen 2.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 3@3x.jpg"
+            src: "botpapers/Welcome Screen 3.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 7@3x.jpg"
+            src: "botpapers/Welcome Screen 4.jpg"
         }
     ],
     'EVENING': [
@@ -52,19 +52,19 @@ const botPapers = {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 10@3x.jpg"
+            src: "botpapers/Welcome Screen 1.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 3@3x.jpg"
+            src: "botpapers/Welcome Screen 2.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Wallpaper 7@3x.jpg"
+            src: "botpapers/Welcome Screen 3.jpg"
         }
     ]
 };

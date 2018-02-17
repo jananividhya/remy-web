@@ -1,8 +1,8 @@
 import React from 'react';
-import Grid from 'material-ui/Grid';
+import Slider from 'react-slick';
 
 const botPaperClass = {
-    height: window.innerHeight - 15,
+    height: window.innerHeight,
     width: window.innerWidth,
 };
 
@@ -12,10 +12,34 @@ const botPapers = {
             type: "image",
             actionType: "",
             action: {},
+            src: "botpapers/Wallpaper 10@3x.jpg"
+        },
+        {
+            type: "image",
+            actionType: "",
+            action: {},
             src: "botpapers/Wallpaper 3@3x.jpg"
+        },
+        {
+            type: "image",
+            actionType: "",
+            action: {},
+            src: "botpapers/Wallpaper 7@3x.jpg"
         }
     ],
     'NOON': [
+        {
+            type: "image",
+            actionType: "",
+            action: {},
+            src: "botpapers/Wallpaper 10@3x.jpg"
+        },
+        {
+            type: "image",
+            actionType: "",
+            action: {},
+            src: "botpapers/Wallpaper 3@3x.jpg"
+        },
         {
             type: "image",
             actionType: "",
@@ -29,6 +53,18 @@ const botPapers = {
             actionType: "",
             action: {},
             src: "botpapers/Wallpaper 10@3x.jpg"
+        },
+        {
+            type: "image",
+            actionType: "",
+            action: {},
+            src: "botpapers/Wallpaper 3@3x.jpg"
+        },
+        {
+            type: "image",
+            actionType: "",
+            action: {},
+            src: "botpapers/Wallpaper 7@3x.jpg"
         }
     ]
 };
@@ -41,20 +77,63 @@ const wallpaperClick = (props, type, index) => {
     }
 };
 
+const cardSliderOptions = {
+    dots: false,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: true,
+    speed: 1000,
+    fade: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+};
+
 const greeting = (props) => {
     const currentHour = new Date().getHours();
     let greetingText = 'Good Morning';
 
     switch (true) {
         case (currentHour >= 0 && currentHour < 12):
-            greetingText = <img src={botPapers['MORNING'][Math.floor(Math.random() * (botPapers['MORNING'].length - 1))].src} style={botPaperClass} alt="Bot Wallpaper" onClick={() => wallpaperClick(props, 'MORNING', Math.floor(Math.random() * (botPapers['MORNING'].length - 1)))} />;
+            greetingText = (
+                <Slider {...cardSliderOptions}>
+                {botPapers['MORNING'].map((botpaper, key) => {
+                    return (
+                        <div key={key}>
+                            <img src={botpaper.src} style={botPaperClass} alt="Bot Wallpaper" onClick={() => wallpaperClick(props, 'EVENING', key)} />
+                        </div>
+                    );
+                })}
+                </Slider>
+            );
             break;
         case (currentHour >= 12 && currentHour <= 15):
-            greetingText = <img src={botPapers['NOON'][Math.floor(Math.random() * (botPapers['NOON'].length - 1))].src} style={botPaperClass} alt="Bot Wallpaper"
-            onClick={() => wallpaperClick(props, 'NOON', Math.floor(Math.random() * (botPapers['NOON'].length - 1)))} />;
+            greetingText = (
+                <Slider {...cardSliderOptions}>
+                {botPapers['NOON'].map((botpaper, key) => {
+                    return (
+                        <div key={key}>
+                            <img src={botpaper.src} style={botPaperClass} alt="Bot Wallpaper" onClick={() => wallpaperClick(props, 'EVENING', key)} />
+                        </div>
+                    );
+                })}
+                </Slider>
+            );
             break;
         case (currentHour > 15 && currentHour <= 24):
-            greetingText = <img src={botPapers['EVENING'][Math.floor(Math.random() * (botPapers['EVENING'].length - 1))].src} style={botPaperClass} alt="Bot Wallpaper" onClick={() => wallpaperClick(props, 'EVENING', Math.floor(Math.random() * (botPapers['EVENING'].length - 1)))} />;
+            greetingText = (
+                <Slider {...cardSliderOptions}>
+                {botPapers['EVENING'].map((botpaper, key) => {
+                    return (
+                        <div key={key}>
+                            <img src={botpaper.src} style={botPaperClass} alt="Bot Wallpaper" onClick={() => wallpaperClick(props, 'EVENING', key)} />
+                        </div>
+                    );
+                })}
+                </Slider>
+                
+            );
             break;
         default:
             break;
@@ -64,9 +143,7 @@ const greeting = (props) => {
 };
 
 export default (props) => (
-    <Grid container gutter={8}>
-        <Grid item xs={12} sm={12}>
-            {greeting(props)}
-        </Grid>
-    </Grid>
+    <div>
+        {greeting(props)}
+    </div>
 );

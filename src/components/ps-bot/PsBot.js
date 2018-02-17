@@ -936,7 +936,7 @@ class PsBot extends Component {
                             {
                                 this.getSessionDetails().id ? (
                                     <Grid container gutter={0} className={this.classes.conversationInput} style={{
-                                        marginBottom: '50px',
+                                        marginBottom: '80px',
                                     }}>
                                         {responseSuggestions.map((suggestion, id) => {
                                             return (

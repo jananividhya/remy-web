@@ -72,7 +72,7 @@ export default class PsBotCard extends Component {
                             }}>
                                 <img src={this.state.images[0].url} alt={this.state.title}
                                     style={{
-                                        height: '150px', 
+                                        height: '180px', 
                                         width: '100%',
                                         borderTopRightRadius: '15px',
                                     }} />

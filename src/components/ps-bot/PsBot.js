@@ -495,13 +495,13 @@ class PsBot extends Component {
             "type": "message",
             "text": this.state.conversationText || conversationText,
             "from": {
-                "id": loggedDetails.id || "default-user",
-                "name": loggedDetails.name || "User",
+                "id": loggedDetails.id,
+                "name": loggedDetails.name,
                 "channelId": "webchat"
             },
             "address": {
                 channelId: 'PSClient',
-                user: { id: loggedDetails.id || 'default-user', name: loggedDetails.name || 'User' },
+                user: { id: loggedDetails.id, name: loggedDetails.name},
             },
             "channelId": "webchat",
             "locale": "en-US",

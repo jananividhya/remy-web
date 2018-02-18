@@ -16,7 +16,7 @@ class PsBotCardImage extends Component {
         return await imageDetails.blob();
     };
 
-    componentDidMount = async () => {
+    componentWillMount = async () => {
         if (this.props.fetchImage) {
             try {
                 const imageBlog = await this.getImageDetails();

@@ -489,8 +489,6 @@ class PsBot extends Component {
             hideOptions: false,
         });
 
-        console.log('conversationText ', conversationText, this.state.conversationText);
-
         const loggedDetails = this.getSessionDetails();
 
         let conversation = {
@@ -633,7 +631,7 @@ class PsBot extends Component {
                 }
             });
         }).catch((ex) => {
-            console.error('Parsing failed while sending conversation to bot ', JSON.stringify(ex));
+            console.error('Unable to connect to Remy Server ', JSON.stringify(ex));
             this.setState({
                 conversationId: this.state.conversationId,
                 conversationText: '',

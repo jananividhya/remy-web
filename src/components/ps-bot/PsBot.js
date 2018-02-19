@@ -378,6 +378,7 @@ class PsBot extends Component {
         'image/png',
         'image/jpg',
         'image/jpeg',
+        'image/gif',
     ];
 
     /**

@@ -18,7 +18,8 @@
   },
   "baseColor": "#97B44D",
   "baseFontColor": "#0D222F",
-  "background": "#FFFFFF",
+  "background": "#EAEEF2",
+  "backgroundImage": "#EAEEF2",
   "botConversationTheme": {
     "background": "#FAFDFF",
     "color": "#091720"

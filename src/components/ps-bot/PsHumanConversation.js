@@ -9,6 +9,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import './styles/remy-style-transitions.css';
 
 // App imports
+import PsMarkdown from './PsMarkdown';
 import SlashCommand from './PsSlashCommand';
 
 const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
@@ -99,10 +100,8 @@ class PsHumanConversation extends Component {
                         }}
                 >
                     <div className={this.classes.conversationText}>
-                        <p>
-                            {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
-                                : conversationText}
-                        </p>
+                        {(isSlashCommand) ? (<SlashCommand commandText={conversationText} />)
+                            : (<PsMarkdown text={conversationText} />)}
                     </div>
                 </Paper>
             </div>

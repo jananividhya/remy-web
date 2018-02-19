@@ -100,7 +100,7 @@ export default class PsBotCard extends Component {
                     </Typography>}
                     {(this.state.text && Array.isArray(this.state.text)) ? (
                         this.state.text.map((textVal, key) => (
-                            <Typography component="p" key={key} style={{
+                            <Typography component="div" key={key} style={{
                                 background: (this.props.theme) ? this.props.theme.background : '',
                                 color: (this.props.theme) ? this.props.theme.color : '',
                                 fontFamily: 'Lato, sans-serif',
@@ -141,7 +141,7 @@ export default class PsBotCard extends Component {
                                             fontFamily: 'Lato sans-serif',
                                             borderRadius: '15px',
                                         }}>
-                                    {button.title}
+                                    <PsMarkdown text={button.title} />
                                 </Button>) : ''
                         })}
                         </div>

@@ -702,24 +702,6 @@ class PsBot extends Component {
     };
 
     /**
-     * @method setConversation
-     * @methodOf PsBot#setConversation
-     * @description Sets the conversation state
-     * @param event
-     */
-    setConversation = (event) => {
-        this.setState({
-            conversationId: this.state.conversationId,
-            conversationText: event.target.value,
-            conversations: this.state.conversations,
-            conversationInputText: (this.props.promptTheme) ? this.props.promptTheme.text : 'Say Something..',
-            conversationHistory: this.state.conversationHistory,
-            responseSuggestions: this.state.responseSuggestions,
-            listMenu: this.state.listMenu,
-        });
-    };
-
-    /**
      * @method pSBotButtonClick
      * @methodOf PsBot#pSBotButtonClick
      * @description Sends the conversation to the bot based on the value of the button being clicked
@@ -727,16 +709,6 @@ class PsBot extends Component {
      */
     pSBotButtonClick = (buttonValue) => {
         this.sendConversationToBot(null, buttonValue, true);
-    };
-
-    wallpaperClick = (toLoad) => {
-        if (toLoad) {
-            window.open(toLoad);
-        }
-
-        this.setState({
-            loadWallpaper: false,
-        });
     };
 
     pSBotSuggestionResponseClick = (button) => {
@@ -948,9 +920,7 @@ class PsBot extends Component {
                                                                 fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
                                                             }}>
                                                     <div className={this.classes.conversationText}>
-                                                        <p>
-                                                            {suggestion.title}
-                                                        </p>
+                                                        <PsMarkdown text={suggestion.title} />
                                                     </div>
                                                 </Paper>
                                             )

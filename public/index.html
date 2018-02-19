@@ -6,11 +6,46 @@
     <meta name="theme-color" content="#000000">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/arrow.png">
+    <style>
+      @keyframes logoSpinner {
+        0% {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        60% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0.8);
+        }
+      }
+
+      .animated-logo {
+        animation: logoSpinner 2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-direction: alternate;
+      }
+
+      .text-align-center {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+      }
+    </style>
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="text-align-center">
+        <img
+                src="https://test-purpleslate.in/remy-web/psbot-logo.png"
+                class="animated-logo"
+        />
+      </div>
+    </div>
   </body>
 </html>

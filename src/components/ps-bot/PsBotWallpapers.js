@@ -25,9 +25,21 @@ const botPapers = {
             actionType: "",
             action: {},
             src: "botpapers/Welcome Screen 3.jpg"
+        },
+        {
+            type: "image",
+            actionType: "",
+            action: {},
+            src: "botpapers/Welcome Screen 4.jpg"
         }
     ],
     'NOON': [
+        {
+            type: "image",
+            actionType: "",
+            action: {},
+            src: "botpapers/Welcome Screen 1.jpg"
+        },
         {
             type: "image",
             actionType: "",
@@ -65,6 +77,12 @@ const botPapers = {
             actionType: "",
             action: {},
             src: "botpapers/Welcome Screen 3.jpg"
+        },
+        {
+            type: "image",
+            actionType: "",
+            action: {},
+            src: "botpapers/Welcome Screen 4.jpg"
         }
     ]
 };

@@ -37,7 +37,7 @@
     "markdown-it-emoji": "^1.4.0",
     "markdown-react-js": "^1.0.0",
     "marked": "^0.3.12",
-    "material-ui": "^1.0.0-alpha.21",
+    "material-ui": "1.0.0-alpha.21",
     "material-ui-icons": "^1.0.0-alpha.19",
     "metascraper": "^1.0.7",
     "node-emoji": "^1.8.1",

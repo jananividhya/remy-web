@@ -17,7 +17,8 @@ let styleSheet = createStyleSheet('PsBotNavbar', theme => ({
     root: {
         width: '100%',
         position: 'fixed',
-        zIndex: '100000'
+        zIndex: '100000',
+        top: 0,
     },
     appFrame: {
         display: 'flex',

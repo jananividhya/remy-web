@@ -25,6 +25,7 @@ const cuiTheme = window.parent.remy ? window.parent.remy.theme : remyDress;
 const paperStyle = {
     height: '100%',
     width: '100%',
+    bottom: '78px',
     marginTop: (window.parent.remy) ? ((cuiTheme.hideHeader) ? -50 : 0) : 0,
     marginLeft: 0,
     display: 'inline-block',

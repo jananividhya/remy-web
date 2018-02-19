@@ -754,7 +754,7 @@ class PsBot extends Component {
                     logout={this.clearSession}
                 />}
                 <div className={this.classes.root} style={{
-                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 0,
+                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 80,
                 }}>
                     <div style={{
                         marginTop: '30px',
@@ -907,9 +907,7 @@ class PsBot extends Component {
                     }
                             {
                                 this.getSessionDetails().id ? (
-                                    <Grid container gutter={0} className={this.classes.conversationInput} style={{
-                                        marginBottom: '80px',
-                                    }}>
+                                    <Grid container gutter={0} className={this.classes.conversationInput}>
                                         {responseSuggestions.map((suggestion, id) => {
                                             return (
                                                 <Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}

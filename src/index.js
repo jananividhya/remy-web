@@ -29,7 +29,7 @@ const paperStyle = {
     marginTop: (window.parent.remy) ? ((cuiTheme.hideHeader) ? -50 : 0) : 0,
     marginLeft: 0,
     display: 'inline-block',
-    overflow: 'scroll',
+    overflowY: 'scroll',
     boxShadow: '0px 0px',
     border: '0px solid #D2D1D2',
     background: remyDress.background || '#FFFFFF',

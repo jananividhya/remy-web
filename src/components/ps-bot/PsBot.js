@@ -445,24 +445,6 @@ class PsBot extends Component {
         });
     };
 
-    remyThinking = {
-        "type": "message",
-        "text": "Thinking...",
-        "from": {
-            "id": "ps-public-bot",
-            "name": "bot",
-            "channelId": "webchat"
-        },
-        "channelId": "webchat",
-        "locale": "en-US",
-        "textFormat": "plain",
-        "contentType": "typing",
-        "img": "thinking.gif",
-        "timestamp": new Date(),
-        "localTimestamp": Date.now(),
-        "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
-    };
-
     watermark = 0;
 
 
@@ -939,39 +921,21 @@ class PsBot extends Component {
                     <div className="remy-input-grid">
                         <div className="remy-input-grid-one">
                             <div className="Ps-Bot-Conversation-Input-Container">
-                                {(this.state.listMenu && this.state.listMenu.length === 0) ?
-                                    (<form onSubmit={this.sendConversationToBot} autoComplete="off" style={{
-                                        display: 'grid'
-                                    }}>
-                                        <input type="text" placeholder="Say Something..." className="remy-input"
-                                            ref={(conversationInput) => {this.conversationInput = conversationInput;}}
-                                            onChange={this.updateInputState}
-                                            value={this.state.conversationText} />
-                                    </form>) : (
-                                        <div className={this.classes.input}>
-                                            <Button
-                                                aria-owns={this.state.menuOpen ? 'simple-menu' : null}
-                                                aria-haspopup="true"
-                                                onClick={this.handleMenuClick}
-                                            >
-                                                {this.state.listMenuTitle || 'What would you like to know about?'}
-                                            </Button>
-                                            <Menu
-                                                id="simple-menu"
-                                                anchorEl={this.state.anchorEl}
-                                                open={this.state.menuOpen}
-                                                onRequestClose={this.handleMenuClose}
-                                            >
-                                                {
-                                                    this.state.listMenu.map((menu, id) => {
-                                                        return (
-                                                            <MenuItem onClick={() => this.pSBotSuggestionResponseClick(menu)} key={id}>{menu.title}</MenuItem>
-                                                        )
-                                                    })
-                                                }
-                                            </Menu>
-                                        </div>
-                                    )}
+                                <div style={{
+                                    float:  'left',
+                                    paddingLeft: '7px',
+                                    marginTop: '-30px',
+                                }}>
+                                    {this.state.user.imageUrl &&<Avatar src={this.state.user.imageUrl} className={this.classes.avatar}></Avatar>}
+                                </div>
+                                <form onSubmit={this.sendConversationToBot} autoComplete="off" style={{
+                                    display: 'grid'
+                                }}>
+                                    <input type="text" placeholder="Say Something..." className="remy-input"
+                                           ref={(conversationInput) => {this.conversationInput = conversationInput;}}
+                                           onChange={this.updateInputState}
+                                           value={this.state.conversationText} />
+                                </form>
                             </div>
                         </div>
                     </div>

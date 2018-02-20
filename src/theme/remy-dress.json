@@ -1,9 +1,7 @@
 {
   "title": "Remy 👨‍🍳 ",
   "navbar": {
-    "appBar": {
-      "background": "#FFFFFF"
-    },
+    "background": "#FFFFFF",
     "logo": {
       "imageUrl": "psbot-logo.png"
     }

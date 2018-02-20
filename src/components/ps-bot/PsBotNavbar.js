@@ -57,7 +57,6 @@ class PsBotNavbar extends Component {
         this.classes = props.classes;
         this.state = {
             open: false,
-            theme: props.theme,
             themeType: 'light',
         };
     }
@@ -75,11 +74,11 @@ class PsBotNavbar extends Component {
 
     render() {
 
-        const botLogo = (this.state.theme.logo) ? this.state.theme.logo.imageUrl : 'arrow.png';
+        const botLogo = (this.props.theme.logo) ? this.props.theme.logo.imageUrl : 'arrow.png';
 
         return (<div className={this.classes.root}>
             <AppBar position="static" style={{
-                background: '#FFFFFF',
+                background: (this.props.theme.background) ? this.props.theme.background : '#FFFFFF',
                 boxShadow: 'none',
             }}>
                 <Toolbar>

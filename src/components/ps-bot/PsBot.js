@@ -761,14 +761,16 @@ class PsBot extends Component {
                         {this.state.conversations.map((conversation, id) => {
 
                             const multipleCards = (conversation.attachments) ? conversation.attachments.length > 1 : false;
+                            const isFirstConv = this.state.conversations[id - 1] && this.state.conversations[id - 1].from.name !== 'fiercebadlands' && this.state.conversations[id - 1].from.name !== 'psbot-demo';
 
                             return ((conversation.from.name === 'fiercebadlands' || conversation.from.name === 'psbot-demo') ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
-                                            {(this.state.conversations[id - 1] && this.state.conversations[id - 1].from.name !== 'fiercebadlands' && this.state.conversations[id - 1].from.name !== 'psbot-demo') ? (<div style={{
+                                            {isFirstConv ? (<div style={{
                                                 float:  'left',
                                                 paddingRight: '7px'
                                             }}>
                                                 <Avatar className={this.classes.avatar}>B</Avatar>
+                                                    <div className="conversation-by"><span>{botName}</span></div>
                                             </div>) : (
                                                 <div style={{
                                                     float:  'left',
@@ -785,6 +787,8 @@ class PsBot extends Component {
                                                        fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
                                                        fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
                                                        maxWidth: (window.parent.remy) ? '250px' : '450px',
+                                                       marginTop: (isFirstConv) ? '10px' : '0px',
+                                                       marginLeft: (isFirstConv) ? '-30px' : '0px',
                                                    }}>
                                                 <div className={this.classes.conversationText}>
                                                     {

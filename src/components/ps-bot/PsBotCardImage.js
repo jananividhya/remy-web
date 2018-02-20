@@ -39,8 +39,7 @@ class PsBotCardImage extends Component {
             }}>
                 <img src={this.imageSrc} alt=""
                     style={{
-                        height: this.props.height || '240px', 
-                        width: this.props.width || '240px',
+                        width: this.props.width || '250px',
                         borderRadius: '10px 10px 10px 10px',
                         marginTop: '5px',
                         marginBottom: '5px',

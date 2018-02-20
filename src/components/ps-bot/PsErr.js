@@ -15,7 +15,7 @@ const PsErr = {
         "attachments": [
             {
                 "contentType": "image/png",
-                "contentUrl": "server-error.png",
+                "contentUrl": "https://m.popkey.co/93fb88/Z0e5O.gif",
                 "fetchImg": false
             }
         ]

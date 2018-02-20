@@ -786,7 +786,7 @@ class PsBot extends Component {
                                                        color: (this.props.botConversationTheme) ? this.props.botConversationTheme.color : botConversationClass.color,
                                                        fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
                                                        fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
-                                                       maxWidth: (window.parent.remy) ? '250px' : '450px',
+                                                       maxWidth: (window.parent.remy) ? '250px' : '270px',
                                                        marginTop: (isFirstConv) ? '10px' : '0px',
                                                        marginLeft: (isFirstConv) ? '-30px' : '0px',
                                                    }}>

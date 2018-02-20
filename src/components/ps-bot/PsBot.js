@@ -8,8 +8,6 @@ import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import Menu, { MenuItem } from 'material-ui/Menu';
 import Avatar from 'material-ui/Avatar';
 
 import PsMarkdown from './PsMarkdown';

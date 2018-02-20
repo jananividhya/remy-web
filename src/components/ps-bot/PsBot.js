@@ -734,7 +734,7 @@ class PsBot extends Component {
                     logout={this.clearSession}
                 />}
                 <div className={this.classes.root} style={{
-                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 80,
+                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 55,
                 }}>
                     <div style={{
                         marginTop: '30px',
@@ -912,27 +912,50 @@ class PsBot extends Component {
                 {!this.props.inputEnabled &&<div style={{
                     color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
                     position: 'fixed',
-                    bottom: '20px',
-                    width: '100%',
-                    paddingTop: '25px',
                 }}>
                     <div className="remy-input-grid">
-                        <div className="remy-input-grid-one">
+                        <div>
                             <div className="Ps-Bot-Conversation-Input-Container">
                                 <div style={{
                                     float:  'left',
                                     paddingLeft: '7px',
-                                    marginTop: '-30px',
+                                    marginTop: '-10px',
                                 }}>
                                     {this.state.user.imageUrl &&<Avatar src={this.state.user.imageUrl} className={this.classes.avatar}></Avatar>}
                                 </div>
                                 <form onSubmit={this.sendConversationToBot} autoComplete="off" style={{
                                     display: 'grid'
                                 }}>
-                                    <input type="text" placeholder="Say Something..." className="remy-input"
+                                    <input type="text" placeholder="Say Something..." className="remy-input remy-input-grid-one"
                                            ref={(conversationInput) => {this.conversationInput = conversationInput;}}
                                            onChange={this.updateInputState}
                                            value={this.state.conversationText} />
+                                    {this.state.conversationText.length > 0 &&<div style={{
+                                        float:  'right',
+                                        marginTop: '-20px',
+                                        paddingRight: '7px',
+                                        zIndex: 99999,
+                                    }} className="remy-input-grid-two">
+                                        <Paper
+                                            onClick={this.sendConversationToBot}
+                                            style={{
+                                                background: this.props.baseColor || 'rgba(150, 101, 171, 0.87)',
+                                                color: this.props.botConversationTheme ? this.props.botConversationTheme.background : '#FFFFFF',
+                                                boxShadow: '0px 0px',
+                                                border: '0px solid #D2D1D2',
+                                                borderRadius: '15px',
+                                                fontSize: '14px',
+                                                float: 'center',
+                                                letterSpacing: '0px',
+                                                paddingRight: '7px',
+                                                position: 'relative',
+                                                cursor: 'pointer',
+                                            }}>
+                                            <p>
+                                                Send
+                                            </p>
+                                        </Paper>
+                                    </div>}
                                 </form>
                             </div>
                         </div>

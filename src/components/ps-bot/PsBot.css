@@ -13,14 +13,28 @@
     to { transform: rotate(360deg); }
 }
 
+@keyframes sendButtonAnimation {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8);
+    }
+}
+
 .remy-input {
     position: fixed;
     width: 100%;
-    bottom: 35px;
+    bottom: 20px;
     color: #000000;
     resize: none; 
-    height: 40px;
-    padding-left: 40px;
+    height: 30px;
+    padding-left: 8px;
     font-family: Lato, sans-serif;
     border-color: lightgray;
     border-top-width: 1px;
@@ -57,12 +71,14 @@
   .remy-input-grid-one {
     grid-column: 1;
     grid-row: 1;
-    text-align: center;
+    text-align: left;
   }
   .remy-input-grid-two {
-    grid-column: 2;
+    grid-column: 100;
     grid-row: 1;
-    text-align: center;
+    text-align: right;
+    animation: sendButtonAnimation 2s;
+    animation-timing-function: linear;
   }
   .remy-input-grid-three {
     grid-column: 3;

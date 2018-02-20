@@ -931,7 +931,7 @@ class PsBot extends Component {
                                            ref={(conversationInput) => {this.conversationInput = conversationInput;}}
                                            onChange={this.updateInputState}
                                            value={this.state.conversationText} />
-                                    {this.state.conversationText.length > 0 &&<div style={{
+                                    {/*{this.state.conversationText.length > 0 &&<div style={{
                                         float:  'right',
                                         marginTop: '-20px',
                                         paddingRight: '7px',
@@ -956,7 +956,7 @@ class PsBot extends Component {
                                                 Send
                                             </p>
                                         </Paper>
-                                    </div>}
+                                    </div>}*/}
                                 </form>
                             </div>
                         </div>

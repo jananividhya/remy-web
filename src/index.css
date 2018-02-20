@@ -13,7 +13,7 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   position: fixed;
-  bottom: 5px;
+  bottom: 2px;
   width: 100%;
 }
 

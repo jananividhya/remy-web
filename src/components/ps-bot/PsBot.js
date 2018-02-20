@@ -734,7 +734,7 @@ class PsBot extends Component {
                     logout={this.clearSession}
                 />}
                 <div className={this.classes.root} style={{
-                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 0 : 55) : 55,
+                    marginTop: (window.parent.remy) ? (this.props.navbarEnabled ? 55 : 0) : 55,
                 }}>
                     <div style={{
                         marginTop: '30px',

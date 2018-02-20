@@ -920,6 +920,7 @@ class PsBot extends Component {
                                     float:  'left',
                                     paddingLeft: '7px',
                                     marginTop: '-10px',
+                                    paddingRight: '5px',
                                 }}>
                                     {this.state.user.imageUrl &&<Avatar src={this.state.user.imageUrl} className={this.classes.avatar}></Avatar>}
                                 </div>

@@ -29,7 +29,7 @@ for (const widget of remyWidget) {
             hideInput: widget.dataset.hideInput,
             startText: widget.dataset.startText,
             botDetails: {
-                name: widget.dataset.title || "Remy 👨‍🍳 ",
+                name: widget.dataset.title || "Remy",
                 description: widget.dataset.description || "Some things you can ask me..",
             },
             title: "Remy 👨‍🍳 ",

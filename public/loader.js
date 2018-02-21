@@ -43,7 +43,7 @@ for (const widget of remyWidget) {
             },
             termsOfService: {
               text: "pS Terms of Service",
-              link: "http://purpleslate.in"
+              link: "https://purpleslate.io"
             },
             baseColor: "#97B44D",
             baseFontColor: "#0D222F",

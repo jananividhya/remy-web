@@ -22,6 +22,11 @@
     "background": "#FAFDFF",
     "color": "#091720"
   },
+  "poweredBy": {
+    "fontSize": "13px",
+    "text": "purpleSlate",
+    "url": "https://purpleslate.io"
+  },
   "humanConversationTheme": {
     "background": "#0AA4DC",
     "color": "#F4F6F8"

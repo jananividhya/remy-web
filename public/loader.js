@@ -52,6 +52,11 @@ for (const widget of remyWidget) {
               background: "#FAFDFF",
               color: "#091720"
             },
+            "poweredBy": {
+              "fontSize": widget.dataset.poweredby.font || "13px",
+              "text": widget.dataset.poweredby.text || "purpleSlate",
+              "url": widget.dataset.poweredby.url || "https://purpleslate.io"
+            },
             humanConversationTheme: {
               background: "#0AA4DC",
               color: "#F4F6F8"

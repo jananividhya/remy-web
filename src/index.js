@@ -88,7 +88,7 @@ class PsBotAdWrapper extends Component {
                         <div className="powered-by-grid">
                             <div className="powered-by-grid-one"></div>
                             <div className="powered-by-grid-two">
-                                <PsBotPoweredBy url="https://purpleslate.io" />
+                                <PsBotPoweredBy {...cuiTheme.poweredBy} />
                             </div>
                             <div className="powered-by-grid-three"></div>                            
                         </div>

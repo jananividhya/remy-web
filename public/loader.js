@@ -4,13 +4,6 @@ let remy = {
 
 const remyWidget = document.getElementsByClassName('remy-widget');
 
-const allowedProperties = [
-    "hideHeader",
-    "hideBotpaper",
-    "hideInput",
-    "startText"
-];
-
 for (const widget of remyWidget) {
     if (widget.nodeName === 'remy'.toUpperCase()) {
         var paddingLeft = widget.attributes.paddingLeft ? widget.attributes.paddingLeft.nodeValue : 0;

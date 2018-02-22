@@ -16,6 +16,7 @@ for (const widget of remyWidget) {
                             "width='100%'"+
                             "frameborder=0></iframe></div>";
 
+
         remy.theme = Object.assign({
             hideHeader: widget.dataset.hideHeader,
             hideBotpaper: widget.dataset.hideBotpaper,
@@ -28,7 +29,7 @@ for (const widget of remyWidget) {
             title: widget.dataset.title || "Remy 👨‍🍳 ",
             navbar: {
               appBar: {
-                background: widget.dataset.navbarBackground || "#FFFFFF"
+                background: widget.dataset.navbarBackground || "#459BE3"
               },
               logo: {
                 imageUrl: widget.dataset.navbarLogo || "psCUI.png"
@@ -51,7 +52,7 @@ for (const widget of remyWidget) {
               "url": widget.dataset.poweredbyUrl || "https://purpleslate.io"
             },
             humanConversationTheme: {
-              background: widget.dataset.userbubbleBackground || "#0AA4DC",
+              background: widget.dataset.userbubbleBackground || "#41A6DB",
               color: widget.dataset.userbubbleColor || "#F4F6F8"
             },
             thinkingImg: widget.dataset.thinking || "ezgif.com-crop.gif"

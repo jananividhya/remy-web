@@ -32,36 +32,36 @@ for (const widget of remyWidget) {
                 name: widget.dataset.title || "Remy",
                 description: widget.dataset.description || "Some things you can ask me..",
             },
-            title: "Remy 👨‍🍳 ",
+            title: widget.dataset.title || "Remy 👨‍🍳 ",
             navbar: {
               appBar: {
-                background: "#FFFFFF"
+                background: widget.dataset.navbarBackground || "#FFFFFF"
               },
               logo: {
-                imageUrl: "psbot-logo.png"
+                imageUrl: widget.dataset.navbarLogo || "psCUI.png"
               }
             },
             termsOfService: {
-              text: "pS Terms of Service",
-              link: "https://purpleslate.io"
+              text: widget.dataset.termsText || "pS Terms of Service",
+              link: widget.dataset.termsUrl ||"https://purpleslate.io"
             },
-            baseColor: "#97B44D",
-            baseFontColor: "#0D222F",
-            background: "#FFFFFF",
+            baseColor: widget.dataset.basecolor || "#97B44D",
+            baseFontColor: widget.dataset.fontBasecolor || "#0D222F",
+            background: widget.dataset.background || "#FFFFFF",
             botConversationTheme: {
-              background: "#FAFDFF",
-              color: "#091720"
+              background: widget.dataset.botbubbleBackground || "#FAFDFF",
+              color: widget.dataset.botbubbleColor || "#091720"
             },
             "poweredBy": {
-              "fontSize": widget.dataset.poweredby.font || "13px",
-              "text": widget.dataset.poweredby.text || "purpleSlate",
-              "url": widget.dataset.poweredby.url || "https://purpleslate.io"
+              "fontSize": widget.dataset.poweredbyFont || "13px",
+              "text": widget.dataset.poweredbyText || "purpleSlate",
+              "url": widget.dataset.poweredbyUrl || "https://purpleslate.io"
             },
             humanConversationTheme: {
-              background: "#0AA4DC",
-              color: "#F4F6F8"
+              background: widget.dataset.userbubbleBackground || "#0AA4DC",
+              color: widget.dataset.userbubbleColor || "#F4F6F8"
             },
-            thinkingImg: "ezgif.com-crop.gif"
+            thinkingImg: widget.dataset.thinking || "ezgif.com-crop.gif"
         }, remy.theme);
     }
 }

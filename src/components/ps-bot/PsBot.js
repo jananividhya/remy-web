@@ -206,7 +206,6 @@ class PsBot extends Component {
             anchorEl: undefined,
             menuOpen: false,
             noButtonCard: false,
-            loadWallpaper: !!this.props.botpaperEnabled,
             sendInputToServer: true,
             user: {},
             hideOptions: false,
@@ -391,7 +390,7 @@ class PsBot extends Component {
         }
 
         // Focus on Conversation input every time the component updates.
-        this.conversationInput.focus();
+        //this.conversationInput.focus();
     };
 
     /**
@@ -920,14 +919,6 @@ class PsBot extends Component {
                     <div className="remy-input-grid">
                         <div>
                             <div className="Ps-Bot-Conversation-Input-Container">
-                                <div style={{
-                                    float:  'left',
-                                    paddingLeft: '7px',
-                                    marginTop: '-10px',
-                                    paddingRight: '5px',
-                                }}>
-                                    {this.state.user.imageUrl &&<Avatar src={this.state.user.imageUrl} className={this.classes.avatar}></Avatar>}
-                                </div>
                                 <form onSubmit={this.sendConversationToBot} autoComplete="off" style={{
                                     display: 'grid'
                                 }}>

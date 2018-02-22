@@ -45,7 +45,7 @@ class PsBotAdWrapper extends Component {
         super(props);
 
         this.state = {
-            showWallpaper: true
+            showWallpaper: cuiTheme.hideBotpaper !== 'true' ? true : false
         }
     }
 
@@ -70,7 +70,6 @@ class PsBotAdWrapper extends Component {
                                        accessSecret="eSuQ3mxu61Q.cwA.fxU.ShH6-q_lglxbBiXo6CniDfj-CBbBIEOEG-MkKgJzVWw"
                                        navbarTheme={cuiTheme.navbar}
                                        navbarEnabled={cuiTheme.hideHeader !== 'true'}
-                                       botpaperEnabled={cuiTheme.hideBotpaper !== 'true'}
                                        showGreeting={true}
                                        containerHeight={window.innerHeight - 80}
                                        botDetailsTheme={cuiTheme.botDetails}

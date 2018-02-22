@@ -12,7 +12,7 @@ class PsBotApps extends Component {
     }
 
     pSBotAppsButtonClick = (buttonValue) => {
-        this.props.action(buttonValue);
+        this.props.action(buttonValue, buttonValue);
     };
 
     render() {

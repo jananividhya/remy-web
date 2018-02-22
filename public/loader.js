@@ -43,7 +43,12 @@ for (const widget of remyWidget) {
             background: widget.dataset.background || "#FFFFFF",
             botConversationTheme: {
               background: widget.dataset.botbubbleBackground || "#FAFDFF",
-              color: widget.dataset.botbubbleColor || "#091720"
+              color: widget.dataset.botbubbleColor || "#091720",
+              card: {
+                title: {
+                    fontSize: widget.dataset.cardtitleFontsize || "20px"
+                }
+              }
             },
             "poweredBy": {
               "fontSize": widget.dataset.poweredbyFont || "13px",

@@ -65,7 +65,7 @@ class PsBotNavbar extends Component {
         const buttonValue = button;
 
         this.setState({open: false});
-        this.props.action(buttonValue);
+        this.props.action(buttonValue, buttonValue);
     };
 
     psBotLogout = () => {

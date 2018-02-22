@@ -47,7 +47,7 @@ export default class PsBotCard extends Component {
         if (this.isURL(buttonValue)) {
             window.open(buttonValue);
         } else {
-            this.props.action(buttonValue);
+            this.props.action(button.title, buttonValue);
         }
     };
 
@@ -78,16 +78,16 @@ export default class PsBotCard extends Component {
                                     }} />
                             </CardMedia>
                         ) : ''}
-                    {this.state.title &&<Typography type="headline" component="h2" style={{
-                        background: (this.props.theme) ? this.props.theme.background : '',
-                        color: (this.props.theme) ? this.props.theme.color : '',
+                    {this.state.title &&<Typography type="headline" component="h4" style={{
+                        background: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.background : '') : '',
+                        color: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.color : '') : '',
                         fontFamily: 'Lato, sans-serif',
-                        fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
+                        fontSize: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.fontSize : '20px') : '20px',
                         paddingTop: 10,
                     }}>
                             <span>{this.state.title}</span>
                     </Typography>}
-                    {this.state.subtitle &&<Typography type="subheading" component="h4" style={{
+                    {this.state.subtitle &&<Typography type="subheading" component="h5" style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
                         color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: 'Lato, sans-serif',

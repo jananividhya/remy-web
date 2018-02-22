@@ -20,7 +20,12 @@
   "backgroundImage": "#EAEEF2",
   "botConversationTheme": {
     "background": "#FAFDFF",
-    "color": "#091720"
+    "color": "#091720",
+    "card": {
+      "title": {
+        "fontSize": "20px"
+      }
+    }
   },
   "poweredBy": {
     "fontSize": "13px",

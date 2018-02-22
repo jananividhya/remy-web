@@ -247,7 +247,7 @@ class PsBot extends Component {
             hideOptions: false,
         });
         localStorage.clear();
-        this.sendConversationToBot(null, "/signin", true);
+        this.sendConversationToBot(null, null, "/signin", true);
     };
 
     onSignIn = (data) => {
@@ -421,7 +421,7 @@ class PsBot extends Component {
             this.remyActivitySocket = new WebSocket(this.state.activityStreamUrl);
 
             if (!this.getSessionDetails().id) {
-                this.sendConversationToBot(null, "/signin", true);
+                this.sendConversationToBot(null, null, "/signin", true);
             } else {
                 this.setState({
                     user: {
@@ -433,7 +433,7 @@ class PsBot extends Component {
                 });
 
                 if (this.props.conversationStarter) {
-                    this.sendConversationToBot(null, this.props.conversationStarter, true);    
+                    this.sendConversationToBot(null, null, this.props.conversationStarter, true);
                 }
             }
 
@@ -452,7 +452,7 @@ class PsBot extends Component {
      * @param {String} conversationText Conversation being sent to bot
      * @description Sends the user conversation to pS Bot
      */
-    sendConversationToBot = (event, conversationText, isAutoResponse) => {
+    sendConversationToBot = (event, conversationDisplayVal, conversationText, isAutoResponse) => {
         if (conversationText instanceof Event || !conversationText) {
             conversationText = this.state.conversationText;
         }
@@ -488,7 +488,8 @@ class PsBot extends Component {
             'localTimestamp': Date.now(),
             "textFormat": "plain",
             "timestamp": new Date(),
-            "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
+            "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9",
+            "displayVal": conversationDisplayVal || this.state.conversationText || conversationText
         };
 
         if (isAutoResponse) {
@@ -687,13 +688,13 @@ class PsBot extends Component {
      * @description Sends the conversation to the bot based on the value of the button being clicked
      * @param {Object} buttonValue Button Click Event
      */
-    pSBotButtonClick = (buttonValue) => {
-        this.sendConversationToBot(null, buttonValue, true);
+    pSBotButtonClick = (buttonDisplayText, buttonValue) => {
+        this.sendConversationToBot(null, buttonDisplayText, buttonValue, true);
     };
 
     pSBotSuggestionResponseClick = (button) => {
         const buttonValue = button.value;
-        this.pSBotButtonClick(buttonValue);
+        this.pSBotButtonClick(button.title, buttonValue);
     };
 
     handleMenuClick = (event) => {
@@ -805,7 +806,7 @@ class PsBot extends Component {
                                                                         {conversation.text}
                                                                     </Typist>
                                                                 ) : (
-                                                                    <PsMarkdown text={conversation.text} />
+                                                                    <PsMarkdown text={conversation.displayVal || conversation.text} />
                                                                 )
                                                             )) :
                                                             ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
@@ -850,7 +851,7 @@ class PsBot extends Component {
                                                                                 ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                     <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                         <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
-                                                                                        : <PsMarkdown text={conversation.text} />)))))))
+                                                                                        : <PsMarkdown text={conversation.displayVal || conversation.text} />)))))))
                                                     }
                                                 </div>
                                             </Paper>
@@ -865,7 +866,7 @@ class PsBot extends Component {
                                     (
                                         <Grid item xs={12} sm={12} key={id}>
                                             <PsHumanConversation
-                                                                 conversationText={conversation.text}
+                                                                 conversationText={conversation.displayVal || conversation.text}
                                                                  user={this.state.user}
                                                                  theme={this.props.humanConversationTheme} />
                                         </Grid>

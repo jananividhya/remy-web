@@ -1,7 +1,7 @@
 {
   "title": "Remy",
   "navbar": {
-    "background": "#459BE3",
+    "background": "#1C817F",
     "logo": {
       "imageUrl": "Arrow Color Bg@5x.png"
     }
@@ -14,27 +14,27 @@
     "text": "pS Terms of Service",
     "link": "https://purpleslate.io"
   },
-  "baseColor": "#97B44D",
-  "baseFontColor": "#0D222F",
-  "background": "#EAEEF2",
-  "backgroundImage": "#EAEEF2",
+  "baseColor": "#1A7CC8",
+  "baseFontColor": "#F1F2F4",
+  "background": "#FFFFFF",
+  "backgroundImage": "#FFFFFF",
   "botConversationTheme": {
-    "background": "#FAFDFF",
-    "color": "#091720",
+    "background": "#F1F2F4",
+    "color": "#1D1E1F",
     "card": {
       "title": {
-        "fontSize": "20px"
+        "fontSize": "18px"
       }
     }
   },
   "poweredBy": {
-    "fontSize": "13px",
+    "fontSize": "10px",
     "text": "purpleSlate",
     "url": "https://purpleslate.io"
   },
   "humanConversationTheme": {
-    "background": "#41A6DB",
-    "color": "#F4F6F8"
+    "background": "#10B4AB",
+    "color": "#F1F2F4"
   },
   "thinkingImg": "ezgif.com-crop.gif"
 }

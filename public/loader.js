@@ -32,7 +32,7 @@ for (const widget of remyWidget) {
                 background: widget.dataset.navbarBackground || "#459BE3"
               },
               logo: {
-                imageUrl: widget.dataset.navbarLogo || "psCUI.png"
+                imageUrl: widget.dataset.navbarLogo || "Arrow Color Bg@5x.png"
               }
             },
             termsOfService: {

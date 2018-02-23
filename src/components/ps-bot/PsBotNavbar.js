@@ -40,7 +40,7 @@ let styleSheet = createStyleSheet('PsBotNavbar', theme => ({
         textAlign: 'center',
     },
     logo: {
-        height: '42px',
+        height: '32px',
         fontSize: '42px',
     },
 }));
@@ -88,8 +88,9 @@ class PsBotNavbar extends Component {
                             this.props.user.id ? (<Avatar
                                 alt={this.props.user.name}
                                 style={{
-                                    width: 30,
-                                    height: 30,
+                                    width: 26,
+                                    height: 26,
+                                    border: '3px solid #FFFFFF',
                                 }}
                                 src={this.props.user.imageUrl} />) : (<AccountIcon/>)
                         }
@@ -101,7 +102,11 @@ class PsBotNavbar extends Component {
                     </Typography>
                     {
                         this.props.user.id &&<IconButton aria-label="Logout" onClick={() => this.psBotLogout()}>
-                            <LogoutIcon />
+                            <LogoutIcon style={{
+                                height: 30,
+                                width: 30,
+                                fill: '#FFFFFF',
+                            }} />
                         </IconButton>
                     }
                 </Toolbar>

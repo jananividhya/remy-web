@@ -453,8 +453,9 @@ class PsBot extends Component {
      * @description Sends the user conversation to pS Bot
      */
     sendConversationToBot = (event, conversationDisplayVal, conversationText, isAutoResponse) => {
-        if (conversationText instanceof Event || !conversationText) {
+        if (conversationDisplayVal instanceof Event || conversationText instanceof Event || !conversationText) {
             conversationText = this.state.conversationText;
+            conversationDisplayVal = this.state.conversationText;
         }
 
 

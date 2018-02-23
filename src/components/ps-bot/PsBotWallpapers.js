@@ -12,25 +12,25 @@ const botPapers = {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 1.jpg"
+            src: "botpapers/Screen 1@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 2.jpg"
+            src: "botpapers/Screen 2@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 3.jpg"
+            src: "botpapers/Screen 3@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 4.jpg"
+            src: "botpapers/Screen 4@10x.jpg"
         }
     ],
     'NOON': [
@@ -38,25 +38,25 @@ const botPapers = {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 1.jpg"
+            src: "botpapers/Screen 1@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 2.jpg"
+            src: "botpapers/Screen 2@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 3.jpg"
+            src: "botpapers/Screen 3@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 4.jpg"
+            src: "botpapers/Screen 4@10x.jpg"
         }
     ],
     'EVENING': [
@@ -64,25 +64,25 @@ const botPapers = {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 1.jpg"
+            src: "botpapers/Screen 1@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 2.jpg"
+            src: "botpapers/Screen 2@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 3.jpg"
+            src: "botpapers/Screen 3@10x.jpg"
         },
         {
             type: "image",
             actionType: "",
             action: {},
-            src: "botpapers/Welcome Screen 4.jpg"
+            src: "botpapers/Screen 4@10x.jpg"
         }
     ]
 };

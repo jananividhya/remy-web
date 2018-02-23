@@ -726,6 +726,8 @@ class PsBot extends Component {
         const botDescription = (this.props.botDetailsTheme) ? (this.props.botDetailsTheme.description || "Some things you can ask me..") : "Some things you can ask me..";
         const botConversationClass = this.classes.paperBotConversation;
 
+        console.log('Test');
+
         return (
             <div>
                 { this.props.navbarEnabled &&<PsBotNavbar

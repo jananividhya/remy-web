@@ -7,7 +7,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import { GoogleLogin } from 'react-google-login';
 
 // Style Imports
-import './PsBotButton.css';
+import '../ps-bot/PsBotButton.css';
 
 const styleSheet = createStyleSheet('PsBotGoogleSignInCard', theme => ({
     buttonResponse: {

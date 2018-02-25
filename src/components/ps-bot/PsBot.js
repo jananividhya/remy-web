@@ -10,7 +10,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 
-import PsMarkdown from './PsMarkdown';
+import PsMarkdown from '../markdown/PsMarkdown';
 
 // Common imports
 import 'whatwg-fetch';
@@ -21,26 +21,26 @@ import Slider from 'react-slick';
 // App imports
 import './PsBot.css';
 import './styles/remy-style-transitions.css';
-import PsBotNavbar from './PsBotNavbar';
-import PsBotThinking from './PsBotThinking';
-import PsHumanConversation from './PsHumanConversation';
-import PsBotCard from './PsBotCard';
-import PsBotCardImage from './PsBotCardImage';
+import PsBotNavbar from '../navbar/PsBotNavbar';
+import PsBotThinking from '../thinking/PsBotThinking';
+import PsHumanConversation from '../humanConversation/PsHumanConversation';
+import PsBotCard from '../cards/generic/PsBotCard';
+import PsBotCardImage from '../cards/image/PsBotCardImage';
 import AutoSuggestTheme from './AutoSuggestTheme.css'; // eslint-disable-line no-unused-vars
 import TypistTheme from './Typist.css'; // eslint-disable-line no-unused-vars
-import PsBotCodeCard from './PsBotCodeCard';
-import PsBotQuizCard from './PsBotQuizCard';
-import PsBotSignInCard from './PsBotSignInCard';
+import PsBotCodeCard from '../cards/code/PsBotCodeCard';
+import PsBotQuizCard from '../cards/app/quiz/PsBotQuizCard';
+import PsBotSignInCard from '../social/PsBotSignInCard';
 import PsBotCommandCard from './commands/PsBotCommandCard';
 import SlashCommands from '../../config/PsBotSlashCommands';
 import PsError from './PsErr';
-import PsBotFbSignInCard from './PsBotFbSignInCard';
-import PsBotFbLikeCard from './PsBotFbLikeCard';
-import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
+import PsBotFbSignInCard from '../social/PsBotFbSignInCard';
+import PsBotFbLikeCard from '../social/PsBotFbLikeCard';
+import PsBotGoogleSignInCard from '../social/PsBotGoogleSignInCard';
 import PsBotSliderArrowLeft from './slider/PsBotSliderArrowLeft';
 import PsBotSliderArrowRight from './slider/PsBotSliderArrowRight';
-import PsBotConversationTime from './PsBotConversationTime';
-import PsBotApps from './PsBotApps';
+import PsBotConversationTime from '../conversationTime/PsBotConversationTime';
+import PsBotApps from '../apps/PsBotApps';
 
 import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords';
 import HandleErrors from '../../util/HandleErrors';
@@ -607,6 +607,7 @@ class PsBot extends Component {
             this.remyActivitySocket.addEventListener('message', (event) => {
                 if (event.data && JSON.parse(event.data).activities && JSON.parse(event.data).watermark) {
                     if (this.watermark !== JSON.parse(event.data).watermark) {
+                        console.log(JSON.parse(event.data).activities);
                         this.watermark = JSON.parse(event.data).watermark;
                         this.setConversationToView(JSON.parse(event.data).activities);
                     }

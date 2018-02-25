@@ -5,7 +5,8 @@ import React, {Component} from 'react';
 import {CardContent, CardMedia} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import PsMarkdown from './PsMarkdown';
+import PsMarkdown from '../../../markdown/PsMarkdown';
+import PsBotTimer from '../../../timer/PsBotTimer';
 
 import isURL from 'validator/lib/isURL';
 
@@ -44,6 +45,10 @@ export default class PsBotCard extends Component {
     pSBotButtonClick = (button) => {
         const buttonValue = button.value;
 
+        if (this.refs.psBotTimer) {
+            this.refs.psBotTimer.turnOffTimer();
+        }
+
         if (this.isURL(buttonValue)) {
             window.open(buttonValue);
         } else {
@@ -51,7 +56,25 @@ export default class PsBotCard extends Component {
         }
     };
 
+    quizTimerOff = (timerResponse) => {
+        this.disableButtons = true;
+        if (timerResponse.timerAutoOff) {
+            this.props.action('Chosen Answer <Skip> ', timerResponse);
+        }
+    };
+
+    turnTimerOff = () => {
+        this.refs.psBotTimer.turnOffTimer();
+    };
+
     render() {
+
+        const quizTimer = (this.state.timer) ? (
+            <PsBotTimer ref="psBotTimer"
+                        options={{totalTime: this.state.timer}}
+                        action={this.quizTimerOff}/>
+        ) : '';
+
         return ( ((this.state.title || this.state.subtitle || this.state.text) ? (
         <CardContent 
                 style={{
@@ -72,22 +95,23 @@ export default class PsBotCard extends Component {
                             }}>
                                 <img src={this.state.images[0].url} alt={this.state.title}
                                     style={{
-                                        height: '180px', 
+                                        height: '150px', 
                                         width: '100%',
                                         borderTopRightRadius: '15px',
                                     }} />
                             </CardMedia>
                         ) : ''}
-                    {this.state.title &&<Typography type="headline" component="h4" style={{
-                        background: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.background : '') : '',
-                        color: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.color : '') : '',
+                    {this.state.title &&<Typography type="headline" component="h2" style={{
+                        background: (this.props.theme) ? this.props.theme.background : '',
+                        color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: 'Lato, sans-serif',
-                        fontSize: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.fontSize : '20px') : '20px',
+                        fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
                         paddingTop: 10,
+                        paddingBottom: (this.state.subtitle) ? 0 : 10,
                     }}>
                             <span>{this.state.title}</span>
                     </Typography>}
-                    {this.state.subtitle &&<Typography type="subheading" component="h5" style={{
+                    {this.state.subtitle &&<Typography type="subheading" component="h4" style={{
                         background: (this.props.theme) ? this.props.theme.background : '',
                         color: (this.props.theme) ? this.props.theme.color : '',
                         fontFamily: 'Lato, sans-serif',
@@ -100,7 +124,7 @@ export default class PsBotCard extends Component {
                     </Typography>}
                     {(this.state.text && Array.isArray(this.state.text)) ? (
                         this.state.text.map((textVal, key) => (
-                            <Typography component="div" key={key} style={{
+                            <Typography component="p" key={key} style={{
                                 background: (this.props.theme) ? this.props.theme.background : '',
                                 color: (this.props.theme) ? this.props.theme.color : '',
                                 fontFamily: 'Lato, sans-serif',
@@ -128,10 +152,11 @@ export default class PsBotCard extends Component {
                             marginBottom: '10px',
                         }}>
                             {this.state.buttons.map((button, buttonId) => {
-                            return (button.type === 'openUrl') ? (
+                            return (button.type === 'imBack') ? (
                                 <Button size="small" 
                                         key={buttonId}
-                                        onTouchTap={() => this.pSBotButtonClick(button)}
+                                        // eslint-disable-next-line
+                                        onTouchTap={() => {(!this.disableButtons) ? this.pSBotButtonClick(button) : ''}}
                                         style={{
                                             background: (this.props.baseColor) ? this.props.baseColor  : ((this.props.theme) ? this.props.theme.background : '#FFFFFF'),
                                             color: this.props.theme ? this.props.theme.color : '#FFFFFF',
@@ -141,11 +166,19 @@ export default class PsBotCard extends Component {
                                             fontFamily: 'Lato sans-serif',
                                             borderRadius: '15px',
                                         }}>
-                                    <PsMarkdown text={button.title} />
+                                    {button.title}
                                 </Button>) : ''
                         })}
                         </div>
                     ) : ''}
+                    {(this.state.timer) &&
+                            <div style={{
+                                paddingBottom: 10,
+                                float: 'right',
+                            }}>
+                                {quizTimer}
+                            </div>
+                        }
                 </div>
             </CardContent>): ''));
     }

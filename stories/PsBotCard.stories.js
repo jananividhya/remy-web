@@ -9,7 +9,7 @@ import { withInfo } from '@storybook/addon-info';
 import { Button, Welcome } from '@storybook/react/demo';
 import {MuiThemeProvider} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
-import PsBotCard from '../src/components/ps-bot/PsBotCard';
+import PsBotCard from '../src/components/cards/generic/PsBotCard';
 
 const cardAttachment = {
     "contentType": "application/vnd.microsoft.card.hero",

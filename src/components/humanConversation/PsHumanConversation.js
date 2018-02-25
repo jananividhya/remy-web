@@ -6,11 +6,11 @@ import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import './styles/remy-style-transitions.css';
+import '../ps-bot/styles/remy-style-transitions.css';
 
 // App imports
-import PsMarkdown from './PsMarkdown';
-import SlashCommand from './PsSlashCommand';
+import PsMarkdown from '../markdown/PsMarkdown';
+import SlashCommand from '../ps-bot/PsSlashCommand';
 
 const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {

@@ -14,8 +14,8 @@ import DocumentTitle from 'react-document-title';
 
 // App imports
 import PsBot from './components/ps-bot/PsBot';
-import PsBotWallpapers from './components/ps-bot/PsBotWallpapers';
-import PsBotPoweredBy from './components/ps-bot/PsBotPoweredBy';
+import PsBotWallpapers from './components/wallpaper/PsBotWallpapers';
+import PsBotPoweredBy from './components/poweredBy/PsBotPoweredBy';
 
 // Service Worker import for offline app
 // import registerServiceWorker from './registerServiceWorker';

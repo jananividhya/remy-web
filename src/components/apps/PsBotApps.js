@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import { TransitionMotion, spring } from 'react-motion';
 
-import PsBotGreeting from './PsBotGreeting';
+import PsBotGreeting from '../greeting/PsBotGreeting';
 
 class PsBotApps extends Component {
     constructor(props) {

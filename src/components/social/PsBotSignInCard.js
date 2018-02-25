@@ -7,13 +7,13 @@ import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 
-import PsBotTimer from './PsBotTimer';
+import PsBotTimer from '../timer/PsBotTimer';
 
 import PsBotFbSignInCard from './PsBotFbSignInCard';
 import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
 
 // Style Imports
-import './PsBotButton.css';
+import '../ps-bot/PsBotButton.css';
 
 const styleSheet = createStyleSheet('PsBotSignInCard', theme => ({
     buttonResponse: {

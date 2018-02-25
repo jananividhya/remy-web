@@ -4,12 +4,12 @@ import React, {Component} from 'react';
 // Material UI imports
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import FacebookProvider, { Like } from 'react-facebook';
+import FacebookProvider, { Login } from 'react-facebook';
 
 // Style Imports
-import './PsBotButton.css';
+import '../ps-bot/PsBotButton.css';
 
-const styleSheet = createStyleSheet('PsBotFbLikeCard', theme => ({
+const styleSheet = createStyleSheet('PsBotFbSignInCard', theme => ({
     buttonResponse: {
         boxShadow: '0px 0px',
         color: '#FFFFFF',
@@ -94,7 +94,7 @@ const styleSheet = createStyleSheet('PsBotFbLikeCard', theme => ({
  * @extends Component
  * @description pS Bot Card Response
  */
-class PsBotFbLikeCard extends Component {
+class PsBotFbSignInCard extends Component {
 
     constructor(props) {
         super(props);
@@ -103,17 +103,49 @@ class PsBotFbLikeCard extends Component {
         this.state = this.props.data;
     }
 
+    /**
+     * @method pSBotButtonClick
+     * @methodOf PsBotCard#pSBotButtonClick
+     * @description Sends the conversation to the bot based on the value of the button being clicked
+     * @param {Object} event Button Click Event
+     * @param {Object} button Button object passed from onClick
+     */
+    signInResponse = (data) => {
+        this.props.action({
+            status: 'success',
+            provider: 'facebook',
+            ...data
+        });
+    };
+
+    signInError = (err) => {
+        this.props.action({
+            status: 'error',
+            provider: 'facebook',
+            ...err
+        });
+    };
+
     render() {
         return ( <div>
             <FacebookProvider appId="1896270490692668">
-                <Like href="https://www.facebook.com/PurpleSlateLearning" colorScheme="light" showFaces share />
+                <Login
+                    onResponse={this.signInResponse}
+                    onError={this.signInError}
+                    render={({ isLoading, isWorking, onClick }) => (
+                        <img src="https://scontent-lga3-1.xx.fbcdn.net/v/t39.2365-6/18928641_251957295286418_4362086450741641216_n.png?oh=7868a8b2f5e36f0981472d9134828e5a&oe=5AC61F05"
+                         alt="Login with Facebook"
+                             height="30px"
+                             width="200px"
+                             onClick={onClick}/>
+                    )}/>
             </FacebookProvider>
         </div> );
     }
 }
 
-PsBotFbLikeCard.propTypes = {
+PsBotFbSignInCard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(PsBotFbLikeCard);
+export default withStyles(styleSheet)(PsBotFbSignInCard);

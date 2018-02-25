@@ -6,12 +6,12 @@ import {CardContent} from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Highlight from 'react-highlight';
-import '../../../node_modules/highlight.js/styles/vs.css';
+import '../../../../node_modules/highlight.js/styles/vs.css';
 
 import isURL from 'validator/lib/isURL';
 
 // Style Imports
-import './PsBotButton.css';
+import '../../ps-bot/PsBotButton.css';
 
 const styleSheet = createStyleSheet('PsBotCard', theme => ({
     buttonResponse: {

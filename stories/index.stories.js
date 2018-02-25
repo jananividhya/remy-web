@@ -7,7 +7,7 @@ import { withNotes } from '@storybook/addon-notes';
 import { withInfo } from '@storybook/addon-info';
 
 import { Button, Welcome } from '@storybook/react/demo';
-import PsBotGreeting from '../src/components/ps-bot/PsBotGreeting';
+import PsBotGreeting from '../src/components/greeting/PsBotGreeting';
 
 storiesOf('Remy Greeting', module)
   .add('with user name', withInfo(`

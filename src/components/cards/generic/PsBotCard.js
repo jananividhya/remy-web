@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 // Material UI imports
 import {CardContent, CardMedia} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 import PsMarkdown from '../../markdown/PsMarkdown';
 
 import isURL from 'validator/lib/isURL';
@@ -129,20 +129,33 @@ export default class PsBotCard extends Component {
                         }}>
                             {this.state.buttons.map((button, buttonId) => {
                             return (button.type === 'openUrl') ? (
-                                <Button size="small" 
-                                        key={buttonId}
-                                        onTouchTap={() => this.pSBotButtonClick(button)}
-                                        style={{
-                                            background: (this.props.baseColor) ? this.props.baseColor  : ((this.props.theme) ? this.props.theme.background : '#FFFFFF'),
-                                            color: this.props.theme ? this.props.theme.color : '#FFFFFF',
-                                            marginRight: '10px',
-                                            marginBottom: '10px',
-                                            boxShadow: '0px 0px',
-                                            fontFamily: 'Lato sans-serif',
-                                            borderRadius: '15px',
-                                        }}>
-                                    <PsMarkdown text={button.title} />
-                                </Button>) : ''
+                                <Paper key={buttonId}
+                                       onTouchTap={() => this.pSBotButtonClick(button)}
+                                       style={{
+                                           border: '0px',
+                                           float: 'left',
+                                           textAlign: 'left',
+                                           paddingRight: '10px',
+                                           paddingLeft: '10px',
+                                           position: 'relative',
+                                           maxWidth: '450px',
+                                           borderRadius: '60px',
+                                           marginBottom: '15px',
+                                           marginRight: '4px',
+                                           boxShadow: '0px 0px',
+                                           cursor: 'pointer',
+                                           background: (this.props.baseColor) ? this.props.baseColor  : ((this.props.theme) ? this.props.theme.background : '#FFFFFF'),
+                                           color: this.props.theme ? this.props.theme.background : '#FFFFFF',
+                                           fontFamily: (this.props.theme) ? this.props.theme.fontFamily : 'Lato, sans-serif',
+                                           fontSize: (this.props.theme) ? this.props.theme.fontSize : '12px',
+                                       }}>
+                                    <div style={{
+                                        marginTop: '-8px',
+                                        marginBottom: '-8px',
+                                    }}>
+                                        <PsMarkdown text={button.title} />
+                                    </div>
+                                </Paper>) : ''
                         })}
                         </div>
                     ) : ''}

@@ -607,7 +607,6 @@ class PsBot extends Component {
             this.remyActivitySocket.addEventListener('message', (event) => {
                 if (event.data && JSON.parse(event.data).activities && JSON.parse(event.data).watermark) {
                     if (this.watermark !== JSON.parse(event.data).watermark) {
-                        console.log(JSON.parse(event.data).activities);
                         this.watermark = JSON.parse(event.data).watermark;
                         this.setConversationToView(JSON.parse(event.data).activities);
                     }
@@ -771,7 +770,8 @@ class PsBot extends Component {
                                                 float:  'left',
                                                 paddingRight: '7px'
                                             }}>
-                                                <Avatar className={this.classes.avatar}>B</Avatar>
+                                                    {this.props.navbarTheme.logo &&<Avatar src={this.props.navbarTheme.logo.imageUrl} className={this.classes.avatar} />}
+                                                    {!this.props.navbarTheme.logo &&<Avatar className={this.classes.avatar}>R</Avatar>}
                                                     <div className="conversation-by"><span>{botName}</span></div>
                                             </div>) : (
                                                 <div style={{
@@ -887,7 +887,8 @@ class PsBot extends Component {
                                                 paddingRight: '7px',
                                                 marginTop: '-47px'
                                             }}>
-                                                <Avatar className={this.classes.avatar}>B</Avatar>
+                                                {this.props.navbarTheme.logo &&<Avatar src={this.props.navbarTheme.logo.imageUrl} className={this.classes.avatar} />}
+                                                {!this.props.navbarTheme.logo &&<Avatar className={this.classes.avatar}>R</Avatar>}
                                             </div>
                                                         </Grid>
                     }

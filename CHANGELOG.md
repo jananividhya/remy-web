@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.2"></a>
+## [1.3.2](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.1...v1.3.2) (2018-02-26)
+
+
+### Bug Fixes
+
+* **card:** Fix request sent to the server on click of button in a card ([bba5047](https://gitlab.com/purpleslate/ps-remy-web/commit/bba5047))
+* **loader:** update theme in embed loader ([a971555](https://gitlab.com/purpleslate/ps-remy-web/commit/a971555))
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.0...v1.3.1) (2018-02-25)
 

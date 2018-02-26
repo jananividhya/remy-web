@@ -690,12 +690,15 @@ class PsBot extends Component {
      * @param {Object} buttonValue Button Click Event
      */
     pSBotButtonClick = (buttonDisplayText, buttonValue) => {
+        if(!buttonValue) {
+            buttonValue = buttonDisplayText;
+        }
+
         this.sendConversationToBot(null, buttonDisplayText, buttonValue, true);
     };
 
     pSBotSuggestionResponseClick = (button) => {
-        const buttonValue = button.value;
-        this.pSBotButtonClick(button.title, buttonValue);
+        this.pSBotButtonClick(button.title, button.value);
     };
 
     handleMenuClick = (event) => {

@@ -28,7 +28,7 @@ for (const widget of remyWidget) {
             },
             title: widget.dataset.title || "Remy 👨‍🍳 ",
             navbar: {
-              background: widget.dataset.navbarBackground || "#6e377e",
+              background: widget.dataset.navbarBackground || "#14aea5",
               logo: {
                 imageUrl: widget.dataset.navbarLogo || "Arrow Color Bg@5x.png"
               }
@@ -37,12 +37,12 @@ for (const widget of remyWidget) {
               text: widget.dataset.termsText || "pS Terms of Service",
               link: widget.dataset.termsUrl ||"https://purpleslate.io"
             },
-            baseColor: widget.dataset.basecolor || "#1A7CC8",
+            baseColor: widget.dataset.basecolor || "#62acd4",
             baseFontColor: widget.dataset.fontBasecolor || "#1d1e1f",
             background: widget.dataset.background || "#FFFFFF",
             botConversationTheme: {
-              background: widget.dataset.botbubbleBackground || "#F1F2F4",
-              color: widget.dataset.botbubbleColor || "#1D1E1F",
+              background: widget.dataset.botbubbleBackground || "#f1f3f5",
+              color: widget.dataset.botbubbleColor || "#1e1f20",
               card: {
                 title: {
                     fontSize: widget.dataset.cardtitleFontsize || "18px"
@@ -55,8 +55,8 @@ for (const widget of remyWidget) {
               url: widget.dataset.poweredbyUrl || "https://purpleslate.io"
             },
             humanConversationTheme: {
-              background: widget.dataset.userbubbleBackground || "#7340a4",
-              color: widget.dataset.userbubbleColor || "#F1F2F4"
+              background: widget.dataset.userbubbleBackground || "#0c7fd1",
+              color: widget.dataset.userbubbleColor || "#f1f3f5"
             },
             thinkingImg: widget.dataset.thinking || "ezgif.com-crop.gif"
         }, remy.theme);

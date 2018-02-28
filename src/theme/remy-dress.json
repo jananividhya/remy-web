@@ -1,7 +1,7 @@
 {
   "title": "Remy",
   "navbar": {
-    "background": "#089dfb",
+    "background": "#55bcc4",
     "logo": {
       "imageUrl": "Arrow Color Bg@5x.png"
     }
@@ -33,7 +33,7 @@
     "url": "https://purpleslate.io"
   },
   "humanConversationTheme": {
-    "background": "#3bb9fd",
+    "background": "#4a90e2",
     "color": "#f8fbfe"
   },
   "thinkingImg": "ezgif.com-crop.gif"

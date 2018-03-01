@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.4"></a>
+## [1.3.4](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.3...v1.3.4) (2018-03-01)
+
+
+### Bug Fixes
+
+* **Card:** Trim whitespace around Card button value before validating if it's an URL ([8ba75a9](https://gitlab.com/purpleslate/ps-remy-web/commit/8ba75a9))
+
+
+### Features
+
+* **Message Bar:** Add ability to control message bar color through dress and embed API ([368c8ac](https://gitlab.com/purpleslate/ps-remy-web/commit/368c8ac))
+
+
+
 <a name="1.3.3"></a>
 ## [1.3.3](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.2...v1.3.3) (2018-02-27)
 

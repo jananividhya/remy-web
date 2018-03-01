@@ -930,35 +930,12 @@ class PsBot extends Component {
                                     display: 'grid'
                                 }}>
                                     <input type="text" placeholder="Say Something..." className="remy-input remy-input-grid-one"
+                                           style={{
+                                               background: (this.props.messageBar) ? this.props.messageBar.background : '#FFFFFF'
+                                           }}
                                            ref={(conversationInput) => {this.conversationInput = conversationInput;}}
                                            onChange={this.updateInputState}
                                            value={this.state.conversationText} />
-                                    {/*{this.state.conversationText.length > 0 &&<div style={{
-                                        float:  'right',
-                                        marginTop: '-20px',
-                                        paddingRight: '7px',
-                                        zIndex: 99999,
-                                    }} className="remy-input-grid-two">
-                                        <Paper
-                                            onClick={this.sendConversationToBot}
-                                            style={{
-                                                background: this.props.baseColor || 'rgba(150, 101, 171, 0.87)',
-                                                color: this.props.botConversationTheme ? this.props.botConversationTheme.background : '#FFFFFF',
-                                                boxShadow: '0px 0px',
-                                                border: '0px solid #D2D1D2',
-                                                borderRadius: '15px',
-                                                fontSize: '14px',
-                                                float: 'center',
-                                                letterSpacing: '0px',
-                                                paddingRight: '7px',
-                                                position: 'relative',
-                                                cursor: 'pointer',
-                                            }}>
-                                            <p>
-                                                Send
-                                            </p>
-                                        </Paper>
-                                    </div>}*/}
                                 </form>
                             </div>
                         </div>

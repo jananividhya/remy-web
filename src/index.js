@@ -81,6 +81,7 @@ class PsBotAdWrapper extends Component {
                                        inputEnabled={cuiTheme.hideInput === 'true'}
                                        baseFontColor={cuiTheme.baseFontColor}
                                        thinkingImg={cuiTheme.thinkingImg || 'thinking.gif'}
+                                       messageBar={cuiTheme.messageBar}
                                 />
                             </Paper>
                         </DocumentTitle>

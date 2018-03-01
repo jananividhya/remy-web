@@ -28,7 +28,7 @@ for (const widget of remyWidget) {
             },
             title: widget.dataset.title || "Remy 👨‍🍳 ",
             navbar: {
-              background: widget.dataset.navbarBackground || "#14aea5",
+              background: widget.dataset.navbarBackground || "#55bcc4",
               logo: {
                 imageUrl: widget.dataset.navbarLogo || "Arrow Color Bg@5x.png"
               }
@@ -55,10 +55,13 @@ for (const widget of remyWidget) {
               url: widget.dataset.poweredbyUrl || "https://purpleslate.io"
             },
             humanConversationTheme: {
-              background: widget.dataset.userbubbleBackground || "#0c7fd1",
+              background: widget.dataset.userbubbleBackground || "#4a90e2",
               color: widget.dataset.userbubbleColor || "#f1f3f5"
             },
-            thinkingImg: widget.dataset.thinking || "ezgif.com-crop.gif"
+            thinkingImg: widget.dataset.thinking || "ezgif.com-crop.gif",
+            messageBar: {
+              background: widget.dataset.messagebarColor || "#FFFFFF"
+            }
         }, remy.theme);
     }
 }

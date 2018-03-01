@@ -15,7 +15,7 @@
     "link": "https://purpleslate.io"
   },
   "baseColor": "#7eb9d7",
-  "baseFontColor": "#f8fbfe",
+  "baseFontColor": "#6d7079",
   "background": "#FFFFFF",
   "backgroundImage": "#FFFFFF",
   "botConversationTheme": {
@@ -36,5 +36,8 @@
     "background": "#4a90e2",
     "color": "#f8fbfe"
   },
-  "thinkingImg": "ezgif.com-crop.gif"
+  "thinkingImg": "ezgif.com-crop.gif",
+  "messageBar": {
+     "background": "#FFFFFF"
+  }
 }

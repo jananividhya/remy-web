@@ -44,7 +44,7 @@ export default class PsBotCard extends Component {
     pSBotButtonClick = (button) => {
         const buttonValue = button.value;
 
-        if (this.isURL(buttonValue)) {
+        if (this.isURL(buttonValue.trim())) {
             window.open(buttonValue);
         } else {
             this.props.action(button.title, button.title);

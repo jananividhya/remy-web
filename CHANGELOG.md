@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See [standa
 # [1.4.0](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.4...v1.4.0) (2018-03-04)
 
 
+### Features
+
+* **Card:** [Semantic UI](https://react.semantic-ui.com) library included as part of Remy Web
+* **Card:** [Semantic UI Cards](https://react.semantic-ui.com/views/card) are used for Remy Web cards
+* **Card Buttons:** Animated Card Buttons for buttons referencing External URL
+* **Style:** Stylesheet changes to support Semantic UI
+
 
 <a name="1.3.4"></a>
 ## [1.3.4](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.3...v1.3.4) (2018-03-01)

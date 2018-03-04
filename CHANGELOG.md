@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.4...v1.4.0) (2018-03-04)
+
+
+
 <a name="1.3.4"></a>
 ## [1.3.4](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.3...v1.3.4) (2018-03-01)
 

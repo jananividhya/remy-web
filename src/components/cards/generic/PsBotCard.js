@@ -2,12 +2,12 @@
 import React, {Component} from 'react';
 
 // Material UI imports
-import {CardContent, CardMedia} from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
 import PsMarkdown from '../../markdown/PsMarkdown';
 
 import isURL from 'validator/lib/isURL';
+
+import { Card, Button, Icon, Image } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 /**
  * @class PsBotCard
@@ -53,113 +53,50 @@ export default class PsBotCard extends Component {
 
     render() {
         return ( ((this.state.title || this.state.subtitle || this.state.text) ? (
-        <CardContent 
-                style={{
-                    padding: '8px 8px 8px 8px',
+                <Card style={{
+                    marginBottom: '13px',
+                    marginTop: '10px',
+                    marginLeft: '30px',
+                    fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif"
                 }}>
-                <div style={{
-                    float: 'left',
-                    textAlign: 'left',
-                    maxWidth: '250px',
-                }}>
-                    {(this.state.images && this.state.images[0]) ? (
-                            <CardMedia style={{
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                marginLeft: '-18px',
-                                marginRight: '-18px',
-                            }}>
-                                <img src={this.state.images[0].url} alt={this.state.title}
-                                    style={{
-                                        height: '180px', 
-                                        width: '100%',
-                                        borderTopRightRadius: '15px',
-                                    }} />
-                            </CardMedia>
-                        ) : ''}
-                    {this.state.title &&<Typography type="headline" component="h4" style={{
-                        background: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.background : '') : '',
-                        color: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.color : '') : '',
-                        fontFamily: 'Lato, sans-serif',
-                        fontSize: (this.props.theme.card) ? ((this.props.theme.card.title) ? this.props.theme.card.title.fontSize : '20px') : '20px',
-                        paddingTop: 10,
+                    {(this.state.images && this.state.images[0])
+                        &&<Image style={{
+                            height: '250px',
+                            background: 'transparent',
+                    }} src={this.state.images[0].url} />}
+                    <Card.Content style={{
+                        marginTop: '-13px',
+                        marginBottom: '-13px',
                     }}>
-                            <span>{this.state.title}</span>
-                    </Typography>}
-                    {this.state.subtitle &&<Typography type="subheading" component="h5" style={{
-                        background: (this.props.theme) ? this.props.theme.background : '',
-                        color: (this.props.theme) ? this.props.theme.color : '',
-                        fontFamily: 'Lato, sans-serif',
-                        fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
-                        marginTop: '-10px',
-                    }}>
-                        <span>
-                            <PsMarkdown text={this.state.subtitle} />
-                        </span>
-                    </Typography>}
-                    {(this.state.text && Array.isArray(this.state.text)) ? (
-                        this.state.text.map((textVal, key) => (
-                            <Typography component="div" key={key} style={{
-                                background: (this.props.theme) ? this.props.theme.background : '',
-                                color: (this.props.theme) ? this.props.theme.color : '',
-                                fontFamily: 'Lato, sans-serif',
-                                fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
-                                marginTop: !this.state.noButtonCard ? 10 : 0,
-                                marginBottom: !this.state.noButtonCard ? 10 : 0,
-                            }}>
-                                {textVal &&<PsMarkdown text={textVal} />}
-                            </Typography>
-                        ))
-                    ) : (
-                        this.state.text &&<Typography component="p" style={{
-                            background: (this.props.theme) ? this.props.theme.background : '',
-                            color: (this.props.theme) ? this.props.theme.color : '',
-                            fontFamily: 'Lato, sans-serif',
-                            fontSize: (this.props.theme) ? this.props.theme.fontSize : '',
-                            marginTop: !this.state.noButtonCard ? 10 : 0,
-                            marginBottom: !this.state.noButtonCard ? 10 : 0,
+                        {this.state.title &&<Card.Header>
+                            <PsMarkdown text={this.state.title} />
+                        </Card.Header>}
+                        {this.state.subtitle &&<Card.Meta style={{
+                            marginTop: '-10px'
                         }}>
+                              <PsMarkdown text={this.state.subtitle} />
+                        </Card.Meta>}
+                        {this.state.text &&<Card.Description>
                             <PsMarkdown text={this.state.text} />
-                        </Typography>
-                    )}
-                    {(!this.state.noButtonCard && this.state.buttons) ? (
-                        <div style={{
-                            marginBottom: '10px',
-                        }}>
-                            {this.state.buttons.map((button, buttonId) => {
-                            return (button.type === 'openUrl') ? (
-                                <Paper key={buttonId}
-                                       onTouchTap={() => this.pSBotButtonClick(button)}
-                                       style={{
-                                           border: '0px',
-                                           float: 'left',
-                                           textAlign: 'left',
-                                           paddingRight: '10px',
-                                           paddingLeft: '10px',
-                                           position: 'relative',
-                                           maxWidth: '450px',
-                                           borderRadius: '60px',
-                                           marginBottom: '15px',
-                                           marginRight: '4px',
-                                           boxShadow: '0px 0px',
-                                           cursor: 'pointer',
-                                           background: (this.props.baseColor) ? this.props.baseColor  : ((this.props.theme) ? this.props.theme.background : '#FFFFFF'),
-                                           color: this.props.theme ? this.props.theme.background : '#FFFFFF',
-                                           fontFamily: (this.props.theme) ? this.props.theme.fontFamily : 'Lato, sans-serif',
-                                           fontSize: (this.props.theme) ? this.props.theme.fontSize : '12px',
-                                       }}>
-                                    <div style={{
-                                        marginTop: '-8px',
-                                        marginBottom: '-8px',
-                                    }}>
-                                        <PsMarkdown text={button.title} />
-                                    </div>
-                                </Paper>) : ''
-                        })}
-                        </div>
-                    ) : ''}
-                </div>
-            </CardContent>): ''));
+                        </Card.Description>}
+                    </Card.Content>
+                    {(this.props.data.buttons && this.props.data.buttons.length > 0)
+                        ? (this.props.data.buttons[0].type === 'openUrl' &&<Card.Content extra>
+                            <div className='ui buttons'>
+                                {this.state.buttons.map((button, buttonId) => {
+                                    return (
+                                    <Button animated='fade' key={buttonId} onClick={() => this.pSBotButtonClick(button)}>
+                                        <Button.Content visible>
+                                            <PsMarkdown text={button.title} />
+                                        </Button.Content>
+                                        <Button.Content hidden>
+                                            <Icon name="external share"/>
+                                        </Button.Content>
+                                    </Button>)
+                                })}
+                            </div>
+                    </Card.Content>) : ''}
+                </Card>
+            ): ''));
     }
 }

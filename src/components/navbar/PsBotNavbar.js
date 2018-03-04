@@ -88,8 +88,8 @@ class PsBotNavbar extends Component {
                             this.props.user.id ? (<Avatar
                                 alt={this.props.user.name}
                                 style={{
-                                    width: 26,
-                                    height: 26,
+                                    width: 32,
+                                    height: 32,
                                     border: '3px solid #FFFFFF',
                                 }}
                                 src={this.props.user.imageUrl} />) : (<AccountIcon/>)

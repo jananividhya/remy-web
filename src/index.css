@@ -8,6 +8,20 @@ body {
   overflow-x: hidden;
 }
 
+p {
+    margin: 13px 1px 13px 1px !important;
+    font-weight: lighter !important;
+}
+
+.ui.animated.button .visible.content {
+    margin-right: 0px !important;
+    padding-right: 10px !important;
+}
+
+.ui.animated.button {
+    padding: 0 10px 0 10px !important;
+}
+
 .powered-by-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

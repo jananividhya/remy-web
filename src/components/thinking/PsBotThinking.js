@@ -10,6 +10,7 @@ const styleSheet = createStyleSheet('PsBotThinking', theme => ({
         width: '55px',
         height: '36px',
         marginTop: '-8px',
+        marginLeft: '30px',
     },
 }));
 
@@ -26,9 +27,7 @@ class PsBotThinking extends Component {
     }
 
     render() {
-        return ( <p style={{
-            marginLeft: '30px',
-        }}><img src={this.props.thinkingImg} alt="thinking aloud.." className={this.classes.emojis} /></p> );
+        return ( <p><img src={this.props.thinkingImg} alt="thinking aloud.." className={this.classes.emojis} /></p> );
     }
 }
 

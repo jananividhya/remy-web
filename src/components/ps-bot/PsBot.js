@@ -662,6 +662,7 @@ class PsBot extends Component {
                 } else if (activity.attachments && activity.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && !activity.text) {
                     if (activity.attachments[0].content.buttons) {
                         const responseSuggestions = activity.attachments[0].content.buttons;
+
                         this.setState((prevState) => ({
                             conversations: [...prevState.conversations, activity],
                             responseSuggestions: responseSuggestions,
@@ -784,18 +785,6 @@ class PsBot extends Component {
                                                     <Avatar className={this.classes.avatar}></Avatar>
                                                 </div>
                                             )}
-                                            <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : [botConversationClass, "slideInFromLeft"].join(" ")}
-                                                   style={{
-                                                       background: (conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? 'transparent' : 
-                                                        ((this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background),
-                                                       color: (this.props.botConversationTheme) ? this.props.botConversationTheme.color : botConversationClass.color,
-                                                       fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                                       fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
-                                                       maxWidth: (window.parent.remy) ? '250px' : '270px',
-                                                       marginTop: (isFirstConv) ? '10px' : '0px',
-                                                       marginLeft: (isFirstConv) ? '-30px' : '0px',
-                                                   }}>
-                                                <div className={this.classes.conversationText}>
                                                     {
                                                         !conversation.attachments ? (
                                                             (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (
@@ -811,7 +800,22 @@ class PsBot extends Component {
                                                                         {conversation.text}
                                                                     </Typist>
                                                                 ) : (
-                                                                    <PsMarkdown text={conversation.displayVal || conversation.text} />
+                                                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : [botConversationClass, "slideInFromLeft"].join(" ")}
+                                                                               style={{
+                                                                                   background: (conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? 'transparent' :
+                                                                                       ((this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background),
+                                                                                   color: (this.props.botConversationTheme) ? this.props.botConversationTheme.color : botConversationClass.color,
+                                                                                   fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
+                                                                                   fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
+                                                                                   maxWidth: (window.parent.remy) ? '250px' : '270px',
+                                                                                   marginTop: '8px',
+                                                                                   marginBottom: '2px',
+                                                                                   marginLeft: (isFirstConv) ? '-30px' : '0px',
+                                                                               }}>
+                                                                            <div className={this.classes.conversationText}>
+                                                                                <PsMarkdown text={conversation.displayVal || conversation.text} />
+                                                                            </div>
+                                                                        </Paper>
                                                                 )
                                                             )) :
                                                             ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
@@ -831,7 +835,8 @@ class PsBot extends Component {
                                                                     )
                                                                     : (
                                                                     <PsBotCard data={conversation.attachments[0].content}
-                                                                                   action={this.pSBotButtonClick} theme={this.props.botConversationTheme} baseColor={this.props.baseColor} />
+                                                                                   action={this.pSBotButtonClick} theme={this.props.botConversationTheme} baseColor={this.props.baseColor}
+                                                                                    isFirstCard={isFirstConv} />
                                                                 )
 
                                                             ) :
@@ -858,8 +863,6 @@ class PsBot extends Component {
                                                                                         <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
                                                                                         : <PsMarkdown text={conversation.displayVal || conversation.text} />)))))))
                                                     }
-                                                </div>
-                                            </Paper>
                                             {(this.state.conversations[id + 1] && this.state.conversations[id + 1].from.name !== 'fiercebadlands' && this.state.conversations[id + 1].from.name !== 'psbot-demo') &&(
                                                 <PsBotConversationTime time={conversation.timestamp} />
                                             )}

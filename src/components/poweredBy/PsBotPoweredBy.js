@@ -8,6 +8,7 @@ export default ({fontSize = '14px', height, width, poweredBySymbol = 'fa fa-bolt
     return (
         <span style={{
             fontSize: fontSize,
+            fontWeight: 'lighter',
         }}>
             <span style={{
                 color: 'rgba(150, 101, 171, 0.87)',

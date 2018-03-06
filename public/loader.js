@@ -29,7 +29,7 @@ for (const widget of remyWidget) {
             },
             title: widget.dataset.title || "Remy 👨‍🍳 ",
             navbar: {
-              background: widget.dataset.navbarBackground || "#55bcc4",
+              background: widget.dataset.navbarBackground || "#16738A",
               logo: {
                 imageUrl: widget.dataset.navbarLogo || "Arrow Color Bg@5x.png"
               }
@@ -38,12 +38,12 @@ for (const widget of remyWidget) {
               text: widget.dataset.termsText || "pS Terms of Service",
               link: widget.dataset.termsUrl ||"https://purpleslate.io"
             },
-            baseColor: widget.dataset.basecolor || "#62acd4",
+            baseColor: widget.dataset.basecolor || "#13A948",
             baseFontColor: widget.dataset.fontBasecolor || "#1d1e1f",
             background: widget.dataset.background || "#FFFFFF",
             botConversationTheme: {
-              background: widget.dataset.botbubbleBackground || "#f1f3f5",
-              color: widget.dataset.botbubbleColor || "#1e1f20",
+              background: widget.dataset.botbubbleBackground || "#F2F4F3",
+              color: widget.dataset.botbubbleColor || "#0E3D3B",
               card: {
                 title: {
                     fontSize: widget.dataset.cardtitleFontsize || "18px"
@@ -51,13 +51,13 @@ for (const widget of remyWidget) {
               }
             },
             poweredBy: {
-              fontSize: widget.dataset.poweredbyFont || "10px",
+              fontSize: widget.dataset.poweredbyFont || "11px",
               text: widget.dataset.poweredbyText || "purpleSlate",
               url: widget.dataset.poweredbyUrl || "https://purpleslate.io"
             },
             humanConversationTheme: {
-              background: widget.dataset.userbubbleBackground || "#4a90e2",
-              color: widget.dataset.userbubbleColor || "#f1f3f5"
+              background: widget.dataset.userbubbleBackground || "#2B9F8E",
+              color: widget.dataset.userbubbleColor || "#FFFFFF"
             },
             thinkingImg: widget.dataset.thinking || "ezgif.com-crop.gif",
             messageBar: {

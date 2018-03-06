@@ -6,7 +6,7 @@ import PsMarkdown from '../../markdown/PsMarkdown';
 
 import isURL from 'validator/lib/isURL';
 
-import { Card, Button, Icon, Image } from 'semantic-ui-react';
+import { Card, Button, Icon, Image} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 /**

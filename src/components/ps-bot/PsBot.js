@@ -25,6 +25,7 @@ import PsBotNavbar from '../navbar/PsBotNavbar';
 import PsBotThinking from '../thinking/PsBotThinking';
 import PsHumanConversation from '../humanConversation/PsHumanConversation';
 import PsBotCard from '../cards/generic/PsBotCard';
+import AnonymousLoginCard from '../cards/anonymousLogin/AnonymousLoginCard';
 import PsBotCardImage from '../cards/image/PsBotCardImage';
 import AutoSuggestTheme from './AutoSuggestTheme.css'; // eslint-disable-line no-unused-vars
 import TypistTheme from './Typist.css'; // eslint-disable-line no-unused-vars
@@ -250,6 +251,22 @@ class PsBot extends Component {
         this.sendConversationToBot(null, null, "/signin", true);
     };
 
+    setupAnonymousUser = ({ userName, userId }) => {
+        this.setState({
+            user: {
+                name: userName,
+                id: userId,
+            },
+            inputEnabled: true,
+        });
+
+        this.setSessionDetails({
+            "user.name": userName,
+            "user.id": userId,
+            "user.authProvider": 'Local',
+        });
+    };
+
     onSignIn = (data) => {
           switch (data.status) {
               case 'success':
@@ -420,8 +437,10 @@ class PsBot extends Component {
 
             this.remyActivitySocket = new WebSocket(this.state.activityStreamUrl);
 
-            if (!this.getSessionDetails().id) {
+            if (!this.getSessionDetails().id && !this.props.anonymousLogin) {
                 this.sendConversationToBot(null, null, "/signin", true);
+            } else if (!this.getSessionDetails().id && this.props.anonymousLogin) {
+                this.sendConversationToBot(null, null, this.props.conversationStarter, true);
             } else {
                 this.setState({
                     user: {
@@ -429,7 +448,8 @@ class PsBot extends Component {
                         id: this.getSessionDetails().id,
                         imageUrl: this.getSessionDetails().imageUrl,
                     },
-                    hideOptions: true
+                    hideOptions: true,
+                    inputEnabled: true
                 });
 
                 if (this.props.conversationStarter) {
@@ -536,35 +556,15 @@ class PsBot extends Component {
                 }));
 
                 const convSetState = (conv, i) => {
-                    const thinkingObj = {
-                        "type": "message",
-                        "text": "Thinking...",
-                        "from": {
-                            "id": "ps-public-bot",
-                            "name": "bot",
-                            "channelId": "webchat"
-                        },
-                        "channelId": "webchat",
-                        "locale": "en-US",
-                        "textFormat": "plain",
-                        "contentType": "typing",
-                        "img": "thinking.gif",
-                        "timestamp": new Date(),
-                        "localTimestamp": Date.now(),
-                        "id": "1253e4ba-90d7-435b-95bf-8f2ad30441c9"
-                    };
-
                     this.setState((prevState) => ({
-                        conversations: [...prevState.conversations, conv, thinkingObj],
+                        conversations: [...prevState.conversations, conv],
+                        showTyping: true,
                     }));
                 };
 
                 const removeThinkingState = () => {
-                    let conversations = this.state.conversations.slice();
-                    conversations.splice(-1, 1);
-
                     this.setState({
-                        conversations: conversations,
+                        showTyping: false
                     });
                 };
 
@@ -575,7 +575,7 @@ class PsBot extends Component {
                         setTimeoutTimerId = setTimeout(() => {
                             removeThinkingState();
                             iterator();
-                        }, 100);
+                        }, 1500);
                     } else {
                         clearTimeout(setTimeoutTimerId);
                         removeThinkingState();
@@ -861,7 +861,13 @@ class PsBot extends Component {
                                                                                 ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
                                                                                     <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
                                                                                         <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
-                                                                                        : <PsMarkdown text={conversation.displayVal || conversation.text} />)))))))
+                                                                                        : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.anonymousLogin')
+                                                                                                ? <p><AnonymousLoginCard data={conversation.attachments[0].content}
+                                                                                                             action={this.setupAnonymousUser}
+                                                                                                             theme={this.props.botConversationTheme}
+                                                                                                             baseColor={this.props.baseColor}
+                                                                                                             user={this.state.user} /></p> :
+                                                                                                <PsMarkdown text={conversation.displayVal || conversation.text} />))))))))
                                                     }
                                             {(this.state.conversations[id + 1] && this.state.conversations[id + 1].from.name !== 'fiercebadlands' && this.state.conversations[id + 1].from.name !== 'psbot-demo') &&(
                                                 <PsBotConversationTime time={conversation.timestamp} />
@@ -922,7 +928,7 @@ class PsBot extends Component {
                             }
                         </div>
                 </div>
-                {!this.props.inputEnabled &&<div style={{
+                {(!this.props.inputEnabled || this.state.inputEnabled) &&<div style={{
                     color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
                     position: 'fixed',
                 }}>

@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.4.0...v1.5.0) (2018-03-06)
+
+
+### Bug Fixes
+
+* **Avatar:** Show account circle when user is not logged in ([bbf3d4d](https://gitlab.com/purpleslate/ps-remy-web/commit/bbf3d4d))
+* **Card:** Fix margins between card buttons ([237a562](https://gitlab.com/purpleslate/ps-remy-web/commit/237a562))
+
+
+### Features
+
+* **Card:** Add card for anonymous login ([d9f3407](https://gitlab.com/purpleslate/ps-remy-web/commit/d9f3407))
+* **Embed:** Enable anonymous login in Remy Embedded widget ([db69b41](https://gitlab.com/purpleslate/ps-remy-web/commit/db69b41))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.3.4...v1.4.0) (2018-03-04)
 

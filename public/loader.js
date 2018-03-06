@@ -22,6 +22,7 @@ for (const widget of remyWidget) {
             hideBotpaper: widget.dataset.hideBotpaper,
             hideInput: widget.dataset.hideInput,
             startText: widget.dataset.startText,
+            loginAnonymously: widget.dataset.loginAnonymously,
             botDetails: {
                 name: widget.dataset.title || "Remy",
                 description: widget.dataset.description || "Some things you can ask me..",

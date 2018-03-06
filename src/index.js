@@ -82,6 +82,7 @@ class PsBotAdWrapper extends Component {
                                        baseFontColor={cuiTheme.baseFontColor}
                                        thinkingImg={cuiTheme.thinkingImg || 'thinking.gif'}
                                        messageBar={cuiTheme.messageBar}
+                                       anonymousLogin={cuiTheme.loginAnonymously === 'true'}
                                 />
                             </Paper>
                         </DocumentTitle>

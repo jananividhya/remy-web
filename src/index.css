@@ -20,6 +20,7 @@ p {
 
 .ui.animated.button {
     padding: 0 10px 0 10px !important;
+    margin-right: 10px !important;
 }
 
 .powered-by-grid {

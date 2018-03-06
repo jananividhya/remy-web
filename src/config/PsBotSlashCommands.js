@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const slashCommands = {
     "/help": [{
         "type": "message",
-        "text": "# _We_ are here to help you :package:",
+        "text": "**We** are here to help you :package:",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"
@@ -25,6 +25,52 @@ const slashCommands = {
         "textFormat": "plain",
         "timestamp": new Date(),
         "id": uuid.v4()
+    }, {
+        "type": "message",
+        "id": uuid.v4(),
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "application/vnd.ps.card.anonymousLogin",
+                "content": {
+                    "title": "Hey, there!",
+                    "subtitle": "My name is Remy. And you are..."
+                }
+            }
+        ]
+    }],
+    "/hello": [{
+        "type": "message",
+        "id": uuid.v4(),
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "application/vnd.ps.card.anonymousLogin",
+                "content": {
+                    "title": "Hey, there!",
+                    "subtitle": "My name is Remy. And you are...",
+                    "images": [
+                        {
+                            "url": "https://react.semantic-ui.com/assets/images/avatar/large/elliot.jpg"
+                        }
+                    ]
+                }
+            }
+        ]
     }],
     "/ga": [{
         "type": "message",

@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import PropTypes from 'prop-types';
+import AccountIcon from 'material-ui-icons/AccountCircle';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import '../ps-bot/styles/remy-style-transitions.css';
 
@@ -79,7 +80,7 @@ class PsHumanConversation extends Component {
         }
 
         const theme = (this.state.theme) ? this.state.theme : null;
-        const userAvatar = (this.props.user) ? (this.props.user.name ? this.props.user.name.charAt(0) : 'U') : 'U';
+        const userAvatar = (this.props.user) ? (this.props.user.name ? this.props.user.name.charAt(0) : <AccountIcon/>) : <AccountIcon/>;
         
         return (
             <div>

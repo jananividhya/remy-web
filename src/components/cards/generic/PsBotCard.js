@@ -61,7 +61,6 @@ export default class PsBotCard extends Component {
                 }}>
                     {(this.state.images && this.state.images[0])
                         &&<Image style={{
-                            height: '250px',
                             background: 'transparent',
                     }} src={this.state.images[0].url} />}
                     <Card.Content style={{

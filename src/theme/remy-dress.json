@@ -15,12 +15,12 @@
     "link": "https://purpleslate.io"
   },
   "baseColor": "#13A948",
-  "baseFontColor": "#FFFFFF",
+  "baseFontColor": "#093332",
   "background": "#FFFFFF",
   "backgroundImage": "#FFFFFF",
   "botConversationTheme": {
     "background": "#F2F4F3",
-    "color": "#0E3D3B",
+    "color": "#093332",
     "card": {
       "title": {
         "fontSize": "18px"

@@ -39,11 +39,11 @@ for (const widget of remyWidget) {
               link: widget.dataset.termsUrl ||"https://purpleslate.io"
             },
             baseColor: widget.dataset.basecolor || "#13A948",
-            baseFontColor: widget.dataset.fontBasecolor || "#1d1e1f",
+            baseFontColor: widget.dataset.fontBasecolor || "#093332",
             background: widget.dataset.background || "#FFFFFF",
             botConversationTheme: {
               background: widget.dataset.botbubbleBackground || "#F2F4F3",
-              color: widget.dataset.botbubbleColor || "#0E3D3B",
+              color: widget.dataset.botbubbleColor || "#093332",
               card: {
                 title: {
                     fontSize: widget.dataset.cardtitleFontsize || "18px"

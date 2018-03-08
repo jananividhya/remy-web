@@ -1,7 +1,7 @@
 {
   "title": "Remy",
   "navbar": {
-    "background": "#16738A",
+    "background": "#4070D5",
     "logo": {
       "imageUrl": "Arrow Color Bg@5x.png"
     }
@@ -14,13 +14,13 @@
     "text": "pS Terms of Service",
     "link": "https://purpleslate.io"
   },
-  "baseColor": "#13A948",
+  "baseColor": "#44AA5F",
   "baseFontColor": "#093332",
   "background": "#FFFFFF",
   "backgroundImage": "#FFFFFF",
   "botConversationTheme": {
-    "background": "#F2F4F3",
-    "color": "#093332",
+    "background": "#EEF1F5",
+    "color": "#131419",
     "card": {
       "title": {
         "fontSize": "18px"
@@ -33,8 +33,8 @@
     "url": "https://purpleslate.io"
   },
   "humanConversationTheme": {
-    "background": "#2B9F8E",
-    "color": "#FFFFFF"
+    "background": "#3C7EEF",
+    "color": "#F5F7F8"
   },
   "thinkingImg": "ezgif.com-crop.gif",
   "messageBar": {

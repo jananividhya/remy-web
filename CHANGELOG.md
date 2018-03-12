@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.4"></a>
+## [1.5.4](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.2...v1.5.4) (2018-03-12)
+
+
+### Bug Fixes
+
+* **Card:** Fix card image dimensions ([b1351f4](https://gitlab.com/purpleslate/ps-remy-web/commit/b1351f4))
+
+
+### Features
+
+* **Card:** Adopt theme base colors for Card buttons ([247f1d1](https://gitlab.com/purpleslate/ps-remy-web/commit/247f1d1))
+* **Image Card:** Add ability to zoom images in an image card ([e4fef82](https://gitlab.com/purpleslate/ps-remy-web/commit/e4fef82))
+
+
+
 <a name="1.5.3"></a>
 ## [1.5.3](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.2...v1.5.3) (2018-03-07)
 

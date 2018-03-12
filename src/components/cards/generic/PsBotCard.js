@@ -84,7 +84,10 @@ export default class PsBotCard extends Component {
                             <div className='ui buttons'>
                                 {this.state.buttons.map((button, buttonId) => {
                                     return (
-                                    <Button animated='fade' key={buttonId} onClick={() => this.pSBotButtonClick(button)}>
+                                    <Button animated='fade' key={buttonId} onClick={() => this.pSBotButtonClick(button)} style={{
+                                        background: this.props.baseColor ? this.props.baseColor : ((this.props.botConversationTheme) ? this.props.botConversationTheme.background : '#FFFFFF'),
+                                        color: this.props.theme ? this.props.theme.background : '#000000',
+                                    }}>
                                         <Button.Content visible>
                                             <PsMarkdown text={button.title} />
                                         </Button.Content>

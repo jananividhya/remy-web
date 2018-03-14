@@ -6,7 +6,7 @@ import PsMarkdown from '../../markdown/PsMarkdown';
 
 import isURL from 'validator/lib/isURL';
 
-import { Card, Button, Icon, Image, Modal } from 'semantic-ui-react';
+import { Card, Button, Icon, Image, Modal, Embed } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 /**
@@ -66,10 +66,19 @@ export default class PsBotCard extends Component {
         }
     };
 
+    isVideo = (src) => {
+        return src.includes("youtube.com");
+    };
+
+    getVideoId = (src) => {
+        return src.split("?v=")[1];
+    };
+
     render() {
 
         const cardData = this.props.data;
         const { dimmer, zoom, size } = this.state;
+        const isVideo = (cardData.images && cardData.images[0]) ? this.isVideo(cardData.images[0].url) : false;
 
         return ( ((cardData.title || cardData.subtitle || cardData.text) ? (
             <div>
@@ -79,11 +88,21 @@ export default class PsBotCard extends Component {
                     marginLeft: '30px',
                     fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif"
                 }}>
-                    {(cardData.images && cardData.images[0])
+                    {(!isVideo && cardData.images && cardData.images[0])
                         &&<Image style={{
                             background: 'transparent',
                             cursor: 'pointer'
                     }} src={cardData.images[0].url} onClick={this.zoom('blurring')} />}
+                    {(isVideo && cardData.images && cardData.images[0])
+                        &&<Embed
+                            autoplay={true}
+                            brandedUI
+                            color='white'
+                            hd={true}
+                            icon='video play'
+                            id={this.getVideoId(cardData.images[0].url)}
+                            source="youtube"
+                        />}
                     <Card.Content style={{
                         marginTop: '-13px',
                         marginBottom: '-13px',

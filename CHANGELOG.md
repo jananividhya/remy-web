@@ -8,15 +8,13 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* **Cards:** Add ability to render buttons in Card and also have response suggestions in the conversation ([25c1d96](https://gitlab.com/purpleslate/ps-remy-web/commit/25c1d96))
+* **Card:** Add ability to render buttons in Card and also have response suggestions in the conversation ([25c1d96](https://gitlab.com/purpleslate/ps-remy-web/commit/25c1d96))
 
 
 ### Features
 
-* **Card:** Adopt theme base colors for Card buttons ([247f1d1](https://gitlab.com/purpleslate/ps-remy-web/commit/247f1d1))
-* **Cards:** Add ability to zoom image in a card ([c054685](https://gitlab.com/purpleslate/ps-remy-web/commit/c054685))
+* **Card:** Add ability to zoom image in a card ([c054685](https://gitlab.com/purpleslate/ps-remy-web/commit/c054685))
 * **Exception Handling:** Add types of exceptions to be handled by Remy web ([4c8baf3](https://gitlab.com/purpleslate/ps-remy-web/commit/4c8baf3))
-* **Image Card:** Add ability to zoom images in an image card ([e4fef82](https://gitlab.com/purpleslate/ps-remy-web/commit/e4fef82))
 * **Session Management:** Handle invalid sessions gracefully ([b46545e](https://gitlab.com/purpleslate/ps-remy-web/commit/b46545e))
 
 

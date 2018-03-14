@@ -6,7 +6,7 @@ import PsMarkdown from '../../markdown/PsMarkdown';
 
 import isURL from 'validator/lib/isURL';
 
-import { Card, Button, Icon, Image} from 'semantic-ui-react';
+import { Card, Button, Icon, Image, Modal } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 /**
@@ -16,12 +16,27 @@ import 'semantic-ui-css/semantic.min.css';
  */
 export default class PsBotCard extends Component {
 
+    state = {
+        zoom: false,
+        size: 'small'
+    };
+
     constructor(props) {
         super(props);
         this.classes = props.classes;
-
-        this.state = this.props.data;
     }
+
+    zoom = dimmer => () =>
+        this.setState({
+            dimmer,
+            zoom: true,
+        });
+
+    closeZoom = () => {
+        this.setState({
+            zoom: false,
+        });
+    };
 
     /**
      * @method isURL
@@ -44,7 +59,7 @@ export default class PsBotCard extends Component {
     pSBotButtonClick = (button) => {
         const buttonValue = button.value;
 
-        if (this.isURL(buttonValue.trim())) {
+        if (buttonValue && this.isURL(buttonValue.trim())) {
             window.open(buttonValue);
         } else {
             this.props.action(button.title, button.title);
@@ -52,37 +67,43 @@ export default class PsBotCard extends Component {
     };
 
     render() {
-        return ( ((this.state.title || this.state.subtitle || this.state.text) ? (
+
+        const cardData = this.props.data;
+        const { dimmer, zoom, size } = this.state;
+
+        return ( ((cardData.title || cardData.subtitle || cardData.text) ? (
+            <div>
                 <Card style={{
                     marginBottom: '13px',
                     marginTop: '10px',
                     marginLeft: '30px',
                     fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif"
                 }}>
-                    {(this.state.images && this.state.images[0])
+                    {(cardData.images && cardData.images[0])
                         &&<Image style={{
                             background: 'transparent',
-                    }} src={this.state.images[0].url} />}
+                            cursor: 'pointer'
+                    }} src={cardData.images[0].url} onClick={this.zoom('blurring')} />}
                     <Card.Content style={{
                         marginTop: '-13px',
                         marginBottom: '-13px',
                     }}>
-                        {this.state.title &&<Card.Header>
-                            <PsMarkdown text={this.state.title} />
+                        {cardData.title &&<Card.Header>
+                            <PsMarkdown text={cardData.title} />
                         </Card.Header>}
-                        {this.state.subtitle &&<Card.Meta style={{
+                        {cardData.subtitle &&<Card.Meta style={{
                             marginTop: '-10px'
                         }}>
-                              <PsMarkdown text={this.state.subtitle} />
+                              <PsMarkdown text={cardData.subtitle} />
                         </Card.Meta>}
-                        {this.state.text &&<Card.Description>
-                            <PsMarkdown text={this.state.text} />
+                        {cardData.text &&<Card.Description>
+                            <PsMarkdown text={cardData.text} />
                         </Card.Description>}
                     </Card.Content>
-                    {(this.props.data.buttons && this.props.data.buttons.length > 0)
-                        ? ((this.props.data.buttons[0].type === 'openUrl' || this.props.data.buttons[0].type === 'openURL') &&<Card.Content extra>
+                    {(cardData.buttons && cardData.buttons.length > 0)
+                        ? ((cardData.buttons[0].type === 'openUrl' || cardData.buttons[0].type === 'openURL') &&<Card.Content extra>
                             <div className='ui buttons'>
-                                {this.state.buttons.map((button, buttonId) => {
+                                {cardData.buttons.map((button, buttonId) => {
                                     return (
                                     <Button animated='fade' key={buttonId} onClick={() => this.pSBotButtonClick(button)} style={{
                                         background: this.props.baseColor ? this.props.baseColor : ((this.props.botConversationTheme) ? this.props.botConversationTheme.background : '#FFFFFF'),
@@ -99,6 +120,24 @@ export default class PsBotCard extends Component {
                             </div>
                     </Card.Content>) : ''}
                 </Card>
+
+                {(cardData.images && cardData.images[0])
+                    &&<Modal size={size} dimmer={dimmer} open={zoom} style={{
+                        marginTop: 0,
+                        width: '100%',
+                    }}
+                           closeOnEscape={true}
+                           closeOnRootNodeClick={true}
+                           onClose={() => this.closeZoom()}
+                    >
+                        <Modal.Content>
+                            <Image src={cardData.images[0].url} style={{
+                                width: '100%',
+                                height: '100%'
+                            }} />
+                        </Modal.Content>
+                    </Modal>}
+            </div>
             ): ''));
     }
 }

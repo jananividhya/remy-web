@@ -80,7 +80,7 @@ export default class PsBotCard extends Component {
                         </Card.Description>}
                     </Card.Content>
                     {(this.props.data.buttons && this.props.data.buttons.length > 0)
-                        ? (this.props.data.buttons[0].type === 'openUrl' &&<Card.Content extra>
+                        ? ((this.props.data.buttons[0].type === 'openUrl' || this.props.data.buttons[0].type === 'openURL') &&<Card.Content extra>
                             <div className='ui buttons'>
                                 {this.state.buttons.map((button, buttonId) => {
                                     return (

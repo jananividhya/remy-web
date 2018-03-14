@@ -14,6 +14,7 @@ import PsMarkdown from '../markdown/PsMarkdown';
 
 // Common imports
 import 'whatwg-fetch';
+import _ from 'lodash';
 // React Typist
 import Typist from 'react-typist';
 import Slider from 'react-slick';
@@ -676,7 +677,12 @@ class PsBot extends Component {
 
                 } else if (activity.attachments && activity.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && !activity.text) {
                     if (activity.attachments[0].content.buttons) {
-                        const responseSuggestions = activity.attachments[0].content.buttons;
+                        const conversationButtons = activity.attachments[0].content.buttons;
+
+                        const cardButtons = _.filter(conversationButtons, {'type': 'openURL'});
+                        const responseSuggestions = _.filter(conversationButtons, {'type': 'imBack'});
+
+                        activity.attachments[0].content.buttons = cardButtons;
 
                         this.setState((prevState) => ({
                             conversations: [...prevState.conversations, activity],

@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.6"></a>
+## [1.5.6](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.5...v1.5.6) (2018-03-14)
+
+
+### Bug Fixes
+
+* **Cards:** Cards to use buttons of type openUrl not openURL ([1038104](https://gitlab.com/purpleslate/ps-remy-web/commit/1038104))
+
+
+### Features
+
+* **Cards:** Add support for YouTube video embeds ([3c9f4bf](https://gitlab.com/purpleslate/ps-remy-web/commit/3c9f4bf))
+
+
+
 <a name="1.5.5"></a>
 ## [1.5.5](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.3...v1.5.5) (2018-03-14)
 

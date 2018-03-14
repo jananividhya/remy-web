@@ -56,9 +56,9 @@ const PsErr = {
         "timestamp": new Date(),
         "id": uuid.v4()
     }],
-    "serverError": [{
+    "sessionInvalid": [{
         "type": "message",
-        "text": "Am unable to connect to the server right now.",
+        "text": "Looks like your session is no longer valid.",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"
@@ -70,19 +70,7 @@ const PsErr = {
         "id": uuid.v4()
     }, {
         "type": "message",
-        "text": " I have notified the support about this incident and they will try their best to analyze and resolve this issue.",
-        "from": {
-            "id": "fiercebadlands",
-            "name": "fiercebadlands"
-        },
-        "locale": "en-US",
-        'localTimestamp': Date.now(),
-        "textFormat": "plain",
-        "timestamp": new Date(),
-        "id": uuid.v4()
-    }, {
-        "type": "message",
-        "text": "Please start a new conversation.",
+        "text": "Sign in again to continue",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

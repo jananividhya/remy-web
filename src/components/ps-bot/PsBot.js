@@ -46,6 +46,8 @@ import PsBotApps from '../apps/PsBotApps';
 import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords';
 import HandleErrors from '../../util/HandleErrors';
 
+import Exception from '../../util/Exceptions';
+
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
         flexGrow: 1,
@@ -263,7 +265,7 @@ class PsBot extends Component {
         this.setSessionDetails({
             "user.name": userName,
             "user.id": userId,
-            "user.authProvider": 'Local',
+            "user.authProvider": 'Anonymous',
         });
     };
 
@@ -601,9 +603,8 @@ class PsBot extends Component {
                 conversationText: '',
             });
 
-            fetch(request)
-                .then(HandleErrors).then((json) => {
-
+        fetch(request)
+            .then(HandleErrors).then(() => {
             this.remyActivitySocket.addEventListener('message', (event) => {
                 if (event.data && JSON.parse(event.data).activities && JSON.parse(event.data).watermark) {
                     if (this.watermark !== JSON.parse(event.data).watermark) {
@@ -613,16 +614,30 @@ class PsBot extends Component {
                 }
             });
         }).catch((ex) => {
-            console.error('Unable to connect to Remy Server ', JSON.stringify(ex));
-            this.setState({
-                conversationId: this.state.conversationId,
-                conversationText: '',
-                conversations: this.state.conversations.concat([...PsError['unableToConnect']]),
-                conversationInputText: this.state.conversationInputText,
-                responseSuggestions: this.state.responseSuggestions,
-                listMenu: this.state.listMenu,
-                showTyping: false,
-            });
+            console.error(ex);
+
+            if (ex instanceof Exception.serverUnavailableException) {
+                this.setState({
+                    conversations: this.state.conversations.concat([...PsError['unableToConnect']]),
+                    showTyping: false,
+                });
+            } else if (ex instanceof Exception.sessionInvalidException) {
+                this.setState({
+                    user: {},
+                    hideOptions: false,
+                });
+                localStorage.clear();
+                this.setState({
+                    conversations: this.state.conversations.concat([...PsError['sessionInvalid']]),
+                    showTyping: false,
+                });
+                this.sendConversationToBot(null, "help me sign in", "/siginAfterExpiredSession", true);
+            } else {
+                this.setState({
+                    conversations: this.state.conversations.concat([...PsError['unableToConnect']]),
+                    showTyping: false,
+                });
+            }
         });
         }
     };
@@ -700,14 +715,6 @@ class PsBot extends Component {
 
     pSBotSuggestionResponseClick = (button) => {
         this.pSBotButtonClick(button.title, button.value);
-    };
-
-    handleMenuClick = (event) => {
-        this.setState({ menuOpen: true, anchorEl: event.currentTarget });
-    };
-
-    handleMenuClose = () => {
-        this.setState({ menuOpen: false });
     };
 
     updateInputState = (e) => {

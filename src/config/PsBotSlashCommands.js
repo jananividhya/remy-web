@@ -272,62 +272,78 @@ const slashCommands = {
             }
         ]
     }],
-    "/signinwithps": [
-        {
-            "type": "message",
-            "text": "Let's sign in with purpleSlate",
-            "from": {
-                "id": "localbot",
-                "name": "localbot"
-            },
-            "locale": "en-US",
-            'localTimestamp': Date.now(),
-            "textFormat": "plain",
-            "timestamp": new Date(),
-            "id": uuid.v4(),
-            "nextConversation": [{
-                "type": "message",
-                "text": "Please enter your user name",
-                "from": {
-                    "id": "localbot",
-                    "name": "localbot"
-                },
-                "locale": "en-US",
-                'localTimestamp': Date.now(),
-                "textFormat": "plain",
-                "timestamp": new Date(),
-                "id": uuid.v4(),
-                "doesExpectInput": true,
-                "inputType": "text",
-                "action": {
-                    "type": "saveLocal",
-                    "value": "_userId", 
-                },
-                "nextConversation": [{
-                    "type": "message",
-                    "text": "Please enter your password",
-                    "from": {
-                        "id": "localbot",
-                        "name": "localbot"
-                    },
-                    "locale": "en-US",
-                    'localTimestamp': Date.now(),
-                    "textFormat": "plain",
-                    "timestamp": new Date(),
-                    "id": uuid.v4(),
-                    "doesExpectInput": true,
-                    "inputType": "password",
-                    "action": {
-                        "type": "saveLocal",
-                        "value": "_password", 
-                        "submitToServer": true,
-                        "submitParams": ["_user", "_password"],
-                        "serviceAPI": "http://foo.bar/sign-in",
-                    }
-                }]
-            }] 
-        }
-    ],
+    "/siginAfterExpiredSession": [{
+        "type": "message",
+        "text": "Hey, there!",
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        'localTimestamp': Date.now(),
+        "textFormat": "plain",
+        "timestamp": new Date(),
+        "id": uuid.v4()
+    }, {
+        "type": "message",
+        "text": "I am Remy 👨‍🍳 , your anytime learning companion.",
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        'localTimestamp': Date.now(),
+        "textFormat": "plain",
+        "timestamp": new Date(),
+        "id": uuid.v4()
+    }, {
+        "type": "message",
+        "text": "Help me know you better. :smile:",
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        'localTimestamp': Date.now(),
+        "textFormat": "plain",
+        "timestamp": new Date(),
+        "id": uuid.v4()
+    }, {
+        "type": "message",
+        "id": uuid.v4(),
+        "timestamp": Date.now(),
+        "localTimestamp": Date.now(),
+        "from": {
+            "id": "fiercebadlands",
+            "name": "fiercebadlands"
+        },
+        "locale": "en-US",
+        "inputHint": "ignoringInput",
+        "attachments": [
+            {
+                "contentType": "application/vnd.ps.card.signin",
+                "content": {
+                    "title": "Sign-in to purpleSlate",
+                    "text": [
+                        "You have few options.",
+                    ],
+                    "subtitle": "How do you want to authenticate yourself?",
+                    "choices": [
+                        {
+                            "type": "fbSignIn",
+                            "title": "Facebook",
+                            "value": "/signin-with-fb"
+                        },
+                        {
+                            "type": "googleSignIn",
+                            "title": "Google",
+                            "value": "/signin-with-google"
+                        }
+                    ]
+                }
+            }
+        ]
+    }],
     "/quiz-card": [{
         "type": "message",
         "id": "DRbdBQEFmKRDsaFOxRFPL0|0000015",

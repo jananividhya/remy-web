@@ -679,7 +679,7 @@ class PsBot extends Component {
                     if (activity.attachments[0].content.buttons) {
                         const conversationButtons = activity.attachments[0].content.buttons;
 
-                        const cardButtons = _.filter(conversationButtons, {'type': 'openURL'});
+                        const cardButtons = _.filter(conversationButtons, {'type': 'openUrl'});
                         const responseSuggestions = _.filter(conversationButtons, {'type': 'imBack'});
 
                         activity.attachments[0].content.buttons = cardButtons;

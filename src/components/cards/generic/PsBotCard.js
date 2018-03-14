@@ -101,7 +101,7 @@ export default class PsBotCard extends Component {
                         </Card.Description>}
                     </Card.Content>
                     {(cardData.buttons && cardData.buttons.length > 0)
-                        ? ((cardData.buttons[0].type === 'openUrl' || cardData.buttons[0].type === 'openURL') &&<Card.Content extra>
+                        ? (cardData.buttons[0].type === 'openUrl' &&<Card.Content extra>
                             <div className='ui buttons'>
                                 {cardData.buttons.map((button, buttonId) => {
                                     return (

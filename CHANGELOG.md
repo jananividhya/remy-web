@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.7"></a>
+## [1.5.7](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.6...v1.5.7) (2018-03-15)
+
+
+### Features
+
+* **Image Zoom:** Add Close button in a zoomed image ([a206a84](https://gitlab.com/purpleslate/ps-remy-web/commit/a206a84))
+* **Scrollbar:** Customize scrollbar width ([eb4bc52](https://gitlab.com/purpleslate/ps-remy-web/commit/eb4bc52))
+
+
+
 <a name="1.5.6"></a>
 ## [1.5.6](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.5...v1.5.6) (2018-03-14)
 

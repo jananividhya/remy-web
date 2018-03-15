@@ -171,7 +171,7 @@ const slashCommands = {
         "id": uuid.v4()
     }, {
         "type": "message",
-        "text": "I am Remy 👨‍🍳 , your anytime learning companion.",
+        "text": "I am Remy 👨‍🍳 , your anytime information assistant.",
         "from": {
             "id": "fiercebadlands",
             "name": "fiercebadlands"

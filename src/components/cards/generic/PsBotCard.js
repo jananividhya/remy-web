@@ -147,7 +147,9 @@ export default class PsBotCard extends Component {
                     }}
                            closeOnEscape={true}
                            closeOnRootNodeClick={true}
+                           closeOnDimmerClick={true}
                            onClose={() => this.closeZoom()}
+                           closeIcon
                     >
                         <Modal.Content>
                             <Image src={cardData.images[0].url} style={{

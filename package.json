@@ -1,6 +1,6 @@
 {
   "name": "ps-public",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "private": true,
   "main": "ps-electron.js",
   "productName": "purpleBot",

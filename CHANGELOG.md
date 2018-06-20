@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.11"></a>
+## [1.5.11](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.10...v1.5.11) (2018-06-20)
+
+
+### Bug Fixes
+
+* **Sign-In:** Disable Facebook Sign-in ([ba3e840](https://gitlab.com/purpleslate/ps-remy-web/commit/ba3e840))
+
+
+
 <a name="1.5.10"></a>
 ## [1.5.10](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.9...v1.5.10) (2018-03-17)
 

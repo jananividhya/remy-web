@@ -210,15 +210,10 @@ const slashCommands = {
                 "content": {
                     "title": "Sign-in to purpleSlate",
                     "text": [
-                        "You have few options.",
+                        "Sign-in with your Google account to get started.",
                     ],
                     "subtitle": "How do you want to authenticate yourself?",
                     "choices": [
-                        {
-                            "type": "fbSignIn",
-                            "title": "Facebook",
-                            "value": "/signin-with-fb"
-                        },
                         {
                             "type": "googleSignIn",
                             "title": "Google",

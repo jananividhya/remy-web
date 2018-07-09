@@ -46,6 +46,111 @@ const slashCommands = {
             }
         ]
     }],
+    "/charts": [
+        {
+            "type": "message",
+            "text": "This will *show* you all the components that are available :smile:",
+            "from": {
+                "id": "fiercebadlands",
+                "name": "fiercebadlands"
+            },
+            "channelData": {
+              "attachment": {
+                  "payload": {
+                      "template_type": "Charts",
+                      "chart_type": "horizontalBar",
+                      "data": {
+                          labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+                          datasets: [{
+                              data: [12, 19, 3, 5, 2],
+                              backgroundColor: [
+                                  'rgb(255, 158, 74)',
+                                  'rgb(255, 158, 74)',
+                                  'rgb(255, 158, 74)',
+                                  'rgb(255, 158, 74)',
+                                  'rgb(255, 158, 74)',
+                              ],
+                              borderWidth: 1
+                          }],
+                          gridLines: {
+                              lineWidth: 0
+                          }
+                      },
+                      "options": {
+                          maintainAspectRatio: false,
+                          scales: {
+                              xAxes: [{
+                                  display: false,
+                                  gridLines: {
+                                      display: false,
+                                      drawBorder: false
+                                  }
+                              }],
+                              yAxes: [{
+                                  gridLines: {
+                                      display: false,
+                                      drawBorder: false
+                                  },
+                                  scaleLabel: {
+                                      display: false
+                                  }
+                              }]
+                          }
+                      },
+                      "legend": {
+                          display: false
+                      }
+                  }
+              }
+            },
+            "locale": "en-US",
+            'localTimestamp': Date.now(),
+            "textFormat": "plain",
+            "timestamp": new Date(),
+            "id": uuid.v4()
+        },
+        {
+            "type": "message",
+            "text": "This will *show* you all the components that are available :smile:",
+            "from": {
+                "id": "fiercebadlands",
+                "name": "fiercebadlands"
+            },
+            "channelData": {
+                "attachment": {
+                    "payload": {
+                        "template_type": "Charts",
+                        "chart_type": "pie",
+                        "data": {
+                            labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+                            datasets: [{
+                                data: [12, 19, 3, 5, 2],
+                                backgroundColor: [
+                                    'rgb(255, 158, 74)',
+                                    'rgb(255, 158, 74)',
+                                    'rgb(255, 158, 74)',
+                                    'rgb(255, 158, 74)',
+                                    'rgb(255, 158, 74)',
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        "options": {
+                            maintainAspectRatio: false
+                        },
+                        "legend": {
+                            display: false
+                        }
+                    }
+                }
+            },
+            "locale": "en-US",
+            'localTimestamp': Date.now(),
+            "textFormat": "plain",
+            "timestamp": new Date(),
+            "id": uuid.v4()
+        }
+    ],
     "/hello": [{
         "type": "message",
         "id": uuid.v4(),

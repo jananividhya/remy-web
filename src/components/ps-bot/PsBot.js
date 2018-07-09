@@ -48,6 +48,10 @@ import ConversationSkipKeywords from '../../config/PsBotConversationSkipKeywords
 import HandleErrors from '../../util/HandleErrors';
 
 import Exception from '../../util/Exceptions';
+import PsHorizontalBarChart from "../charts/PsHorizontalBarChart";
+import PsLineChart from "../charts/PsLineChart";
+import PsBarChart from "../charts/PsBarChart";
+import PsPieChart from "../charts/PsPieChart";
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -232,6 +236,7 @@ class PsBot extends Component {
         return {
             id: localStorage.getItem("user.id"),
             name: localStorage.getItem("user.name"),
+            email: localStorage.getItem("user.email"),
             gender: localStorage.getItem("user.gender"),
             authProvider: localStorage.getItem("user.authProvider"),
             imageUrl: localStorage.getItem("user.imageUrl")
@@ -275,6 +280,8 @@ class PsBot extends Component {
               case 'success':
                   let id, name, gender, imageUrl, authProvider;
 
+                  console.log(`User object `, data.profileObj);
+
                   if (data.provider === 'google') {
                       name = data.profileObj.name;
                       id = data.profileObj.googleId;
@@ -295,6 +302,7 @@ class PsBot extends Component {
                           name: name,
                           id: id,
                           imageUrl: imageUrl,
+                          email: data.profileObj.email
                       },
                       hideOptions: true,
                   });
@@ -306,6 +314,7 @@ class PsBot extends Component {
                       "user.gender": gender,
                       "user.authProvider": authProvider,
                       "user.imageUrl": imageUrl,
+                      "user.email": data.profileObj.email,
                   });
 
                   let signInWelcome = [{
@@ -448,6 +457,7 @@ class PsBot extends Component {
                 this.setState({
                     user: {
                         name: this.getSessionDetails().name,
+                        email: this.getSessionDetails().email,
                         id: this.getSessionDetails().id,
                         imageUrl: this.getSessionDetails().imageUrl,
                     },
@@ -729,6 +739,49 @@ class PsBot extends Component {
         });
     };
 
+    renderCharts = (channelData) => {
+        switch (channelData.attachment.payload.chart_type) {
+            case 'line':
+                return (<PsLineChart
+                    data={channelData.attachment.payload.data}
+                    width={210}
+                    height={150}
+                    user={this.state.user}
+                    options={channelData.attachment.payload.options}
+                    legend={channelData.attachment.payload.legend}
+                />);
+            case 'horizontalBar':
+                return (<PsHorizontalBarChart
+                    data={channelData.attachment.payload.data}
+                    width={210}
+                    height={150}
+                    user={this.state.user}
+                    options={channelData.attachment.payload.options}
+                    legend={channelData.attachment.payload.legend}
+                />);
+            case 'bar':
+                return (<PsBarChart
+                    data={channelData.attachment.payload.data}
+                    width={210}
+                    height={150}
+                    user={this.state.user}
+                    options={channelData.attachment.payload.options}
+                    legend={channelData.attachment.payload.legend}
+                />);
+            case 'pie':
+                return (<PsPieChart
+                    data={channelData.attachment.payload.data}
+                    width={210}
+                    height={150}
+                    user={this.state.user}
+                    options={channelData.attachment.payload.options}
+                    legend={channelData.attachment.payload.legend}
+                />);
+            default:
+                break;
+        }
+    };
+
     render() {
 
         let responseSuggestions = [];
@@ -780,6 +833,7 @@ class PsBot extends Component {
 
                             const multipleCards = (conversation.attachments) ? conversation.attachments.length > 1 : false;
                             const isFirstConv = this.state.conversations[id - 1] && this.state.conversations[id - 1].from.name !== 'fiercebadlands' && this.state.conversations[id - 1].from.name !== 'psbot-demo';
+                            const channelData = conversation.channelData;
 
                             return ((conversation.from.name === 'fiercebadlands' || conversation.from.name === 'psbot-demo') ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
@@ -800,11 +854,14 @@ class PsBot extends Component {
                                             )}
                                                     {
                                                         !conversation.attachments ? (
-                                                            (conversation.channelData && conversation.channelData.attachment.payload.template_type === 'QuizCard') ? (
-                                                                <PsBotQuizCard data={conversation.channelData.attachment.payload.quiz_card}
+                                                            (channelData && channelData.attachment.payload.template_type === 'QuizCard') ? (
+                                                                <PsBotQuizCard data={channelData.attachment.payload.quiz_card}
                                                                                ref={(ref) => {this.psBotQuiz = ref;} }
                                                                                action={this.pSBotButtonClick} />
-                                                            ) : ((this.props.typing) ? (
+                                                            ) : ((channelData && channelData.attachment.payload.template_type === 'Charts') ?
+                                                                    this.renderCharts(channelData)
+                                                                :
+                                                                ((this.props.typing) ? (
                                                                     <Typist cursor={{
                                                                         element: '',
                                                                         hideWhenDone: true,
@@ -830,7 +887,7 @@ class PsBot extends Component {
                                                                             </div>
                                                                         </Paper>
                                                                 )
-                                                            )) :
+                                                            ))) :
                                                             ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
                                                                 (multipleCards) ?
                                                                     (

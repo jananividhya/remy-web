@@ -131,6 +131,7 @@ export default class PsCharts extends Component {
 
         const mailBody = {
             to: this.props.user.email,
+            userName: this.props.user.name,
             subject: 'Chart from purpleSlate Remy',
             base64EncodedImage: base64Image
         };

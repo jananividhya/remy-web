@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.6.0"></a>
+# [1.6.0](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.11...v1.6.0) (2018-07-09)
+
+
+### Features
+
+* **Charts:** Add support for charts ([502c560](https://gitlab.com/purpleslate/ps-remy-web/commit/502c560))
+
+
+
 <a name="1.5.11"></a>
 ## [1.5.11](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.10...v1.5.11) (2018-06-20)
 

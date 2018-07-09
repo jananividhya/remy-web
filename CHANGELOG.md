@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.6.1"></a>
+## [1.6.1](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.6.0...v1.6.1) (2018-07-09)
+
+
+### Bug Fixes
+
+* **Charts:** Update subject of email ([d58528f](https://gitlab.com/purpleslate/ps-remy-web/commit/d58528f))
+
+
+### Features
+
+* **Charts:** Add `userName` to the email sent from Charts service ([14db711](https://gitlab.com/purpleslate/ps-remy-web/commit/14db711))
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.5.11...v1.6.0) (2018-07-09)
 

@@ -52,6 +52,7 @@ import PsHorizontalBarChart from "../charts/PsHorizontalBarChart";
 import PsLineChart from "../charts/PsLineChart";
 import PsBarChart from "../charts/PsBarChart";
 import PsPieChart from "../charts/PsPieChart";
+import PsAreaChart from "../charts/PsAreaChart";
 
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
@@ -747,7 +748,7 @@ class PsBot extends Component {
                     width={210}
                     height={150}
                     user={this.state.user}
-                    showMore={true}
+                    showMore={channelData.attachment.payload.showMore}
                     email={true}
                     options={channelData.attachment.payload.options}
                     legend={channelData.attachment.payload.legend}
@@ -758,7 +759,7 @@ class PsBot extends Component {
                     width={210}
                     height={150}
                     user={this.state.user}
-                    showMore={true}
+                    showMore={channelData.attachment.payload.showMore}
                     email={true}
                     options={channelData.attachment.payload.options}
                     legend={channelData.attachment.payload.legend}
@@ -769,7 +770,18 @@ class PsBot extends Component {
                     width={210}
                     height={150}
                     user={this.state.user}
-                    showMore={true}
+                    showMore={channelData.attachment.payload.showMore}
+                    email={true}
+                    options={channelData.attachment.payload.options}
+                    legend={channelData.attachment.payload.legend}
+                />);
+            case 'area':
+                return (<PsAreaChart
+                    data={channelData.attachment.payload.data}
+                    width={210}
+                    height={150}
+                    user={this.state.user}
+                    showMore={channelData.attachment.payload.showMore}
                     email={true}
                     options={channelData.attachment.payload.options}
                     legend={channelData.attachment.payload.legend}
@@ -780,7 +792,7 @@ class PsBot extends Component {
                     width={210}
                     height={150}
                     user={this.state.user}
-                    showMore={false}
+                    showMore={channelData.attachment.payload.showMore}
                     email={true}
                     options={channelData.attachment.payload.options}
                     legend={channelData.attachment.payload.legend}

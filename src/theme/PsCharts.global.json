@@ -1,0 +1,204 @@
+{
+    "backgroundColor": [
+        "rgb(255, 225, 74)",
+        "rgb(255, 158, 74)",
+        "rgb(255, 158, 74)",
+        "rgb(255, 158, 74)",
+        "rgb(255, 158, 74)"
+    ],
+    "borderColor": "rgb(255, 225, 74)",
+    "maintainAspectRatio": false,
+    "horizontalBar": {
+        "options": {
+            "maintainAspectRatio": false,
+            "scales": {
+                "xAxes": [{
+                    "display": false,
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    }
+                }],
+                "yAxes": [{
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    },
+                    "scaleLabel": {
+                        "display": false
+                    }
+                }]
+            },
+            "plugins": {
+                "datalabels": {
+                    "anchor": "end",
+                    "offset": 2,
+                    "align": "right",
+                    "color": "black"
+                }
+            },
+            "legend": {
+                "display": false
+            }
+        },
+        "fill": false,
+        "showMore": true
+    },
+    "bar": {
+        "options": {
+            "maintainAspectRatio": false,
+            "scales": {
+                "xAxes": [{
+                    "display": false,
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    }
+                }],
+                "yAxes": [{
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    },
+                    "scaleLabel": {
+                        "display": false
+                    }
+                }]
+            },
+            "plugins": {
+                "datalabels": {
+                    "anchor": "end",
+                    "offset": 2,
+                    "align": "right",
+                    "color": "black"
+                }
+            },
+            "legend": {
+                "display": false
+            }
+        },
+        "fill": false,
+        "showMore": true
+    },
+    "area": {
+        "options": {
+            "maintainAspectRatio": false,
+            "scales": {
+                "xAxes": [{
+                    "display": false,
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    }
+                }],
+                "yAxes": [{
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    },
+                    "scaleLabel": {
+                        "display": false
+                    }
+                }]
+            },
+            "plugins": {
+                "datalabels": {
+                    "anchor": "end",
+                    "offset": 2,
+                    "align": "right",
+                    "color": "black"
+                },
+                "filler": {
+                    "propagate": true
+                }
+            },
+            "legend": {
+                "display": false
+            }
+        },
+        "fill": true,
+        "showMore": true
+    },
+    "line": {
+        "options": {
+            "maintainAspectRatio": false,
+            "scales": {
+                "xAxes": [{
+                    "display": false,
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    }
+                }],
+                "yAxes": [{
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    },
+                    "scaleLabel": {
+                        "display": false
+                    }
+                }]
+            },
+            "plugins": {
+                "datalabels": {
+                    "anchor": "end",
+                    "offset": 2,
+                    "align": "right",
+                    "color": "black"
+                }
+            },
+            "legend": {
+                "display": false
+            }
+        },
+        "fill": false,
+        "showMore": true
+    },
+    "pie": {
+        "options": {
+            "maintainAspectRatio": false,
+            "scales": {
+                "xAxes": [{
+                    "display": false,
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    }
+                }]
+            },
+            "plugins": {
+                "datalabels": {
+                    "display": false
+                }
+            },
+            "legend": {
+                "display": false
+            }
+        },
+        "showMore": true
+    },
+    "doughnut": {
+        "options": {
+            "maintainAspectRatio": false,
+            "scales": {
+                "xAxes": [{
+                    "display": false,
+                    "gridLines": {
+                        "display": false,
+                        "drawBorder": false
+                    }
+                }]
+            },
+            "plugins": {
+                "datalabels": {
+                    "display": false
+                }
+            },
+            "legend": {
+                "display": false
+            }
+        },
+        "showMore": true
+    }
+}

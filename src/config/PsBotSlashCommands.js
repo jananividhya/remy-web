@@ -62,37 +62,10 @@ const slashCommands = {
                       "data": {
                           labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
                           datasets: [{
-                              data: [12, 19, 3, 5, 2],
-                              borderWidth: 1
-                          }],
-                          gridLines: {
-                              lineWidth: 0
-                          }
+                              data: [12, 19, 3, 5, 2]
+                          }]
                       },
-                      "options": {
-                          maintainAspectRatio: false,
-                          scales: {
-                              xAxes: [{
-                                  display: false,
-                                  gridLines: {
-                                      display: false,
-                                      drawBorder: false
-                                  }
-                              }],
-                              yAxes: [{
-                                  gridLines: {
-                                      display: false,
-                                      drawBorder: false
-                                  },
-                                  scaleLabel: {
-                                      display: false
-                                  }
-                              }]
-                          }
-                      },
-                      "legend": {
-                          display: false
-                      }
+                      "showMore": true
                   }
               }
             },
@@ -117,30 +90,10 @@ const slashCommands = {
                         "data": {
                             labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
                             datasets: [{
-                                data: [12, 19, 3, 5, 2],
-                                borderWidth: 1
-                            }],
-                            gridLines: {
-                                lineWidth: 0
-                            }
+                                data: [12, 19, 3, 5, 2]
+                            }]
                         },
-                        "options": {
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    gridLines: {
-                                        display: false,
-                                        drawBorder: false
-                                    },
-                                    scaleLabel: {
-                                        display: false
-                                    }
-                                }]
-                            }
-                        },
-                        "legend": {
-                            display: false
-                        }
+                        "showMore": false
                     }
                 }
             },
@@ -165,23 +118,10 @@ const slashCommands = {
                         "data": {
                             labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
                             datasets: [{
-                                data: [12, 19, 3, 5, 2],
-                                backgroundColor: [
-                                    'rgb(255, 158, 74)',
-                                    'rgb(255, 158, 74)',
-                                    'rgb(255, 158, 74)',
-                                    'rgb(255, 158, 74)',
-                                    'rgb(255, 158, 74)',
-                                ],
-                                borderWidth: 1
+                                data: [12, 19, 3, 5, 2]
                             }]
                         },
-                        "options": {
-                            maintainAspectRatio: false
-                        },
-                        "legend": {
-                            display: false
-                        }
+                        "showMore": false
                     }
                 }
             },

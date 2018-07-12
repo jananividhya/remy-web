@@ -6,7 +6,7 @@ export default class PsAreaChart extends Component {
         return (
             <PsCharts
                 {...this.props}
-                type='area'
+                type='line'
             />
         );
     }

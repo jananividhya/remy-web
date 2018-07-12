@@ -9,7 +9,7 @@ import isEqual from 'lodash/isEqual';
 import Chart from 'chart.js';
 import 'chartjs-plugin-datalabels';
 
-import ChartDefaults from './PsCharts.global';
+import ChartDefaults from '../../theme/PsCharts.global';
 
 export default class PsCharts extends Component {
 
@@ -59,38 +59,41 @@ export default class PsCharts extends Component {
         }
     }
 
-    createChart() {
-        const {options, legend, type, plugins} = this.props;
-        const node = this.element;
-        let data = this.memoizeDataProps();
+    overrideGlobals(data, options, legend, type, plugins) {
+        data.datasets[0].backgroundColor = !data.datasets[0].backgroundColor ? ChartDefaults.backgroundColor : data.datasets[0].backgroundColor;
+        data.datasets[0].borderColor = !data.datasets[0].borderColor ? ChartDefaults.borderColor : data.datasets[0].borderColor;
+        data.datasets[0].fill = !data.datasets[0].fill ? ChartDefaults[type].fill : data.datasets[0].fill;
+
+        plugins = ChartDefaults[type].options.plugins;
+
+        if(typeof plugins !== 'undefined' && !isEqual(ChartDefaults.plugins, options.plugins)) {
+            options.plugins = plugins;
+        }
+
+        if(typeof options !== 'undefined' && !isEqual(ChartDefaults[type].options, options)) {
+            options = ChartDefaults[type].options;
+        }
 
         if(typeof legend !== 'undefined' && !isEqual(PsCharts.defaultProps.legend, legend)) {
             options.legend = legend;
         }
 
-        if (type !== 'pie') {
-            options.plugins = {
-                datalabels: {
-                    anchor: 'end',
-                    offset: 2,
-                    align: 'right',
-                    formatter: function(value, context) {
-                        return value;
-                    },
-                    color: 'black',
-                }
-            };
-        } else {
-            options.plugins = {
-                datalabels: {
-                    display: false
-                }
-            };
+        return {
+            options,
+            data,
+            plugins
         }
+    }
+
+    createChart() {
+        let {options, legend, type, plugins, showMore} = this.props;
+        const node = this.element;
+        let data = this.memoizeDataProps();
+        options = options ? options : {};
 
         // Check if the dataset is greater than 3. If yes, chunk the dataset to 3 and persist others in component state.
         // If no, render the dataset as is.
-        if (data.datasets[0].data.length > 3 && type !== 'pie') {
+        if (showMore && data.datasets[0].data.length > 3) {
             this.setState({
                 fullDataset: Object.assign({}, data)
             });
@@ -100,7 +103,10 @@ export default class PsCharts extends Component {
             });
         }
 
-        data.datasets[0].backgroundColor = !data.datasets[0].backgroundColor ? ChartDefaults.backgroundColor : data.datasets[0].backgroundColor;
+        const newOpts = this.overrideGlobals(data, options, legend, type, plugins);
+
+        options = newOpts.options;
+        plugins = newOpts.plugins;
 
         this.chartInstance = new Chart(node, {
             type,

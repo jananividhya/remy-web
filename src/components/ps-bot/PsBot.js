@@ -742,12 +742,13 @@ class PsBot extends Component {
     renderCharts = (channelData) => {
         switch (channelData.attachment.payload.chart_type) {
             case 'line':
-                console.log(`Returning line chart`);
                 return (<PsLineChart
                     data={channelData.attachment.payload.data}
                     width={210}
                     height={150}
                     user={this.state.user}
+                    showMore={true}
+                    email={true}
                     options={channelData.attachment.payload.options}
                     legend={channelData.attachment.payload.legend}
                 />);
@@ -757,6 +758,8 @@ class PsBot extends Component {
                     width={210}
                     height={150}
                     user={this.state.user}
+                    showMore={true}
+                    email={true}
                     options={channelData.attachment.payload.options}
                     legend={channelData.attachment.payload.legend}
                 />);
@@ -766,6 +769,8 @@ class PsBot extends Component {
                     width={210}
                     height={150}
                     user={this.state.user}
+                    showMore={true}
+                    email={true}
                     options={channelData.attachment.payload.options}
                     legend={channelData.attachment.payload.legend}
                 />);
@@ -775,6 +780,8 @@ class PsBot extends Component {
                     width={210}
                     height={150}
                     user={this.state.user}
+                    showMore={false}
+                    email={true}
                     options={channelData.attachment.payload.options}
                     legend={channelData.attachment.payload.legend}
                 />);

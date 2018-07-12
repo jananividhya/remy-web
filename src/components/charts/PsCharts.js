@@ -159,7 +159,7 @@ export default class PsCharts extends Component {
 
     render() {
 
-        const { height, width } = this.props;
+        const { height, width, showMore, email } = this.props;
 
         return (
             <Card style={{
@@ -182,7 +182,7 @@ export default class PsCharts extends Component {
                 </Card.Content>
                 <Card.Content extra>
                     <div className='ps-ui input'>
-                        <Button animated='fade' onClick={() => this.showMore(this.state.showMore)} style={{
+                        {showMore&&<Button animated='fade' onClick={() => this.showMore(this.state.showMore)} style={{
                             background: '#44AA5F',
                             color: '#FFFFFF',
                         }}>
@@ -196,8 +196,8 @@ export default class PsCharts extends Component {
                                     <Icon name="angle double down"/> : <Icon name="angle double up"/>
                                 }
                             </Button.Content>
-                        </Button>
-                        <Button animated='fade' onClick={() => this.exportImage()} style={{
+                        </Button>}
+                        {email&&<Button animated='fade' onClick={() => this.exportImage()} style={{
                             background: '#44AA5F',
                             color: '#FFFFFF',
                         }}
@@ -209,7 +209,7 @@ export default class PsCharts extends Component {
                             <Button.Content hidden>
                                 <Icon name="mail forward"/>
                             </Button.Content>
-                        </Button>
+                        </Button>}
                     </div>
                 </Card.Content>
             </Card>

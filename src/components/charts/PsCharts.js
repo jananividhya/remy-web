@@ -9,6 +9,8 @@ import isEqual from 'lodash/isEqual';
 import Chart from 'chart.js';
 import 'chartjs-plugin-datalabels';
 
+import ChartDefaults from './PsCharts.global';
+
 export default class PsCharts extends Component {
 
     static defaultProps = {
@@ -98,6 +100,8 @@ export default class PsCharts extends Component {
             });
         }
 
+        data.datasets[0].backgroundColor = !data.datasets[0].backgroundColor ? ChartDefaults.backgroundColor : data.datasets[0].backgroundColor;
+
         this.chartInstance = new Chart(node, {
             type,
             data,
@@ -110,6 +114,9 @@ export default class PsCharts extends Component {
     ref = (element) => {
         this.element = element;
     };
+
+    componentWillMount() {
+    }
 
     componentDidMount() {
         this.createChart();

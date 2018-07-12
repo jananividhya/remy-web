@@ -742,6 +742,7 @@ class PsBot extends Component {
     renderCharts = (channelData) => {
         switch (channelData.attachment.payload.chart_type) {
             case 'line':
+                console.log(`Returning line chart`);
                 return (<PsLineChart
                     data={channelData.attachment.payload.data}
                     width={210}

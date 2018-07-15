@@ -31,7 +31,7 @@ for (const widget of remyWidget) {
             navbar: {
               background: widget.dataset.navbarBackground || "#16738A",
               logo: {
-                imageUrl: widget.dataset.navbarLogo || "Arrow Color Bg@5x.png"
+                imageUrl: widget.dataset.navbarLogo || "image.png"
               }
             },
             termsOfService: {

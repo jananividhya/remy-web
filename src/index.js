@@ -86,13 +86,13 @@ class PsBotAdWrapper extends Component {
                                 />
                             </Paper>
                         </DocumentTitle>
-                        <div className="powered-by-grid">
+                        {cuiTheme.poweredBy.enabled &&<div className="powered-by-grid">
                             <div className="powered-by-grid-one"></div>
                             <div className="powered-by-grid-two">
                                 <PsBotPoweredBy {...cuiTheme.poweredBy} />
                             </div>
                             <div className="powered-by-grid-three"></div>                            
-                        </div>
+                        </div>}
                         
                     </div>
                 )

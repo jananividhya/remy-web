@@ -294,7 +294,7 @@ const slashCommands = {
             {
                 "contentType": "application/vnd.ps.card.signin",
                 "content": {
-                    "title": "Sign-in to purpleSlate",
+                    "title": "Sign-in to Remy",
                     "text": [
                         "Sign-in with your Google account to get started.",
                     ],

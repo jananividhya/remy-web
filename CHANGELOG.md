@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.7.5"></a>
+## [1.7.5](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.7.4...v1.7.5) (2018-12-13)
+
+
+### Features
+
+* **Remy Launcher:** Add simple Remy Launcher JavaScript to open Remy Web in a new window ([7a73a70](https://gitlab.com/purpleslate/ps-remy-web/commit/7a73a70))
+
+
+
 <a name="1.7.4"></a>
 ## [1.7.4](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.7.3...v1.7.4) (2018-08-07)
 

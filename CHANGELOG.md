@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.7.6"></a>
+## [1.7.6](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.7.5...v1.7.6) (2018-12-16)
+
+
+### Bug Fixes
+
+* **Human Conversation:** Fix a box shadow issue with Human Conversation. ([09b7e9e](https://gitlab.com/purpleslate/ps-remy-web/commit/09b7e9e))
+
+
+
 <a name="1.7.5"></a>
 ## [1.7.5](https://gitlab.com/purpleslate/ps-remy-web/compare/v1.7.4...v1.7.5) (2018-12-13)
 

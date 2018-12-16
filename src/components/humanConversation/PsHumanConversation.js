@@ -17,6 +17,7 @@ const styleSheet = createStyleSheet('PsHumanConversation', theme => ({
     paperHumanConversation: {
         color: '#FFFFFF',
         border: '0px',
+        boxShadow: '0px 0px',
         borderRadius: '15px 0px 15px 15px',
         fontSize: '14px',
         float: 'right',

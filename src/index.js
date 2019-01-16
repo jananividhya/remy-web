@@ -67,7 +67,7 @@ class PsBotAdWrapper extends Component {
                         <DocumentTitle title={cuiTheme.title || 'Remy'}>
                             <Paper style={paperStyle}>
                                 <PsBot conversationInputText="Say Something.."
-                                       accessSecret="eSuQ3mxu61Q.cwA.fxU.ShH6-q_lglxbBiXo6CniDfj-CBbBIEOEG-MkKgJzVWw"
+                                       accessSecret="Cj__Z7KtT_g.cwA.7eg.wTN79vOHVITs9HFFAwoHNoXPivuXuDeBxKfL-Djvw7I"
                                        navbarTheme={cuiTheme.navbar}
                                        navbarEnabled={cuiTheme.hideHeader !== 'true'}
                                        showGreeting={true}

@@ -10,7 +10,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import PsBotTimer from '../timer/PsBotTimer';
 
 import PsBotFbSignInCard from './PsBotFbSignInCard';
-import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
+//import PsBotGoogleSignInCard from './PsBotGoogleSignInCard';
 
 // Style Imports
 import '../ps-bot/PsBotButton.css';
@@ -138,26 +138,37 @@ class PsBotSignInCard extends Component {
     };
 
     onSignIn = (props) => {
+        console.log("props signin")
+        this.props.action(props);
+    };
+
+    signIn = (props) => {
         this.props.action(props);
     };
 
     render() {
-
+        console.log("render")
         const quizTimer = (this.state.timer) ? (
             <PsBotTimer ref="psBotTimer"
                         options={{totalTime: this.state.timer}}
                         action={this.quizTimerOff}/>
         ) : '';
-
+   
         const signInButtonHandler = (buttonType, key) => {
             let button = '';
 
             switch (buttonType) {
                 case 'fbSignIn':
-                    button = (<p key={key}><PsBotFbSignInCard action={this.onSignIn} /></p>);
+                    button = (<p key={key}><PsBotFbSignInCard onClick={this.onSignIn} /></p>);
                     break;
-                case 'googleSignIn':
-                    button = (<p key={key}><PsBotGoogleSignInCard action={this.onSignIn} /></p>);
+                    case 'googleSignIn':
+                    button = (<p key={key}><button onClick={this.signIn} style={{
+                        background: 'url("./googlelogin.png") no-repeat',
+                        cursor: 'pointer',
+                        border: 'none',
+                        height: '30px',
+                        width: '200px'
+                    }}></button></p>);
                     break;
                 default:
                     break;

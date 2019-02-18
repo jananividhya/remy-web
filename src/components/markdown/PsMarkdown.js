@@ -6,6 +6,7 @@ import { MarkdownPreview } from 'react-marked-markdown';
 
 class PsMarkdown extends Component {
     render() {
+        console.log('markdown',this.props)
         let { text } = this.props;
         text = emoji.emojify(text);
         

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pS Remy Launcher</title>
+    <script>
+        function launchRemy() {
+            let remyWebAppWindow = window.open(
+                `https://test-purpleslate.in/remy-web/`,
+                `_blank`,
+                `resizable=no,height=800,width=500,top=100,left=500`
+            );
+            remyWebAppWindow.focus();
+            remyWebAppWindow.onload = () => {
+                remyWebAppWindow.opener.close();
+            };
+        }
+    </script>
+</head>
+<body onload="launchRemy()">
+    <h2 align="center"><small>Remy Launcher</small></h2>
+</body>
+</html>

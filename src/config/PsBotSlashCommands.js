@@ -718,7 +718,7 @@ const slashCommands = {
                     }, {
                         "identifier": "/menu",
                         "description": "Lists the menu options"
-                    }, {
+                    },{
                         "identifier": "/signin",
                         "description": "Sign-in and make more context sensitive conversations.."
                     }],

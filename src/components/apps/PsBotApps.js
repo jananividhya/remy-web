@@ -134,7 +134,7 @@ class PsBotApps extends Component {
                                         </Paper>
                                     )
                                 ) : (
-                                (data.display) ? (
+                                (data.display)? (
                                     <Paper
                                            onClick={() => this.pSBotAppsButtonClick(data.value)} 
                                            style={{

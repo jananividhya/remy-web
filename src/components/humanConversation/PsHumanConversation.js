@@ -72,10 +72,10 @@ class PsHumanConversation extends Component {
     }
 
     render() {
-
+        console.log("render od human")
         let conversationText = this.props.conversationText;
         let isSlashCommand = false;
-
+        console.log('human render',conversationText,"and",conversationText.charAt(0));
         if (conversationText && conversationText.charAt(0) === '/') {
             isSlashCommand = true;
         }

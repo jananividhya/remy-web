@@ -111,6 +111,7 @@ class PsBotGoogleSignInCard extends Component {
      * @param {Object} button Button object passed from onClick
      */
     signInResponse = (data) => {
+        console.log("signi response")
         this.props.action({
             status: 'success',
             provider: 'google',
@@ -127,6 +128,7 @@ class PsBotGoogleSignInCard extends Component {
     };
 
     render() {
+        console.log("render google")
         return ( <div>
             <GoogleLogin clientId="921814792691-reh6oij417djlfh12pv311a0t0e5pjin.apps.googleusercontent.com"
                               buttonText=""

@@ -1,12 +1,12 @@
 // React imports
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 // Material UI imports
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
-import {withStyles, createStyleSheet} from 'material-ui/styles';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 
@@ -53,7 +53,7 @@ import PsLineChart from "../charts/PsLineChart";
 import PsBarChart from "../charts/PsBarChart";
 import PsPieChart from "../charts/PsPieChart";
 import PsAreaChart from "../charts/PsAreaChart";
-
+var resultData = {};
 const styleSheet = createStyleSheet('PsBot', theme => ({
     root: {
         flexGrow: 1,
@@ -172,8 +172,8 @@ const cardSliderOptions = {
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,
-    nextArrow: <PsBotSliderArrowRight/>,
-    prevArrow: <PsBotSliderArrowLeft/>
+    nextArrow: <PsBotSliderArrowRight />,
+    prevArrow: <PsBotSliderArrowLeft />
 };
 
 /**
@@ -234,6 +234,7 @@ class PsBot extends Component {
     }
 
     getSessionDetails = () => {
+        // console.log("user.id", localStorage.getItem("user.id"))
         return {
             id: localStorage.getItem("user.id"),
             name: localStorage.getItem("user.name"),
@@ -246,7 +247,7 @@ class PsBot extends Component {
 
     setSessionDetails = (objToStore) => {
         const keys = Object.keys(objToStore);
-        for (let i=0; i<keys.length; i++) {
+        for (let i = 0; i < keys.length; i++) {
             localStorage.setItem(keys[i], objToStore[keys[i]]);
         }
     };
@@ -275,126 +276,155 @@ class PsBot extends Component {
             "user.authProvider": 'Anonymous',
         });
     };
+    signIn = () => {
+        console.log("signin")
+        window.plugins.googleplus.login(
+            {
 
+            },
+            (obj) => {
+                console.log("success")
+                resultData = obj;
+                resultData.status = 'success'
+                resultData.provider = 'google'
+                resultData.profileObj = {};
+                resultData.profileObj.name = resultData.displayName
+                resultData.profileObj.googleId = resultData.email
+                resultData.profileObj.imageUrl = resultData.imageUrl
+                console.log(resultData)
+                this.onSignIn(resultData)
+                return obj;
+
+            },
+            function (msg) {
+                console.error(msg);
+                resultData = {
+                    status: 'error',
+                    provider: 'google'
+                }
+            }
+        )
+
+    }
     onSignIn = (data) => {
-          switch (data.status) {
-              case 'success':
-                  let id, name, gender, imageUrl, authProvider;
+        switch (data.status) {
+            case 'success':
+                let id, name, gender, imageUrl, authProvider;
 
-                  console.log(`User object `, data.profileObj);
+                console.log(`User object `, data);
 
-                  if (data.provider === 'google') {
-                      name = data.profileObj.name;
-                      id = data.profileObj.googleId;
-                      imageUrl = data.profileObj.imageUrl;
-                      authProvider = "Google";
-                      gender = 'Male';
-                  } else {
-                      id = data.profile.id;
-                      name = data.profile.name;
-                      gender = data.profile.gender;
-                      imageUrl = 'https://graph.facebook.com/' + data.profile.id + '/picture';
-                      authProvider = "Facebook";
-                  }
+                if (data.provider === 'google') {
+                    name = data.profileObj.name;
+                    id = data.profileObj.googleId;
+                    imageUrl = data.profileObj.imageUrl;
+                    authProvider = "Google";
+                    gender = 'Male';
+                } else {
+                    id = data.profile.id;
+                    name = data.profile.name;
+                    gender = data.profile.gender;
+                    imageUrl = 'https://graph.facebook.com/' + data.profile.id + '/picture';
+                    authProvider = "Facebook";
+                }
 
-                  this.setState({
-                      conversations: [],
-                      user: {
-                          name: name,
-                          id: id,
-                          imageUrl: imageUrl,
-                          email: data.profileObj.email
-                      },
-                      hideOptions: true,
-                  });
+                this.setState({
+                    conversations: [],
+                    user: {
+                        name: name,
+                        id: id,
+                        imageUrl: imageUrl,
+                        email: data.profileObj.email
+                    },
+                    hideOptions: true,
+                });
 
-                  // Set in session
-                  this.setSessionDetails({
-                      "user.name": name,
-                      "user.id": id,
-                      "user.gender": gender,
-                      "user.authProvider": authProvider,
-                      "user.imageUrl": imageUrl,
-                      "user.email": data.profileObj.email,
-                  });
+                // Set in session
+                this.setSessionDetails({
+                    "user.name": name,
+                    "user.id": id,
+                    "user.gender": gender,
+                    "user.authProvider": authProvider,
+                    "user.imageUrl": imageUrl,
+                    "user.email": data.profileObj.email,
+                });
 
-                  let signInWelcome = [{
-                      "type": "message",
-                      "text": "Hello, " + name,
-                      "from": {
-                          "id": "fiercebadlands",
-                          "name": "fiercebadlands"
-                      },
-                      "locale": "en-US",
-                      'localTimestamp': Date.now(),
-                      "textFormat": "plain",
-                      "timestamp": new Date(),
-                  }, {
-                      "type": "message",
-                      "text": "Welcome to pS",
-                      "from": {
-                          "id": "fiercebadlands",
-                          "name": "fiercebadlands"
-                      },
-                      "locale": "en-US",
-                      'localTimestamp': Date.now(),
-                      "textFormat": "plain",
-                      "timestamp": new Date(),
-                  }, ];
+                let signInWelcome = [{
+                    "type": "message",
+                    "text": "Hello, " + name,
+                    "from": {
+                        "id": "fiercebadlands",
+                        "name": "fiercebadlands"
+                    },
+                    "locale": "en-US",
+                    'localTimestamp': Date.now(),
+                    "textFormat": "plain",
+                    "timestamp": new Date(),
+                }, {
+                    "type": "message",
+                    "text": "Welcome to pS",
+                    "from": {
+                        "id": "fiercebadlands",
+                        "name": "fiercebadlands"
+                    },
+                    "locale": "en-US",
+                    'localTimestamp': Date.now(),
+                    "textFormat": "plain",
+                    "timestamp": new Date(),
+                },];
 
-                  if (data.provider === 'facebook') {
-                      signInWelcome.push({
-                          "type": "message",
-                          "text": "Like and share us on Facebook",
-                          "from": {
-                              "id": "fiercebadlands",
-                              "name": "fiercebadlands"
-                          },
-                          "locale": "en-US",
-                          'localTimestamp': Date.now(),
-                          "textFormat": "plain",
-                          "timestamp": new Date(),
-                      }, {
-                          "type": "message",
-                          "timestamp": Date.now(),
-                          "localTimestamp": Date.now(),
-                          "from": {
-                              "id": "fiercebadlands",
-                              "name": "fiercebadlands"
-                          },
-                          "locale": "en-US",
-                          "inputHint": "ignoringInput",
-                          "attachments": [
-                              {
-                                  "contentType": "application/vnd.ps.card.like.fb",
-                              }
-                          ],
-                      },)
-                  }
+                if (data.provider === 'facebook') {
+                    signInWelcome.push({
+                        "type": "message",
+                        "text": "Like and share us on Facebook",
+                        "from": {
+                            "id": "fiercebadlands",
+                            "name": "fiercebadlands"
+                        },
+                        "locale": "en-US",
+                        'localTimestamp': Date.now(),
+                        "textFormat": "plain",
+                        "timestamp": new Date(),
+                    }, {
+                            "type": "message",
+                            "timestamp": Date.now(),
+                            "localTimestamp": Date.now(),
+                            "from": {
+                                "id": "fiercebadlands",
+                                "name": "fiercebadlands"
+                            },
+                            "locale": "en-US",
+                            "inputHint": "ignoringInput",
+                            "attachments": [
+                                {
+                                    "contentType": "application/vnd.ps.card.like.fb",
+                                }
+                            ],
+                        })
+                }
 
-                  break;
-              case 'error':
-                  const signInError = [{
-                      "type": "message",
-                      "text": "We are unable to sign you in",
-                      "from": {
-                          "id": "fiercebadlands",
-                          "name": "fiercebadlands"
-                      },
-                      "locale": "en-US",
-                      'localTimestamp': Date.now(),
-                      "textFormat": "plain",
-                      "timestamp": new Date(),
-                  }];
+                break;
+            case 'error':
+                const signInError = [{
+                    "type": "message",
+                    "text": "We are unable to sign you in",
+                    "from": {
+                        "id": "fiercebadlands",
+                        "name": "fiercebadlands"
+                    },
+                    "locale": "en-US",
+                    'localTimestamp': Date.now(),
+                    "textFormat": "plain",
+                    "timestamp": new Date(),
+                }];
 
-                  this.setState((prevState) => ({
-                      conversations: [...prevState.conversations, ...signInError]
-                  }));
-                  console.error('Error occurred while signing in ', JSON.stringify(data));
-                  break;
-              default:
-                  break;
-          }
+                this.setState((prevState) => ({
+                    conversations: [...prevState.conversations, ...signInError]
+                }));
+                console.error('Error occurred while signing in ', JSON.stringify(data));
+                break;
+            default:
+                break;
+        }
     };
 
     setNavbarIcon = (userIcon) => {
@@ -436,44 +466,44 @@ class PsBot extends Component {
         };
 
         let request = new Request(directLineBaseUrl + '/conversations',
-            {method: 'POST', headers: this.headers, body: JSON.stringify(conversationObj)});
+            { method: 'POST', headers: this.headers, body: JSON.stringify(conversationObj) });
 
         fetch(request)
             .then((response) => {
                 return response.json();
             }).then((json) => {
 
-            this.setState({
-                conversationId: json.conversationId,
-                activityStreamUrl: json.streamUrl,
-            });
-
-            this.remyActivitySocket = new WebSocket(this.state.activityStreamUrl);
-
-            if (!this.getSessionDetails().id && !this.props.anonymousLogin) {
-                this.sendConversationToBot(null, null, "/signin", true);
-            } else if (!this.getSessionDetails().id && this.props.anonymousLogin) {
-                this.sendConversationToBot(null, null, this.props.conversationStarter, true);
-            } else {
                 this.setState({
-                    user: {
-                        name: this.getSessionDetails().name,
-                        email: this.getSessionDetails().email,
-                        id: this.getSessionDetails().id,
-                        imageUrl: this.getSessionDetails().imageUrl,
-                    },
-                    hideOptions: true,
-                    inputEnabled: true
+                    conversationId: json.conversationId,
+                    activityStreamUrl: json.streamUrl,
                 });
 
-                if (this.props.conversationStarter) {
-                    this.sendConversationToBot(null, null, this.props.conversationStarter, true);
-                }
-            }
+                this.remyActivitySocket = new WebSocket(this.state.activityStreamUrl);
 
-        }).catch((ex) => {
-            console.error('Exception Occurred while parsing json ', ex);
-        });
+                if (!this.getSessionDetails().id && !this.props.anonymousLogin) {
+                    this.sendConversationToBot(null, null, "/signin", true);
+                } else if (!this.getSessionDetails().id && this.props.anonymousLogin) {
+                    this.sendConversationToBot(null, null, this.props.conversationStarter, true);
+                } else {
+                    this.setState({
+                        user: {
+                            name: this.getSessionDetails().name,
+                            email: this.getSessionDetails().email,
+                            id: this.getSessionDetails().id,
+                            imageUrl: this.getSessionDetails().imageUrl,
+                        },
+                        hideOptions: true,
+                        inputEnabled: true
+                    });
+
+                    if (this.props.conversationStarter) {
+                        this.sendConversationToBot(null, null, this.props.conversationStarter, true);
+                    }
+                }
+
+            }).catch((ex) => {
+                console.error('Exception Occurred while parsing json ', ex);
+            });
     };
 
     watermark = 0;
@@ -516,7 +546,7 @@ class PsBot extends Component {
             },
             "address": {
                 channelId: 'PSClient',
-                user: { id: loggedDetails.id, name: loggedDetails.name},
+                user: { id: loggedDetails.id, name: loggedDetails.name },
             },
             "channelId": "webchat",
             "locale": "en-US",
@@ -532,9 +562,9 @@ class PsBot extends Component {
         }
 
         let request = new Request(this.directLineBaseUrl + '/conversations/' + this.state.conversationId + '/activities',
-            {method: 'POST', headers: this.headers, body: JSON.stringify(conversation)});
+            { method: 'POST', headers: this.headers, body: JSON.stringify(conversation) });
 
-        if(!this.skipConversation(conversation) && conversationText.charAt(0) !== '/') {
+        if (!this.skipConversation(conversation) && conversationText.charAt(0) !== '/') {
             this.setState((prevState) => ({
                 conversations: [...prevState.conversations, conversation],
                 responseSuggestions: [],
@@ -585,7 +615,7 @@ class PsBot extends Component {
                 let i = 0, l = commandResponses.length, setTimeoutTimerId;
                 (function iterator() {
                     convSetState(commandResponses[i], i);
-                    if(++i < l) {
+                    if (++i < l) {
                         setTimeoutTimerId = setTimeout(() => {
                             removeThinkingState();
                             iterator();
@@ -615,42 +645,43 @@ class PsBot extends Component {
                 conversationText: '',
             });
 
-        fetch(request)
-            .then(HandleErrors).then(() => {
-            this.remyActivitySocket.addEventListener('message', (event) => {
-                if (event.data && JSON.parse(event.data).activities && JSON.parse(event.data).watermark) {
-                    if (this.watermark !== JSON.parse(event.data).watermark) {
-                        this.watermark = JSON.parse(event.data).watermark;
-                        this.setConversationToView(JSON.parse(event.data).activities);
-                    }
-                }
-            });
-        }).catch((ex) => {
-            console.error(ex);
+            fetch(request)
+                .then(HandleErrors).then(() => {
+                    this.remyActivitySocket.addEventListener('message', (event) => {
+                        if (event.data && JSON.parse(event.data).activities && JSON.parse(event.data).watermark) {
+                            if (this.watermark !== JSON.parse(event.data).watermark) {
+                                this.watermark = JSON.parse(event.data).watermark;
+                                this.setConversationToView(JSON.parse(event.data).activities);
+                            }
+                        }
+                    });
+                }).catch((ex) => {
+                    console.error('error', ex);
 
-            if (ex instanceof Exception.serverUnavailableException) {
-                this.setState({
-                    conversations: this.state.conversations.concat([...PsError['unableToConnect']]),
-                    showTyping: false,
+                    if (ex instanceof Exception.serverUnavailableException) {
+
+                        this.setState({
+                            conversations: this.state.conversations.concat([...PsError['unableToConnect']]),
+                            showTyping: false,
+                        });
+                    } else if (ex instanceof Exception.sessionInvalidException) {
+                        this.setState({
+                            user: {},
+                            hideOptions: false,
+                        });
+                        localStorage.clear();
+                        this.setState({
+                            conversations: this.state.conversations.concat([...PsError['sessionInvalid']]),
+                            showTyping: false,
+                        });
+                        this.sendConversationToBot(null, "help me sign in", "/siginAfterExpiredSession", true);
+                    } else {
+                        this.setState({
+                            conversations: this.state.conversations.concat([...PsError['unableToConnect']]),
+                            showTyping: false,
+                        });
+                    }
                 });
-            } else if (ex instanceof Exception.sessionInvalidException) {
-                this.setState({
-                    user: {},
-                    hideOptions: false,
-                });
-                localStorage.clear();
-                this.setState({
-                    conversations: this.state.conversations.concat([...PsError['sessionInvalid']]),
-                    showTyping: false,
-                });
-                this.sendConversationToBot(null, "help me sign in", "/siginAfterExpiredSession", true);
-            } else {
-                this.setState({
-                    conversations: this.state.conversations.concat([...PsError['unableToConnect']]),
-                    showTyping: false,
-                });
-            }
-        });
         }
     };
 
@@ -671,12 +702,10 @@ class PsBot extends Component {
     setConversationToView = (activities) => {
         for (const activity of activities) {
             if (!this.skipConversation(activity) &&
-                (activity.from.name === 'fiercebadlands' || activity.from.name === 'psbot-demo' || activity.contentType === 'typing') && activity.code !== 'completedSuccessfully') {
-
+                (activity.from.name === 'fiercebadlands' || activity.from.name === 'psbot-demo' || activity.from.name === 'remy-demo' || activity.contentType === 'typing') && activity.code !== 'completedSuccessfully') {
                 if (activity.attachments && activity.attachments[0].contentType === 'application/vnd.microsoft.card.hero' && activity.text) {
                     const textConversation = Object.assign({}, activity);
                     delete textConversation.attachments;
-
                     if (activity.attachments[0].content.buttons) {
                         const responseSuggestions = activity.attachments[0].content.buttons;
                         this.setState((prevState) => ({
@@ -690,8 +719,8 @@ class PsBot extends Component {
                     if (activity.attachments[0].content.buttons) {
                         const conversationButtons = activity.attachments[0].content.buttons;
 
-                        const cardButtons = _.filter(conversationButtons, {'type': 'openUrl'});
-                        const responseSuggestions = _.filter(conversationButtons, {'type': 'imBack'});
+                        const cardButtons = _.filter(conversationButtons, { 'type': 'openUrl' });
+                        const responseSuggestions = _.filter(conversationButtons, { 'type': 'imBack' });
 
                         activity.attachments[0].content.buttons = cardButtons;
 
@@ -723,7 +752,7 @@ class PsBot extends Component {
      * @param {Object} buttonValue Button Click Event
      */
     pSBotButtonClick = (buttonDisplayText, buttonValue) => {
-        if(!buttonValue) {
+        if (!buttonValue) {
             buttonValue = buttonDisplayText;
         }
 
@@ -818,7 +847,7 @@ class PsBot extends Component {
 
         return (
             <div>
-                { this.props.navbarEnabled &&<PsBotNavbar
+                {this.props.navbarEnabled && <PsBotNavbar
                     user={this.state.user}
                     action={this.pSBotButtonClick}
                     theme={this.props.navbarTheme}
@@ -830,195 +859,197 @@ class PsBot extends Component {
                     <div style={{
                         marginTop: '30px',
                     }}>
-                    <Grid container gutter={0} className={this.classes.conversationContainer}>
-                        {
-                            this.state.hideOptions ? (
-                                <PsBotApps  theme={{
-                                                botConversationTheme: this.props.botConversationTheme,
-                                                baseColor: this.props.baseColor,
-                                                baseFontColor: this.props.baseFontColor,
-                                            }}
-                                            botDetails={{
-                                                botName: botName,
-                                                botDescription: botDescription,
-                                            }}
-                                            user={{
-                                                id: this.state.user.id,
-                                                name: this.state.user.name
-                                            }}
-                                            action={this.pSBotButtonClick} />
-                            ) : ('')
-                        }
-                        {this.state.conversations.map((conversation, id) => {
+                        <Grid container gutter={0} className={this.classes.conversationContainer}>
+                            {
+                                this.state.hideOptions ? (
+                                    <PsBotApps theme={{
+                                        botConversationTheme: this.props.botConversationTheme,
+                                        baseColor: this.props.baseColor,
+                                        baseFontColor: this.props.baseFontColor,
+                                    }}
+                                        botDetails={{
+                                            botName: botName,
+                                            botDescription: botDescription,
+                                        }}
+                                        user={{
+                                            id: this.state.user.id,
+                                            name: this.state.user.name
+                                        }}
+                                        action={this.pSBotButtonClick} />
+                                ) : ('')
+                            }
+                            {this.state.conversations.map((conversation, id) => {
 
-                            const multipleCards = (conversation.attachments) ? conversation.attachments.length > 1 : false;
-                            const isFirstConv = this.state.conversations[id - 1] && this.state.conversations[id - 1].from.name !== 'fiercebadlands' && this.state.conversations[id - 1].from.name !== 'psbot-demo';
-                            const channelData = conversation.channelData;
+                                const multipleCards = (conversation.attachments) ? conversation.attachments.length > 1 : false;
+                                const isFirstConv = this.state.conversations[id - 1] && this.state.conversations[id - 1].from.name !== 'fiercebadlands' && this.state.conversations[id - 1].from.name !== 'psbot-demo' && this.state.conversations[id - 1].from.name !== 'remy-demo';
+                                const channelData = conversation.channelData;
 
-                            return ((conversation.from.name === 'fiercebadlands' || conversation.from.name === 'psbot-demo') ?
+                                return ((conversation.from.name === 'fiercebadlands' || conversation.from.name === 'psbot-demo' || conversation.from.name === 'remy-demo') ?
                                     (<Grid item xs={12} sm={12} key={id} ref={(el) => { this.messagesEnd = el; }}>
-                                            {isFirstConv ? (<div style={{
-                                                float:  'left',
-                                                paddingRight: '7px'
-                                            }}>
-                                                    {this.props.navbarTheme.logo &&<Avatar src={this.props.navbarTheme.logo.imageUrl} className={this.classes.avatar} />}
-                                                    {!this.props.navbarTheme.logo &&<Avatar className={this.classes.avatar}>R</Avatar>}
-                                                    <div className="conversation-by"><span>{botName}</span></div>
-                                            </div>) : (
+                                        {isFirstConv ? (<div style={{
+                                            float: 'left',
+                                            paddingRight: '7px'
+                                        }}>
+                                            {this.props.navbarTheme.logo && <Avatar src={this.props.navbarTheme.logo.imageUrl} className={this.classes.avatar} />}
+                                            {!this.props.navbarTheme.logo && <Avatar className={this.classes.avatar}>R</Avatar>}
+                                            <div className="conversation-by"><span>{botName}</span></div>
+                                        </div>) : (
                                                 <div style={{
-                                                    float:  'left',
+                                                    float: 'left',
                                                     paddingRight: '7px'
                                                 }}>
                                                     <Avatar className={this.classes.avatar}></Avatar>
                                                 </div>
                                             )}
-                                                    {
-                                                        !conversation.attachments ? (
-                                                            (channelData && channelData.attachment.payload.template_type === 'QuizCard') ? (
-                                                                <PsBotQuizCard data={channelData.attachment.payload.quiz_card}
-                                                                               ref={(ref) => {this.psBotQuiz = ref;} }
-                                                                               action={this.pSBotButtonClick} />
-                                                            ) : ((channelData && channelData.attachment.payload.template_type === 'Charts') ?
-                                                                    this.renderCharts(channelData)
-                                                                :
-                                                                ((this.props.typing) ? (
-                                                                    <Typist cursor={{
-                                                                        element: '',
-                                                                        hideWhenDone: true,
-                                                                        hideWhenDoneDelay: 0,
-                                                                    }}>
-                                                                        {conversation.text}
-                                                                    </Typist>
-                                                                ) : (
-                                                                        <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : [botConversationClass, "slideInFromLeft"].join(" ")}
-                                                                               style={{
-                                                                                   background: (conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? 'transparent' :
-                                                                                       ((this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background),
-                                                                                   color: (this.props.botConversationTheme) ? this.props.botConversationTheme.color : botConversationClass.color,
-                                                                                   fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                                                                   fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
-                                                                                   maxWidth: (window.parent.remy) ? '250px' : '270px',
-                                                                                   marginTop: '8px',
-                                                                                   marginBottom: '2px',
-                                                                                   marginLeft: (isFirstConv) ? '-30px' : '0px',
-                                                                               }}>
-                                                                            <div className={this.classes.conversationText}>
-                                                                                <PsMarkdown text={conversation.displayVal || conversation.text} />
-                                                                            </div>
-                                                                        </Paper>
-                                                                )
-                                                            ))) :
-                                                            ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
-                                                                (multipleCards) ?
-                                                                    (
-                                                                        <Slider {...cardSliderOptions}>
-                                                                            {conversation.attachments.map((attachment, key) => {
-                                                                                return (
-                                                                                    <div key={key}>
-                                                                                        <PsBotCard data={attachment.content}
-                                                                                                   action={this.pSBotButtonClick}
-                                                                                                   theme={this.props.botConversationTheme} />
-                                                                                    </div>
-                                                                                );
-                                                                            })}
-                                                                        </Slider>
-                                                                    )
-                                                                    : (
-                                                                    <PsBotCard data={conversation.attachments[0].content}
-                                                                                   action={this.pSBotButtonClick} theme={this.props.botConversationTheme} baseColor={this.props.baseColor}
-                                                                                    isFirstCard={isFirstConv} />
-                                                                )
+                                        {
+                                            !conversation.attachments ? (
+                                                (channelData && channelData.attachment.payload.template_type === 'QuizCard') ? (
+                                                    <PsBotQuizCard data={channelData.attachment.payload.quiz_card}
+                                                        ref={(ref) => { this.psBotQuiz = ref; }}
+                                                        action={this.pSBotButtonClick} />
+                                                ) : ((channelData && channelData.attachment.payload.template_type === 'Charts') ?
+                                                    this.renderCharts(channelData)
+                                                    :
+                                                    ((this.props.typing) ? (
+                                                        <Typist cursor={{
+                                                            element: '',
+                                                            hideWhenDone: true,
+                                                            hideWhenDoneDelay: 0,
+                                                        }}>
+                                                            {conversation.text}
+                                                        </Typist>
+                                                    ) : (
+                                                            <Paper className={(conversation.contentType === 'typing') ? this.classes.psBotThinking : [botConversationClass, "slideInFromLeft"].join(" ")}
+                                                                style={{
+                                                                    background: (conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? 'transparent' :
+                                                                        ((this.props.botConversationTheme && conversation.contentType !== 'typing') ? this.props.botConversationTheme.background : botConversationClass.background),
+                                                                    color: (this.props.botConversationTheme) ? this.props.botConversationTheme.color : botConversationClass.color,
+                                                                    fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
+                                                                    fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
+                                                                    maxWidth: (window.parent.remy) ? '250px' : '270px',
+                                                                    marginTop: '8px',
+                                                                    marginBottom: '2px',
+                                                                    marginLeft: (isFirstConv) ? '-30px' : '0px',
+                                                                }}>
+                                                                <div className={this.classes.conversationText}>
+                                                                    {console.log("psmarkdown", conversation.displayVal, "text", conversation.text)}
+                                                                    <PsMarkdown text={conversation.displayVal || conversation.text} />
+                                                                </div>
+                                                            </Paper>
+                                                        )
+                                                    ))) :
+                                                ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.hero') ? (
+                                                    (multipleCards) ?
+                                                        (
+                                                            <Slider {...cardSliderOptions}>
+                                                                {conversation.attachments.map((attachment, key) => {
+                                                                    return (
+                                                                        <div key={key}>
+                                                                            <PsBotCard data={attachment.content}
+                                                                                action={this.pSBotButtonClick}
+                                                                                theme={this.props.botConversationTheme} />
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </Slider>
+                                                        )
+                                                        : (
+                                                            <PsBotCard data={conversation.attachments[0].content}
+                                                                action={this.pSBotButtonClick} theme={this.props.botConversationTheme} baseColor={this.props.baseColor}
+                                                                isFirstCard={isFirstConv} />
+                                                        )
 
-                                                            ) :
-                                                                ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
-                                                                    <p>
-                                                                        <PsBotQuizCard data={conversation.attachments[0].content}
-                                                                                       action={this.pSBotButtonClick}
-                                                                                       theme={this.props.botConversationTheme} /></p>
-                                                                    : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.fb')) ?
-                                                                        (<p><PsBotFbSignInCard action={this.onSignIn} /></p>)
-                                                                        : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.google')) ?
-                                                                            (<p><PsBotGoogleSignInCard action={this.onSignIn} /></p>)
-                                                                            : (((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
-                                                                                (<p><PsBotFbLikeCard /></p>)
-                                                                                : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin') ? (
-                                                                                    <p>
-                                                                                        <PsBotSignInCard data={conversation.attachments[0].content}
-                                                                                                         action={this.onSignIn}
-                                                                                                         theme={this.props.botConversationTheme} /></p>
-                                                                                ) : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
-                                                                                    <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} theme={this.props.botConversationTheme} />
-                                                                                ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
-                                                                                    <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
-                                                                                        <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
-                                                                                        : ((conversation.attachments  && conversation.attachments[0].contentType === 'application/vnd.ps.card.anonymousLogin')
-                                                                                                ? <p><AnonymousLoginCard data={conversation.attachments[0].content}
-                                                                                                             action={this.setupAnonymousUser}
-                                                                                                             theme={this.props.botConversationTheme}
-                                                                                                             baseColor={this.props.baseColor}
-                                                                                                             user={this.state.user} /></p> :
-                                                                                                <PsMarkdown text={conversation.displayVal || conversation.text} />))))))))
-                                                    }
-                                            {(this.state.conversations[id + 1] && this.state.conversations[id + 1].from.name !== 'fiercebadlands' && this.state.conversations[id + 1].from.name !== 'psbot-demo') &&(
-                                                <PsBotConversationTime time={conversation.timestamp} />
-                                            )}
-                                            {(this.state.conversations.length === id + 1) ?
-                                                (<PsBotConversationTime time={conversation.timestamp} />) : ''}
-                                        </Grid>
+                                                ) :
+                                                    ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.quiz') ?
+                                                        <p>
+                                                            <PsBotQuizCard data={conversation.attachments[0].content}
+                                                                action={this.pSBotButtonClick}
+                                                                theme={this.props.botConversationTheme} /></p>
+                                                        : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.fb')) ?
+                                                            (<p><PsBotFbSignInCard action={this.onSignIn} /></p>)
+                                                            : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin.google')) ?
+                                                                (<p><PsBotGoogleSignInCard action={this.onSignIn} /></p>)
+                                                                : (((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.like.fb')) ?
+                                                                    (<p><PsBotFbLikeCard /></p>)
+                                                                    : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.signin') ? (
+                                                                        // console.log("inside ps bot")
+                                                                        <p>
+                                                                            <PsBotSignInCard data={conversation.attachments[0].content}
+                                                                                action={this.signIn}
+                                                                                theme={this.props.botConversationTheme} /></p>
+                                                                    ) : ((((conversation.attachments && this.allowedImageTypes.indexOf(conversation.attachments[0].contentType) >= 0) ? (
+                                                                        <PsBotCardImage imageUrl={conversation.attachments[0].contentUrl} theme={this.props.botConversationTheme} />
+                                                                    ) : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.microsoft.card.code')) ?
+                                                                            <PsBotCodeCard data={conversation.attachments[0].content} /> : (conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.command') ?
+                                                                                <PsBotCommandCard data={conversation.attachments[0].content} theme={this.props.botConversationTheme} />
+                                                                                : ((conversation.attachments && conversation.attachments[0].contentType === 'application/vnd.ps.card.anonymousLogin')
+                                                                                    ? <p><AnonymousLoginCard data={conversation.attachments[0].content}
+                                                                                        action={this.setupAnonymousUser}
+                                                                                        theme={this.props.botConversationTheme}
+                                                                                        baseColor={this.props.baseColor}
+                                                                                        user={this.state.user} /></p> :
+                                                                                    <PsMarkdown text={conversation.displayVal || conversation.text} />))))))))
+                                        }
+                                        {(this.state.conversations[id + 1] && this.state.conversations[id + 1].from.name !== 'fiercebadlands' && this.state.conversations[id + 1].from.name !== 'psbot-demo'  && this.state.conversations[id + 1].from.name !== 'remy-demo') && (
+                                            <PsBotConversationTime time={conversation.timestamp} />
+                                        )}
+                                        {(this.state.conversations.length === id + 1) ?
+                                            (<PsBotConversationTime time={conversation.timestamp} />) : ''}
+                                    </Grid>
                                     )
                                     :
                                     (
                                         <Grid item xs={12} sm={12} key={id}>
                                             <PsHumanConversation
-                                                                 conversationText={conversation.displayVal || conversation.text}
-                                                                 user={this.state.user}
-                                                                 theme={this.props.humanConversationTheme} />
+                                                conversationText={conversation.displayVal || conversation.text}
+                                                user={this.state.user}
+                                                theme={this.props.humanConversationTheme} />
                                         </Grid>
-                                        )
+                                    )
 
-                            )
-                        })}
-                    </Grid>
-                    {this.state.showTyping &&<Grid item xs={12} sm={12} className={this.classes.psBotThinking}>
-                                            <PsBotThinking thinkingImg={this.props.thinkingImg} style={{
-                                                            border: 'none',
-                                                            background: 'transparent !important',
-                                                        }} /> 
-                                            <div style={{   
-                                                float:  'left',
-                                                paddingRight: '7px',
-                                                marginTop: '-47px'
-                                            }}>
-                                                {this.props.navbarTheme.logo &&<Avatar src={this.props.navbarTheme.logo.imageUrl} className={this.classes.avatar} />}
-                                                {!this.props.navbarTheme.logo &&<Avatar className={this.classes.avatar}>R</Avatar>}
-                                            </div>
-                                                        </Grid>
-                    }
-                            {
-                                this.getSessionDetails().id ? (
-                                    <Grid container gutter={0} className={this.classes.conversationInput}>
-                                        {responseSuggestions.map((suggestion, id) => {
-                                            return (
-                                                <Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
-                                                            onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}
-                                                            style={{
-                                                                background: this.props.baseColor ? this.props.baseColor : ((this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background),
-                                                                color: this.props.botConversationTheme ? this.props.botConversationTheme.background : '#FFFFFF',
-                                                                fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
-                                                                fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
-                                                            }}>
-                                                    <div className={this.classes.conversationText}>
-                                                        <PsMarkdown text={suggestion.title} />
-                                                    </div>
-                                                </Paper>
-                                            )
-                                        })}
-                                    </Grid>
-                                ) : ''
-                            }
-                        </div>
+                                )
+                            })}
+                        </Grid>
+                        {this.state.showTyping && <Grid item xs={12} sm={12} className={this.classes.psBotThinking}>
+                            <PsBotThinking thinkingImg={this.props.thinkingImg} style={{
+                                border: 'none',
+                                background: 'transparent !important',
+                            }} />
+                            <div style={{
+                                float: 'left',
+                                paddingRight: '7px',
+                                marginTop: '-47px'
+                            }}>
+                                {this.props.navbarTheme.logo && <Avatar src={this.props.navbarTheme.logo.imageUrl} className={this.classes.avatar} />}
+                                {!this.props.navbarTheme.logo && <Avatar className={this.classes.avatar}>R</Avatar>}
+                            </div>
+                        </Grid>
+                        }
+                        {
+                            this.getSessionDetails().id ? (
+                                <Grid container gutter={0} className={this.classes.conversationInput}>
+                                    {responseSuggestions.map((suggestion, id) => {
+                                        return (
+                                            <Paper className={[this.classes.paperBotConversation, this.classes.responseSuggestionButton].join(' ')} key={id}
+                                                onTouchTap={() => this.pSBotSuggestionResponseClick(suggestion)}
+                                                style={{
+                                                    background: this.props.baseColor ? this.props.baseColor : ((this.props.botConversationTheme) ? this.props.botConversationTheme.background : botConversationClass.background),
+                                                    color: this.props.botConversationTheme ? this.props.botConversationTheme.background : '#FFFFFF',
+                                                    fontFamily: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontFamily + ' !important' : 'Lato, sans-serif',
+                                                    fontSize: (this.props.botConversationTheme) ? this.props.botConversationTheme.fontSize + ' !important' : botConversationClass.fontSize,
+                                                }}>
+                                                <div className={this.classes.conversationText}>
+                                                    <PsMarkdown text={suggestion.title} />
+                                                </div>
+                                            </Paper>
+                                        )
+                                    })}
+                                </Grid>
+                            ) : ''
+                        }
+                    </div>
                 </div>
-                {(!this.props.inputEnabled || this.state.inputEnabled) &&<div style={{
+                {(!this.props.inputEnabled || this.state.inputEnabled) && <div style={{
                     color: (this.props.humanConversationTheme) ? this.props.humanConversationTheme.color : botConversationClass.color,
                     position: 'fixed',
                 }}>
@@ -1029,12 +1060,12 @@ class PsBot extends Component {
                                     display: 'grid'
                                 }}>
                                     <input type="text" placeholder="Say Something..." className="remy-input remy-input-grid-one"
-                                           style={{
-                                               background: (this.props.messageBar) ? this.props.messageBar.background : '#FFFFFF'
-                                           }}
-                                           ref={(conversationInput) => {this.conversationInput = conversationInput;}}
-                                           onChange={this.updateInputState}
-                                           value={this.state.conversationText} />
+                                        style={{
+                                            background: (this.props.messageBar) ? this.props.messageBar.background : '#FFFFFF'
+                                        }}
+                                        ref={(conversationInput) => { this.conversationInput = conversationInput; }}
+                                        onChange={this.updateInputState}
+                                        value={this.state.conversationText} />
                                 </form>
                             </div>
                         </div>

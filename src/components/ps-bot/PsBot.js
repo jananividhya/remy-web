@@ -296,12 +296,11 @@ class PsBot extends Component {
                 return obj;
 
             },
-            function (msg) {
+            (msg) => {
                 console.error(msg);
-                resultData = {
-                    status: 'error',
-                    provider: 'google'
-                }
+                resultData.status = 'error'
+                resultData.provider = 'google'
+                this.onSignIn(resultData)
             }
         )
 
